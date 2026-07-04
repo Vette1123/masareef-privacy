@@ -25,6 +25,9 @@
     th, td { border: 1px solid #ddd; padding: 8px 10px; text-align: left; font-size: 0.95rem; }
     th { background: rgba(128,128,128,0.12); }
     code { padding: 1px 5px; border-radius: 4px; background: #f0f0f0; }
+    .subject { font-weight: 600; font-style: italic; }
+    .subject::before { content: "\201C"; }
+    .subject::after { content: "\201D"; }
     .note { font-size: 0.9rem; color: #666; }
   </style>
 </head>
@@ -45,7 +48,7 @@
       Email <a href="mailto:boogado@yahoo.com?subject=Delete%20my%20Masareef%20account">boogado@yahoo.com</a>
       from the email address you used to sign in to Masareef.
     </li>
-    <li>Use the subject line <code>Delete my Masareef account</code>.</li>
+    <li>Use the subject line <span class="subject">Delete my Masareef account</span>.</li>
     <li>
       We verify the request against your account email and delete your account
       within <strong>30 days</strong>. We reply to confirm once it is done.
