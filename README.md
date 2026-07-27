@@ -3,6 +3,7 @@
 The published privacy policy and account-deletion page for **Masareef**, the spending
 tracker (`com.mohamedgado.masareef`).
 
+- **App on Google Play:** https://play.google.com/store/apps/details?id=com.mohamedgado.masareef
 - **Privacy policy:** https://vette1123.github.io/masareef-privacy/
 - **Account deletion:** https://vette1123.github.io/masareef-privacy/delete-account.html
 
@@ -109,6 +110,7 @@ When the app changes, the policy changes in the same session as the feature, not
 
 ## Google Play
 
+- Store listing: `https://play.google.com/store/apps/details?id=com.mohamedgado.masareef`
 - Privacy policy URL: `https://vette1123.github.io/masareef-privacy/`
 - Data deletion URL: `https://vette1123.github.io/masareef-privacy/delete-account.html`
 
