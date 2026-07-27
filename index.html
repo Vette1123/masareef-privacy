@@ -1,84 +1,2087 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Masareef — Privacy Policy</title>
-  <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-           max-width: 720px; margin: 40px auto; padding: 0 20px; line-height: 1.65; color: #1a1a1a; }
-    h1 { font-size: 1.8rem; } h2 { font-size: 1.2rem; margin-top: 2rem; }
-    code { background: #f0f0f0; padding: 1px 5px; border-radius: 4px; }
-    .muted { color: #666; font-size: 0.9rem; }
-    ul { padding-left: 1.2rem; }
-  </style>
-</head>
-<body>
-  <h1>Privacy Policy for Masareef</h1>
-  <p class="muted">Last updated: 5 July 2026</p>
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Masareef · Privacy Policy · سياسة الخصوصية</title>
+    <meta
+      name="description"
+      content="Privacy policy for the Masareef spending tracker, in English and Arabic: what stays on your device, what syncs to our server, what auto-track reads, and what analytics never receive."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#020617" media="(prefers-color-scheme: dark)" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://vette1123.github.io/masareef-privacy/" />
+    <meta property="og:title" content="Masareef · Privacy Policy · سياسة الخصوصية" />
+    <meta
+      property="og:description"
+      content="What Masareef keeps on your device, what it syncs, and who else is involved. English and Arabic."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://vette1123.github.io/masareef-privacy/" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230A1626'/%3E%3Cpath d='M6 21.5 12 14l5 4.5L26 9' stroke='%232DD4BF' stroke-width='2.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"
+    />
+    <style>
+      /* Self-contained on purpose: no web fonts, no third-party scripts, no cookies,
+         no analytics. A privacy page should not be the thing that tracks you. */
+      :root {
+        --bg: #f8fafc;
+        --surface: #ffffff;
+        --surface-2: #f1f5f9;
+        --text: #0f172a;
+        --muted: #55657c;
+        --line: #dde5ee;
+        --accent: #0d7d70;
+        --accent-soft: #e8f6f4;
+        --radius: 14px;
+        --maxw: 800px;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #020617;
+          --surface: #0b1324;
+          --surface-2: #111c31;
+          --text: #e8edf6;
+          --muted: #93a2b8;
+          --line: #1d2b44;
+          --accent: #2dd4bf;
+          --accent-soft: #0d2029;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+          sans-serif;
+        font-size: 17px;
+        line-height: 1.75;
+        -webkit-font-smoothing: antialiased;
+      }
+      [dir="rtl"] body,
+      [lang="ar"] {
+        font-family: "IBM Plex Sans Arabic", "Noto Sans Arabic", "Segoe UI", Tahoma, system-ui,
+          -apple-system, Arial, sans-serif;
+      }
+      .wrap {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 0 20px 96px;
+      }
 
-  <p>Masareef ("the app") is a personal expense tracker for Android. We respect your privacy.
-  This policy explains what data the app handles and why. In plain terms: Masareef is
-  offline-first and built to keep your financial data on your device.</p>
+      /* Header */
+      .top {
+        border-bottom: 1px solid var(--line);
+        background: var(--surface);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+      .top-inner {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        min-height: 60px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+      .brand svg {
+        display: block;
+      }
+      .switch {
+        display: inline-flex;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 3px;
+        background: var(--surface-2);
+      }
+      .switch button {
+        appearance: none;
+        border: 0;
+        background: transparent;
+        color: var(--muted);
+        font: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 5px 14px;
+        border-radius: 999px;
+        cursor: pointer;
+        transition: background-color 0.18s ease, color 0.18s ease;
+      }
+      .switch button[aria-pressed="true"] {
+        background: var(--accent);
+        color: #ffffff;
+      }
+      @media (prefers-color-scheme: dark) {
+        .switch button[aria-pressed="true"] {
+          color: #04231f;
+        }
+      }
+      .switch button:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
 
-  <h2>Our core principle</h2>
-  <p>Your transactions, wallets, budgets, and categories are stored <strong>locally on your
-  device</strong>. The app works fully <strong>without an account and without internet</strong>.
-  We <strong>never</strong> sell your data, there are <strong>no ads</strong>, and amounts,
-  merchant names, and balances are <strong>never</strong> sent to analytics. Drafts that
-  Auto-track reads from your bank notifications stay in a <strong>local inbox on your device</strong>
-  and are <strong>never</strong> uploaded — even when you sync.</p>
+      /* Hero */
+      h1 {
+        font-size: clamp(1.9rem, 5vw, 2.5rem);
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        margin: 40px 0 10px;
+      }
+      .lede {
+        color: var(--muted);
+        font-size: 1.05rem;
+        margin: 0 0 8px;
+        max-width: 62ch;
+      }
+      .meta {
+        color: var(--muted);
+        font-size: 0.86rem;
+        margin: 0 0 28px;
+        padding-bottom: 22px;
+        border-bottom: 1px solid var(--line);
+      }
+      .meta b {
+        color: var(--text);
+        font-weight: 600;
+      }
 
-  <h2>Notification access (optional, off by default)</h2>
-  <p>If you enable <strong>Auto-track</strong>, Masareef reads incoming payment and transaction
-  notifications from banks and payment apps to create expense records automatically. This reading
-  happens <strong>entirely on your device</strong>. The content of your notifications is never
-  transmitted to us or any third party. The drafts this creates ("captures") are kept in a
-  <strong>local review inbox on your device only</strong> — they are <strong>never</strong> uploaded
-  or synced, even if you sign in to sync. You can disable Auto-track at any time in Settings, which
-  stops all notification access.</p>
+      /* At a glance: four tiles, not a bullet box */
+      .glance {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin: 28px 0 40px;
+      }
+      @media (max-width: 620px) {
+        .glance {
+          grid-template-columns: 1fr;
+        }
+      }
+      .tile {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--surface);
+        padding: 16px 18px;
+      }
+      .tile.lead {
+        grid-column: 1 / -1;
+        background: var(--accent-soft);
+      }
+      .tile h2 {
+        margin: 0 0 4px;
+        font-size: 0.95rem;
+        letter-spacing: -0.01em;
+      }
+      .tile p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.94rem;
+        line-height: 1.65;
+        max-width: none;
+      }
 
-  <h2>Location (optional, only for Nearby ATMs)</h2>
-  <p>When you open the <strong>Nearby ATMs</strong> screen, the app requests your device location
-  <strong>once</strong> to find ATMs near you. Your coordinates are sent to the OpenStreetMap
-  Overpass API (<code>overpass-api.de</code>), a public map-data service, solely to retrieve nearby
-  ATM locations for that request. Your location is <strong>not stored</strong> by the app and is not
-  used for any other purpose. Location is only accessed while you are using this feature; the app
-  <strong>never</strong> tracks your location in the background.</p>
+      /* TOC */
+      nav.toc {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 16px 22px;
+        margin: 0 0 44px;
+        background: var(--surface);
+      }
+      nav.toc h2 {
+        margin: 0 0 8px;
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+      }
+      nav.toc ol {
+        margin: 0;
+        padding-inline-start: 20px;
+        columns: 2;
+        column-gap: 28px;
+        font-size: 0.95rem;
+      }
+      @media (max-width: 620px) {
+        nav.toc ol {
+          columns: 1;
+        }
+      }
+      nav.toc li {
+        margin: 3px 0;
+        break-inside: avoid;
+      }
 
-  <h2>Optional account &amp; sync</h2>
-  <p>If you choose to <strong>create an account and sign in</strong>, your app data (such as
-  transactions, wallets, budgets, and categories) is synchronised to our backend so you can access
-  it across devices. This is <strong>entirely optional</strong> — if you never sign in, no financial
-  data leaves your device. Account data is protected by your login and transmitted over encrypted
-  connections. You can request deletion of your account and its synced data by contacting us at the
-  email below.</p>
+      h2 {
+        font-size: 1.32rem;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+        margin: 44px 0 12px;
+        scroll-margin-top: 80px;
+      }
+      h3 {
+        font-size: 1.02rem;
+        margin: 26px 0 8px;
+      }
+      p {
+        margin: 0 0 14px;
+        max-width: 68ch;
+      }
+      ul,
+      ol {
+        max-width: 68ch;
+      }
+      li {
+        margin: 5px 0;
+      }
+      a {
+        color: var(--accent);
+        text-underline-offset: 3px;
+      }
+      a:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+        border-radius: 3px;
+      }
+      strong {
+        font-weight: 700;
+      }
+      code {
+        font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+        font-size: 0.86em;
+        background: var(--surface-2);
+        border: 1px solid var(--line);
+        padding: 1px 6px;
+        border-radius: 6px;
+        direction: ltr;
+        unicode-bidi: embed;
+        display: inline-block;
+      }
 
-  <h2>Usage analytics</h2>
-  <p>To understand how Masareef is used and to improve it, the app collects <strong>non-financial,
-  aggregate usage analytics</strong> — for example, which screen you opened or that a transaction was
-  added. We do <strong>not</strong> send transaction amounts, merchant names, balances, currencies,
-  account numbers, notification contents, or your location to analytics. Analytics are processed on
-  our behalf by PostHog, on servers located in the <strong>European Union</strong>.</p>
+      /* Tables */
+      .table-scroll {
+        overflow-x: auto;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        margin: 18px 0 24px;
+        background: var(--surface);
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        min-width: 560px;
+        font-size: 0.92rem;
+      }
+      caption {
+        caption-side: top;
+        text-align: start;
+        color: var(--muted);
+        font-size: 0.86rem;
+        padding: 12px 16px 0;
+      }
+      th,
+      td {
+        text-align: start;
+        padding: 11px 16px;
+        vertical-align: top;
+      }
+      thead th {
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--muted);
+        font-weight: 700;
+      }
+      tbody tr + tr {
+        border-top: 1px solid var(--line);
+      }
+      td code {
+        white-space: nowrap;
+      }
 
-  <h2>Data we do not collect</h2>
-  <ul>
-    <li>We do not sell or share your personal data with advertisers.</li>
-    <li>We do not access your SMS or call logs in the Google Play version of the app.</li>
-    <li>We do not track your location in the background.</li>
-  </ul>
+      .note {
+        border-inline-start: 3px solid var(--accent);
+        background: var(--surface-2);
+        border-radius: 0 var(--radius) var(--radius) 0;
+        padding: 12px 18px;
+        margin: 20px 0;
+        color: var(--text);
+      }
+      [dir="rtl"] .note {
+        border-radius: var(--radius) 0 0 var(--radius);
+      }
+      .note p:last-child {
+        margin-bottom: 0;
+      }
 
-  <h2>Children</h2>
-  <p>Masareef is not directed at children under 13 and does not knowingly collect data from them.</p>
+      .contact {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 20px 22px;
+        background: var(--surface);
+        margin-top: 20px;
+      }
+      .contact p:last-child {
+        margin-bottom: 0;
+      }
 
-  <h2>Your rights</h2>
-  <p>You can delete all local data by clearing the app's storage or uninstalling it. If you use
-  account sync, contact us to request deletion of your synced data.</p>
+      footer.page {
+        border-top: 1px solid var(--line);
+        margin-top: 56px;
+        padding-top: 20px;
+        color: var(--muted);
+        font-size: 0.86rem;
+      }
+      .lang-hidden {
+        display: none;
+      }
+      .skip {
+        position: absolute;
+        inset-inline-start: -9999px;
+      }
+      .skip:focus {
+        position: static;
+        display: inline-block;
+        padding: 8px 12px;
+      }
 
-  <h2>Changes</h2>
-  <p>We may update this policy; material changes will be reflected by the "Last updated" date above.</p>
+      /* Print and save-as-PDF: the visible language prints as a plain document. Link
+         targets are spelled out, since a printed hyperlink is otherwise a dead end. */
+      @media print {
+        :root {
+          --bg: #ffffff;
+          --surface: #ffffff;
+          --surface-2: #ffffff;
+          --text: #000000;
+          --muted: #333333;
+          --line: #999999;
+          --accent: #000000;
+          --accent-soft: #ffffff;
+        }
+        body {
+          font-size: 11pt;
+          line-height: 1.5;
+        }
+        .top,
+        .switch,
+        .skip,
+        nav.toc {
+          display: none;
+        }
+        .wrap {
+          max-width: none;
+          padding: 0;
+        }
+        h1 {
+          margin-top: 0;
+        }
+        h2 {
+          margin-top: 20pt;
+          break-after: avoid;
+        }
+        .glance {
+          display: block;
+        }
+        .tile {
+          border: 0;
+          padding: 0;
+          margin-bottom: 8pt;
+        }
+        p,
+        li {
+          orphans: 3;
+          widows: 3;
+        }
+        .table-scroll,
+        table {
+          overflow: visible;
+          min-width: 0;
+          break-inside: auto;
+        }
+        tr {
+          break-inside: avoid;
+        }
+        a[href^="http"]::after {
+          content: " (" attr(href) ")";
+          font-size: 9pt;
+          color: #333;
+          word-break: break-all;
+        }
+      }
+    </style>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "PrivacyPolicy",
+        "name": "Masareef Privacy Policy",
+        "alternateName": "سياسة الخصوصية لتطبيق مصاريف",
+        "url": "https://vette1123.github.io/masareef-privacy/",
+        "inLanguage": ["en", "ar"],
+        "dateModified": "2026-07-27",
+        "about": {
+          "@type": "MobileApplication",
+          "name": "Masareef",
+          "alternateName": "مصاريف",
+          "applicationCategory": "FinanceApplication",
+          "operatingSystem": "Android",
+          "identifier": "com.mohamedgado.masareef"
+        },
+        "publisher": {
+          "@type": "Person",
+          "name": "Mohamed Gado",
+          "email": "boogado@yahoo.com"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content / تخطي إلى المحتوى</a>
+    <header class="top">
+      <div class="top-inner">
+        <span class="brand">
+          <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true">
+            <rect width="32" height="32" rx="8" fill="#0A1626" />
+            <path
+              d="M6 21.5 12 14l5 4.5L26 9"
+              stroke="#2DD4BF"
+              stroke-width="2.8"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          Masareef
+        </span>
+        <div class="switch" role="group" aria-label="Language / اللغة">
+          <button type="button" id="btn-en" aria-pressed="true" lang="en">English</button>
+          <button type="button" id="btn-ar" aria-pressed="false" lang="ar">العربية</button>
+        </div>
+      </div>
+    </header>
 
-  <h2>Contact</h2>
-  <p>Questions about this policy: <a href="mailto:boogado@yahoo.com">boogado@yahoo.com</a></p>
-</body>
+    <main class="wrap" id="main">
+      <!-- ================================ ENGLISH ================================ -->
+      <section id="doc-en" lang="en" dir="ltr">
+        <h1>Privacy Policy for Masareef</h1>
+        <p class="lede">
+          Masareef is a spending tracker that can read your bank's payment notifications on your
+          device, sort your money into wallets, budgets and insights, and find ATMs near you. This
+          page explains exactly what it stores, what it sends, and to whom.
+        </p>
+        <p class="meta">
+          Last updated: <b><time datetime="2026-07-27">27 July 2026</time></b> · Covers app version
+          <b>1.46.0</b> and later · Package <code>com.mohamedgado.masareef</code>
+        </p>
+
+        <div class="glance">
+          <div class="tile lead">
+            <h2>The short version</h2>
+            <p>
+              Masareef needs an account, so your transactions, wallets, budgets, categories and
+              bills are synced to our own server and stored there. Everything auto-track reads from
+              your notifications stays on your phone. No ads, no data selling, no third-party
+              advertising, and analytics never receive a single amount, merchant or balance.
+            </p>
+          </div>
+          <div class="tile">
+            <h2>Auto-track stays local</h2>
+            <p>
+              Notification text is parsed on your device. Drafts live in a local inbox and are never
+              uploaded, even while sync is running.
+            </p>
+          </div>
+          <div class="tile">
+            <h2>Location is optional</h2>
+            <p>
+              Requested only for Nearby ATMs and one-time country detection, only while the app is
+              open, never in the background.
+            </p>
+          </div>
+          <div class="tile">
+            <h2>No SMS, no call logs</h2>
+            <p>
+              The Google Play build does not declare or hold the SMS permission and cannot read your
+              messages or call history.
+            </p>
+          </div>
+          <div class="tile">
+            <h2>You can wipe it</h2>
+            <p>
+              Uninstalling clears everything stored on the device. Account deletion removes your
+              synced rows from our database.
+            </p>
+          </div>
+        </div>
+
+        <nav class="toc" aria-label="Contents">
+          <h2>Contents</h2>
+          <ol>
+            <li><a href="#en-1">Who we are and what this covers</a></li>
+            <li><a href="#en-2">Your account</a></li>
+            <li><a href="#en-3">What stays on your device</a></li>
+            <li><a href="#en-4">What syncs to our server</a></li>
+            <li><a href="#en-5">Auto-track and notification access</a></li>
+            <li><a href="#en-6">Typing, pasting and sharing a message</a></li>
+            <li><a href="#en-7">Location</a></li>
+            <li><a href="#en-8">Nearby ATMs and the map</a></li>
+            <li><a href="#en-9">Profile photo</a></li>
+            <li><a href="#en-10">Notifications and reminders</a></li>
+            <li><a href="#en-11">Exchange rates and Travel mode</a></li>
+            <li><a href="#en-12">Analytics and crash reporting</a></li>
+            <li><a href="#en-13">Exports, backups and restore</a></li>
+            <li><a href="#en-14">App updates, rating and sharing</a></li>
+            <li><a href="#en-15">Privacy features inside the app</a></li>
+            <li><a href="#en-16">Android permissions</a></li>
+            <li><a href="#en-17">How we secure data</a></li>
+            <li><a href="#en-18">Retention and deletion</a></li>
+            <li><a href="#en-19">Your rights</a></li>
+            <li><a href="#en-20">Children's privacy</a></li>
+            <li><a href="#en-21">Third-party services</a></li>
+            <li><a href="#en-22">Changes to this policy</a></li>
+            <li><a href="#en-23">Contact</a></li>
+          </ol>
+        </nav>
+
+        <h2 id="en-1">1. Who we are and what this covers</h2>
+        <p>
+          Masareef (<code>com.mohamedgado.masareef</code>) is built and operated by one person,
+          Mohamed Gado. This policy covers the Masareef Android app, any future iOS release, the
+          backend the app talks to (<code>masareef-server.vercel.app</code>), and this page itself.
+          The page sets no cookies and loads nothing from another host.
+        </p>
+        <p>
+          You can open this policy from inside the app at any time:
+          <strong>Settings, then Privacy policy</strong>. The in-app
+          <strong>How it works</strong> page describes the same behaviour in plain language.
+        </p>
+        <p>
+          One design rule drives everything below: <strong>the raw material stays local</strong>.
+          Your bank's notification text, the drafts parsed from it, and the diagnostics about that
+          parsing never leave your phone. What does leave is the finished record you kept, so your
+          own devices can agree on it.
+        </p>
+
+        <h2 id="en-2">2. Your account</h2>
+        <p>
+          Masareef requires an account, so signing in is not optional. You can sign up with an email
+          address and password, or sign in with Google. Authentication runs on our backend using
+          better-auth.
+        </p>
+        <p>Stored on our server for your account:</p>
+        <ul>
+          <li>Your display name and email address, and whether that email is verified.</li>
+          <li>
+            A one-way hash of your password (never the password itself). Google sign-in stores no
+            password at all.
+          </li>
+          <li>
+            Sessions: an opaque session token, creation and expiry times, and the user agent of the
+            device that signed in.
+          </li>
+          <li>
+            For Google sign-in: the account link Google gives us (a provider account id and the
+            tokens needed to verify it), plus the email, name and profile picture URL from your
+            Google profile. We never see your Google password.
+          </li>
+          <li>An optional profile photo, if you upload one (section 9).</li>
+        </ul>
+        <p>
+          Account emails (verify your address, reset your password) are sent through
+          <strong>Resend</strong>, which processes your email address to deliver them. We do not run
+          newsletters and do not send marketing email.
+        </p>
+
+        <h2 id="en-3">3. What stays on your device</h2>
+        <p>
+          The app keeps a local SQLite database, a key-value store (MMKV), an app-private files
+          directory, and an encrypted keystore (Android Keystore, through expo-secure-store) for
+          your session. The following lives in those and is <strong>never uploaded</strong>:
+        </p>
+        <ul>
+          <li>
+            <strong>Auto-track captures:</strong> the pending review inbox and the record of
+            already-handled messages, including the message text a capture came from.
+          </li>
+          <li>
+            <strong>Trusted senders</strong> you marked, and the auto-track diagnostics trace (a
+            redacted, truncated snippet per money-shaped message, so you can see what the reader
+            did).
+          </li>
+          <li>
+            <strong>Every setting:</strong> theme, language, currency, country, default wallet,
+            notification preferences, haptics, App Lock and its grace period, screen privacy, hidden
+            balance cards, dismissed hints.
+          </li>
+          <li><strong>Your last known coordinates</strong>, cached so the ATM screen need not ask again.</li>
+          <li><strong>Travel mode trips:</strong> trip name, country, currency and the rate you locked.</li>
+          <li>
+            <strong>Your profile photo's local copy</strong>, and the session cookie in the encrypted
+            store.
+          </li>
+          <li>
+            <strong>Everything derived:</strong> insights, subscription radar, duplicate-charge and
+            refund detection, price-creep and personal-inflation numbers, net worth and cash-flow
+            trends, safe-to-spend, no-spend streaks, Wrapped. All of it is computed on your device
+            from your local data. None of it is computed on a server.
+          </li>
+        </ul>
+
+        <h2 id="en-4">4. What syncs to our server</h2>
+        <p>
+          Because the app is account-based, the records you keep are synchronised so your phone, a
+          replacement phone, and a reinstall all see the same data. Sync is automatic and offline
+          first: it runs after sign-in, when the app comes to the foreground, and on a slow
+          background heartbeat while the app is open. There is no manual "sync now" button, and
+          conflicts resolve by last write wins.
+        </p>
+        <div class="table-scroll">
+          <table>
+            <caption>Data stored in our database, per signed-in account</caption>
+            <thead>
+              <tr>
+                <th scope="col">Record</th>
+                <th scope="col">What it contains</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Transactions</td>
+                <td>
+                  Amount, currency, type (expense, income, transfer), date and time, note, merchant
+                  name, category, wallet, and the balance a bank message reported, when there was
+                  one
+                </td>
+              </tr>
+              <tr>
+                <td>Wallets</td>
+                <td>Name, kind (cash, bank, card, wallet), currency, balance, archived flag</td>
+              </tr>
+              <tr>
+                <td>Categories</td>
+                <td>Name, icon, colour, type</td>
+              </tr>
+              <tr>
+                <td>Budgets</td>
+                <td>Category, period and the limit you set</td>
+              </tr>
+              <tr>
+                <td>Spend targets</td>
+                <td>The monthly "safe to spend" target you set, and its currency</td>
+              </tr>
+              <tr>
+                <td>Recurring items</td>
+                <td>Subscriptions and bills: name, amount, cadence, next due date, reminder setting</td>
+              </tr>
+              <tr>
+                <td>Planned items</td>
+                <td>Expected one-off income or expense, until you confirm or cancel it</td>
+              </tr>
+              <tr>
+                <td>Merchant rules</td>
+                <td>
+                  The merchant-to-category corrections you made, so categorisation learns from you
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          So yes: <strong>amounts and merchant names are stored on our server</strong>. Being
+          straight about that matters more than a nicer sentence. They are sent over TLS, scoped to
+          your user id, and held in a PostgreSQL database (Neon) reached through our Vercel backend.
+          They are never used for advertising, never sold, never shared with a data broker, and never
+          forwarded to the analytics services in section 12.
+        </p>
+        <div class="note">
+          <p>
+            <strong>Never synced, by design:</strong> auto-track captures and their message text,
+            trusted senders, the diagnostics trace, all app settings, your coordinates, and Travel
+            mode trips. Deleting a record in the app deletes it on the server too: the deletion
+            propagates as a tombstone on the next sync pass rather than lingering as a hidden row.
+          </p>
+        </div>
+
+        <h2 id="en-5">5. Auto-track and notification access</h2>
+        <p>
+          Auto-track is the feature that saves you daily typing: it reads incoming payment
+          notifications and turns them into transactions. It is enabled in Settings by default but
+          completely <strong>inert</strong> until you grant Android's notification-access special
+          permission yourself, in the system settings screen the app sends you to. Until then it
+          reads nothing.
+        </p>
+        <h3>What it does once you grant access</h3>
+        <ul>
+          <li>
+            <strong>An allowlist decides what is even looked at.</strong> A notification is
+            considered only when its sender or package matches a known bank, card issuer or payment
+            wallet, and it is dropped when it matches a denylist (promotions, one-time codes,
+            airtime top-ups). Notifications from chat apps, email, social apps and everything else
+            are never parsed. There is no "any message with a number in it" fallback: that fallback
+            existed once, leaked a non-bank message, and was removed.
+          </li>
+          <li>
+            <strong>Parsing happens entirely on your device.</strong> Amount, currency, direction,
+            merchant, card tail, timestamp and balance are extracted by code inside the app. The
+            message text is never sent anywhere.
+          </li>
+          <li>
+            <strong>The result is a draft in a local inbox.</strong> You review it and confirm, edit
+            or discard it. If you turn on auto-accept, high-confidence captures post themselves and
+            you get an optional confirmation notification. Senders you explicitly mark as trusted
+            post without review until you revoke that trust in Settings.
+          </li>
+          <li>
+            <strong>It survives the app being closed.</strong> A message that arrives while Masareef
+            is killed is written to a durable on-device spool first, then parsed by a background
+            task, so nothing is lost. The spool holds the message only until it has been handled.
+          </li>
+          <li>
+            <strong>Diagnostics are redacted.</strong> Settings has a diagnostics screen listing what
+            the reader did with each money-shaped message. Card numbers and similar identifiers are
+            masked, snippets are truncated, and messages that are not money-shaped are not logged at
+            all. It is a local log; it is never uploaded.
+          </li>
+        </ul>
+        <p>
+          Turning Auto-track off in Settings stops all of it, and revoking notification access in
+          Android settings stops it at the OS level. Neither affects the transactions you already
+          kept.
+        </p>
+        <div class="note">
+          <p>
+            <strong>SMS and call logs:</strong> the Google Play build of Masareef does not declare
+            <code>RECEIVE_SMS</code>, contains no SMS receiver, and cannot read your messages or call
+            history. Bank SMS is picked up only in the form Android shows it as a notification. A
+            separate sideload-only build behind a compile-time flag can read SMS directly; that build
+            is never published to Google Play.
+          </p>
+        </div>
+
+        <h2 id="en-6">6. Typing, pasting and sharing a message</h2>
+        <p>Three manual paths exist, and all three parse on the device:</p>
+        <ul>
+          <li>
+            <strong>Quick add:</strong> an optional persistent notification with a reply box, so you
+            can log an expense by typing one line. What you type becomes a local transaction.
+          </li>
+          <li>
+            <strong>Paste:</strong> you paste a bank message into the app and the same on-device
+            parser proposes a transaction.
+          </li>
+          <li>
+            <strong>Share into Masareef:</strong> you share a message's text from another app through
+            Android's share sheet. Masareef receives that text, parses it locally, and proposes a
+            draft. Nothing is uploaded by the act of sharing.
+          </li>
+        </ul>
+        <p>
+          A transaction you then save syncs like any other record (section 4). The original message
+          text does not.
+        </p>
+
+        <h2 id="en-7">7. Location</h2>
+        <p>
+          Location is <strong>optional</strong> and requested only while you are using the app. Two
+          features ask for it:
+        </p>
+        <ul>
+          <li>
+            <strong>Nearby ATMs:</strong> your coordinates are used to look up cash machines around
+            you.
+          </li>
+          <li>
+            <strong>Region and currency:</strong> once during setup, or when you tap it in Settings,
+            your coordinates are turned into a country and city name so the app can pick a sensible
+            currency and bank list. Only the resulting country, city and currency are saved; if you
+            picked a region by hand, GPS never overwrites it.
+          </li>
+        </ul>
+        <p>
+          Coordinates go to two places: our ATM endpoint (section 8) and
+          <strong>BigDataCloud</strong> for reverse geocoding into a place name. Your last
+          coordinates are cached on your device so the ATM screen does not have to ask again. There
+          is <strong>no background location</strong>, no location history, no movement profile, and
+          no advertising use.
+        </p>
+        <p>
+          Deny the permission and the app still works: pick your country by hand in Settings, and
+          search for ATMs at any pinned point on the map or by searching a city name (which is sent
+          to Open-Meteo's geocoding search as the text you typed).
+        </p>
+
+        <h2 id="en-8">8. Nearby ATMs and the map</h2>
+        <p>
+          The map is rendered natively with MapLibre using vector tiles from
+          <strong>OpenFreeMap</strong>. As with any map, the tile server sees the tiles your device
+          requests and its IP address. No account, no key and no identifier is attached to those
+          requests.
+        </p>
+        <p>ATM pins are fetched like this:</p>
+        <ul>
+          <li>
+            The app asks <strong>our own endpoint</strong> with a latitude, longitude and radius. That
+            endpoint requires no sign-in and receives nothing that identifies you or your money.
+          </li>
+          <li>
+            On a cache miss, the endpoint rounds the point into a <strong>coarse cell of roughly a
+            kilometre</strong> and queries commercial and open map sources with keys that stay on the
+            server: TomTom, Foursquare and Geoapify, with the public OpenStreetMap Overpass mirrors
+            as a keyless last resort. Only that coarse cell is cached, shared by everyone who looks
+            near the same place, so a repeat search hits our database and no upstream service at all.
+          </li>
+          <li>
+            If our backend is unreachable, the app queries the public
+            <strong>Overpass</strong> mirrors directly. In that fallback the mirror sees your
+            coordinates and your IP address, because it is answering your device directly.
+          </li>
+          <li>
+            Tapping <strong>Directions</strong> hands the ATM's coordinates to Google Maps or
+            whichever maps app you choose. That is a normal deep link, and Google's policy applies
+            from there.
+          </li>
+        </ul>
+        <p>Bank logos and pin artwork are bundled inside the app. No logo is fetched at runtime.</p>
+
+        <h2 id="en-9">9. Profile photo</h2>
+        <p>
+          A profile photo is optional. Masareef uses Android's system photo picker, so the app never
+          receives photo-library permission and never sees any image other than the one you pick. The
+          chosen image is copied into the app's private directory so it survives.
+        </p>
+        <p>
+          When you are signed in, that image is <strong>uploaded to our backend</strong> and stored
+          as a file on Vercel Blob, so the same avatar appears after a reinstall or on another
+          device. The stored URL is not guessable but it is not access-controlled either: treat it as
+          a photo published at an unlisted address, and do not use a picture you would not want at a
+          public URL. Clear the photo in the app to stop using it, and email us to have the stored
+          file deleted.
+        </p>
+
+        <h2 id="en-10">10. Notifications and reminders</h2>
+        <p>
+          Every notification Masareef shows is a <strong>local</strong> notification, scheduled and
+          fired on your device: budget alerts, the weekly or monthly spending digest, bill reminders
+          a few days before a recurring item is due, the weekly "count your cash" nudge, auto-track
+          confirmations, and the quick-add reply box.
+        </p>
+        <p>
+          There is <strong>no push server</strong>. The app never registers a push token, and nothing
+          about your spending is sent anywhere in order to produce a reminder. Push plumbing ships
+          inside the notification library we depend on, and we send no messages through it.
+        </p>
+
+        <h2 id="en-11">11. Exchange rates and Travel mode</h2>
+        <p>
+          Travel mode records a trip and converts spending in a foreign currency back to your home
+          currency. Trips are stored on your device only. To get a rate the app calls the public
+          <strong>ExchangeRate-API</strong> endpoint with a currency code and nothing else. No
+          amounts, no trip details and no identifiers are sent.
+        </p>
+
+        <h2 id="en-12">12. Analytics and crash reporting</h2>
+        <p>
+          To see which screens are actually used, whether sync and auto-track are working in the
+          field, and where the app crashes, Masareef sends usage events to
+          <strong>PostHog</strong> (EU region, <code>eu.i.posthog.com</code>) and performance data to
+          <strong>Expo EAS</strong> (Insights and Observe).
+        </p>
+        <h3>What is sent</h3>
+        <ul>
+          <li>
+            Event names from a fixed list defined in the app's source, for example
+            <code>screen_view</code>, <code>txn_added</code>, <code>sync_completed</code>,
+            <code>autotrack_toggled</code>, <code>capture_reviewed</code>, <code>atm_search</code>,
+            <code>theme_changed</code>, <code>app_lock_toggled</code>.
+          </li>
+          <li>
+            Low-cardinality properties beside the event: counts, enums, booleans, a currency or
+            country code, a reason code such as why a capture was held for review.
+          </li>
+          <li>
+            Technical context: app version, platform and OS version, device model, launch and
+            navigation timings, and whether an update was downloaded.
+          </li>
+          <li>
+            Errors: uncaught JavaScript exceptions and unhandled promise rejections, with stack
+            traces.
+          </li>
+          <li>
+            An identifier: while you are signed in, events are attached to your
+            <strong>account's random id</strong> so one person's events are not counted as many. That
+            id is the internal UUID from our auth system, <strong>never your email address</strong>.
+            The events are pseudonymous rather than anonymous, and we say so plainly.
+          </li>
+        </ul>
+        <h3>What is never sent</h3>
+        <ul>
+          <li>Any amount, balance, running total, merchant name or account number.</li>
+          <li>Any notification, SMS or pasted message text, and any parsed draft.</li>
+          <li>Your coordinates, your name, your email address, your contacts or your app list.</li>
+          <li>
+            No session replay, no screen recording, no keystroke capture, no console capture, no
+            advertising identifier, and no third-party advertising or attribution SDK. The app
+            contains none.
+          </li>
+        </ul>
+        <div class="note">
+          <p>
+            This version has no in-app switch to turn analytics off. If you want yours stopped or
+            deleted, email the address in section 23 and it will be done.
+          </p>
+        </div>
+
+        <h2 id="en-13">13. Exports, backups and restore</h2>
+        <p>
+          You can export your data as a file and restore from one. An export is written to the app's
+          own cache directory and handed to Android's share sheet, so the file goes
+          <strong>only where you send it</strong>: your drive, a chat, your file manager. We never
+          receive a copy, and after that the receiving app's privacy policy applies.
+        </p>
+        <p>
+          Restoring reads a file you pick with the system document picker and applies it on the
+          device. An export is deliberately unencrypted so you can read and restore it, which also
+          means it contains your financial detail in plain form. Keep it somewhere you trust.
+        </p>
+
+        <h2 id="en-14">14. App updates, rating and sharing</h2>
+        <ul>
+          <li>
+            <strong>Over-the-air updates:</strong> the app can fetch a JavaScript update from Expo's
+            update service. The request carries the app version, the release channel, the runtime
+            version and the platform. No personal or financial data is involved.
+          </li>
+          <li>
+            <strong>Store updates:</strong> when a new version is on Google Play, the app can show
+            Play's own in-app update prompt. That exchange is between your device and Google Play.
+          </li>
+          <li>
+            <strong>Rating:</strong> the rate row opens Google Play's rating dialog. We never see what
+            you type there beyond the public review anyone can read.
+          </li>
+          <li>
+            <strong>Sharing the app:</strong> the share sheet sends a Play Store link, as plain text,
+            to whoever you choose. Nothing about your data is attached.
+          </li>
+        </ul>
+
+        <h2 id="en-15">15. Privacy features inside the app</h2>
+        <ul>
+          <li>
+            <strong>App Lock:</strong> optional fingerprint, face or device-PIN gate on opening the
+            app, with a grace period you choose. The check is performed by Android; the app receives
+            a yes or no and never any biometric data. If a device cannot satisfy the lock any more,
+            the setting disables itself rather than locking you out.
+          </li>
+          <li>
+            <strong>Screen privacy:</strong> on by default. It blocks screenshots and screen
+            recording and blanks the app's preview in the recent-apps switcher, using Android's
+            secure-window flag. Turn it off in Settings if you need to take a screenshot.
+          </li>
+          <li>
+            <strong>Hide balances:</strong> mask every amount on the dashboard, or hide individual
+            money cards.
+          </li>
+          <li>
+            <strong>Session storage:</strong> your session lives in the encrypted keystore and is
+            excluded from Android's cloud backup, so it cannot travel to another device inside a
+            device backup.
+          </li>
+        </ul>
+
+        <h2 id="en-16">16. Android permissions</h2>
+        <div class="table-scroll">
+          <table>
+            <caption>Every permission the Google Play build declares, and why</caption>
+            <thead>
+              <tr>
+                <th scope="col">Permission</th>
+                <th scope="col">Asked?</th>
+                <th scope="col">Why</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Location, coarse and fine</td>
+                <td>Asked</td>
+                <td>Nearby ATMs, and detecting your country once. Foreground only</td>
+              </tr>
+              <tr>
+                <td>Notifications</td>
+                <td>Asked</td>
+                <td>Budget alerts, bill reminders, digests, auto-track confirmations, quick add</td>
+              </tr>
+              <tr>
+                <td>Notification access (special access)</td>
+                <td>Asked in system settings</td>
+                <td>Auto-track reading payment notifications. Inert until you grant it</td>
+              </tr>
+              <tr>
+                <td>Biometrics and fingerprint</td>
+                <td>Used on demand</td>
+                <td>App Lock. No biometric data reaches the app</td>
+              </tr>
+              <tr>
+                <td>Detect screen capture (Android 14 and later)</td>
+                <td>Automatic</td>
+                <td>
+                  Comes with the screen-privacy module. Required by the OS for the secure-window
+                  feature
+                </td>
+              </tr>
+              <tr>
+                <td>Internet, network state, Wi-Fi state</td>
+                <td>Automatic</td>
+                <td>Sync, maps, rates, analytics, and knowing when you are offline</td>
+              </tr>
+              <tr>
+                <td>Vibrate</td>
+                <td>Automatic</td>
+                <td>Haptic feedback, which you can switch off in Settings</td>
+              </tr>
+              <tr>
+                <td>Wake lock and foreground service</td>
+                <td>Automatic</td>
+                <td>Finishing a scheduled notification or a capture before the device sleeps</td>
+              </tr>
+              <tr>
+                <td>Run after restart</td>
+                <td>Automatic</td>
+                <td>Rescheduling your reminders after a reboot</td>
+              </tr>
+              <tr>
+                <td>Read storage (Android 12 and earlier)</td>
+                <td>Legacy</td>
+                <td>Old-Android file access inside libraries we depend on</td>
+              </tr>
+              <tr>
+                <td>Launcher badge permissions</td>
+                <td>Automatic</td>
+                <td>
+                  Drawing an unread count on the app icon on launchers that support it. Cosmetic only
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note">
+          <p>
+            That is the complete list. Masareef does not request SMS, call logs, contacts, camera,
+            microphone, photo or media library access, your installed-app list, background location,
+            or the ability to draw over other apps. Permissions that arrived through libraries and
+            were not actually used, including camera, microphone, media images and draw-over-apps,
+            are stripped from the manifest at build time rather than shipped and left unexplained.
+          </p>
+        </div>
+
+        <h2 id="en-17">17. How we secure data</h2>
+        <ul>
+          <li>
+            All network traffic uses <strong>HTTPS with certificate validation</strong>. The release
+            build permits no cleartext traffic.
+          </li>
+          <li>
+            On the device, your database, settings and files live in
+            <strong>app-private storage</strong> that Android isolates from other apps. Your session
+            token sits in the OS keystore.
+          </li>
+          <li>
+            On the server, passwords are stored only as one-way hashes by better-auth, every sync
+            query is scoped to your own user id, and the API keys for the map and place services stay
+            server side, never inside the app.
+          </li>
+          <li>
+            The message text that auto-track reads is the most sensitive material the app touches,
+            which is exactly why it never leaves the device and why the diagnostics log redacts it.
+          </li>
+          <li>
+            A file you export yourself is unencrypted by design, so its safety is in your hands
+            (section 13).
+          </li>
+        </ul>
+        <p>
+          No absolute guarantee is honest for any service. What we can say is that the categories of
+          data most likely to hurt you if leaked, message text and raw captures, are not in our
+          database at all. If you find a vulnerability, email us before disclosing it publicly.
+        </p>
+
+        <h2 id="en-18">18. Retention and deletion</h2>
+        <ul>
+          <li>
+            <strong>On-device data</strong> is kept until you delete it, uninstall the app, or clear
+            its storage in Android settings. Any of those removes it permanently, including the
+            capture inbox and the diagnostics log.
+          </li>
+          <li>
+            <strong>Synced records</strong> are kept while your account exists. Deleting a record in
+            the app deletes it on the server on the next sync pass.
+          </li>
+          <li>
+            <strong>Your account</strong> and everything synced under it are deleted on request,
+            within 30 days. See the
+            <a href="./delete-account.html">account deletion page</a>.
+          </li>
+          <li>
+            <strong>Analytics events</strong> are held by PostHog and Expo under their own retention
+            windows, keyed to the random account id described in section 12, and deleted on request.
+          </li>
+          <li>
+            <strong>The ATM cache</strong> on our server holds map data for coarse geographic cells.
+            It contains no user id and nothing personal, so there is nothing in it to delete.
+          </li>
+        </ul>
+
+        <h2 id="en-19">19. Your rights</h2>
+        <p>
+          If you are in the EU, the UK, or California, you have rights of access, correction,
+          deletion, portability and objection. In practice:
+        </p>
+        <ul>
+          <li>
+            Ask us and you get a copy of the rows stored under your account, or their deletion.
+          </li>
+          <li>
+            Most of what the app knows about you never reaches us at all, so you can inspect and
+            delete it yourself, on the device.
+          </li>
+          <li>
+            We do not sell your personal information, do not share it for advertising, and do not
+            build advertising or credit profiles from it.
+          </li>
+          <li>
+            Legal bases: performing the service you asked for (your account and sync), your consent
+            (location, notification access, notifications, uploading a photo), and legitimate
+            interests (keeping the app working, fixing crashes, preventing abuse), which is where the
+            pseudonymous analytics in section 12 sit.
+          </li>
+        </ul>
+
+        <h2 id="en-20">20. Children's privacy</h2>
+        <p>
+          Masareef is a personal finance app intended for adults. It is not directed at children
+          under 13, and we do not knowingly collect their data. If you believe a child created an
+          account, email us and it will be deleted.
+        </p>
+
+        <h2 id="en-21">21. Third-party services</h2>
+        <p>
+          These are every outside party involved, and the ones your device contacts directly are
+          marked as such:
+        </p>
+        <ul>
+          <li>
+            <a href="https://vercel.com/legal/privacy-policy" rel="noopener">Vercel</a> hosts our
+            backend and stores uploaded profile photos on Vercel Blob (device contacts it)
+          </li>
+          <li>
+            <a href="https://neon.com/privacy-policy" rel="noopener">Neon</a> hosts the PostgreSQL
+            database behind our backend (server side only)
+          </li>
+          <li>
+            <a href="https://resend.com/legal/privacy-policy" rel="noopener">Resend</a> delivers
+            account emails (server side only)
+          </li>
+          <li>
+            <a href="https://policies.google.com/privacy" rel="noopener">Google</a> for optional
+            Google sign-in, Google Play distribution and updates, and Maps directions when you tap
+            them (device contacts it)
+          </li>
+          <li>
+            <a href="https://posthog.com/privacy" rel="noopener">PostHog</a> for usage analytics and
+            error tracking, EU region (device contacts it)
+          </li>
+          <li>
+            <a href="https://expo.dev/privacy" rel="noopener">Expo</a> for over-the-air updates and
+            performance metrics (device contacts it)
+          </li>
+          <li>
+            <a href="https://openfreemap.org/" rel="noopener">OpenFreeMap</a> for map tiles, built on
+            <a href="https://osmfoundation.org/wiki/Privacy_Policy" rel="noopener">OpenStreetMap</a>
+            data (device contacts it)
+          </li>
+          <li>
+            <a href="https://wiki.openstreetmap.org/wiki/Overpass_API" rel="noopener">Overpass API</a>
+            mirrors for ATM data as a keyless fallback (device contacts them only when our backend is
+            unreachable)
+          </li>
+          <li>
+            <a href="https://www.tomtom.com/privacy/" rel="noopener">TomTom</a>,
+            <a href="https://legal.foursquare.com/privacy/" rel="noopener">Foursquare</a> and
+            <a href="https://www.geoapify.com/privacy-policy/" rel="noopener">Geoapify</a> for ATM and
+            place data (server side only, queried with a coarse location cell)
+          </li>
+          <li>
+            <a href="https://www.bigdatacloud.com/privacy-and-cookie-policy" rel="noopener"
+              >BigDataCloud</a
+            >
+            turns coordinates into a country and city name (device contacts it, only with your
+            permission)
+          </li>
+          <li>
+            <a href="https://open-meteo.com/en/terms" rel="noopener">Open-Meteo</a> for city search by
+            name (device contacts it, sends the text you typed)
+          </li>
+          <li>
+            <a href="https://www.exchangerate-api.com/terms" rel="noopener">ExchangeRate-API</a> for
+            currency rates (device contacts it, sends a currency code)
+          </li>
+        </ul>
+        <p>
+          There is no advertising network, no attribution SDK and no data broker in this list, and
+          none in the app.
+        </p>
+
+        <h2 id="en-22">22. Changes to this policy</h2>
+        <p>
+          We update this page whenever a feature or a data flow changes. The date at the top reflects
+          the current version, the full history is public in this page's GitHub repository, and
+          material changes are called out in the app's release notes.
+        </p>
+
+        <h2 id="en-23">23. Contact</h2>
+        <div class="contact">
+          <p>
+            For any privacy question, a copy of your data, or a deletion request:
+            <a href="mailto:boogado@yahoo.com">boogado@yahoo.com</a>
+          </p>
+          <p>
+            Deleting your account: <a href="./delete-account.html">how to request deletion</a>
+          </p>
+          <p>Developer: Mohamed Gado · App: Masareef (<code>com.mohamedgado.masareef</code>)</p>
+        </div>
+
+        <footer class="page">
+          <p>
+            This page is static and hosted on GitHub Pages. It sets no cookies, runs no analytics,
+            and loads no fonts or scripts from other servers.
+          </p>
+        </footer>
+      </section>
+
+      <!-- ================================ ARABIC ================================ -->
+      <section id="doc-ar" lang="ar" dir="rtl" class="lang-hidden">
+        <h1>سياسة الخصوصية لتطبيق مصاريف</h1>
+        <p class="lede">
+          مصاريف تطبيق لتتبّع المصروفات، يقرأ إشعارات المدفوعات من بنكك على جهازك، ويرتّب أموالك في
+          محافظ وميزانيات وتحليلات، ويجد ماكينات الصرف القريبة منك. هذه الصفحة توضّح بدقة ما يخزّنه
+          التطبيق، وما يرسله، وإلى مَن.
+        </p>
+        <p class="meta">
+          آخر تحديث: <b><time datetime="2026-07-27">٢٧ يوليو ٢٠٢٦</time></b> · تغطي الإصدار
+          <b>1.46.0</b> وما بعده · معرّف الحزمة <code>com.mohamedgado.masareef</code>
+        </p>
+
+        <div class="glance">
+          <div class="tile lead">
+            <h2>باختصار</h2>
+            <p>
+              مصاريف يتطلّب حسابًا، لذلك تُزامَن معاملاتك ومحافظك وميزانياتك وفئاتك وفواتيرك مع
+              خادمنا وتُخزَّن عليه. أما كل ما يقرأه التتبّع التلقائي من إشعاراتك فيبقى على هاتفك. لا
+              إعلانات، ولا بيع بيانات، ولا أي شبكة إعلانية، وقياسات الاستخدام لا تستلم أي مبلغ أو اسم
+              تاجر أو رصيد.
+            </p>
+          </div>
+          <div class="tile">
+            <h2>التتبّع التلقائي محلي</h2>
+            <p>
+              نص الإشعار يُحلَّل على جهازك، والمسوّدات تبقى في صندوق مراجعة محلي ولا تُرفع أبدًا، حتى
+              أثناء المزامنة.
+            </p>
+          </div>
+          <div class="tile">
+            <h2>الموقع اختياري</h2>
+            <p>
+              يُطلب فقط لماكينات الصرف القريبة وتحديد دولتك مرة واحدة، وفقط أثناء استخدام التطبيق،
+              وأبدًا في الخلفية.
+            </p>
+          </div>
+          <div class="tile">
+            <h2>لا رسائل ولا سجل مكالمات</h2>
+            <p>
+              نسخة جوجل بلاي لا تُعلن إذن الرسائل ولا تملكه، ولا يمكنها قراءة رسائلك أو سجل مكالماتك.
+            </p>
+          </div>
+          <div class="tile">
+            <h2>يمكنك محو كل شيء</h2>
+            <p>
+              حذف التطبيق يمحو كل ما خُزِّن على الجهاز، وحذف الحساب يمسح صفوفك المزامَنة من قاعدة
+              بياناتنا.
+            </p>
+          </div>
+        </div>
+
+        <nav class="toc" aria-label="محتويات الصفحة">
+          <h2>المحتويات</h2>
+          <ol>
+            <li><a href="#ar-1">من نحن ونطاق السياسة</a></li>
+            <li><a href="#ar-2">حسابك</a></li>
+            <li><a href="#ar-3">ما يبقى على جهازك</a></li>
+            <li><a href="#ar-4">ما يُزامَن مع خادمنا</a></li>
+            <li><a href="#ar-5">التتبّع التلقائي والوصول للإشعارات</a></li>
+            <li><a href="#ar-6">الكتابة واللصق والمشاركة</a></li>
+            <li><a href="#ar-7">الموقع</a></li>
+            <li><a href="#ar-8">ماكينات الصرف والخريطة</a></li>
+            <li><a href="#ar-9">صورة الملف الشخصي</a></li>
+            <li><a href="#ar-10">الإشعارات والتنبيهات</a></li>
+            <li><a href="#ar-11">أسعار الصرف ووضع السفر</a></li>
+            <li><a href="#ar-12">قياسات الاستخدام وتقارير الأعطال</a></li>
+            <li><a href="#ar-13">التصدير والنسخ الاحتياطي والاستعادة</a></li>
+            <li><a href="#ar-14">التحديثات والتقييم والمشاركة</a></li>
+            <li><a href="#ar-15">ميزات الخصوصية داخل التطبيق</a></li>
+            <li><a href="#ar-16">أذونات أندرويد</a></li>
+            <li><a href="#ar-17">تأمين البيانات</a></li>
+            <li><a href="#ar-18">الاحتفاظ بالبيانات وحذفها</a></li>
+            <li><a href="#ar-19">حقوقك</a></li>
+            <li><a href="#ar-20">خصوصية الأطفال</a></li>
+            <li><a href="#ar-21">خدمات الغير</a></li>
+            <li><a href="#ar-22">تعديلات السياسة</a></li>
+            <li><a href="#ar-23">التواصل</a></li>
+          </ol>
+        </nav>
+
+        <h2 id="ar-1">١. من نحن ونطاق السياسة</h2>
+        <p>
+          مصاريف (<code>com.mohamedgado.masareef</code>) يطوّره ويشغّله فرد واحد: محمد جادو. تغطي هذه
+          السياسة تطبيق مصاريف على أندرويد، وأي إصدار مستقبلي على iOS، والخادم الذي يتصل به التطبيق
+          (<code>masareef-server.vercel.app</code>)، وتغطي كذلك هذه الصفحة نفسها. الصفحة لا تضع كوكيز
+          ولا تحمّل أي ملف من خادم آخر.
+        </p>
+        <p>
+          يمكنك فتح هذه السياسة من داخل التطبيق في أي وقت: <strong>الإعدادات ← سياسة الخصوصية</strong>.
+          وصفحة <strong>كيف يعمل التطبيق</strong> بالداخل تشرح نفس السلوك بلغة مبسّطة.
+        </p>
+        <p>
+          قاعدة واحدة تحكم كل ما يأتي بعدها: <strong>المادة الخام تبقى محليًا</strong>. نص إشعار بنكك،
+          والمسوّدات المستخرَجة منه، وسجل تشخيص هذا التحليل، لا تغادر هاتفك. الذي يغادر هو السجل
+          النهائي الذي احتفظتَ به أنت، حتى تتفق عليه أجهزتك.
+        </p>
+
+        <h2 id="ar-2">٢. حسابك</h2>
+        <p>
+          مصاريف يتطلّب حسابًا، فتسجيل الدخول ليس اختياريًا. يمكنك التسجيل ببريد إلكتروني وكلمة مرور،
+          أو الدخول بحساب جوجل. المصادقة تعمل على خادمنا عبر better-auth.
+        </p>
+        <p>ما يُخزَّن على خادمنا لحسابك:</p>
+        <ul>
+          <li>اسم العرض وبريدك الإلكتروني، وما إذا كان البريد مُوثَّقًا.</li>
+          <li>
+            بصمة أحادية الاتجاه (hash) لكلمة المرور، وليس كلمة المرور نفسها. والدخول بجوجل لا يخزّن
+            كلمة مرور من الأصل.
+          </li>
+          <li>
+            الجلسات: رمز جلسة غير مقروء، ووقت الإنشاء والانتهاء، ومعرّف عميل الجهاز الذي سجّل الدخول.
+          </li>
+          <li>
+            في حالة الدخول بجوجل: رابط الحساب الذي تمنحه جوجل (معرّف الحساب لدى المزوّد والرموز
+            اللازمة للتحقق)، مع البريد والاسم ورابط صورة الملف الشخصي من حسابك في جوجل. نحن لا نرى
+            كلمة مرور جوجل إطلاقًا.
+          </li>
+          <li>صورة ملف شخصي اختيارية إن رفعتَها (القسم ٩).</li>
+        </ul>
+        <p>
+          رسائل الحساب (توثيق البريد، إعادة تعيين كلمة المرور) تُرسل عبر <strong>Resend</strong>، وهي
+          تعالج بريدك الإلكتروني لتوصيلها. لا نرسل قوائم بريدية ولا رسائل تسويقية.
+        </p>
+
+        <h2 id="ar-3">٣. ما يبقى على جهازك</h2>
+        <p>
+          يحفظ التطبيق قاعدة بيانات SQLite محلية، ومخزن مفاتيح وقيم (MMKV)، ومجلد ملفات خاصًا
+          بالتطبيق، ومخزنًا مشفّرًا (Android Keystore عبر expo-secure-store) لجلستك. ما يلي يوجد في
+          هذه المخازن و<strong>لا يُرفع أبدًا</strong>:
+        </p>
+        <ul>
+          <li>
+            <strong>عناصر التتبّع التلقائي:</strong> صندوق المراجعة المعلّق وسجل الرسائل التي جرى
+            التعامل معها، بما في ذلك نص الرسالة التي جاء منها العنصر.
+          </li>
+          <li>
+            <strong>المرسِلون الموثوقون</strong> الذين اخترتهم، وسجل تشخيص التتبّع التلقائي (مقتطف
+            مُنقّح ومقتصر لكل رسالة ذات شكل مالي، لتعرف ما فعله القارئ).
+          </li>
+          <li>
+            <strong>كل الإعدادات:</strong> السمة، اللغة، العملة، الدولة، المحفظة الافتراضية، تفضيلات
+            الإشعارات، الاهتزاز، قفل التطبيق ومدة السماح، خصوصية الشاشة، البطاقات المخفية، التلميحات
+            المستبعدة.
+          </li>
+          <li><strong>آخر إحداثيات معروفة</strong>، محفوظة كي لا تسأل شاشة ماكينات الصرف مرة أخرى.</li>
+          <li><strong>رحلات وضع السفر:</strong> اسم الرحلة والدولة والعملة وسعر الصرف الذي ثبّتَه.</li>
+          <li>
+            <strong>النسخة المحلية من صورتك الشخصية</strong>، وكوكي الجلسة في المخزن المشفّر.
+          </li>
+          <li>
+            <strong>كل ما هو مُستخرَج بالحساب:</strong> التحليلات، ورادار الاشتراكات، وكشف الخصم
+            المزدوج والمبالغ المرتجعة، وأرقام زحف الأسعار والتضخّم الشخصي، واتجاه الثروة والتدفّق
+            النقدي، وحد الإنفاق الآمن، وسلاسل الأيام بلا إنفاق، والملخّص السنوي. كل ذلك يُحسب على
+            جهازك من بياناتك المحلية، ولا يُحسب على أي خادم.
+          </li>
+        </ul>
+
+        <h2 id="ar-4">٤. ما يُزامَن مع خادمنا</h2>
+        <p>
+          لأن التطبيق قائم على حساب، تُزامَن السجلات التي تحتفظ بها كي يرى هاتفك، وهاتفك البديل،
+          وإعادة التثبيت، البيانات نفسها. المزامنة تلقائية وتعمل بمنطق «الجهاز أولًا»: تجري بعد تسجيل
+          الدخول، وعند عودة التطبيق للمقدمة، وعلى نبضة خلفية بطيئة أثناء فتح التطبيق. لا يوجد زر
+          «زامِن الآن»، والتعارضات تُحسم بمبدأ «آخر كتابة تفوز».
+        </p>
+        <div class="table-scroll">
+          <table>
+            <caption>البيانات المخزّنة في قاعدة بياناتنا، لكل حساب مسجّل</caption>
+            <thead>
+              <tr>
+                <th scope="col">السجل</th>
+                <th scope="col">ما يحتويه</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>المعاملات</td>
+                <td>
+                  المبلغ والعملة والنوع (مصروف، دخل، تحويل) والتاريخ والوقت والملاحظة واسم التاجر
+                  والفئة والمحفظة، والرصيد الذي ذكرته رسالة البنك إن وُجد
+                </td>
+              </tr>
+              <tr>
+                <td>المحافظ</td>
+                <td>الاسم والنوع (نقدي، بنك، بطاقة، محفظة) والعملة والرصيد وحالة الأرشفة</td>
+              </tr>
+              <tr>
+                <td>الفئات</td>
+                <td>الاسم والأيقونة واللون والنوع</td>
+              </tr>
+              <tr>
+                <td>الميزانيات</td>
+                <td>الفئة والمدة والحد الذي ضبطتَه</td>
+              </tr>
+              <tr>
+                <td>حدود الإنفاق</td>
+                <td>هدف «الإنفاق الآمن» الشهري الذي ضبطتَه وعملته</td>
+              </tr>
+              <tr>
+                <td>العناصر المتكرّرة</td>
+                <td>الاشتراكات والفواتير: الاسم والمبلغ والدورية وتاريخ الاستحقاق القادم والتنبيه</td>
+              </tr>
+              <tr>
+                <td>العناصر المتوقّعة</td>
+                <td>دخل أو مصروف لمرة واحدة متوقّع، حتى تؤكّده أو تلغيه</td>
+              </tr>
+              <tr>
+                <td>قواعد التجّار</td>
+                <td>تصحيحاتك لربط تاجر بفئة، حتى يتعلّم التصنيف منك</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          إذن نعم: <strong>المبالغ وأسماء التجّار تُخزَّن على خادمنا</strong>. الصراحة في هذه الجزئية
+          أهم من جملة ألطف. تُرسل عبر TLS، ومحصورة بمعرّف المستخدم الخاص بك، ومحفوظة في قاعدة بيانات
+          PostgreSQL (Neon) يجري الوصول إليها عبر خادمنا على Vercel. لا تُستخدم للإعلانات، ولا تُباع،
+          ولا تُشارَك مع أي وسيط بيانات، ولا تُمرَّر إلى خدمات القياس في القسم ١٢.
+        </p>
+        <div class="note">
+          <p>
+            <strong>ما لا يُزامَن أبدًا بحكم التصميم:</strong> عناصر التتبّع التلقائي ونصوص رسائلها،
+            والمرسِلون الموثوقون، وسجل التشخيص، وكل إعدادات التطبيق، وإحداثياتك، ورحلات وضع السفر. وحذف
+            سجل داخل التطبيق يحذفه على الخادم أيضًا: ينتقل الحذف كعلامة قبر في أول دورة مزامنة، ولا
+            يبقى صفًّا مخفيًا.
+          </p>
+        </div>
+
+        <h2 id="ar-5">٥. التتبّع التلقائي والوصول للإشعارات</h2>
+        <p>
+          التتبّع التلقائي هو الميزة التي توفّر عليك الإدخال اليومي: يقرأ إشعارات المدفوعات الواردة
+          ويحوّلها إلى معاملات. وهو مفعّل في الإعدادات افتراضيًا، لكنه <strong>خامل تمامًا</strong> حتى
+          تمنح بنفسك إذن الوصول للإشعارات من شاشة إعدادات النظام التي يوجّهك التطبيق إليها. قبل ذلك لا
+          يقرأ شيئًا.
+        </p>
+        <h3>ماذا يفعل بعد منح الإذن</h3>
+        <ul>
+          <li>
+            <strong>قائمة سماح تحدّد ما يُنظر إليه أصلًا.</strong> لا يُفحص الإشعار إلا إذا طابق
+            مُرسِله أو حزمته بنكًا معروفًا أو مُصدِر بطاقة أو محفظة دفع، ويُستبعد إذا طابق قائمة منع
+            (العروض الترويجية، رموز التحقق، شحن الرصيد). إشعارات تطبيقات المحادثة والبريد والتطبيقات
+            الاجتماعية وكل ما عداها لا تُحلَّل أبدًا. ولا يوجد بديل من نوع «أي رسالة فيها رقم»: هذا
+            البديل كان موجودًا مرة، وسرّب رسالة غير بنكية، فأُزيل.
+          </li>
+          <li>
+            <strong>التحليل يجري بالكامل على جهازك.</strong> المبلغ والعملة والاتجاه واسم التاجر
+            وآخر أرقام البطاقة والوقت والرصيد تُستخرج بكود داخل التطبيق. نص الرسالة لا يُرسل إلى أي
+            مكان.
+          </li>
+          <li>
+            <strong>الناتج مسوّدة في صندوق محلي.</strong> تراجعها فتؤكّدها أو تعدّلها أو تحذفها. وإن
+            فعّلتَ القبول التلقائي، تُسجَّل العناصر عالية الثقة وحدها مع إشعار تأكيد اختياري.
+            والمرسِلون الذين تعلّمهم كموثوقين يسجّلون بلا مراجعة حتى تسحب هذه الثقة من الإعدادات.
+          </li>
+          <li>
+            <strong>يعمل حتى لو أُغلق التطبيق.</strong> الرسالة التي تصل ومصاريف مُغلَق تُكتب أولًا في
+            مخزن دائم على الجهاز، ثم تحلّلها مهمة خلفية، فلا يُفقد شيء. ويحتفظ المخزن بالرسالة فقط
+            حتى يتم التعامل معها.
+          </li>
+          <li>
+            <strong>التشخيص مُنقّح.</strong> في الإعدادات شاشة تشخيص تسرد ما فعله القارئ بكل رسالة ذات
+            شكل مالي. أرقام البطاقات والمعرّفات المشابهة مُقنّعة، والمقتطفات مقتصرة، والرسائل غير
+            المالية لا تُسجَّل من الأصل. وهو سجل محلي لا يُرفع أبدًا.
+          </li>
+        </ul>
+        <p>
+          إيقاف التتبّع التلقائي من الإعدادات يوقف كل ذلك، وسحب إذن الإشعارات من إعدادات أندرويد
+          يوقفه على مستوى النظام. وأيٌّ منهما لا يمسّ المعاملات التي احتفظتَ بها.
+        </p>
+        <div class="note">
+          <p>
+            <strong>الرسائل النصية وسجل المكالمات:</strong> نسخة جوجل بلاي من مصاريف لا تُعلن إذن
+            <code>RECEIVE_SMS</code>، ولا تحتوي أي مستقبِل رسائل، ولا تستطيع قراءة رسائلك أو سجل
+            مكالماتك. رسائل البنك تُلتقط فقط بالشكل الذي يعرضه أندرويد كإشعار. وتوجد نسخة تُثبَّت
+            يدويًا خلف مفتاح في وقت البناء تستطيع قراءة الرسائل مباشرة، وهذه النسخة لا تُنشر على جوجل
+            بلاي أبدًا.
+          </p>
+        </div>
+
+        <h2 id="ar-6">٦. الكتابة واللصق والمشاركة</h2>
+        <p>توجد ثلاثة مسارات يدوية، وكلها تُحلَّل على الجهاز:</p>
+        <ul>
+          <li>
+            <strong>الإضافة السريعة:</strong> إشعار ثابت اختياري فيه مربع رد، لتسجيل مصروف بسطر واحد.
+            وما تكتبه يصبح معاملة محلية.
+          </li>
+          <li>
+            <strong>اللصق:</strong> تلصق رسالة بنكية في التطبيق، فيقترح المحلّل نفسه على الجهاز معاملة.
+          </li>
+          <li>
+            <strong>المشاركة إلى مصاريف:</strong> تشارك نص رسالة من تطبيق آخر عبر قائمة المشاركة في
+            أندرويد. يستلم مصاريف النص ويحلّله محليًا ويقترح مسوّدة. ولا يُرفع أي شيء بمجرد المشاركة.
+          </li>
+        </ul>
+        <p>
+          المعاملة التي تحفظها بعد ذلك تُزامَن مثل أي سجل آخر (القسم ٤). أما نص الرسالة الأصلي فلا.
+        </p>
+
+        <h2 id="ar-7">٧. الموقع</h2>
+        <p>
+          إذن الموقع <strong>اختياري</strong> ويُطلب فقط أثناء استخدامك للتطبيق، وميزتان تطلبانه:
+        </p>
+        <ul>
+          <li><strong>ماكينات الصرف القريبة:</strong> تُستخدم إحداثياتك للبحث عن ماكينات حولك.</li>
+          <li>
+            <strong>المنطقة والعملة:</strong> مرة واحدة في التهيئة، أو عند طلبك من الإعدادات، تُحوَّل
+            إحداثياتك إلى اسم دولة ومدينة ليختار التطبيق عملة وقائمة بنوك مناسبة. ولا يُحفظ سوى
+            الدولة والمدينة والعملة الناتجة، وإن اخترت المنطقة يدويًا فلن يستبدلها الـ GPS.
+          </li>
+        </ul>
+        <p>
+          تذهب الإحداثيات إلى جهتين: نقطة نهاية ماكينات الصرف الخاصة بنا (القسم ٨)، و
+          <strong>BigDataCloud</strong> لتحويلها إلى اسم مكان. وتُحفظ آخر إحداثيات على جهازك كي لا
+          تسأل شاشة الماكينات مرة أخرى. <strong>لا يوجد تتبّع موقع في الخلفية</strong>، ولا سجل
+          مواقع، ولا ملف تحرّكات، ولا أي استخدام إعلاني.
+        </p>
+        <p>
+          وإن رفضت الإذن يعمل التطبيق كاملًا: اختر دولتك يدويًا من الإعدادات، وابحث عن الماكينات عند
+          أي نقطة تثبّتها على الخريطة، أو بالبحث باسم مدينة (يُرسل النص الذي كتبته إلى خدمة البحث
+          الجغرافي في Open-Meteo).
+        </p>
+
+        <h2 id="ar-8">٨. ماكينات الصرف والخريطة</h2>
+        <p>
+          تُرسم الخريطة أصليًا عبر MapLibre ببلاطات متجهية من <strong>OpenFreeMap</strong>. وكما في أي
+          خريطة، يرى خادم البلاطات ما يطلبه جهازك وعنوان الـ IP الخاص به. ولا يُرفق بهذه الطلبات أي
+          حساب أو مفتاح أو معرّف.
+        </p>
+        <p>وتُجلب نقاط الماكينات هكذا:</p>
+        <ul>
+          <li>
+            يسأل التطبيق <strong>نقطة النهاية الخاصة بنا</strong> بخط عرض وخط طول ونطاق. وهذه النقطة
+            لا تتطلّب تسجيل دخول، ولا تستلم ما يعرّفك أو يعرّف أموالك.
+          </li>
+          <li>
+            وعند عدم وجود نسخة مخزّنة، تُقرِّب النقطة إلى <strong>خلية خشنة بحدود كيلومتر</strong>، ثم
+            تسأل مصادر خرائط تجارية ومفتوحة بمفاتيح تبقى على الخادم: TomTom وFoursquare وGeoapify،
+            وتُستخدم مرايا Overpass العامة (OpenStreetMap) كملاذ أخير بلا مفاتيح. ولا يُخزَّن سوى تلك
+            الخلية الخشنة، مشتركة بين كل من يبحث قرب المكان نفسه، فيُخدَم البحث المتكرّر من قاعدة
+            بياناتنا دون أي طلب خارجي.
+          </li>
+          <li>
+            وإن كان خادمنا غير متاح، يسأل التطبيق مرايا <strong>Overpass</strong> العامة مباشرة. في
+            هذا البديل ترى المرآة إحداثياتك وعنوان الـ IP، لأنها تجيب جهازك مباشرة.
+          </li>
+          <li>
+            وعند الضغط على <strong>الاتجاهات</strong> تُسلَّم إحداثيات الماكينة إلى خرائط جوجل أو أي
+            تطبيق خرائط تختاره. وهذا رابط عادي، وتنطبق سياسة جوجل من تلك اللحظة.
+          </li>
+        </ul>
+        <p>شعارات البنوك وصور النقاط مُضمَّنة داخل التطبيق، ولا يُجلب أي شعار من الشبكة.</p>
+
+        <h2 id="ar-9">٩. صورة الملف الشخصي</h2>
+        <p>
+          صورة الملف الشخصي اختيارية. يستخدم مصاريف منتقي الصور في نظام أندرويد، فلا يحصل التطبيق على
+          إذن مكتبة الصور ولا يرى أي صورة غير التي اخترتها. وتُنسخ الصورة المختارة إلى مجلد التطبيق
+          الخاص لتبقى.
+        </p>
+        <p>
+          وأثناء تسجيل دخولك، <strong>تُرفع الصورة إلى خادمنا</strong> وتُخزَّن كملف على Vercel Blob،
+          لتظهر الصورة نفسها بعد إعادة التثبيت أو على جهاز آخر. الرابط المخزَّن لا يمكن تخمينه، لكنه
+          غير محمي بصلاحية أيضًا: اعتبرها صورة منشورة على عنوان غير معلن، ولا تستخدم صورة تكره وجودها
+          على رابط عام. امسح الصورة من التطبيق للتوقّف عن استخدامها، وراسلنا لحذف الملف المخزَّن.
+        </p>
+
+        <h2 id="ar-10">١٠. الإشعارات والتنبيهات</h2>
+        <p>
+          كل إشعار يعرضه مصاريف هو إشعار <strong>محلي</strong> يُجدَّل ويُطلق على جهازك: تنبيهات
+          الميزانية، والملخّص الأسبوعي أو الشهري، وتنبيه الفاتورة قبل استحقاقها بأيام، وتذكير «اعدد
+          النقد» الأسبوعي، وتأكيدات التتبّع التلقائي، ومربع الإضافة السريعة.
+        </p>
+        <p>
+          <strong>لا يوجد خادم إشعارات دفع</strong>. التطبيق لا يسجّل رمز دفع (push token) أبدًا، ولا
+          يُرسل أي شيء عن إنفاقك إلى أي مكان من أجل إنتاج تنبيه. وبنية الدفع تأتي داخل مكتبة الإشعارات
+          التي نعتمد عليها، ونحن لا نرسل أي رسالة عبرها.
+        </p>
+
+        <h2 id="ar-11">١١. أسعار الصرف ووضع السفر</h2>
+        <p>
+          يسجّل وضع السفر رحلة ويحوّل الإنفاق بعملة أجنبية إلى عملتك الأساسية. والرحلات محفوظة على
+          جهازك فقط. ولجلب السعر يستدعي التطبيق نقطة <strong>ExchangeRate-API</strong> العامة برمز
+          عملة ولا شيء غيره. لا مبالغ، ولا تفاصيل رحلة، ولا معرّفات.
+        </p>
+
+        <h2 id="ar-12">١٢. قياسات الاستخدام وتقارير الأعطال</h2>
+        <p>
+          لمعرفة الشاشات المستخدمة فعلًا، وهل تعمل المزامنة والتتبّع التلقائي على أجهزة الناس، وأين
+          يتعطّل التطبيق، يرسل مصاريف أحداث استخدام إلى <strong>PostHog</strong> (منطقة الاتحاد
+          الأوروبي، <code>eu.i.posthog.com</code>) وبيانات أداء إلى <strong>Expo EAS</strong>
+          (Insights وObserve).
+        </p>
+        <h3>ما يُرسل</h3>
+        <ul>
+          <li>
+            أسماء أحداث من قائمة ثابتة معرّفة في كود التطبيق، مثل <code>screen_view</code> و
+            <code>txn_added</code> و <code>sync_completed</code> و <code>autotrack_toggled</code> و
+            <code>capture_reviewed</code> و <code>atm_search</code> و <code>theme_changed</code> و
+            <code>app_lock_toggled</code>.
+          </li>
+          <li>
+            خصائص منخفضة التنوّع مع الحدث: أعداد، وقيم محدّدة مسبقًا، وقيم منطقية، ورمز عملة أو دولة،
+            وسبب مثل لماذا احتُجز عنصر للمراجعة.
+          </li>
+          <li>
+            سياق تقني: إصدار التطبيق والمنصّة وإصدار النظام وطراز الجهاز وأزمنة الإقلاع والتنقّل، وهل
+            نُزّل تحديث.
+          </li>
+          <li>الأخطاء: استثناءات JavaScript غير المعالَجة ورفض الوعود، مع أثر التنفيذ.</li>
+          <li>
+            معرّف: أثناء تسجيل دخولك تُربط الأحداث <strong>بالمعرّف العشوائي لحسابك</strong> كي لا
+            يُحسب شخص واحد كعدة أشخاص. وهذا المعرّف هو الـ UUID الداخلي من نظام المصادقة،
+            <strong>وليس بريدك الإلكتروني أبدًا</strong>. أي أن الأحداث مستعارة الهوية لا مجهولة
+            تمامًا، ونقول ذلك بصراحة.
+          </li>
+        </ul>
+        <h3>ما لا يُرسل أبدًا</h3>
+        <ul>
+          <li>أي مبلغ أو رصيد أو مجموع أو اسم تاجر أو رقم حساب.</li>
+          <li>أي نص إشعار أو رسالة نصية أو نص ملصوق، وأي مسوّدة مستخرَجة.</li>
+          <li>إحداثياتك أو اسمك أو بريدك أو جهات اتصالك أو قائمة تطبيقاتك.</li>
+          <li>
+            لا تسجيل للجلسة، ولا تسجيل للشاشة، ولا التقاط لما تكتبه، ولا التقاط لسجل الأخطاء النصي،
+            ولا معرّف إعلاني، ولا أي حزمة إعلانات أو إحالة. التطبيق لا يحتوي أيًّا منها.
+          </li>
+        </ul>
+        <div class="note">
+          <p>
+            لا يوجد في هذا الإصدار مفتاح داخلي لإيقاف القياسات. إن رغبت في إيقافها أو حذف بياناتك،
+            راسلنا على البريد في القسم ٢٣ وسننفّذ ذلك.
+          </p>
+        </div>
+
+        <h2 id="ar-13">١٣. التصدير والنسخ الاحتياطي والاستعادة</h2>
+        <p>
+          يمكنك تصدير بياناتك في ملف والاستعادة من ملف. يُكتب الملف في مجلد التخزين المؤقت الخاص
+          بالتطبيق ثم يُسلَّم لقائمة المشاركة في أندرويد، فيذهب <strong>حيث ترسله أنت فقط</strong>:
+          سحابتك، أو محادثة، أو مدير الملفات. نحن لا نستلم نسخة، وبعد ذلك تحكمه سياسة التطبيق الذي
+          اخترته.
+        </p>
+        <p>
+          والاستعادة تقرأ ملفًا تختاره بمنتقي المستندات وتطبّقه على الجهاز. والتصدير غير مشفّر بشكل
+          مقصود لتبقى قراءته واستعادته ممكنة، وهذا يعني أنه يحتوي تفاصيلك المالية بشكل صريح. احفظه في
+          مكان تثق به.
+        </p>
+
+        <h2 id="ar-14">١٤. التحديثات والتقييم والمشاركة</h2>
+        <ul>
+          <li>
+            <strong>التحديثات الفورية:</strong> يمكن للتطبيق جلب تحديث JavaScript من خدمة تحديثات
+            Expo. ويحمل الطلب إصدار التطبيق وقناة الإصدار وإصدار وقت التشغيل والمنصّة. ولا تدخل فيه أي
+            بيانات شخصية أو مالية.
+          </li>
+          <li>
+            <strong>تحديثات المتجر:</strong> عند وجود إصدار جديد على جوجل بلاي يمكن للتطبيق عرض نافذة
+            التحديث الخاصة ببلاي. وهذا تبادل بين جهازك وجوجل بلاي.
+          </li>
+          <li>
+            <strong>التقييم:</strong> يفتح صف التقييم نافذة التقييم الخاصة بجوجل بلاي. ولا نرى ما
+            تكتبه هناك إلا التقييم العام الذي يراه الجميع.
+          </li>
+          <li>
+            <strong>مشاركة التطبيق:</strong> ترسل قائمة المشاركة رابط المتجر كنص عادي لمن تختاره، ولا
+            يُرفق أي شيء من بياناتك.
+          </li>
+        </ul>
+
+        <h2 id="ar-15">١٥. ميزات الخصوصية داخل التطبيق</h2>
+        <ul>
+          <li>
+            <strong>قفل التطبيق:</strong> بوابة اختيارية ببصمة الإصبع أو الوجه أو رمز الجهاز عند فتح
+            التطبيق، مع مدة سماح تختارها. أندرويد هو من يتحقق، والتطبيق يستلم موافقة أو رفضًا ولا يرى
+            أي بيانات حيوية. وإن لم يعد الجهاز قادرًا على تلبية القفل، يُعطّل الإعداد نفسه بدلًا من
+            حجزك خارج تطبيقك.
+          </li>
+          <li>
+            <strong>خصوصية الشاشة:</strong> مفعّلة افتراضيًا. تمنع لقطات الشاشة وتسجيلها، وتُفرّغ
+            معاينة التطبيق في قائمة التطبيقات الأخيرة، عبر علامة النافذة الآمنة في أندرويد. أوقفها من
+            الإعدادات إن احتجت لقطة شاشة.
+          </li>
+          <li>
+            <strong>إخفاء الأرصدة:</strong> تقنيع كل المبالغ في الشاشة الرئيسية، أو إخفاء بطاقات مالية
+            بعينها.
+          </li>
+          <li>
+            <strong>تخزين الجلسة:</strong> جلستك في المخزن المشفّر، ومستثناة من النسخ الاحتياطي
+            السحابي لأندرويد، فلا تنتقل إلى جهاز آخر داخل نسخة احتياطية للجهاز.
+          </li>
+        </ul>
+
+        <h2 id="ar-16">١٦. أذونات أندرويد</h2>
+        <div class="table-scroll">
+          <table>
+            <caption>كل إذن تُعلنه نسخة جوجل بلاي، وسببه</caption>
+            <thead>
+              <tr>
+                <th scope="col">الإذن</th>
+                <th scope="col">يُطلب منك؟</th>
+                <th scope="col">السبب</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>الموقع، التقريبي والدقيق</td>
+                <td>يُطلب منك</td>
+                <td>ماكينات الصرف القريبة، وتحديد دولتك مرة واحدة. أثناء الاستخدام فقط</td>
+              </tr>
+              <tr>
+                <td>الإشعارات</td>
+                <td>يُطلب منك</td>
+                <td>
+                  تنبيهات الميزانية وتذكير الفواتير والملخّصات وتأكيدات التتبّع التلقائي والإضافة
+                  السريعة
+                </td>
+              </tr>
+              <tr>
+                <td>الوصول للإشعارات (وصول خاص)</td>
+                <td>يُطلب من إعدادات النظام</td>
+                <td>قراءة التتبّع التلقائي لإشعارات المدفوعات. خامل حتى تمنحه</td>
+              </tr>
+              <tr>
+                <td>البصمة والمقاييس الحيوية</td>
+                <td>يُستخدم عند الطلب</td>
+                <td>قفل التطبيق. ولا تصل أي بيانات حيوية إلى التطبيق</td>
+              </tr>
+              <tr>
+                <td>كشف تصوير الشاشة (أندرويد ١٤ وأحدث)</td>
+                <td>تلقائي</td>
+                <td>يأتي مع وحدة خصوصية الشاشة، ويطلبه النظام لميزة النافذة الآمنة</td>
+              </tr>
+              <tr>
+                <td>الإنترنت وحالة الشبكة والواي فاي</td>
+                <td>تلقائي</td>
+                <td>المزامنة والخرائط والأسعار والقياسات، ومعرفة أنك دون اتصال</td>
+              </tr>
+              <tr>
+                <td>الاهتزاز</td>
+                <td>تلقائي</td>
+                <td>الاستجابة اللمسية، ويمكنك إيقافها من الإعدادات</td>
+              </tr>
+              <tr>
+                <td>إبقاء المعالج مستيقظًا وخدمة في المقدمة</td>
+                <td>تلقائي</td>
+                <td>إتمام إشعار مجدول أو معالجة رسالة قبل أن ينام الجهاز</td>
+              </tr>
+              <tr>
+                <td>التشغيل بعد إعادة التشغيل</td>
+                <td>تلقائي</td>
+                <td>إعادة جدولة تنبيهاتك بعد إعادة تشغيل الجهاز</td>
+              </tr>
+              <tr>
+                <td>قراءة التخزين (أندرويد ١٢ فأقل)</td>
+                <td>قديم</td>
+                <td>وصول الملفات في الإصدارات القديمة داخل مكتبات نعتمد عليها</td>
+              </tr>
+              <tr>
+                <td>أذونات شارة المشغّل</td>
+                <td>تلقائي</td>
+                <td>رسم عدد غير المقروء على أيقونة التطبيق في المشغّلات التي تدعمه. شكلي فقط</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note">
+          <p>
+            هذه هي القائمة الكاملة. لا يطلب مصاريف الرسائل النصية ولا سجل المكالمات ولا جهات الاتصال
+            ولا الكاميرا ولا الميكروفون ولا مكتبة الصور ولا قائمة تطبيقاتك المثبّتة ولا الموقع في
+            الخلفية ولا الرسم فوق التطبيقات الأخرى. والأذونات التي دخلت مع المكتبات ولم تُستخدم فعليًا،
+            ومنها الكاميرا والميكروفون وصور الوسائط والرسم فوق التطبيقات، تُزال من ملف البيان وقت
+            البناء بدلًا من شحنها بلا تفسير.
+          </p>
+        </div>
+
+        <h2 id="ar-17">١٧. تأمين البيانات</h2>
+        <ul>
+          <li>
+            كل حركة الشبكة تجري عبر <strong>HTTPS مع التحقق من الشهادات</strong>، ونسخة الإنتاج لا
+            تسمح بأي اتصال غير مشفّر.
+          </li>
+          <li>
+            على الجهاز، قاعدة بياناتك وإعداداتك وملفاتك في <strong>تخزين خاص بالتطبيق</strong> يعزله
+            أندرويد عن بقية التطبيقات، ورمز جلستك في مخزن مفاتيح النظام.
+          </li>
+          <li>
+            على الخادم، تُحفظ كلمات المرور كبصمات أحادية الاتجاه فقط عبر better-auth، وكل استعلام
+            مزامنة محصور بمعرّف المستخدم الخاص بك، ومفاتيح خدمات الخرائط والأماكن تبقى على الخادم ولا
+            توجد داخل التطبيق أبدًا.
+          </li>
+          <li>
+            نص الرسائل الذي يقرأه التتبّع التلقائي هو أخطر مادة يلمسها التطبيق، ولهذا بالتحديد لا
+            يغادر الجهاز، ولهذا يُنقّحه سجل التشخيص.
+          </li>
+          <li>
+            والملف الذي تصدّره أنت غير مشفّر بحكم التصميم، فسلامته في يديك (القسم ١٣).
+          </li>
+        </ul>
+        <p>
+          لا يصحّ لأي خدمة أن تقدّم ضمانًا مطلقًا. ما يمكننا قوله إن أخطر أنواع البيانات عليك لو
+          تسرّبت، أي نصوص الرسائل والمسوّدات الخام، غير موجودة في قاعدة بياناتنا من الأصل. وإن وجدت
+          ثغرة أمنية، راسلنا قبل نشرها.
+        </p>
+
+        <h2 id="ar-18">١٨. الاحتفاظ بالبيانات وحذفها</h2>
+        <ul>
+          <li>
+            <strong>بيانات الجهاز</strong> تبقى حتى تحذفها، أو تحذف التطبيق، أو تمسح بياناته من
+            إعدادات أندرويد. وأيٌّ من ذلك يمحوها نهائيًا، بما فيها صندوق المراجعة وسجل التشخيص.
+          </li>
+          <li>
+            <strong>السجلات المزامَنة</strong> تبقى ما دام حسابك موجودًا. وحذف سجل في التطبيق يحذفه على
+            الخادم في أول دورة مزامنة.
+          </li>
+          <li>
+            <strong>حسابك</strong> وكل ما زُومن تحته يُحذف بناءً على طلبك خلال ٣٠ يومًا. راجع
+            <a href="./delete-account.html">صفحة حذف الحساب</a>.
+          </li>
+          <li>
+            <strong>أحداث القياس</strong> تحتفظ بها PostHog وExpo وفق سياساتهما، مرتبطة بالمعرّف
+            العشوائي المذكور في القسم ١٢، وتُحذف بناءً على طلبك.
+          </li>
+          <li>
+            <strong>مخزن ماكينات الصرف</strong> على خادمنا يحتوي بيانات خرائط لخلايا جغرافية خشنة، ولا
+            يحتوي أي معرّف مستخدم ولا أي بيانات شخصية، فلا يوجد فيه ما يُحذف.
+          </li>
+        </ul>
+
+        <h2 id="ar-19">١٩. حقوقك</h2>
+        <p>
+          إن كنت في الاتحاد الأوروبي أو المملكة المتحدة أو كاليفورنيا، فلك حقوق الوصول والتصحيح والحذف
+          والنقل والاعتراض. عمليًا:
+        </p>
+        <ul>
+          <li>راسلنا فتحصل على نسخة من الصفوف المخزّنة تحت حسابك، أو على حذفها.</li>
+          <li>
+            ومعظم ما يعرفه التطبيق عنك لا يصلنا من الأصل، فيمكنك مراجعته وحذفه بنفسك على الجهاز.
+          </li>
+          <li>
+            لا نبيع بياناتك الشخصية، ولا نشاركها لأغراض إعلانية، ولا نبني منها ملفات إعلانية أو
+            ائتمانية.
+          </li>
+          <li>
+            الأسس القانونية: تنفيذ الخدمة التي طلبتها (حسابك والمزامنة)، وموافقتك (الموقع، والوصول
+            للإشعارات، والإشعارات، ورفع صورة)، والمصلحة المشروعة (إبقاء التطبيق عاملًا، وإصلاح
+            الأعطال، ومنع الإساءة)، وهنا تقع قياسات القسم ١٢ مستعارة الهوية.
+          </li>
+        </ul>
+
+        <h2 id="ar-20">٢٠. خصوصية الأطفال</h2>
+        <p>
+          مصاريف تطبيق مالي شخصي موجّه للبالغين، وهو غير مخصص للأطفال دون ١٣ عامًا، ولا نجمع بياناتهم
+          عن قصد. وإن اعتقدت أن طفلًا أنشأ حسابًا، راسلنا ليُحذف.
+        </p>
+
+        <h2 id="ar-21">٢١. خدمات الغير</h2>
+        <p>هذه كل الأطراف الخارجية، ومكتوب أمام ما يتصل به جهازك مباشرة:</p>
+        <ul>
+          <li>
+            <a href="https://vercel.com/legal/privacy-policy" rel="noopener">Vercel</a> تستضيف خادمنا
+            وتخزّن صور الملف الشخصي المرفوعة على Vercel Blob (جهازك يتصل بها)
+          </li>
+          <li>
+            <a href="https://neon.com/privacy-policy" rel="noopener">Neon</a> تستضيف قاعدة بيانات
+            PostgreSQL خلف خادمنا (على الخادم فقط)
+          </li>
+          <li>
+            <a href="https://resend.com/legal/privacy-policy" rel="noopener">Resend</a> توصّل رسائل
+            الحساب (على الخادم فقط)
+          </li>
+          <li>
+            <a href="https://policies.google.com/privacy" rel="noopener">Google</a> للدخول الاختياري
+            بجوجل، والتوزيع والتحديث عبر جوجل بلاي، والاتجاهات في الخرائط عند طلبك (جهازك يتصل بها)
+          </li>
+          <li>
+            <a href="https://posthog.com/privacy" rel="noopener">PostHog</a> لقياسات الاستخدام وتتبّع
+            الأخطاء، منطقة الاتحاد الأوروبي (جهازك يتصل بها)
+          </li>
+          <li>
+            <a href="https://expo.dev/privacy" rel="noopener">Expo</a> للتحديثات الفورية ومقاييس
+            الأداء (جهازك يتصل بها)
+          </li>
+          <li>
+            <a href="https://openfreemap.org/" rel="noopener">OpenFreeMap</a> لبلاطات الخريطة، وهي
+            مبنية على بيانات
+            <a href="https://osmfoundation.org/wiki/Privacy_Policy" rel="noopener">OpenStreetMap</a>
+            (جهازك يتصل بها)
+          </li>
+          <li>
+            مرايا
+            <a href="https://wiki.openstreetmap.org/wiki/Overpass_API" rel="noopener">Overpass API</a>
+            لبيانات الماكينات كبديل بلا مفاتيح (جهازك يتصل بها فقط عند تعذّر خادمنا)
+          </li>
+          <li>
+            <a href="https://www.tomtom.com/privacy/" rel="noopener">TomTom</a> و
+            <a href="https://legal.foursquare.com/privacy/" rel="noopener">Foursquare</a> و
+            <a href="https://www.geoapify.com/privacy-policy/" rel="noopener">Geoapify</a> لبيانات
+            الماكينات والأماكن (على الخادم فقط، وتُسأل بخلية موقع خشنة)
+          </li>
+          <li>
+            <a href="https://www.bigdatacloud.com/privacy-and-cookie-policy" rel="noopener"
+              >BigDataCloud</a
+            >
+            تحوّل الإحداثيات إلى اسم دولة ومدينة (جهازك يتصل بها، وبإذنك فقط)
+          </li>
+          <li>
+            <a href="https://open-meteo.com/en/terms" rel="noopener">Open-Meteo</a> للبحث عن مدينة
+            بالاسم (جهازك يتصل بها ويرسل النص الذي كتبته)
+          </li>
+          <li>
+            <a href="https://www.exchangerate-api.com/terms" rel="noopener">ExchangeRate-API</a> لأسعار
+            العملات (جهازك يتصل بها ويرسل رمز عملة)
+          </li>
+        </ul>
+        <p>
+          لا توجد في هذه القائمة أي شبكة إعلانات، ولا حزمة إحالة، ولا وسيط بيانات، ولا شيء منها داخل
+          التطبيق.
+        </p>
+
+        <h2 id="ar-22">٢٢. تعديلات السياسة</h2>
+        <p>
+          نحدّث هذه الصفحة كلما تغيّرت ميزة أو مسار بيانات. التاريخ في الأعلى يعبّر عن النسخة الحالية،
+          والسجل الكامل للتغييرات علني في مستودع هذه الصفحة على GitHub، والتغييرات الجوهرية تُذكر في
+          ملاحظات إصدار التطبيق.
+        </p>
+
+        <h2 id="ar-23">٢٣. التواصل</h2>
+        <div class="contact">
+          <p>
+            لأي سؤال عن الخصوصية، أو للحصول على نسخة من بياناتك، أو لطلب حذفها:
+            <a href="mailto:boogado@yahoo.com">boogado@yahoo.com</a>
+          </p>
+          <p>
+            حذف حسابك: <a href="./delete-account.html">طريقة تقديم الطلب</a>
+          </p>
+          <p>المطوّر: محمد جادو · التطبيق: مصاريف (<code>com.mohamedgado.masareef</code>)</p>
+        </div>
+
+        <footer class="page">
+          <p>
+            هذه الصفحة ثابتة ومستضافة على GitHub Pages. لا تضع كوكيز، ولا تشغّل أي قياس، ولا تحمّل
+            خطوطًا أو سكربتات من خوادم أخرى.
+          </p>
+        </footer>
+      </section>
+    </main>
+
+    <script>
+      // Both languages ship in the DOM so crawlers and reader modes see the full policy.
+      // The toggle only flips visibility plus the document lang/dir.
+      (function () {
+        var docs = { en: document.getElementById("doc-en"), ar: document.getElementById("doc-ar") };
+        var btns = { en: document.getElementById("btn-en"), ar: document.getElementById("btn-ar") };
+        var root = document.documentElement;
+
+        function apply(lang, remember) {
+          var other = lang === "en" ? "ar" : "en";
+          docs[lang].classList.remove("lang-hidden");
+          docs[other].classList.add("lang-hidden");
+          btns[lang].setAttribute("aria-pressed", "true");
+          btns[other].setAttribute("aria-pressed", "false");
+          root.lang = lang;
+          root.dir = lang === "ar" ? "rtl" : "ltr";
+          if (remember) {
+            try {
+              localStorage.setItem("masareef-privacy-lang", lang);
+            } catch (e) {
+              // Private browsing can block storage. The toggle still works for this visit.
+            }
+          }
+        }
+
+        // A deep link to a section anchor wins over the stored choice, so a shared
+        // section link always lands on the section it names.
+        function langFromHash(hash) {
+          if (/^#ar-/.test(hash)) return "ar";
+          if (/^#en-/.test(hash)) return "en";
+          return null;
+        }
+
+        function storedLang() {
+          try {
+            return localStorage.getItem("masareef-privacy-lang");
+          } catch (e) {
+            return null; // private browsing can block storage
+          }
+        }
+
+        function browserLang() {
+          var tag = (navigator.language || "en").toLowerCase();
+          return tag.indexOf("ar") === 0 ? "ar" : "en";
+        }
+
+        apply(langFromHash(location.hash) || storedLang() || browserLang(), false);
+
+        btns.en.addEventListener("click", function () {
+          apply("en", true);
+        });
+        btns.ar.addEventListener("click", function () {
+          apply("ar", true);
+        });
+      })();
+    </script>
+  </body>
 </html>

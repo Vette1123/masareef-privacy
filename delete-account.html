@@ -1,98 +1,659 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Delete Your Masareef Account &amp; Data</title>
-  <style>
-    :root { color-scheme: light dark; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      max-width: 720px; margin: 0 auto; padding: 32px 20px; line-height: 1.6;
-      color: #1a1a1a; background: #ffffff;
-    }
-    @media (prefers-color-scheme: dark) {
-      body { color: #e6e6e6; background: #121212; }
-      a { color: #7db3ff; }
-      th, td { border-color: #333 !important; }
-      code { background: #222; }
-    }
-    h1 { font-size: 1.6rem; margin-bottom: 4px; }
-    h2 { font-size: 1.15rem; margin-top: 28px; }
-    .sub { color: #666; margin-top: 0; }
-    ol, ul { padding-left: 20px; }
-    table { border-collapse: collapse; width: 100%; margin: 12px 0; }
-    th, td { border: 1px solid #ddd; padding: 8px 10px; text-align: left; font-size: 0.95rem; }
-    th { background: rgba(128,128,128,0.12); }
-    code { padding: 1px 5px; border-radius: 4px; background: #f0f0f0; }
-    .subject {
-      font-weight: 600;
-      padding: 2px 8px; border-radius: 6px;
-      background: #e3f2ee; color: #0b6b4f;
-      white-space: nowrap;
-    }
-    @media (prefers-color-scheme: dark) {
-      .subject { background: #143a30; color: #4fd1a5; }
-    }
-    .note { font-size: 0.9rem; color: #666; }
-  </style>
-</head>
-<body>
-  <h1>Delete Your Account &amp; Data</h1>
-  <p class="sub"><strong>Masareef</strong> — developed by Mohamed Gado</p>
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Masareef · Delete your account · حذف حسابك</title>
+    <meta
+      name="description"
+      content="How to delete your Masareef account and the data synced with it, and how to wipe the data stored on your device. English and Arabic."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#020617" media="(prefers-color-scheme: dark)" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://vette1123.github.io/masareef-privacy/delete-account.html" />
+    <meta property="og:title" content="Masareef · Delete your account · حذف حسابك" />
+    <meta
+      property="og:description"
+      content="Request deletion of your Masareef account and synced data, or wipe the app's local data yourself."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://vette1123.github.io/masareef-privacy/delete-account.html"
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230A1626'/%3E%3Cpath d='M6 21.5 12 14l5 4.5L26 9' stroke='%232DD4BF' stroke-width='2.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"
+    />
+    <style>
+      /* Same tokens and structure as the privacy policy, so the two pages read as one
+         document set. Self-contained: no web fonts, no third-party scripts, no cookies. */
+      :root {
+        --bg: #f8fafc;
+        --surface: #ffffff;
+        --surface-2: #f1f5f9;
+        --text: #0f172a;
+        --muted: #55657c;
+        --line: #dde5ee;
+        --accent: #0d7d70;
+        --accent-soft: #e8f6f4;
+        --radius: 14px;
+        --maxw: 760px;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #020617;
+          --surface: #0b1324;
+          --surface-2: #111c31;
+          --text: #e8edf6;
+          --muted: #93a2b8;
+          --line: #1d2b44;
+          --accent: #2dd4bf;
+          --accent-soft: #0d2029;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+          sans-serif;
+        font-size: 17px;
+        line-height: 1.75;
+        -webkit-font-smoothing: antialiased;
+      }
+      [dir="rtl"] body,
+      [lang="ar"] {
+        font-family: "IBM Plex Sans Arabic", "Noto Sans Arabic", "Segoe UI", Tahoma, system-ui,
+          -apple-system, Arial, sans-serif;
+      }
+      .wrap {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 0 20px 96px;
+      }
+      .top {
+        border-bottom: 1px solid var(--line);
+        background: var(--surface);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+      .top-inner {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        min-height: 60px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+      .brand svg {
+        display: block;
+      }
+      .switch {
+        display: inline-flex;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 3px;
+        background: var(--surface-2);
+      }
+      .switch button {
+        appearance: none;
+        border: 0;
+        background: transparent;
+        color: var(--muted);
+        font: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 5px 14px;
+        border-radius: 999px;
+        cursor: pointer;
+        transition: background-color 0.18s ease, color 0.18s ease;
+      }
+      .switch button[aria-pressed="true"] {
+        background: var(--accent);
+        color: #ffffff;
+      }
+      @media (prefers-color-scheme: dark) {
+        .switch button[aria-pressed="true"] {
+          color: #04231f;
+        }
+      }
+      .switch button:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+      h1 {
+        font-size: clamp(1.8rem, 5vw, 2.3rem);
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        margin: 40px 0 10px;
+      }
+      .lede {
+        color: var(--muted);
+        font-size: 1.05rem;
+        margin: 0 0 8px;
+        max-width: 62ch;
+      }
+      .meta {
+        color: var(--muted);
+        font-size: 0.86rem;
+        margin: 0 0 32px;
+        padding-bottom: 22px;
+        border-bottom: 1px solid var(--line);
+      }
+      .meta b {
+        color: var(--text);
+        font-weight: 600;
+      }
+      h2 {
+        font-size: 1.28rem;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+        margin: 40px 0 12px;
+      }
+      p {
+        margin: 0 0 14px;
+        max-width: 68ch;
+      }
+      ul,
+      ol {
+        max-width: 68ch;
+        padding-inline-start: 22px;
+      }
+      li {
+        margin: 6px 0;
+      }
+      a {
+        color: var(--accent);
+        text-underline-offset: 3px;
+      }
+      a:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+        border-radius: 3px;
+      }
+      code {
+        font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+        font-size: 0.86em;
+        background: var(--surface-2);
+        border: 1px solid var(--line);
+        padding: 1px 6px;
+        border-radius: 6px;
+        direction: ltr;
+        unicode-bidi: embed;
+        display: inline-block;
+      }
+      .subject {
+        font-weight: 600;
+        background: var(--accent-soft);
+        border: 1px solid var(--line);
+        padding: 2px 10px;
+        border-radius: 8px;
+        white-space: nowrap;
+        direction: ltr;
+        unicode-bidi: embed;
+        display: inline-block;
+      }
+      .steps {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--surface);
+        padding: 18px 22px;
+        margin: 18px 0 8px;
+      }
+      .steps ol {
+        margin: 0;
+      }
+      .table-scroll {
+        overflow-x: auto;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        margin: 18px 0 24px;
+        background: var(--surface);
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        min-width: 560px;
+        font-size: 0.92rem;
+      }
+      th,
+      td {
+        text-align: start;
+        padding: 11px 16px;
+        vertical-align: top;
+      }
+      thead th {
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--muted);
+        font-weight: 700;
+      }
+      tbody tr + tr {
+        border-top: 1px solid var(--line);
+      }
+      .note {
+        border-inline-start: 3px solid var(--accent);
+        background: var(--surface-2);
+        border-radius: 0 var(--radius) var(--radius) 0;
+        padding: 12px 18px;
+        margin: 20px 0;
+      }
+      [dir="rtl"] .note {
+        border-radius: var(--radius) 0 0 var(--radius);
+      }
+      .note p:last-child {
+        margin-bottom: 0;
+      }
+      footer.page {
+        border-top: 1px solid var(--line);
+        margin-top: 48px;
+        padding-top: 20px;
+        color: var(--muted);
+        font-size: 0.86rem;
+      }
+      .lang-hidden {
+        display: none;
+      }
+      .skip {
+        position: absolute;
+        inset-inline-start: -9999px;
+      }
+      .skip:focus {
+        position: static;
+        display: inline-block;
+        padding: 8px 12px;
+      }
+      @media print {
+        :root {
+          --bg: #ffffff;
+          --surface: #ffffff;
+          --surface-2: #ffffff;
+          --text: #000000;
+          --muted: #333333;
+          --line: #999999;
+          --accent: #000000;
+          --accent-soft: #ffffff;
+        }
+        .top,
+        .switch,
+        .skip {
+          display: none;
+        }
+        .wrap {
+          max-width: none;
+          padding: 0;
+        }
+        body {
+          font-size: 11pt;
+          line-height: 1.5;
+        }
+        a[href^="http"]::after {
+          content: " (" attr(href) ")";
+          font-size: 9pt;
+          word-break: break-all;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content / تخطي إلى المحتوى</a>
+    <header class="top">
+      <div class="top-inner">
+        <span class="brand">
+          <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true">
+            <rect width="32" height="32" rx="8" fill="#0A1626" />
+            <path
+              d="M6 21.5 12 14l5 4.5L26 9"
+              stroke="#2DD4BF"
+              stroke-width="2.8"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          Masareef
+        </span>
+        <div class="switch" role="group" aria-label="Language / اللغة">
+          <button type="button" id="btn-en" aria-pressed="true" lang="en">English</button>
+          <button type="button" id="btn-ar" aria-pressed="false" lang="ar">العربية</button>
+        </div>
+      </div>
+    </header>
 
-  <p>
-    This page explains how to request deletion of your Masareef account and the
-    data associated with it. Masareef is a personal spending tracker. Most of
-    your data (transactions, wallets, budgets and categories) is stored
-    <strong>only on your device</strong> and is never uploaded to our servers.
-  </p>
+    <main class="wrap" id="main">
+      <!-- ================================ ENGLISH ================================ -->
+      <section id="doc-en" lang="en" dir="ltr">
+        <h1>Delete your account and data</h1>
+        <p class="lede">
+          Masareef is a personal spending tracker built by Mohamed Gado. This page explains how to
+          delete your account and everything synced under it, and how to wipe what the app stores on
+          your phone.
+        </p>
+        <p class="meta">
+          Last updated: <b><time datetime="2026-07-27">27 July 2026</time></b> · App
+          <code>com.mohamedgado.masareef</code> · Full policy:
+          <a href="./">privacy policy</a>
+        </p>
 
-  <h2>How to request account deletion</h2>
-  <ol>
-    <li>
-      Email <a href="mailto:boogado@yahoo.com?subject=Delete%20my%20Masareef%20account">boogado@yahoo.com</a>
-      from the email address you used to sign in to Masareef.
-    </li>
-    <li>Use the subject line <span class="subject">Delete my Masareef account</span>.</li>
-    <li>
-      We verify the request against your account email and delete your account
-      within <strong>30 days</strong>. We reply to confirm once it is done.
-    </li>
-  </ol>
+        <h2>1. Request account deletion</h2>
+        <div class="steps">
+          <ol>
+            <li>
+              Email
+              <a href="mailto:boogado@yahoo.com?subject=Delete%20my%20Masareef%20account"
+                >boogado@yahoo.com</a
+              >
+              from the address you use to sign in to Masareef.
+            </li>
+            <li>Use the subject line <span class="subject">Delete my Masareef account</span>.</li>
+            <li>
+              We verify the request against your account email, delete the account and its synced
+              rows within <strong>30 days</strong>, and reply to confirm once it is done.
+            </li>
+          </ol>
+        </div>
+        <p>
+          If you signed in with Google, email us from that same Google address. You can also revoke
+          Masareef's access in your
+          <a href="https://myaccount.google.com/connections" rel="noopener">Google account</a>, which
+          stops future sign-ins but does not by itself delete data we already hold.
+        </p>
 
-  <h2>Remove data stored on your device</h2>
-  <p>
-    Because your financial records live locally, you can delete them yourself at
-    any time — no request needed:
-  </p>
-  <ul>
-    <li><strong>Uninstall the app</strong>, or</li>
-    <li>Go to <em>Android Settings → Apps → Masareef → Storage → Clear storage</em>.</li>
-  </ul>
-  <p class="note">This permanently removes all local transactions, wallets, budgets and categories from your device.</p>
+        <h2>2. Wipe the data on your device</h2>
+        <p>
+          A lot of what Masareef knows never reaches our server at all: the auto-track review inbox
+          and the message text behind it, trusted senders, the capture diagnostics log, every
+          setting, your cached coordinates, and Travel mode trips. You can delete all of that
+          yourself, no request needed:
+        </p>
+        <ul>
+          <li><strong>Uninstall the app</strong>, or</li>
+          <li>
+            open <em>Android Settings, Apps, Masareef, Storage, Clear storage</em>.
+          </li>
+        </ul>
+        <p>
+          Either one permanently removes the local database, the local files and the stored session.
+          Individual records can also be deleted inside the app at any time, and that deletion
+          propagates to the server on the next sync.
+        </p>
 
-  <h2>What is deleted</h2>
-  <table>
-    <tr><th>Data</th><th>Where it lives</th><th>On deletion</th></tr>
-    <tr><td>Account email &amp; display name</td><td>Our authentication server</td><td>Permanently deleted within 30 days</td></tr>
-    <tr><td>Transactions, wallets, budgets, categories</td><td>Your device only</td><td>Removed when you uninstall or clear app storage</td></tr>
-    <tr><td>Anonymous usage analytics (e.g. screen opened)</td><td>Analytics provider (no financial data)</td><td>Deleted/anonymised on request</td></tr>
-  </table>
+        <h2>3. What is deleted, and from where</h2>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Data</th>
+                <th scope="col">Where it lives</th>
+                <th scope="col">On deletion</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Name, email, password hash, sessions, Google account link</td>
+                <td>Our authentication database</td>
+                <td>Permanently deleted within 30 days of your request</td>
+              </tr>
+              <tr>
+                <td>
+                  Transactions, wallets, categories, budgets, spend targets, recurring items, planned
+                  items, merchant rules
+                </td>
+                <td>Your device and our database (synced)</td>
+                <td>
+                  Deleted from our database with the account. The local copy goes when you uninstall
+                  or clear storage
+                </td>
+              </tr>
+              <tr>
+                <td>Profile photo you uploaded</td>
+                <td>Our file storage, plus a local copy</td>
+                <td>Deleted with the account, or on request at any time</td>
+              </tr>
+              <tr>
+                <td>
+                  Auto-track captures and message text, trusted senders, diagnostics log, settings,
+                  coordinates, trips
+                </td>
+                <td>Your device only</td>
+                <td>Gone when you uninstall or clear app storage. We never had a copy</td>
+              </tr>
+              <tr>
+                <td>Usage analytics and crash reports</td>
+                <td>PostHog (EU) and Expo, keyed to a random account id</td>
+                <td>Deleted on request. They contain no amounts, merchants or balances</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-  <h2>What is kept</h2>
-  <p>
-    We do not retain any personal data after your account is deleted, except
-    where a limited retention period is required by law (for example, records
-    tied to fraud prevention or legal obligation). No transaction amounts,
-    merchant names, balances or account numbers are ever stored on our servers.
-  </p>
+        <h2>4. What is kept</h2>
+        <p>
+          Nothing personal is retained after your account is deleted, except where a limited
+          retention period is legally required, for example records tied to a legal obligation or to
+          abuse prevention. Our nearby-ATM cache is not affected: it stores map data for coarse
+          geographic cells, with no account id and nothing personal in it.
+        </p>
+        <div class="note">
+          <p>
+            Deleting your account does not delete a backup file you exported yourself. Those files
+            went only where you sent them, so delete them from that destination.
+          </p>
+        </div>
 
-  <h2>Contact</h2>
-  <p>
-    Questions about deletion or your data:
-    <a href="mailto:boogado@yahoo.com">boogado@yahoo.com</a>.
-  </p>
-  <p class="note">See also our <a href="./">Privacy Policy</a>.</p>
-</body>
+        <h2>5. Contact</h2>
+        <p>
+          Questions about deletion or your data:
+          <a href="mailto:boogado@yahoo.com">boogado@yahoo.com</a>. For the full picture of what is
+          stored and where, read the <a href="./">privacy policy</a>.
+        </p>
+
+        <footer class="page">
+          <p>
+            This page is static and hosted on GitHub Pages. It sets no cookies, runs no analytics,
+            and loads no fonts or scripts from other servers.
+          </p>
+        </footer>
+      </section>
+
+      <!-- ================================ ARABIC ================================ -->
+      <section id="doc-ar" lang="ar" dir="rtl" class="lang-hidden">
+        <h1>حذف حسابك وبياناتك</h1>
+        <p class="lede">
+          مصاريف تطبيق شخصي لتتبّع المصروفات، يطوّره محمد جادو. توضّح هذه الصفحة كيف تحذف حسابك وكل ما
+          زُومن تحته، وكيف تمحو ما يخزّنه التطبيق على هاتفك.
+        </p>
+        <p class="meta">
+          آخر تحديث: <b><time datetime="2026-07-27">٢٧ يوليو ٢٠٢٦</time></b> · التطبيق
+          <code>com.mohamedgado.masareef</code> · السياسة الكاملة:
+          <a href="./">سياسة الخصوصية</a>
+        </p>
+
+        <h2>١. طلب حذف الحساب</h2>
+        <div class="steps">
+          <ol>
+            <li>
+              راسلنا على
+              <a href="mailto:boogado@yahoo.com?subject=Delete%20my%20Masareef%20account"
+                >boogado@yahoo.com</a
+              >
+              من نفس البريد الذي تسجّل به الدخول إلى مصاريف.
+            </li>
+            <li>اجعل عنوان الرسالة <span class="subject">Delete my Masareef account</span>.</li>
+            <li>
+              نتحقّق من الطلب مقابل بريد حسابك، ونحذف الحساب وصفوفه المزامَنة خلال
+              <strong>٣٠ يومًا</strong>، ونرد عليك للتأكيد بعد التنفيذ.
+            </li>
+          </ol>
+        </div>
+        <p>
+          وإن كنت تسجّل الدخول بجوجل، راسلنا من عنوان جوجل نفسه. ويمكنك أيضًا سحب صلاحية مصاريف من
+          <a href="https://myaccount.google.com/connections" rel="noopener">حسابك في جوجل</a>، وهذا
+          يمنع تسجيل الدخول لاحقًا لكنه لا يحذف بذاته البيانات الموجودة لدينا.
+        </p>
+
+        <h2>٢. محو البيانات على جهازك</h2>
+        <p>
+          كثير من معلومات مصاريف لا تصل خادمنا من الأصل: صندوق مراجعة التتبّع التلقائي ونصوص الرسائل
+          خلفه، والمرسِلون الموثوقون، وسجل التشخيص، وكل الإعدادات، والإحداثيات المحفوظة، ورحلات وضع
+          السفر. ويمكنك حذف ذلك كله بنفسك بلا أي طلب:
+        </p>
+        <ul>
+          <li><strong>احذف التطبيق</strong>، أو</li>
+          <li>
+            افتح <em>إعدادات أندرويد ← التطبيقات ← مصاريف ← التخزين ← مسح البيانات</em>.
+          </li>
+        </ul>
+        <p>
+          أيٌّ من الطريقتين يمحو نهائيًا قاعدة البيانات المحلية والملفات المحلية والجلسة المخزّنة.
+          ويمكنك أيضًا حذف أي سجل من داخل التطبيق في أي وقت، وينتقل هذا الحذف إلى الخادم في أول
+          مزامنة.
+        </p>
+
+        <h2>٣. ما يُحذف، ومن أين</h2>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">البيانات</th>
+                <th scope="col">مكان وجودها</th>
+                <th scope="col">عند الحذف</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>الاسم والبريد وبصمة كلمة المرور والجلسات ورابط حساب جوجل</td>
+                <td>قاعدة بيانات المصادقة لدينا</td>
+                <td>تُحذف نهائيًا خلال ٣٠ يومًا من طلبك</td>
+              </tr>
+              <tr>
+                <td>
+                  المعاملات والمحافظ والفئات والميزانيات وحدود الإنفاق والعناصر المتكرّرة والمتوقّعة
+                  وقواعد التجّار
+                </td>
+                <td>جهازك وقاعدة بياناتنا (مزامَنة)</td>
+                <td>
+                  تُحذف من قاعدة بياناتنا مع الحساب، والنسخة المحلية تزول بحذف التطبيق أو مسح بياناته
+                </td>
+              </tr>
+              <tr>
+                <td>صورة الملف الشخصي التي رفعتَها</td>
+                <td>تخزين الملفات لدينا، مع نسخة محلية</td>
+                <td>تُحذف مع الحساب، أو بناءً على طلبك في أي وقت</td>
+              </tr>
+              <tr>
+                <td>
+                  عناصر التتبّع التلقائي ونصوص رسائلها والمرسِلون الموثوقون وسجل التشخيص والإعدادات
+                  والإحداثيات والرحلات
+                </td>
+                <td>جهازك فقط</td>
+                <td>تزول بحذف التطبيق أو مسح بياناته. ولم تكن لدينا نسخة منها أصلًا</td>
+              </tr>
+              <tr>
+                <td>قياسات الاستخدام وتقارير الأعطال</td>
+                <td>PostHog (الاتحاد الأوروبي) وExpo، مرتبطة بمعرّف حساب عشوائي</td>
+                <td>تُحذف بناءً على طلبك. ولا تحتوي أي مبالغ أو أسماء تجّار أو أرصدة</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>٤. ما يُحتفظ به</h2>
+        <p>
+          لا نحتفظ بأي بيانات شخصية بعد حذف حسابك، إلا حيث تُلزمنا مدة احتفاظ محدودة قانونًا، مثل
+          سجلات مرتبطة بالتزام قانوني أو بمنع الإساءة. ولا يتأثر مخزن ماكينات الصرف لدينا: فهو يخزّن
+          بيانات خرائط لخلايا جغرافية خشنة، بلا أي معرّف حساب وبلا أي بيانات شخصية.
+        </p>
+        <div class="note">
+          <p>
+            حذف الحساب لا يحذف ملف النسخة الاحتياطية الذي صدّرته أنت. فتلك الملفات ذهبت حيث أرسلتها
+            أنت، لذا احذفها من مكانها.
+          </p>
+        </div>
+
+        <h2>٥. التواصل</h2>
+        <p>
+          لأي سؤال عن الحذف أو عن بياناتك:
+          <a href="mailto:boogado@yahoo.com">boogado@yahoo.com</a>. ولمعرفة الصورة الكاملة لما
+          يُخزَّن وأين، اقرأ <a href="./">سياسة الخصوصية</a>.
+        </p>
+
+        <footer class="page">
+          <p>
+            هذه الصفحة ثابتة ومستضافة على GitHub Pages. لا تضع كوكيز، ولا تشغّل أي قياس، ولا تحمّل
+            خطوطًا أو سكربتات من خوادم أخرى.
+          </p>
+        </footer>
+      </section>
+    </main>
+
+    <script>
+      // Both languages ship in the DOM. The toggle flips visibility plus lang/dir, and
+      // remembers the choice so moving between this page and the policy keeps one language.
+      (function () {
+        var docs = { en: document.getElementById("doc-en"), ar: document.getElementById("doc-ar") };
+        var btns = { en: document.getElementById("btn-en"), ar: document.getElementById("btn-ar") };
+        var root = document.documentElement;
+
+        function apply(lang, remember) {
+          var other = lang === "en" ? "ar" : "en";
+          docs[lang].classList.remove("lang-hidden");
+          docs[other].classList.add("lang-hidden");
+          btns[lang].setAttribute("aria-pressed", "true");
+          btns[other].setAttribute("aria-pressed", "false");
+          root.lang = lang;
+          root.dir = lang === "ar" ? "rtl" : "ltr";
+          if (remember) {
+            try {
+              localStorage.setItem("masareef-privacy-lang", lang);
+            } catch (e) {
+              // Private browsing can block storage. The toggle still works for this visit.
+            }
+          }
+        }
+
+        function storedLang() {
+          try {
+            return localStorage.getItem("masareef-privacy-lang");
+          } catch (e) {
+            return null;
+          }
+        }
+
+        function browserLang() {
+          var tag = (navigator.language || "en").toLowerCase();
+          return tag.indexOf("ar") === 0 ? "ar" : "en";
+        }
+
+        apply(storedLang() || browserLang(), false);
+
+        btns.en.addEventListener("click", function () {
+          apply("en", true);
+        });
+        btns.ar.addEventListener("click", function () {
+          apply("ar", true);
+        });
+      })();
+    </script>
+  </body>
 </html>
