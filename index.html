@@ -520,6 +520,13 @@
             </p>
           </div>
           <div class="tile">
+            <h2>Receipts stay yours</h2>
+            <p>
+              Receipt photos and statements never reach us. Back them up and the copies go to your
+              own Google Drive, where the app can only see the files it put there.
+            </p>
+          </div>
+          <div class="tile">
             <h2>Location is optional</h2>
             <p>
               Requested only for Nearby ATMs and one-time country detection, only while the app is
@@ -648,6 +655,12 @@
           <li>
             <strong>Your profile photo's local copy</strong>, and the session cookie in the encrypted
             store.
+          </li>
+          <li>
+            <strong>Receipt photos</strong> you attach to a transaction, and the
+            <strong>monthly statements</strong> you generate. Both are written to the app's own files
+            directory. Neither is ever uploaded to us — the one place a copy can go is your own Google
+            Drive, and only if you switch that on yourself (section 13).
           </li>
           <li>
             <strong>Everything derived:</strong> insights, subscription radar, duplicate-charge and
@@ -975,6 +988,29 @@
           device. An export is deliberately unencrypted so you can read and restore it, which also
           means it contains your financial detail in plain form. Keep it somewhere you trust.
         </p>
+        <h3>Receipt backup to your own Google Drive</h3>
+        <p>
+          Receipt photos stay on your phone unless you turn on <b>Back up receipts</b> in Settings.
+          If you do, the app asks Google for permission and copies each receipt — and each monthly
+          statement you generate — into a <b>Masareef</b> folder in <strong>your</strong> Google
+          Drive. Those files are yours: they live in your Drive under your Google account, not in
+          ours, and <strong>we never receive them</strong>. Our server is not involved in the
+          transfer at all; the upload goes from your phone straight to Google.
+        </p>
+        <p>
+          The app asks only for the <code>drive.file</code> scope, which Google restricts to files
+          the app itself created. It cannot list, open or search anything else in your Drive. On a
+          new phone, signing in and turning the switch on again restores the receipts from those
+          copies.
+        </p>
+        <p>
+          Turning the switch off stops all further uploads immediately. It deliberately does
+          <strong>not</strong> delete what is already in your Drive — those files are yours to keep,
+          and deleting them because you flipped a switch is not our decision to make. Remove them
+          from Drive yourself whenever you like, or revoke the app's access from your
+          <a href="https://myaccount.google.com/permissions" rel="noopener">Google account
+          permissions</a> page.
+        </p>
 
         <h2 id="en-14">14. App updates, rating and sharing</h2>
         <ul>
@@ -1227,7 +1263,9 @@
           <li>
             <a href="https://policies.google.com/privacy" rel="noopener">Google</a> for optional
             Google sign-in, Google Play distribution and updates, Google Play Billing if you
-            subscribe to Masareef Pro, and Maps directions when you tap them (device contacts it)
+            subscribe to Masareef Pro, Google Drive for receipt backup if you switch it on
+            (<code>drive.file</code> scope — the app sees only the files it created), and Maps
+            directions when you tap them (device contacts it)
           </li>
           <li>
             <a href="https://posthog.com/privacy" rel="noopener">PostHog</a> for usage analytics and
@@ -1362,6 +1400,13 @@
             </p>
           </div>
           <div class="tile">
+            <h2>الإيصالات تبقى ملكك</h2>
+            <p>
+              صور الإيصالات وكشوف الحساب لا تصل إلينا أبدًا. وإذا فعّلت النسخ الاحتياطي، تذهب النسخ
+              إلى Google Drive الخاص بك، حيث لا يرى التطبيق سوى الملفات التي وضعها هو.
+            </p>
+          </div>
+          <div class="tile">
             <h2>الموقع اختياري</h2>
             <p>
               يُطلب فقط لماكينات الصرف القريبة وتحديد دولتك مرة واحدة، وفقط أثناء استخدام التطبيق،
@@ -1482,6 +1527,12 @@
           <li><strong>رحلات وضع السفر:</strong> اسم الرحلة والدولة والعملة وسعر الصرف الذي ثبّتَه.</li>
           <li>
             <strong>النسخة المحلية من صورتك الشخصية</strong>، وكوكي الجلسة في المخزن المشفّر.
+          </li>
+          <li>
+            <strong>صور الإيصالات</strong> التي ترفقها بالمعاملات، و<strong>كشوف الحساب
+            الشهرية</strong> التي تنشئها. كلاهما يُكتب في مجلد ملفات التطبيق نفسه، ولا يُرفع إلينا
+            أبدًا — والمكان الوحيد الذي يمكن أن تذهب إليه نسخة هو Google Drive الخاص بك، وفقط إذا
+            فعّلت ذلك بنفسك (القسم ١٣).
           </li>
           <li>
             <strong>كل ما هو مُستخرَج بالحساب:</strong> التحليلات، ورادار الاشتراكات، وكشف الخصم
@@ -1779,6 +1830,25 @@
           مقصود لتبقى قراءته واستعادته ممكنة، وهذا يعني أنه يحتوي تفاصيلك المالية بشكل صريح. احفظه في
           مكان تثق به.
         </p>
+        <h3>نسخ الإيصالات إلى Google Drive الخاص بك</h3>
+        <p>
+          تبقى صور الإيصالات على هاتفك ما لم تفعّل <b>نسخ الإيصالات احتياطيًا</b> من الإعدادات. وإذا
+          فعّلته، يطلب التطبيق إذن جوجل ثم ينسخ كل إيصال — وكل كشف حساب شهري تنشئه — إلى مجلد باسم
+          <b>Masareef</b> في Google Drive <strong>الخاص بك</strong>. هذه الملفات ملكك: تعيش في Drive
+          تحت حسابك في جوجل لا تحت حسابنا، و<strong>نحن لا نستلمها أبدًا</strong>. ولا يدخل خادمنا في
+          العملية إطلاقًا؛ فالرفع يتم من هاتفك إلى جوجل مباشرة.
+        </p>
+        <p>
+          ولا يطلب التطبيق سوى نطاق <code>drive.file</code>، وهو نطاق تقصره جوجل على الملفات التي
+          أنشأها التطبيق نفسه، فلا يستطيع سرد أو فتح أو البحث في أي شيء آخر في Drive. وعلى هاتف جديد،
+          يكفي تسجيل الدخول وتفعيل المفتاح مرة أخرى لاستعادة الإيصالات من تلك النسخ.
+        </p>
+        <p>
+          وإيقاف المفتاح يوقف أي رفع لاحق فورًا، لكنه <strong>لا</strong> يحذف ما هو موجود في Drive
+          عمدًا — فتلك الملفات ملكك، وحذفها لمجرد أنك أوقفت مفتاحًا ليس قرارنا. احذفها بنفسك من Drive
+          متى شئت، أو اسحب صلاحية التطبيق من صفحة
+          <a href="https://myaccount.google.com/permissions" rel="noopener">أذونات حساب جوجل</a>.
+        </p>
 
         <h2 id="ar-14">١٤. التحديثات والتقييم والمشاركة</h2>
         <ul>
@@ -2014,7 +2084,8 @@
           <li>
             <a href="https://policies.google.com/privacy" rel="noopener">Google</a> للدخول الاختياري
             بجوجل، والتوزيع والتحديث عبر جوجل بلاي، والدفع عبر Google Play Billing إذا اشتركت في
-            مصاريف برو، والاتجاهات في الخرائط عند طلبك (جهازك يتصل بها)
+            مصاريف برو، وGoogle Drive لنسخ الإيصالات إذا فعّلته (نطاق <code>drive.file</code> — لا يرى
+            التطبيق سوى الملفات التي أنشأها)، والاتجاهات في الخرائط عند طلبك (جهازك يتصل بها)
           </li>
           <li>
             <a href="https://posthog.com/privacy" rel="noopener">PostHog</a> لقياسات الاستخدام وتتبّع
