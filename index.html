@@ -443,7 +443,7 @@
         "alternateName": "سياسة الخصوصية لتطبيق مصاريف",
         "url": "https://vette1123.github.io/masareef-privacy/",
         "inLanguage": ["en", "ar"],
-        "dateModified": "2026-07-27",
+        "dateModified": "2026-08-13",
         "about": {
           "@type": "MobileApplication",
           "name": "Masareef",
@@ -498,8 +498,8 @@
           page explains exactly what it stores, what it sends, and to whom.
         </p>
         <p class="meta">
-          Last updated: <b><time datetime="2026-07-27">27 July 2026</time></b> · Covers app version
-          <b>1.46.0</b> and later · Package <code>com.mohamedgado.masareef</code>
+          Last updated: <b><time datetime="2026-08-13">13 August 2026</time></b> · Covers app version
+          <b>1.66.0</b> and later · Package <code>com.mohamedgado.masareef</code>
         </p>
 
         <div class="glance">
@@ -566,8 +566,9 @@
             <li><a href="#en-19">Your rights</a></li>
             <li><a href="#en-20">Children's privacy</a></li>
             <li><a href="#en-21">Third-party services</a></li>
-            <li><a href="#en-22">Changes to this policy</a></li>
-            <li><a href="#en-23">Contact</a></li>
+            <li><a href="#en-22">Masareef Pro and payments</a></li>
+            <li><a href="#en-23">Changes to this policy</a></li>
+            <li><a href="#en-24">Contact</a></li>
           </ol>
         </nav>
 
@@ -575,7 +576,8 @@
         <p>
           Masareef (<code>com.mohamedgado.masareef</code>) is built and operated by one person,
           Mohamed Gado. This policy covers the Masareef Android app, any future iOS release, the
-          backend the app talks to (<code>masareef-server.vercel.app</code>), and this page itself.
+          backend the app talks to (<code>masareef-api.radioheadd1337.workers.dev</code>), and this
+          page itself.
           The page sets no cookies and loads nothing from another host.
         </p>
         <p>
@@ -717,7 +719,8 @@
         <p>
           So yes: <strong>amounts and merchant names are stored on our server</strong>. Being
           straight about that matters more than a nicer sentence. They are sent over TLS, scoped to
-          your user id, and held in a PostgreSQL database (Neon) reached through our Vercel backend.
+          your user id, and held in a PostgreSQL database (Neon) reached through our backend, which
+          runs on Cloudflare Workers.
           They are never used for advertising, never sold, never shared with a data broker, and never
           forwarded to the analytics services in section 12.
         </p>
@@ -879,10 +882,11 @@
         </p>
         <p>
           When you are signed in, that image is <strong>uploaded to our backend</strong> and stored
-          as a file on Vercel Blob, so the same avatar appears after a reinstall or on another
-          device. The stored URL is not guessable but it is not access-controlled either: treat it as
-          a photo published at an unlisted address, and do not use a picture you would not want at a
-          public URL. Clear the photo in the app to stop using it, and email us to have the stored
+          in our Cloudflare D1 database, so the same avatar appears after a reinstall or on another
+          device. It is served back at a <strong>public address that contains your account id</strong>
+          — no sign-in is checked when the picture is fetched, so anyone holding that address can see
+          it. Treat it as a photo published on the open web, and do not use a picture you would not
+          want there. Clear the photo in the app to stop using it, and email us to have the stored
           file deleted.
         </p>
 
@@ -1157,6 +1161,11 @@
             <strong>The ATM cache</strong> on our server holds map data for coarse geographic cells.
             It contains no user id and nothing personal, so there is nothing in it to delete.
           </li>
+          <li>
+            <strong>A Masareef Pro purchase record</strong> is held by Google and RevenueCat for as
+            long as their tax and accounting obligations require, which outlives your account
+            (section 22). We cannot shorten that, and neither can they.
+          </li>
         </ul>
 
         <h2 id="en-19">19. Your rights</h2>
@@ -1198,12 +1207,18 @@
         </p>
         <ul>
           <li>
-            <a href="https://vercel.com/legal/privacy-policy" rel="noopener">Vercel</a> hosts our
-            backend and stores uploaded profile photos on Vercel Blob (device contacts it)
+            <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">Cloudflare</a> runs our
+            backend (Workers) and stores uploaded profile photos and the ATM cache in its D1 database
+            (device contacts it)
           </li>
           <li>
             <a href="https://neon.com/privacy-policy" rel="noopener">Neon</a> hosts the PostgreSQL
             database behind our backend (server side only)
+          </li>
+          <li>
+            <a href="https://www.revenuecat.com/privacy/" rel="noopener">RevenueCat</a> records
+            whether your Masareef Pro subscription is active, against your account id (device
+            contacts it, only if you subscribe)
           </li>
           <li>
             <a href="https://resend.com/legal/privacy-policy" rel="noopener">Resend</a> delivers
@@ -1211,8 +1226,8 @@
           </li>
           <li>
             <a href="https://policies.google.com/privacy" rel="noopener">Google</a> for optional
-            Google sign-in, Google Play distribution and updates, and Maps directions when you tap
-            them (device contacts it)
+            Google sign-in, Google Play distribution and updates, Google Play Billing if you
+            subscribe to Masareef Pro, and Maps directions when you tap them (device contacts it)
           </li>
           <li>
             <a href="https://posthog.com/privacy" rel="noopener">PostHog</a> for usage analytics and
@@ -1259,14 +1274,38 @@
           none in the app.
         </p>
 
-        <h2 id="en-22">22. Changes to this policy</h2>
+        <h2 id="en-22">22. Masareef Pro and payments</h2>
+        <p>
+          Masareef Pro is an optional paid subscription. If you never subscribe, nothing in this
+          section applies to you.
+        </p>
+        <p>
+          The payment itself is handled entirely by <strong>Google Play Billing</strong>. We never
+          see or receive your card number, bank details or billing address — Google takes the money
+          and tells us only that a purchase succeeded.
+        </p>
+        <p>
+          To know whether your subscription is still active, the app uses
+          <strong>RevenueCat</strong>. It receives your Masareef account id, the purchase token Google
+          issues, and the resulting subscription state (active, expired, refunded, which product,
+          which dates). Your account id is what lets Pro follow you to a new phone instead of being
+          stranded on the old one. RevenueCat receives no financial records from the app: no amounts,
+          no merchants, no balances, no transactions.
+        </p>
+        <p>
+          Google and RevenueCat keep the purchase record for their own tax, accounting and
+          anti-fraud obligations, so it survives the deletion of your Masareef account — see
+          <a href="./delete-account.html">the deletion page</a> for what that means in practice.
+        </p>
+
+        <h2 id="en-23">23. Changes to this policy</h2>
         <p>
           We update this page whenever a feature or a data flow changes. The date at the top reflects
           the current version, the full history is public in this page's GitHub repository, and
           material changes are called out in the app's release notes.
         </p>
 
-        <h2 id="en-23">23. Contact</h2>
+        <h2 id="en-24">24. Contact</h2>
         <div class="contact">
           <p>
             For any privacy question, a copy of your data, or a deletion request:
@@ -1301,8 +1340,8 @@
           التطبيق، وما يرسله، وإلى مَن.
         </p>
         <p class="meta">
-          آخر تحديث: <b><time datetime="2026-07-27">٢٧ يوليو ٢٠٢٦</time></b> · تغطي الإصدار
-          <b>1.46.0</b> وما بعده · معرّف الحزمة <code>com.mohamedgado.masareef</code>
+          آخر تحديث: <b><time datetime="2026-08-13">١٣ أغسطس ٢٠٢٦</time></b> · تغطي الإصدار
+          <b>1.66.0</b> وما بعده · معرّف الحزمة <code>com.mohamedgado.masareef</code>
         </p>
 
         <div class="glance">
@@ -1368,8 +1407,9 @@
             <li><a href="#ar-19">حقوقك</a></li>
             <li><a href="#ar-20">خصوصية الأطفال</a></li>
             <li><a href="#ar-21">خدمات الغير</a></li>
-            <li><a href="#ar-22">تعديلات السياسة</a></li>
-            <li><a href="#ar-23">التواصل</a></li>
+            <li><a href="#ar-22">مصاريف برو والمدفوعات</a></li>
+            <li><a href="#ar-23">تعديلات السياسة</a></li>
+            <li><a href="#ar-24">التواصل</a></li>
           </ol>
         </nav>
 
@@ -1377,7 +1417,8 @@
         <p>
           مصاريف (<code>com.mohamedgado.masareef</code>) يطوّره ويشغّله فرد واحد: محمد جادو. تغطي هذه
           السياسة تطبيق مصاريف على أندرويد، وأي إصدار مستقبلي على iOS، والخادم الذي يتصل به التطبيق
-          (<code>masareef-server.vercel.app</code>)، وتغطي كذلك هذه الصفحة نفسها. الصفحة لا تضع كوكيز
+          (<code>masareef-api.radioheadd1337.workers.dev</code>)، وتغطي كذلك هذه الصفحة نفسها.
+          الصفحة لا تضع كوكيز
           ولا تحمّل أي ملف من خادم آخر.
         </p>
         <p>
@@ -1508,7 +1549,8 @@
         <p>
           إذن نعم: <strong>المبالغ وأسماء التجّار تُخزَّن على خادمنا</strong>. الصراحة في هذه الجزئية
           أهم من جملة ألطف. تُرسل عبر TLS، ومحصورة بمعرّف المستخدم الخاص بك، ومحفوظة في قاعدة بيانات
-          PostgreSQL (Neon) يجري الوصول إليها عبر خادمنا على Vercel. لا تُستخدم للإعلانات، ولا تُباع،
+          PostgreSQL (Neon) يجري الوصول إليها عبر خادمنا العامل على Cloudflare Workers. لا تُستخدم
+          للإعلانات، ولا تُباع،
           ولا تُشارَك مع أي وسيط بيانات، ولا تُمرَّر إلى خدمات القياس في القسم ١٢.
         </p>
         <div class="note">
@@ -1651,10 +1693,11 @@
           الخاص لتبقى.
         </p>
         <p>
-          وأثناء تسجيل دخولك، <strong>تُرفع الصورة إلى خادمنا</strong> وتُخزَّن كملف على Vercel Blob،
-          لتظهر الصورة نفسها بعد إعادة التثبيت أو على جهاز آخر. الرابط المخزَّن لا يمكن تخمينه، لكنه
-          غير محمي بصلاحية أيضًا: اعتبرها صورة منشورة على عنوان غير معلن، ولا تستخدم صورة تكره وجودها
-          على رابط عام. امسح الصورة من التطبيق للتوقّف عن استخدامها، وراسلنا لحذف الملف المخزَّن.
+          وأثناء تسجيل دخولك، <strong>تُرفع الصورة إلى خادمنا</strong> وتُخزَّن في قاعدة بيانات
+          Cloudflare D1، لتظهر الصورة نفسها بعد إعادة التثبيت أو على جهاز آخر. وتُقدَّم عبر
+          <strong>رابط عام يحتوي معرّف حسابك</strong> — لا يُفحص تسجيل الدخول عند جلب الصورة، فمن
+          يملك الرابط يستطيع رؤيتها. اعتبرها صورة منشورة على الإنترنت المفتوح، ولا تستخدم صورة تكره
+          وجودها هناك. امسح الصورة من التطبيق للتوقّف عن استخدامها، وراسلنا لحذف الملف المخزَّن.
         </p>
 
         <h2 id="ar-10">١٠. الإشعارات والتنبيهات</h2>
@@ -1915,6 +1958,10 @@
             <strong>مخزن ماكينات الصرف</strong> على خادمنا يحتوي بيانات خرائط لخلايا جغرافية خشنة، ولا
             يحتوي أي معرّف مستخدم ولا أي بيانات شخصية، فلا يوجد فيه ما يُحذف.
           </li>
+          <li>
+            <strong>سجل شراء مصاريف برو</strong> تحتفظ به Google وRevenueCat طوال ما تفرضه التزاماتهما
+            الضريبية والمحاسبية، وهي مدة تتجاوز عمر حسابك (القسم ٢٢). لا نملك تقصيرها، ولا هما.
+          </li>
         </ul>
 
         <h2 id="ar-19">١٩. حقوقك</h2>
@@ -1948,12 +1995,17 @@
         <p>هذه كل الأطراف الخارجية، ومكتوب أمام ما يتصل به جهازك مباشرة:</p>
         <ul>
           <li>
-            <a href="https://vercel.com/legal/privacy-policy" rel="noopener">Vercel</a> تستضيف خادمنا
-            وتخزّن صور الملف الشخصي المرفوعة على Vercel Blob (جهازك يتصل بها)
+            <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">Cloudflare</a> تشغّل
+            خادمنا (Workers) وتخزّن صور الملف الشخصي وذاكرة ماكينات الصرّاف في قاعدة بياناتها D1
+            (جهازك يتصل بها)
           </li>
           <li>
             <a href="https://neon.com/privacy-policy" rel="noopener">Neon</a> تستضيف قاعدة بيانات
             PostgreSQL خلف خادمنا (على الخادم فقط)
+          </li>
+          <li>
+            <a href="https://www.revenuecat.com/privacy/" rel="noopener">RevenueCat</a> تسجّل ما إذا
+            كان اشتراك مصاريف برو نشطًا، مقابل معرّف حسابك (جهازك يتصل بها، فقط إذا اشتركت)
           </li>
           <li>
             <a href="https://resend.com/legal/privacy-policy" rel="noopener">Resend</a> توصّل رسائل
@@ -1961,7 +2013,8 @@
           </li>
           <li>
             <a href="https://policies.google.com/privacy" rel="noopener">Google</a> للدخول الاختياري
-            بجوجل، والتوزيع والتحديث عبر جوجل بلاي، والاتجاهات في الخرائط عند طلبك (جهازك يتصل بها)
+            بجوجل، والتوزيع والتحديث عبر جوجل بلاي، والدفع عبر Google Play Billing إذا اشتركت في
+            مصاريف برو، والاتجاهات في الخرائط عند طلبك (جهازك يتصل بها)
           </li>
           <li>
             <a href="https://posthog.com/privacy" rel="noopener">PostHog</a> لقياسات الاستخدام وتتبّع
@@ -2008,14 +2061,36 @@
           التطبيق.
         </p>
 
-        <h2 id="ar-22">٢٢. تعديلات السياسة</h2>
+        <h2 id="ar-22">٢٢. مصاريف برو والمدفوعات</h2>
+        <p>
+          مصاريف برو اشتراك مدفوع اختياري. إن لم تشترك أبدًا فلا ينطبق عليك أي شيء في هذا القسم.
+        </p>
+        <p>
+          عملية الدفع نفسها تتم بالكامل عبر <strong>Google Play Billing</strong>. لا نرى ولا نستلم
+          رقم بطاقتك ولا بيانات بنكك ولا عنوان الفوترة — جوجل تتولّى تحصيل المبلغ وتخبرنا فقط أن
+          الشراء تم.
+        </p>
+        <p>
+          ولمعرفة ما إذا كان اشتراكك ما زال نشطًا، يستخدم التطبيق <strong>RevenueCat</strong>. تستلم
+          معرّف حسابك في مصاريف، ورمز الشراء الذي تصدره جوجل، وحالة الاشتراك الناتجة (نشط، منتهٍ،
+          مُسترجَع، وأي منتج وأي تواريخ). معرّف حسابك هو ما يجعل برو يتبعك إلى هاتف جديد بدل أن يبقى
+          حبيس القديم. ولا تستلم RevenueCat أي سجلات مالية من التطبيق: لا مبالغ، ولا تجّار، ولا
+          أرصدة، ولا معاملات.
+        </p>
+        <p>
+          وتحتفظ Google وRevenueCat بسجل الشراء لالتزاماتهما الضريبية والمحاسبية ومكافحة الاحتيال،
+          فيبقى بعد حذف حسابك في مصاريف — راجع
+          <a href="./delete-account.html">صفحة الحذف</a> لتفاصيل ذلك عمليًا.
+        </p>
+
+        <h2 id="ar-23">٢٣. تعديلات السياسة</h2>
         <p>
           نحدّث هذه الصفحة كلما تغيّرت ميزة أو مسار بيانات. التاريخ في الأعلى يعبّر عن النسخة الحالية،
           والسجل الكامل للتغييرات علني في مستودع هذه الصفحة على GitHub، والتغييرات الجوهرية تُذكر في
           ملاحظات إصدار التطبيق.
         </p>
 
-        <h2 id="ar-23">٢٣. التواصل</h2>
+        <h2 id="ar-24">٢٤. التواصل</h2>
         <div class="contact">
           <p>
             لأي سؤال عن الخصوصية، أو للحصول على نسخة من بياناتك، أو لطلب حذفها:
