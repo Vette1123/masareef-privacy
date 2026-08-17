@@ -79,8 +79,9 @@ rights, children, third parties, changes, contact.
 | Google (Sign-In, Play, Maps links) | Optional sign-in, distribution and updates, directions |
 
 Server side only, never contacted by the device: TomTom, Foursquare and Geoapify (ATM
-data, queried with a coarse cell), Neon (database), Resend (account email), Vercel Blob
-(avatar files).
+data, queried with a coarse cell), Neon (sign-in details), Resend (account email).
+Everything else the backend stores — synced records, avatars, the ATM cache — is in
+Cloudflare D1.
 
 ### Permissions disclosed
 

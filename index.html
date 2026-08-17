@@ -498,7 +498,7 @@
           page explains exactly what it stores, what it sends, and to whom.
         </p>
         <p class="meta">
-          Last updated: <b><time datetime="2026-08-13">13 August 2026</time></b> · Covers app version
+          Last updated: <b><time datetime="2026-08-17">17 August 2026</time></b> · Covers app version
           <b>1.66.0</b> and later · Package <code>com.mohamedgado.masareef</code>
         </p>
 
@@ -732,8 +732,9 @@
         <p>
           So yes: <strong>amounts and merchant names are stored on our server</strong>. Being
           straight about that matters more than a nicer sentence. They are sent over TLS, scoped to
-          your user id, and held in a PostgreSQL database (Neon) reached through our backend, which
-          runs on Cloudflare Workers.
+          your user id, and held in our Cloudflare D1 database, reached through our backend, which
+          also runs on Cloudflare. Your sign-in details are kept apart from them, in a PostgreSQL
+          database (Neon).
           They are never used for advertising, never sold, never shared with a data broker, and never
           forwarded to the analytics services in section 12.
         </p>
@@ -1244,12 +1245,12 @@
         <ul>
           <li>
             <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">Cloudflare</a> runs our
-            backend (Workers) and stores uploaded profile photos and the ATM cache in its D1 database
-            (device contacts it)
+            backend (Workers) and stores your synced records, uploaded profile photos and the ATM
+            cache in its D1 database (device contacts it)
           </li>
           <li>
             <a href="https://neon.com/privacy-policy" rel="noopener">Neon</a> hosts the PostgreSQL
-            database behind our backend (server side only)
+            database that holds your sign-in details (server side only)
           </li>
           <li>
             <a href="https://www.revenuecat.com/privacy/" rel="noopener">RevenueCat</a> records
@@ -1378,7 +1379,7 @@
           التطبيق، وما يرسله، وإلى مَن.
         </p>
         <p class="meta">
-          آخر تحديث: <b><time datetime="2026-08-13">١٣ أغسطس ٢٠٢٦</time></b> · تغطي الإصدار
+          آخر تحديث: <b><time datetime="2026-08-17">١٧ أغسطس ٢٠٢٦</time></b> · تغطي الإصدار
           <b>1.66.0</b> وما بعده · معرّف الحزمة <code>com.mohamedgado.masareef</code>
         </p>
 
@@ -1600,7 +1601,8 @@
         <p>
           إذن نعم: <strong>المبالغ وأسماء التجّار تُخزَّن على خادمنا</strong>. الصراحة في هذه الجزئية
           أهم من جملة ألطف. تُرسل عبر TLS، ومحصورة بمعرّف المستخدم الخاص بك، ومحفوظة في قاعدة بيانات
-          PostgreSQL (Neon) يجري الوصول إليها عبر خادمنا العامل على Cloudflare Workers. لا تُستخدم
+          Cloudflare D1 يجري الوصول إليها عبر خادمنا العامل على Cloudflare Workers. أما بيانات تسجيل
+          الدخول فمحفوظة منفصلة عنها، في قاعدة بيانات PostgreSQL (Neon). لا تُستخدم
           للإعلانات، ولا تُباع،
           ولا تُشارَك مع أي وسيط بيانات، ولا تُمرَّر إلى خدمات القياس في القسم ١٢.
         </p>
@@ -2066,12 +2068,12 @@
         <ul>
           <li>
             <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">Cloudflare</a> تشغّل
-            خادمنا (Workers) وتخزّن صور الملف الشخصي وذاكرة ماكينات الصرّاف في قاعدة بياناتها D1
-            (جهازك يتصل بها)
+            خادمنا (Workers) وتخزّن سجلاتك المتزامنة وصور الملف الشخصي وذاكرة ماكينات الصرّاف في
+            قاعدة بياناتها D1 (جهازك يتصل بها)
           </li>
           <li>
             <a href="https://neon.com/privacy-policy" rel="noopener">Neon</a> تستضيف قاعدة بيانات
-            PostgreSQL خلف خادمنا (على الخادم فقط)
+            PostgreSQL التي تحفظ بيانات تسجيل الدخول (على الخادم فقط)
           </li>
           <li>
             <a href="https://www.revenuecat.com/privacy/" rel="noopener">RevenueCat</a> تسجّل ما إذا
