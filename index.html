@@ -733,8 +733,8 @@
           So yes: <strong>amounts and merchant names are stored on our server</strong>. Being
           straight about that matters more than a nicer sentence. They are sent over TLS, scoped to
           your user id, and held in our Cloudflare D1 database, reached through our backend, which
-          also runs on Cloudflare. Your sign-in details are kept apart from them, in a PostgreSQL
-          database (Neon).
+          also runs on Cloudflare. Your sign-in details are kept apart from them, in a separate Cloudflare D1
+          database.
           They are never used for advertising, never sold, never shared with a data broker, and never
           forwarded to the analytics services in section 12.
         </p>
@@ -1245,12 +1245,8 @@
         <ul>
           <li>
             <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">Cloudflare</a> runs our
-            backend (Workers) and stores your synced records, uploaded profile photos and the ATM
-            cache in its D1 database (device contacts it)
-          </li>
-          <li>
-            <a href="https://neon.com/privacy-policy" rel="noopener">Neon</a> hosts the PostgreSQL
-            database that holds your sign-in details (server side only)
+            backend (Workers) and stores your synced records, uploaded profile photos, the ATM
+            cache and your sign-in details in its D1 databases (device contacts it)
           </li>
           <li>
             <a href="https://www.revenuecat.com/privacy/" rel="noopener">RevenueCat</a> records
@@ -1602,7 +1598,7 @@
           إذن نعم: <strong>المبالغ وأسماء التجّار تُخزَّن على خادمنا</strong>. الصراحة في هذه الجزئية
           أهم من جملة ألطف. تُرسل عبر TLS، ومحصورة بمعرّف المستخدم الخاص بك، ومحفوظة في قاعدة بيانات
           Cloudflare D1 يجري الوصول إليها عبر خادمنا العامل على Cloudflare Workers. أما بيانات تسجيل
-          الدخول فمحفوظة منفصلة عنها، في قاعدة بيانات PostgreSQL (Neon). لا تُستخدم
+          الدخول فمحفوظة منفصلة عنها، في قاعدة بيانات Cloudflare D1 مستقلة. لا تُستخدم
           للإعلانات، ولا تُباع،
           ولا تُشارَك مع أي وسيط بيانات، ولا تُمرَّر إلى خدمات القياس في القسم ١٢.
         </p>
@@ -2068,12 +2064,8 @@
         <ul>
           <li>
             <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">Cloudflare</a> تشغّل
-            خادمنا (Workers) وتخزّن سجلاتك المتزامنة وصور الملف الشخصي وذاكرة ماكينات الصرّاف في
-            قاعدة بياناتها D1 (جهازك يتصل بها)
-          </li>
-          <li>
-            <a href="https://neon.com/privacy-policy" rel="noopener">Neon</a> تستضيف قاعدة بيانات
-            PostgreSQL التي تحفظ بيانات تسجيل الدخول (على الخادم فقط)
+            خادمنا (Workers) وتخزّن سجلاتك المتزامنة وصور الملف الشخصي وذاكرة ماكينات الصرّاف وبيانات
+            تسجيل الدخول في قواعد بياناتها D1 (جهازك يتصل بها)
           </li>
           <li>
             <a href="https://www.revenuecat.com/privacy/" rel="noopener">RevenueCat</a> تسجّل ما إذا
