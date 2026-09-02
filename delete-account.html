@@ -463,7 +463,10 @@
               <tr>
                 <td>Name, email, password hash, sessions, Google account link</td>
                 <td>Our authentication database</td>
-                <td>Permanently deleted within 30 days of your request</td>
+                <td>
+                  Deleted immediately when you delete the account in the app; within 30 days if you
+                  asked us by email
+                </td>
               </tr>
               <tr>
                 <td>
@@ -485,8 +488,9 @@
                 <td>Masareef Pro subscription record</td>
                 <td>Google Play and RevenueCat, against your account id</td>
                 <td>
-                  <strong>Kept</strong> for as long as their tax and accounting rules require. Cancel
-                  the subscription in Google Play before you ask us to delete the account
+                  The RevenueCat record is <strong>deleted</strong> with your account. Google Play
+                  keeps its own record of the transaction. Cancel the subscription in Google Play
+                  first — deleting the account does not cancel it
                 </td>
               </tr>
               <tr>
@@ -499,8 +503,13 @@
               </tr>
               <tr>
                 <td>Usage analytics and crash reports</td>
-                <td>PostHog (EU) and Expo, keyed to a random account id</td>
-                <td>Deleted on request. They contain no amounts, merchants or balances</td>
+                <td>PostHog (EU), keyed to a random account id; Expo, keyed to nothing about you</td>
+                <td>
+                  PostHog's person record and the events attached to it are deleted with your
+                  account, which PostHog then carries out on its own schedule. Expo's data holds no
+                  account id, so there is nothing in it to look up. Neither contains amounts,
+                  merchants or balances
+                </td>
               </tr>
             </tbody>
           </table>
@@ -514,11 +523,18 @@
           geographic cells, with no account id and nothing personal in it.
         </p>
         <p>
-          The one deliberate exception is a <strong>Masareef Pro purchase</strong>. Google Play and
-          RevenueCat keep that record — the account id it was bought under, the product and the
-          dates — for as long as their tax, accounting and anti-fraud obligations demand. It is
-          their record, not ours, and deleting your Masareef account does not remove it. It holds no
-          financial data from the app: no amounts, no merchants, no balances.
+          Two things are not ours to erase. The first is <strong>Google Play's record of a Masareef
+          Pro purchase</strong> — the account it was bought under, the product and the dates. Google
+          is the seller and the payment processor, it keeps that record under its own policies, and
+          deleting your Masareef account does not remove it. It holds no financial data from the
+          app: no amounts, no merchants, no balances. RevenueCat's copy of it is different: that one
+          is deleted with your account.
+        </p>
+        <p>
+          The second is the <strong>delivery log for account email</strong>. Verify and reset
+          messages go out through Resend, which keeps the address a message was sent to for 30 days
+          and offers no way to delete a message already sent. We keep no contact list or audience
+          there. So that log is not erased with your account; it ages out on its own.
         </p>
         <div class="note">
           <p>
@@ -638,7 +654,9 @@
               <tr>
                 <td>الاسم والبريد وبصمة كلمة المرور والجلسات ورابط حساب جوجل</td>
                 <td>قاعدة بيانات المصادقة لدينا</td>
-                <td>تُحذف نهائيًا خلال ٣٠ يومًا من طلبك</td>
+                <td>
+                  تُحذف فورًا عند حذف الحساب من داخل التطبيق، وخلال ٣٠ يومًا إن طلبتَ الحذف بالبريد
+                </td>
               </tr>
               <tr>
                 <td>
@@ -659,8 +677,8 @@
                 <td>سجل اشتراك مصاريف برو</td>
                 <td>Google Play وRevenueCat، مقابل معرّف حسابك</td>
                 <td>
-                  <strong>يُحتفظ به</strong> طوال ما تفرضه قواعدهما الضريبية والمحاسبية. ألغِ الاشتراك
-                  من Google Play قبل أن تطلب منّا حذف الحساب
+                  سجل RevenueCat <strong>يُحذف</strong> مع حسابك، وتحتفظ Google Play بسجلها هي
+                  للعملية. ألغِ الاشتراك من Google Play أولًا — حذف الحساب لا يلغيه
                 </td>
               </tr>
               <tr>
@@ -673,8 +691,14 @@
               </tr>
               <tr>
                 <td>قياسات الاستخدام وتقارير الأعطال</td>
-                <td>PostHog (الاتحاد الأوروبي) وExpo، مرتبطة بمعرّف حساب عشوائي</td>
-                <td>تُحذف بناءً على طلبك. ولا تحتوي أي مبالغ أو أسماء تجّار أو أرصدة</td>
+                <td>
+                  PostHog (الاتحاد الأوروبي) مرتبطة بمعرّف حساب عشوائي، وExpo غير مرتبطة بك أصلًا
+                </td>
+                <td>
+                  سجل الشخص لدى PostHog والأحداث المرتبطة به تُحذف مع حسابك، وتنفّذ PostHog ذلك وفق
+                  جدولها هي. أما بيانات Expo فلا تحمل أي معرّف حساب، فلا يوجد فيها ما يُبحث عنه.
+                  ولا تحتوي أيٌّ منهما مبالغ أو أسماء تجّار أو أرصدة
+                </td>
               </tr>
             </tbody>
           </table>
@@ -687,10 +711,16 @@
           بيانات خرائط لخلايا جغرافية خشنة، بلا أي معرّف حساب وبلا أي بيانات شخصية.
         </p>
         <p>
-          الاستثناء الوحيد المقصود هو <strong>شراء مصاريف برو</strong>. تحتفظ Google Play وRevenueCat
-          بهذا السجل — معرّف الحساب الذي تم الشراء تحته والمنتج والتواريخ — طوال ما تفرضه التزاماتهما
-          الضريبية والمحاسبية ومكافحة الاحتيال. هو سجلّهما لا سجلّنا، وحذف حسابك في مصاريف لا يزيله.
-          ولا يحتوي أي بيانات مالية من التطبيق: لا مبالغ ولا تجّار ولا أرصدة.
+          هناك أمران ليس لنا أن نمحوهما. الأول <strong>سجل جوجل بلاي لشراء مصاريف برو</strong> —
+          الحساب الذي تم الشراء تحته والمنتج والتواريخ. جوجل هي البائع ومعالج الدفع، وتحتفظ بهذا
+          السجل وفق سياساتها هي، وحذف حسابك في مصاريف لا يزيله. ولا يحتوي أي بيانات مالية من
+          التطبيق: لا مبالغ ولا تجّار ولا أرصدة. أما نسخة RevenueCat منه فمختلفة: تلك تُحذف مع حسابك.
+        </p>
+        <p>
+          والثاني <strong>سجل إرسال رسائل الحساب</strong>. رسائل التوثيق وإعادة التعيين تُرسل عبر
+          Resend، وهي تحتفظ بالعنوان الذي أُرسلت إليه الرسالة ٣٠ يومًا ولا تتيح حذف رسالة أُرسلت
+          بالفعل، ولا نحتفظ لديها بأي قائمة جهات اتصال. فلا يُمحى هذا السجل مع حسابك، بل تنتهي مدته
+          من تلقاء نفسها.
         </p>
         <div class="note">
           <p>

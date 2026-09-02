@@ -443,7 +443,7 @@
         "alternateName": "سياسة الخصوصية لتطبيق مصاريف",
         "url": "https://vette1123.github.io/masareef-privacy/",
         "inLanguage": ["en", "ar"],
-        "dateModified": "2026-08-13",
+        "dateModified": "2026-09-02",
         "about": {
           "@type": "MobileApplication",
           "name": "Masareef",
@@ -972,8 +972,10 @@
         </ul>
         <div class="note">
           <p>
-            This version has no in-app switch to turn analytics off. If you want yours stopped or
-            deleted, email the address in section 23 and it will be done.
+            This version has no in-app switch to turn analytics off. Deleting your account deletes
+            your PostHog person and its events automatically, without a separate request
+            (section 18). If you want yours stopped or deleted while keeping the account, email the
+            address in section 24 and it will be done.
           </p>
         </div>
 
@@ -1208,22 +1210,42 @@
             the app deletes it on the server on the next sync pass.
           </li>
           <li>
-            <strong>Your account</strong> and everything synced under it are deleted on request,
+            <strong>Your account</strong> and everything synced under it are deleted from our
+            databases <strong>immediately</strong> when you delete the account in the app, at
+            Settings, Delete account. If you cannot sign in and ask us by email instead, it is done
             within 30 days. See the
             <a href="./delete-account.html">account deletion page</a>.
           </li>
           <li>
-            <strong>Analytics events</strong> are held by PostHog and Expo under their own retention
-            windows, keyed to the random account id described in section 12, and deleted on request.
+            <strong>Analytics events at PostHog</strong> go with the account, not on a separate
+            request: deleting it tells PostHog to delete the person record keyed to the random id
+            described in section 12, and the events attached to it. PostHog carries that event
+            deletion out on its own schedule rather than at the moment we ask, so it finishes
+            shortly after your account is already gone. If PostHog cannot be reached, we keep a
+            record that the erasure is still owed and retry it nightly until it is done.
+          </li>
+          <li>
+            <strong>Expo's launch and performance data</strong> (Insights and Observe) carries no
+            account id at all, so there is nothing in it to look up and delete. It ages out under
+            Expo's own retention window.
+          </li>
+          <li>
+            <strong>The delivery log for account email</strong> at Resend keeps the address a verify
+            or reset message was sent to. We keep no contact list or audience there, only messages
+            already sent, and Resend offers no way to delete one of those, so that log is not erased
+            with your account: it ages out on Resend's own 30-day window.
           </li>
           <li>
             <strong>The ATM cache</strong> on our server holds map data for coarse geographic cells.
             It contains no user id and nothing personal, so there is nothing in it to delete.
           </li>
           <li>
-            <strong>A Masareef Pro purchase record</strong> is held by Google and RevenueCat for as
-            long as their tax and accounting obligations require, which outlives your account
-            (section 22). We cannot shorten that, and neither can they.
+            <strong>A Masareef Pro purchase.</strong> The RevenueCat customer record keyed to your
+            account id is deleted with the account, on the same path as the PostHog one. Google
+            Play's own record of the transaction is not ours to delete: Google is the seller and the
+            payment processor, and it keeps that record under its own policies (section 22).
+            Deleting the account does not cancel a live subscription either — cancel that in Google
+            Play.
           </li>
         </ul>
 
@@ -1350,8 +1372,10 @@
           no merchants, no balances, no transactions.
         </p>
         <p>
-          Google and RevenueCat keep the purchase record for their own tax, accounting and
-          anti-fraud obligations, so it survives the deletion of your Masareef account — see
+          Deleting your Masareef account deletes the RevenueCat customer record with it. Google's
+          own record of the transaction survives it: Google is the seller and the payment processor,
+          and we can neither reach nor delete that record. Deleting the account does not cancel a
+          live subscription either — cancel that in Google Play first. See
           <a href="./delete-account.html">the deletion page</a> for what that means in practice.
         </p>
 
@@ -1833,8 +1857,9 @@
         </ul>
         <div class="note">
           <p>
-            لا يوجد في هذا الإصدار مفتاح داخلي لإيقاف القياسات. إن رغبت في إيقافها أو حذف بياناتك،
-            راسلنا على البريد في القسم ٢٣ وسننفّذ ذلك.
+            لا يوجد في هذا الإصدار مفتاح داخلي لإيقاف القياسات. وحذف حسابك يحذف سجلك لدى PostHog
+            وأحداثه تلقائيًا دون طلب منفصل (القسم ١٨). وإن رغبت في إيقافها أو حذف بياناتك مع بقاء
+            حسابك، راسلنا على البريد في القسم ٢٤ وسننفّذ ذلك.
           </p>
         </div>
 
@@ -2057,20 +2082,37 @@
             الخادم في أول دورة مزامنة.
           </li>
           <li>
-            <strong>حسابك</strong> وكل ما زُومن تحته يُحذف بناءً على طلبك خلال ٣٠ يومًا. راجع
+            <strong>حسابك</strong> وكل ما زُومن تحته يُحذف من قواعد بياناتنا <strong>فورًا</strong>
+            عند حذف الحساب من داخل التطبيق، في الإعدادات ثم حذف الحساب. وإن تعذّر عليك تسجيل الدخول
+            وطلبتَ الحذف بالبريد، ننفّذه خلال ٣٠ يومًا. راجع
             <a href="./delete-account.html">صفحة حذف الحساب</a>.
           </li>
           <li>
-            <strong>أحداث القياس</strong> تحتفظ بها PostHog وExpo وفق سياساتهما، مرتبطة بالمعرّف
-            العشوائي المذكور في القسم ١٢، وتُحذف بناءً على طلبك.
+            <strong>أحداث القياس لدى PostHog</strong> تُحذف مع الحساب لا بطلب منفصل: حذف الحساب يطلب
+            من PostHog حذف سجل الشخص المرتبط بالمعرّف العشوائي المذكور في القسم ١٢، والأحداث المرتبطة
+            به. وتنفّذ PostHog حذف الأحداث وفق جدولها هي لا في لحظة الطلب، فيكتمل بعد أن يكون حسابك
+            قد زال. وإن تعذّر الوصول إلى PostHog نحتفظ بقيد يقول إن الحذف ما زال مستحقًا، ونعيد
+            المحاولة كل ليلة حتى يتم.
+          </li>
+          <li>
+            <strong>بيانات الإقلاع والأداء لدى Expo</strong> (Insights وObserve) لا تحمل أي معرّف
+            حساب، فلا يوجد فيها ما يُبحث عنه ويُحذف، وتنتهي مدتها وفق سياسة Expo نفسها.
+          </li>
+          <li>
+            <strong>سجل إرسال رسائل الحساب</strong> لدى Resend يحتفظ بالعنوان الذي أُرسلت إليه رسالة
+            التوثيق أو إعادة التعيين. ولا نحتفظ لديها بأي قائمة جهات اتصال، بل رسائل مُرسَلة فقط، ولا
+            تتيح Resend حذف رسالة أُرسلت، فلا يُمحى هذا السجل مع حسابك: بل تنتهي مدته خلال ٣٠ يومًا
+            وفق سياستها.
           </li>
           <li>
             <strong>مخزن ماكينات الصرف</strong> على خادمنا يحتوي بيانات خرائط لخلايا جغرافية خشنة، ولا
             يحتوي أي معرّف مستخدم ولا أي بيانات شخصية، فلا يوجد فيه ما يُحذف.
           </li>
           <li>
-            <strong>سجل شراء مصاريف برو</strong> تحتفظ به Google وRevenueCat طوال ما تفرضه التزاماتهما
-            الضريبية والمحاسبية، وهي مدة تتجاوز عمر حسابك (القسم ٢٢). لا نملك تقصيرها، ولا هما.
+            <strong>شراء مصاريف برو.</strong> سجل العميل لدى RevenueCat المرتبط بمعرّف حسابك يُحذف
+            مع الحساب، بالمسار نفسه الذي يُحذف به سجل PostHog. أما سجل جوجل بلاي للعملية فليس لنا أن
+            نحذفه: جوجل هي البائع ومعالج الدفع، وتحتفظ به وفق سياساتها هي (القسم ٢٢). كما أن حذف
+            الحساب لا يلغي اشتراكًا نشطًا — ألغِ الاشتراك من Google Play.
           </li>
         </ul>
 
@@ -2185,8 +2227,9 @@
           أرصدة، ولا معاملات.
         </p>
         <p>
-          وتحتفظ Google وRevenueCat بسجل الشراء لالتزاماتهما الضريبية والمحاسبية ومكافحة الاحتيال،
-          فيبقى بعد حذف حسابك في مصاريف — راجع
+          وحذف حسابك في مصاريف يحذف معه سجل العميل لدى RevenueCat. أما سجل جوجل للعملية فيبقى: جوجل
+          هي البائع ومعالج الدفع، ولا نستطيع الوصول إليه ولا حذفه. وحذف الحساب لا يلغي اشتراكًا نشطًا
+          — ألغِ الاشتراك من Google Play أولًا. راجع
           <a href="./delete-account.html">صفحة الحذف</a> لتفاصيل ذلك عمليًا.
         </p>
 
