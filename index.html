@@ -498,8 +498,8 @@
           page explains exactly what it stores, what it sends, and to whom.
         </p>
         <p class="meta">
-          Last updated: <b><time datetime="2026-08-17">17 August 2026</time></b> · Covers app version
-          <b>1.66.0</b> and later · Package <code>com.mohamedgado.masareef</code>
+          Last updated: <b><time datetime="2026-09-02">2 September 2026</time></b> · Covers app version
+          <b>1.79.0</b> and later · Package <code>com.mohamedgado.masareef</code>
         </p>
 
         <div class="glance">
@@ -1119,6 +1119,26 @@
                 <td>Rescheduling your reminders after a reboot</td>
               </tr>
               <tr>
+                <td>Camera</td>
+                <td>Asked</td>
+                <td>
+                  Photographing a receipt, from the attach button on a transaction. The photo stays
+                  in app-private storage on your device — not uploaded, not synced
+                </td>
+              </tr>
+              <tr>
+                <td>Microphone</td>
+                <td>Asked</td>
+                <td>
+                  Voice quick-add. It listens from the tap on the mic until you tap again or stop
+                  speaking, and the speech becomes the same text line you would have typed, shown to
+                  you before anything is saved. Recognition is done by your device's own speech
+                  recogniser — on most Android phones Google's, which may send the audio to Google
+                  under Google's privacy policy. Masareef never receives the audio, and the
+                  transcript never leaves your device
+                </td>
+              </tr>
+              <tr>
                 <td>Read storage (Android 12 and earlier)</td>
                 <td>Legacy</td>
                 <td>Old-Android file access inside libraries we depend on</td>
@@ -1135,11 +1155,13 @@
         </div>
         <div class="note">
           <p>
-            That is the complete list. Masareef does not request SMS, call logs, contacts, camera,
-            microphone, photo or media library access, your installed-app list, background location,
-            or the ability to draw over other apps. Permissions that arrived through libraries and
-            were not actually used, including camera, microphone, media images and draw-over-apps,
-            are stripped from the manifest at build time rather than shipped and left unexplained.
+            That is the complete list. Masareef does not request SMS, call logs, contacts, photo or
+            media library access, your installed-app list, background location, or the ability to
+            draw over other apps. Camera and microphone are asked for at the moment you use the
+            feature that needs them, and the app works without granting either. Permissions that
+            arrived through libraries and are not actually used, including media images,
+            draw-over-apps, phone state and the launcher badge, are stripped from the manifest at
+            build time rather than shipped and left unexplained.
           </p>
         </div>
 
@@ -1375,8 +1397,8 @@
           التطبيق، وما يرسله، وإلى مَن.
         </p>
         <p class="meta">
-          آخر تحديث: <b><time datetime="2026-08-17">١٧ أغسطس ٢٠٢٦</time></b> · تغطي الإصدار
-          <b>1.66.0</b> وما بعده · معرّف الحزمة <code>com.mohamedgado.masareef</code>
+          آخر تحديث: <b><time datetime="2026-09-02">٢ سبتمبر ٢٠٢٦</time></b> · تغطي الإصدار
+          <b>1.79.0</b> وما بعده · معرّف الحزمة <code>com.mohamedgado.masareef</code>
         </p>
 
         <div class="glance">
@@ -1953,6 +1975,25 @@
                 <td>إعادة جدولة تنبيهاتك بعد إعادة تشغيل الجهاز</td>
               </tr>
               <tr>
+                <td>الكاميرا</td>
+                <td>يُطلب</td>
+                <td>
+                  تصوير إيصال، من زر الإرفاق داخل المعاملة. تبقى الصورة في تخزين خاص بالتطبيق على
+                  جهازك — لا تُرفع ولا تُزامَن
+                </td>
+              </tr>
+              <tr>
+                <td>الميكروفون</td>
+                <td>يُطلب</td>
+                <td>
+                  الإضافة السريعة بالصوت. يستمع من لحظة الضغط على الميكروفون حتى تضغط مرة أخرى أو
+                  تتوقف عن الكلام، ويتحوّل كلامك إلى سطر الكتابة نفسه الذي كنت ستكتبه، ويُعرض عليك
+                  قبل أن يُحفظ أي شيء. أما التعرّف على الكلام فيقوم به برنامج جهازك نفسه — وهو في
+                  أغلب هواتف أندرويد برنامج جوجل، وقد يرسل الصوت إلى جوجل وفق سياسة خصوصية جوجل. ولا
+                  يصل الصوت إلى مصاريف أبدًا، ولا يغادر النص جهازك
+                </td>
+              </tr>
+              <tr>
                 <td>قراءة التخزين (أندرويد ١٢ فأقل)</td>
                 <td>قديم</td>
                 <td>وصول الملفات في الإصدارات القديمة داخل مكتبات نعتمد عليها</td>
@@ -1968,10 +2009,11 @@
         <div class="note">
           <p>
             هذه هي القائمة الكاملة. لا يطلب مصاريف الرسائل النصية ولا سجل المكالمات ولا جهات الاتصال
-            ولا الكاميرا ولا الميكروفون ولا مكتبة الصور ولا قائمة تطبيقاتك المثبّتة ولا الموقع في
-            الخلفية ولا الرسم فوق التطبيقات الأخرى. والأذونات التي دخلت مع المكتبات ولم تُستخدم فعليًا،
-            ومنها الكاميرا والميكروفون وصور الوسائط والرسم فوق التطبيقات، تُزال من ملف البيان وقت
-            البناء بدلًا من شحنها بلا تفسير.
+            ولا مكتبة الصور ولا قائمة تطبيقاتك المثبّتة ولا الموقع في الخلفية ولا الرسم فوق التطبيقات
+            الأخرى. أما الكاميرا والميكروفون فيُطلبان في لحظة استخدامك للميزة التي تحتاجهما، والتطبيق
+            يعمل دون منح أيٍّ منهما. والأذونات التي دخلت مع المكتبات ولا تُستخدم فعليًا، ومنها صور
+            الوسائط والرسم فوق التطبيقات وحالة الهاتف وشارة المشغّل، تُزال من ملف البيان وقت البناء
+            بدلًا من شحنها بلا تفسير.
           </p>
         </div>
 
