@@ -498,8 +498,8 @@
           page explains exactly what it stores, what it sends, and to whom.
         </p>
         <p class="meta">
-          Last updated: <b><time datetime="2026-09-02">2 September 2026</time></b> · Covers app version
-          <b>1.79.0</b> and later · Package <code>com.mohamedgado.masareef</code>
+          Last updated: <b><time datetime="2026-09-03">3 September 2026</time></b> · Covers app version
+          <b>1.80.0</b> and later · Package <code>com.mohamedgado.masareef</code>
         </p>
 
         <div class="glance">
@@ -651,8 +651,7 @@
             balance cards, dismissed hints.
           </li>
           <li><strong>Your last known coordinates</strong>, cached so the ATM screen need not ask again.</li>
-          <li><strong>Travel mode trips:</strong> trip name, country, currency and the rate you locked.</li>
-          <li>
+                    <li>
             <strong>Your profile photo's local copy</strong>, and the session cookie in the encrypted
             store.
           </li>
@@ -726,6 +725,29 @@
                   The merchant-to-category corrections you made, so categorisation learns from you
                 </td>
               </tr>
+              <tr>
+                <td>Goals</td>
+                <td>Name, target amount, amount saved so far, target date, wallet and colour</td>
+              </tr>
+              <tr>
+                <td>Installment plans</td>
+                <td>Provider, label, total, number of instalments, first due date, wallet and category</td>
+              </tr>
+              <tr>
+                <td>Assets</td>
+                <td>
+                  What you own outside a wallet: kind (gold, foreign cash, a certificate), name,
+                  quantity, karat, value, maturity date and note
+                </td>
+              </tr>
+              <tr>
+                <td>Travel mode trips</td>
+                <td>Trip name, country, currency, home currency, the rate you locked, start and end dates</td>
+              </tr>
+              <tr>
+                <td>Country and currency</td>
+                <td>The two settings a new phone needs to open in the right place. No other setting syncs</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -741,9 +763,19 @@
         <div class="note">
           <p>
             <strong>Never synced, by design:</strong> auto-track captures and their message text,
-            trusted senders, the diagnostics trace, all app settings, your coordinates, and Travel
-            mode trips. Deleting a record in the app deletes it on the server too: the deletion
+            trusted senders, the diagnostics trace, every app setting except your country and currency, and your
+            coordinates. Deleting a record in the app deletes it on the server too: the deletion
             propagates as a tombstone on the next sync pass rather than lingering as a hidden row.
+          </p>
+        </div>
+        <div class="note">
+          <p>
+            <strong>One identifier travels with a free account.</strong> The free tier is metered — a
+            fixed number of auto-captures a month, syncing on one phone — so a sync pass from a free
+            account carries a <strong>salted SHA-256 digest of the Android device id</strong>. Without
+            it the meter would reset by clearing the app’s data or signing up again. We receive the
+            digest, never the device id itself; it is not used for advertising and it is not joined to
+            anything outside the meter. A Pro account sends no device identifier at all.
           </p>
         </div>
 
@@ -876,9 +908,10 @@
             near the same place, so a repeat search hits our database and no upstream service at all.
           </li>
           <li>
-            If our backend is unreachable, the app queries the public
-            <strong>Overpass</strong> mirrors directly. In that fallback the mirror sees your
-            coordinates and your IP address, because it is answering your device directly.
+            <strong>The phone never queries any of those sources itself.</strong> If our backend is
+            unreachable the ATM screen shows an error, and no coordinate and no IP address of yours
+            reaches TomTom, Foursquare, Geoapify or Overpass. The direct-to-Overpass fallback that
+            earlier versions of this policy described was removed from the app.
           </li>
           <li>
             Tapping <strong>Directions</strong> hands the ATM's coordinates to Google Maps or
@@ -921,7 +954,7 @@
         <h2 id="en-11">11. Exchange rates and Travel mode</h2>
         <p>
           Travel mode records a trip and converts spending in a foreign currency back to your home
-          currency. Trips are stored on your device only. To get a rate the app calls the public
+          currency. A trip syncs with the rest of your ledger, so it is still there on another phone. To get a rate the app calls the public
           <strong>ExchangeRate-API</strong> endpoint with a currency code and nothing else. No
           amounts, no trip details and no identifiers are sent.
         </p>
@@ -1422,8 +1455,8 @@
           التطبيق، وما يرسله، وإلى مَن.
         </p>
         <p class="meta">
-          آخر تحديث: <b><time datetime="2026-09-02">٢ سبتمبر ٢٠٢٦</time></b> · تغطي الإصدار
-          <b>1.79.0</b> وما بعده · معرّف الحزمة <code>com.mohamedgado.masareef</code>
+          آخر تحديث: <b><time datetime="2026-09-03">٣ سبتمبر ٢٠٢٦</time></b> · تغطي الإصدار
+          <b>1.80.0</b> وما بعده · معرّف الحزمة <code>com.mohamedgado.masareef</code>
         </p>
 
         <div class="glance">
@@ -1568,8 +1601,7 @@
             المستبعدة.
           </li>
           <li><strong>آخر إحداثيات معروفة</strong>، محفوظة كي لا تسأل شاشة ماكينات الصرف مرة أخرى.</li>
-          <li><strong>رحلات وضع السفر:</strong> اسم الرحلة والدولة والعملة وسعر الصرف الذي ثبّتَه.</li>
-          <li>
+                    <li>
             <strong>النسخة المحلية من صورتك الشخصية</strong>، وكوكي الجلسة في المخزن المشفّر.
           </li>
           <li>
@@ -1638,6 +1670,29 @@
                 <td>قواعد التجّار</td>
                 <td>تصحيحاتك لربط تاجر بفئة، حتى يتعلّم التصنيف منك</td>
               </tr>
+              <tr>
+                <td>الأهداف</td>
+                <td>الاسم والمبلغ المستهدف والمُدّخر حتى الآن وتاريخ الهدف والمحفظة واللون</td>
+              </tr>
+              <tr>
+                <td>خطط التقسيط</td>
+                <td>الجهة والاسم والإجمالي وعدد الأقساط وتاريخ أول قسط والمحفظة والفئة</td>
+              </tr>
+              <tr>
+                <td>الأصول</td>
+                <td>
+                  ما تملكه خارج المحافظ: النوع (ذهب، نقد أجنبي، شهادة) والاسم والكمية والعيار
+                  والقيمة وتاريخ الاستحقاق والملاحظة
+                </td>
+              </tr>
+              <tr>
+                <td>رحلات وضع السفر</td>
+                <td>اسم الرحلة والدولة والعملة والعملة الأساسية وسعر الصرف المثبَّت وتاريخا البداية والنهاية</td>
+              </tr>
+              <tr>
+                <td>الدولة والعملة</td>
+                <td>الإعدادان اللذان يحتاجهما هاتف جديد ليفتح على الوضع الصحيح. ولا يُزامَن أي إعداد آخر</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -1652,9 +1707,18 @@
         <div class="note">
           <p>
             <strong>ما لا يُزامَن أبدًا بحكم التصميم:</strong> عناصر التتبّع التلقائي ونصوص رسائلها،
-            والمرسِلون الموثوقون، وسجل التشخيص، وكل إعدادات التطبيق، وإحداثياتك، ورحلات وضع السفر. وحذف
+            والمرسِلون الموثوقون، وسجل التشخيص، وكل إعدادات التطبيق عدا الدولة والعملة، وإحداثياتك. وحذف
             سجل داخل التطبيق يحذفه على الخادم أيضًا: ينتقل الحذف كعلامة قبر في أول دورة مزامنة، ولا
             يبقى صفًّا مخفيًا.
+          </p>
+        </div>
+        <div class="note">
+          <p>
+            <strong>معرّف واحد يسافر مع الحساب المجاني.</strong> الباقة المجانية محدودة بعدد ثابت من
+            عمليات التتبّع التلقائي شهريًا وبهاتف واحد للمزامنة، ولذلك تحمل دورة المزامنة من حساب
+            مجاني <strong>بصمة SHA-256 مملّحة لمعرّف جهاز أندرويد</strong>. وبدونها يُصفَّر العدّاد بمجرد
+            مسح بيانات التطبيق أو إنشاء حساب جديد. نستلم البصمة فقط لا المعرّف نفسه، ولا تُستخدم في
+            الإعلانات ولا تُربَط بأي شيء خارج العدّاد. أما حساب برو فلا يرسل أي معرّف جهاز.
           </p>
         </div>
 
@@ -1772,8 +1836,10 @@
             بياناتنا دون أي طلب خارجي.
           </li>
           <li>
-            وإن كان خادمنا غير متاح، يسأل التطبيق مرايا <strong>Overpass</strong> العامة مباشرة. في
-            هذا البديل ترى المرآة إحداثياتك وعنوان الـ IP، لأنها تجيب جهازك مباشرة.
+            <strong>ولا يسأل التطبيق أيًّا من هذه المصادر مباشرة.</strong> وإن كان خادمنا غير متاح
+            تظهر رسالة خطأ في شاشة الماكينات، ولا تصل إحداثياتك ولا عنوان الـ IP إلى TomTom أو
+            Foursquare أو Geoapify أو Overpass. أما البديل المباشر إلى Overpass الذي كانت تصفه نسخة
+            سابقة من هذه السياسة فقد أُزيل من التطبيق.
           </li>
           <li>
             وعند الضغط على <strong>الاتجاهات</strong> تُسلَّم إحداثيات الماكينة إلى خرائط جوجل أو أي
@@ -1811,8 +1877,7 @@
 
         <h2 id="ar-11">١١. أسعار الصرف ووضع السفر</h2>
         <p>
-          يسجّل وضع السفر رحلة ويحوّل الإنفاق بعملة أجنبية إلى عملتك الأساسية. والرحلات محفوظة على
-          جهازك فقط. ولجلب السعر يستدعي التطبيق نقطة <strong>ExchangeRate-API</strong> العامة برمز
+          يسجّل وضع السفر رحلة ويحوّل الإنفاق بعملة أجنبية إلى عملتك الأساسية. والرحلة تُزامَن مع بقية سجلّك، فتجدها على هاتف آخر. ولجلب السعر يستدعي التطبيق نقطة <strong>ExchangeRate-API</strong> العامة برمز
           عملة ولا شيء غيره. لا مبالغ، ولا تفاصيل رحلة، ولا معرّفات.
         </p>
 
