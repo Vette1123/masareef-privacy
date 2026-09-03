@@ -132,12 +132,14 @@
         cursor: pointer;
         transition: background-color 0.18s ease, color 0.18s ease;
       }
-      .switch button[aria-pressed="true"] {
+      html:not(.lang-ar) #btn-en,
+      html.lang-ar #btn-ar {
         background: var(--accent);
         color: #ffffff;
       }
       @media (prefers-color-scheme: dark) {
-        .switch button[aria-pressed="true"] {
+        html:not(.lang-ar) #btn-en,
+        html.lang-ar #btn-ar {
           color: #04231f;
         }
       }
@@ -358,7 +360,10 @@
         color: var(--muted);
         font-size: 0.86rem;
       }
-      .lang-hidden {
+      /* The head script stamps html.lang-en / html.lang-ar before the first paint. With
+         no script neither class lands and the page stays the English document it ships as. */
+      html:not(.lang-ar) #doc-ar,
+      html.lang-ar #doc-en {
         display: none;
       }
       .skip {
@@ -461,6 +466,35 @@
           "email": "boogado@yahoo.com"
         }
       }
+    </script>
+    <script>
+      // Resolve the language BEFORE first paint. The whole document flips direction,
+      // so deciding after paint moved the header across the viewport: a visible
+      // LTR to RTL flash and a layout shift on every Arabic visit.
+      (function () {
+        function stored() {
+          try {
+            return localStorage.getItem("masareef-privacy-lang");
+          } catch (e) {
+            return null; // private browsing can block storage
+          }
+        }
+        // A deep link to a section anchor wins over the stored choice, so a shared
+        // section link always lands on the section it names.
+        function pick() {
+          if (/^#ar-/.test(location.hash)) return "ar";
+          if (/^#en-/.test(location.hash)) return "en";
+          var saved = stored();
+          if (saved === "ar" || saved === "en") return saved;
+          if ((navigator.language || "en").toLowerCase().indexOf("ar") === 0) return "ar";
+          return "en";
+        }
+        var lang = pick();
+        var root = document.documentElement;
+        root.lang = lang;
+        root.dir = lang === "ar" ? "rtl" : "ltr";
+        root.classList.add("lang-" + lang);
+      })();
     </script>
   </head>
   <body>
@@ -1447,7 +1481,7 @@
       </section>
 
       <!-- ================================ ARABIC ================================ -->
-      <section id="doc-ar" lang="ar" dir="rtl" class="lang-hidden">
+      <section id="doc-ar" lang="ar" dir="rtl">
         <h1>سياسة الخصوصية لتطبيق مصاريف</h1>
         <p class="lede">
           مصاريف تطبيق لتتبّع المصروفات، يقرأ إشعارات المدفوعات من بنكك على جهازك، ويرتّب أموالك في
@@ -2336,20 +2370,21 @@
 
     <script>
       // Both languages ship in the DOM so crawlers and reader modes see the full policy.
-      // The toggle only flips visibility plus the document lang/dir.
+      // The inline head script has already picked one and stamped the root element; this
+      // only wires the toggle and keeps the buttons' announced state in step.
       (function () {
-        var docs = { en: document.getElementById("doc-en"), ar: document.getElementById("doc-ar") };
-        var btns = { en: document.getElementById("btn-en"), ar: document.getElementById("btn-ar") };
         var root = document.documentElement;
+        var en = document.getElementById("btn-en");
+        var ar = document.getElementById("btn-ar");
+        if (!en || !ar) return;
 
         function apply(lang, remember) {
-          var other = lang === "en" ? "ar" : "en";
-          docs[lang].classList.remove("lang-hidden");
-          docs[other].classList.add("lang-hidden");
-          btns[lang].setAttribute("aria-pressed", "true");
-          btns[other].setAttribute("aria-pressed", "false");
           root.lang = lang;
           root.dir = lang === "ar" ? "rtl" : "ltr";
+          root.classList.toggle("lang-ar", lang === "ar");
+          root.classList.toggle("lang-en", lang === "en");
+          en.setAttribute("aria-pressed", String(lang === "en"));
+          ar.setAttribute("aria-pressed", String(lang === "ar"));
           if (remember) {
             try {
               localStorage.setItem("masareef-privacy-lang", lang);
@@ -2359,33 +2394,13 @@
           }
         }
 
-        // A deep link to a section anchor wins over the stored choice, so a shared
-        // section link always lands on the section it names.
-        function langFromHash(hash) {
-          if (/^#ar-/.test(hash)) return "ar";
-          if (/^#en-/.test(hash)) return "en";
-          return null;
-        }
+        // The markup ships aria-pressed for English; catch it up to what the head script chose.
+        apply(root.lang === "ar" ? "ar" : "en", false);
 
-        function storedLang() {
-          try {
-            return localStorage.getItem("masareef-privacy-lang");
-          } catch (e) {
-            return null; // private browsing can block storage
-          }
-        }
-
-        function browserLang() {
-          var tag = (navigator.language || "en").toLowerCase();
-          return tag.indexOf("ar") === 0 ? "ar" : "en";
-        }
-
-        apply(langFromHash(location.hash) || storedLang() || browserLang(), false);
-
-        btns.en.addEventListener("click", function () {
+        en.addEventListener("click", function () {
           apply("en", true);
         });
-        btns.ar.addEventListener("click", function () {
+        ar.addEventListener("click", function () {
           apply("ar", true);
         });
       })();
