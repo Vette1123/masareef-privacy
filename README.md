@@ -4,6 +4,8 @@ The published privacy policy and account-deletion page for **Masareef**, the spe
 tracker (`com.mohamedgado.masareef`).
 
 - **App on Google Play:** https://play.google.com/store/apps/details?id=com.mohamedgado.masareef
+- **App on the App Store:** https://apps.apple.com/app/id6806735875
+- **Install page (QR target):** https://vette1123.github.io/masareef-privacy/go
 - **Privacy policy:** https://vette1123.github.io/masareef-privacy/
 - **Account deletion:** https://vette1123.github.io/masareef-privacy/delete-account.html
 
@@ -31,6 +33,8 @@ never leaves the phone.
 | `delete-account.html` | Play's required account-deletion URL. Same design, both languages |
 | `404.html` | Meta-refresh to the policy, so no old or mistyped link dead-ends |
 | `robots.txt` | Allow all, points at the sitemap |
+| `go.html` | The install page every share card's QR opens: both store buttons, the reader's own first. Served at `/go`; the path must never change |
+| `icon.png` | The launcher icon, for `go.html` |
 | `sitemap.xml` | The two real pages |
 
 ## Why a separate repo
