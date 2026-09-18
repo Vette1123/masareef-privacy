@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Threads authorisation — Masareef</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <!-- WHY THIS PAGE EXISTS.
+         Threads' OAuth insists on an HTTPS redirect URI and hands the authorisation code
+         back in the address bar. Nothing has to receive it — but something has to HOLD it
+         long enough to be read, and this site's 404.html carries a meta-refresh to the
+         policy so that an old or mistyped link never dead-ends (Play requires the privacy
+         URL to resolve). That refresh drops the query string, so a code redirected to a
+         path that does not exist here is gone before anyone sees it.
+
+         So this is a real page at the exact registered path. It is not a handler: the code
+         never leaves the browser, is sent nowhere, and is stored nowhere. It is printed,
+         and you copy it.
+
+         Registered at: Threads app 929287849795619 -> Access the Threads API -> Settings
+                        -> Redirect Callback URLs
+         Consumed by:   POSTKIT_REDIRECT_URL='<the whole address>' pnpm post:auth threads -->
+    <style>
+      :root {
+        --bg: #f8fafc;
+        --card: #ffffff;
+        --ink: #0f172a;
+        --muted: #64748b;
+        --line: #e2e8f0;
+        --accent: #4f46e5;
+        --bad: #b91c1c;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0b1120;
+          --card: #111827;
+          --ink: #e5e7eb;
+          --muted: #94a3b8;
+          --line: #1f2937;
+          --accent: #818cf8;
+          --bad: #f87171;
+        }
+      }
+      * { box-sizing: border-box; }
+      body {
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        background: var(--bg);
+        color: var(--ink);
+        line-height: 1.6;
+        margin: 0;
+        padding: 8vh 16px;
+      }
+      main { max-width: 44rem; margin: 0 auto; }
+      h1 { font-size: 1.35rem; margin: 0 0 0.25rem; }
+      p.sub { color: var(--muted); margin: 0 0 1.75rem; }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+      }
+      .label {
+        font-size: 0.75rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 0.5rem;
+      }
+      code, .url {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.85rem;
+        word-break: break-all;
+      }
+      .url {
+        display: block;
+        background: var(--bg);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 0.85rem;
+        white-space: pre-wrap;
+      }
+      button {
+        font: inherit;
+        font-weight: 600;
+        color: #fff;
+        background: var(--accent);
+        border: 0;
+        border-radius: 10px;
+        padding: 0.6rem 1.1rem;
+        margin-top: 0.9rem;
+        cursor: pointer;
+      }
+      button:disabled { opacity: 0.65; cursor: default; }
+      .bad { color: var(--bad); }
+      ol { padding-left: 1.2rem; }
+      li { margin-bottom: 0.4rem; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Threads authorisation</h1>
+      <p class="sub">Copy the whole address below and paste it into the terminal that asked for it.</p>
+
+      <div class="card">
+        <div class="label">Full redirect address</div>
+        <span class="url" id="url">…</span>
+        <button id="copy" type="button">Copy address</button>
+      </div>
+
+      <div class="card">
+        <div class="label">What to run</div>
+        <span class="url" id="cmd">…</span>
+      </div>
+
+      <div class="card">
+        <div class="label">Notes</div>
+        <ol>
+          <li>The code is single-use and expires quickly — use it now, or authorise again.</li>
+          <li>Nothing on this page is sent, logged or stored. It is read from the address bar and printed.</li>
+          <li>A Threads token lasts about 60 days, so you will land here again.</li>
+        </ol>
+      </div>
+    </main>
+
+    <script>
+      (function () {
+        var urlEl = document.getElementById("url");
+        var cmdEl = document.getElementById("cmd");
+        var btn = document.getElementById("copy");
+        var href = window.location.href;
+        var params = new URLSearchParams(window.location.search);
+        var err = params.get("error_description") || params.get("error");
+
+        if (err) {
+          urlEl.className = "url bad";
+          urlEl.textContent = "Authorisation refused: " + err;
+          cmdEl.textContent = "Nothing to run — start the authorisation again.";
+          btn.disabled = true;
+          btn.textContent = "Nothing to copy";
+          return;
+        }
+
+        if (!params.get("code")) {
+          urlEl.className = "url bad";
+          urlEl.textContent =
+            "No ?code= in this address. You reached this page directly rather than " +
+            "through the Threads consent screen.";
+          cmdEl.textContent = "Run: pnpm post:auth threads — and follow the link it prints.";
+          btn.disabled = true;
+          btn.textContent = "Nothing to copy";
+          return;
+        }
+
+        urlEl.textContent = href;
+        cmdEl.textContent = "POSTKIT_REDIRECT_URL='" + href + "' pnpm post:auth threads";
+
+        btn.addEventListener("click", function () {
+          // The clipboard API needs a secure context and a user gesture; both hold here.
+          // A failure still leaves the address selectable above, so it is never a dead end.
+          navigator.clipboard.writeText(href).then(
+            function () {
+              btn.textContent = "Copied";
+            },
+            function () {
+              btn.textContent = "Copy failed — select it above";
+            }
+          );
+        });
+      })();
+    </script>
+  </body>
+</html>
