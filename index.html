@@ -532,8 +532,8 @@
           page explains exactly what it stores, what it sends, and to whom.
         </p>
         <p class="meta">
-          Last updated: <b><time datetime="2026-09-03">3 September 2026</time></b> · Covers app version
-          <b>1.80.0</b> and later · Package <code>com.mohamedgado.masareef</code>
+          Last updated: <b><time datetime="2026-10-08">8 October 2026</time></b> · Covers app version
+          <b>1.120.2</b> and later · Package <code>com.mohamedgado.masareef</code>
         </p>
 
         <div class="glance">
@@ -550,14 +550,15 @@
             <h2>Auto-track stays local</h2>
             <p>
               Notification text is parsed on your device. Drafts live in a local inbox and are never
-              uploaded, even while sync is running.
+              uploaded, even while sync is running. The one exception is a message you choose to
+              hand to Pro's AI reader (section 22).
             </p>
           </div>
           <div class="tile">
             <h2>Receipts stay yours</h2>
             <p>
-              Receipt photos and statements never reach us. Back them up and the copies go to your
-              own Google Drive, where the app can only see the files it put there.
+              We never store your receipt photos or statements. Back them up and the copies go to
+              your own Google Drive, where the app can only see the files it put there.
             </p>
           </div>
           <div class="tile">
@@ -630,7 +631,8 @@
           One design rule drives everything below: <strong>the raw material stays local</strong>.
           Your bank's notification text, the drafts parsed from it, and the diagnostics about that
           parsing never leave your phone. What does leave is the finished record you kept, so your
-          own devices can agree on it.
+          own devices can agree on it. The only exceptions are the Masareef Pro AI features in
+          section 22, and each of those runs only when you start it.
         </p>
 
         <h2 id="en-2">2. Your account</h2>
@@ -692,8 +694,9 @@
           <li>
             <strong>Receipt photos</strong> you attach to a transaction, and the
             <strong>monthly statements</strong> you generate. Both are written to the app's own files
-            directory. Neither is ever uploaded to us — the one place a copy can go is your own Google
-            Drive, and only if you switch that on yourself (section 13).
+            directory. Neither is ever stored by us — a copy can go to your own Google Drive, only if
+            you switch that on yourself (section 13), and a single receipt photo is read and
+            discarded when you ask Masareef Pro to read it (section 22).
           </li>
           <li>
             <strong>Everything derived:</strong> insights, subscription radar, duplicate-charge and
@@ -834,7 +837,8 @@
           <li>
             <strong>Parsing happens entirely on your device.</strong> Amount, currency, direction,
             merchant, card tail, timestamp and balance are extracted by code inside the app. The
-            message text is never sent anywhere.
+            message text is never sent anywhere — unless the parser gives up on a message and you,
+            as a Pro subscriber, tap to have that one message read by AI (section 22).
           </li>
           <li>
             <strong>The result is a draft in a local inbox.</strong> You review it and confirm, edit
@@ -980,9 +984,15 @@
           confirmations, and the quick-add reply box.
         </p>
         <p>
-          There is <strong>no push server</strong>. The app never registers a push token, and nothing
-          about your spending is sent anywhere in order to produce a reminder. Push plumbing ships
-          inside the notification library we depend on, and we send no messages through it.
+          Nothing about your spending is sent anywhere in order to produce a reminder. The one push
+          we send is a <strong>silent sync signal</strong>, and only for accounts that can have a
+          second phone writing to the same ledger: a Masareef Pro account on more than one device, or
+          a shared household. When one phone saves a change, our server asks Expo's push service to
+          wake the others so they fetch it in seconds instead of the next morning. To do that, each
+          such phone registers its Expo push token and our salted device id with our server. The
+          message carries only an internal ledger id — no title, no text, no amount — and shows
+          nothing on screen. The token is removed when you sign out, when the account stops
+          qualifying, and when you delete your account.
         </p>
 
         <h2 id="en-11">11. Exchange rates and Travel mode</h2>
@@ -1193,7 +1203,8 @@
                 <td>Asked</td>
                 <td>
                   Photographing a receipt, from the attach button on a transaction. The photo stays
-                  in app-private storage on your device — not uploaded, not synced
+                  in app-private storage on your device and is not synced. It is sent to us only if
+                  you, as a Pro subscriber, ask Masareef to read it, and is not kept (section 22)
                 </td>
               </tr>
               <tr>
@@ -1204,8 +1215,11 @@
                   speaking, and the speech becomes the same text line you would have typed, shown to
                   you before anything is saved. Recognition is done by your device's own speech
                   recogniser — on most Android phones Google's, which may send the audio to Google
-                  under Google's privacy policy. Masareef never receives the audio, and the
-                  transcript never leaves your device
+                  under Google's privacy policy — and on the phone itself when an offline language
+                  model is installed. By default Masareef never receives the audio and the
+                  transcript never leaves your device. If you are a Pro subscriber and switch on
+                  <b>Cloud recognizer</b> in Settings (off by default), the short clip is also sent
+                  to our server to be transcribed, and is not kept (section 22)
                 </td>
               </tr>
               <tr>
@@ -1358,7 +1372,8 @@
           <li>
             <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">Cloudflare</a> runs our
             backend (Workers) and stores your synced records, uploaded profile photos, the ATM
-            cache and your sign-in details in its D1 databases (device contacts it)
+            cache and your sign-in details in its D1 databases, and runs the AI models behind the
+            Masareef Pro AI features on Workers AI (device contacts it)
           </li>
           <li>
             <a href="https://www.revenuecat.com/privacy/" rel="noopener">RevenueCat</a> records
@@ -1381,8 +1396,9 @@
             error tracking, EU region (device contacts it)
           </li>
           <li>
-            <a href="https://expo.dev/privacy" rel="noopener">Expo</a> for over-the-air updates and
-            performance metrics (device contacts it)
+            <a href="https://expo.dev/privacy" rel="noopener">Expo</a> for over-the-air updates,
+            performance metrics (device contacts it), and the push service that delivers the silent
+            sync signal in section 10 (server side, plus the token registration on your device)
           </li>
           <li>
             <a href="https://openfreemap.org/" rel="noopener">OpenFreeMap</a> for map tiles, built on
@@ -1391,8 +1407,7 @@
           </li>
           <li>
             <a href="https://wiki.openstreetmap.org/wiki/Overpass_API" rel="noopener">Overpass API</a>
-            mirrors for ATM data as a keyless fallback (device contacts them only when our backend is
-            unreachable)
+            mirrors for ATM data as a keyless last resort (server side only)
           </li>
           <li>
             <a href="https://www.tomtom.com/privacy/" rel="noopener">TomTom</a>,
@@ -1414,6 +1429,10 @@
           <li>
             <a href="https://www.exchangerate-api.com/terms" rel="noopener">ExchangeRate-API</a> for
             currency rates (device contacts it, sends a currency code)
+          </li>
+          <li>
+            <a href="https://gold-api.com/" rel="noopener">Gold API</a> for the live gold price used to
+            value gold you track as an asset (device contacts it, sends a metal symbol)
           </li>
         </ul>
         <p>
@@ -1438,6 +1457,40 @@
           which dates). Your account id is what lets Pro follow you to a new phone instead of being
           stranded on the old one. RevenueCat receives no financial records from the app: no amounts,
           no merchants, no balances, no transactions.
+        </p>
+        <h3>The AI features</h3>
+        <p>
+          Pro includes four features that send something to our server so an AI model can read it.
+          Each one runs <strong>only when you start it</strong>, and sends only what is listed:
+        </p>
+        <ul>
+          <li>
+            <strong>Rescue a message</strong>: when auto-track could not read a bank message and you
+            tap to retry it with AI, that one message's text, your category names and your currency
+            code. The answer comes back as a draft for you to confirm, never as a saved transaction.
+          </li>
+          <li>
+            <strong>Read a receipt</strong>: the one receipt photo you choose, shrunk first, plus your
+            category names and currency code.
+          </li>
+          <li>
+            <strong>Cloud recognizer</strong> for voice quick-add, a setting that is off until you
+            switch it on: the short voice clip you just recorded, its language, and a few words that
+            help the listener.
+          </li>
+          <li>
+            <strong>Coach</strong>: the summary Masareef already shows you — monthly totals, budgets,
+            top merchants, the last seven days as daily totals by category — your conversation with
+            Coach, and your category names. Never your individual transactions.
+          </li>
+        </ul>
+        <p>
+          The models run on Cloudflare Workers AI, the same company that hosts our backend, acting
+          for us. What you send is processed in memory to produce the answer and
+          <strong>is not stored</strong> — not by us, and not used to train any model. Our logs record
+          only which feature ran, how long it took and whether it succeeded, never what was in it.
+          We count how many times each feature was used today against your account, to enforce the
+          daily limit.
         </p>
         <p>
           Deleting your Masareef account deletes the RevenueCat customer record with it. Google's
@@ -1489,8 +1542,8 @@
           التطبيق، وما يرسله، وإلى مَن.
         </p>
         <p class="meta">
-          آخر تحديث: <b><time datetime="2026-09-03">٣ سبتمبر ٢٠٢٦</time></b> · تغطي الإصدار
-          <b>1.80.0</b> وما بعده · معرّف الحزمة <code>com.mohamedgado.masareef</code>
+          آخر تحديث: <b><time datetime="2026-10-08">٨ أكتوبر ٢٠٢٦</time></b> · تغطي الإصدار
+          <b>1.120.2</b> وما بعده · معرّف الحزمة <code>com.mohamedgado.masareef</code>
         </p>
 
         <div class="glance">
@@ -1507,13 +1560,14 @@
             <h2>التتبّع التلقائي محلي</h2>
             <p>
               نص الإشعار يُحلَّل على جهازك، والمسوّدات تبقى في صندوق مراجعة محلي ولا تُرفع أبدًا، حتى
-              أثناء المزامنة.
+              أثناء المزامنة. والاستثناء الوحيد رسالة تختار أنت إرسالها لقارئ الذكاء الاصطناعي في
+              مصاريف برو (القسم ٢٢).
             </p>
           </div>
           <div class="tile">
             <h2>الإيصالات تبقى ملكك</h2>
             <p>
-              صور الإيصالات وكشوف الحساب لا تصل إلينا أبدًا. وإذا فعّلت النسخ الاحتياطي، تذهب النسخ
+              لا نخزّن صور إيصالاتك ولا كشوف حسابك أبدًا. وإذا فعّلت النسخ الاحتياطي، تذهب النسخ
               إلى Google Drive الخاص بك، حيث لا يرى التطبيق سوى الملفات التي وضعها هو.
             </p>
           </div>
@@ -1584,7 +1638,8 @@
         <p>
           قاعدة واحدة تحكم كل ما يأتي بعدها: <strong>المادة الخام تبقى محليًا</strong>. نص إشعار بنكك،
           والمسوّدات المستخرَجة منه، وسجل تشخيص هذا التحليل، لا تغادر هاتفك. الذي يغادر هو السجل
-          النهائي الذي احتفظتَ به أنت، حتى تتفق عليه أجهزتك.
+          النهائي الذي احتفظتَ به أنت، حتى تتفق عليه أجهزتك. والاستثناءات الوحيدة هي ميزات الذكاء
+          الاصطناعي في مصاريف برو (القسم ٢٢)، وكل منها لا يعمل إلا حين تبدأه أنت.
         </p>
 
         <h2 id="ar-2">٢. حسابك</h2>
@@ -1640,9 +1695,9 @@
           </li>
           <li>
             <strong>صور الإيصالات</strong> التي ترفقها بالمعاملات، و<strong>كشوف الحساب
-            الشهرية</strong> التي تنشئها. كلاهما يُكتب في مجلد ملفات التطبيق نفسه، ولا يُرفع إلينا
-            أبدًا — والمكان الوحيد الذي يمكن أن تذهب إليه نسخة هو Google Drive الخاص بك، وفقط إذا
-            فعّلت ذلك بنفسك (القسم ١٣).
+            الشهرية</strong> التي تنشئها. كلاهما يُكتب في مجلد ملفات التطبيق نفسه، ولا نخزّن أيًّا
+            منهما أبدًا — يمكن أن تذهب نسخة إلى Google Drive الخاص بك، فقط إذا فعّلت ذلك بنفسك
+            (القسم ١٣)، وتُقرأ صورة إيصال واحدة ثم تُحذف حين تطلب من مصاريف برو قراءتها (القسم ٢٢).
           </li>
           <li>
             <strong>كل ما هو مُستخرَج بالحساب:</strong> التحليلات، ورادار الاشتراكات، وكشف الخصم
@@ -1775,7 +1830,8 @@
           <li>
             <strong>التحليل يجري بالكامل على جهازك.</strong> المبلغ والعملة والاتجاه واسم التاجر
             وآخر أرقام البطاقة والوقت والرصيد تُستخرج بكود داخل التطبيق. نص الرسالة لا يُرسل إلى أي
-            مكان.
+            مكان — إلا إذا عجز المحلّل عن قراءة رسالة وضغطتَ أنت، كمشترك في برو، لتُقرأ تلك الرسالة
+            وحدها بالذكاء الاصطناعي (القسم ٢٢).
           </li>
           <li>
             <strong>الناتج مسوّدة في صندوق محلي.</strong> تراجعها فتؤكّدها أو تعدّلها أو تحذفها. وإن
@@ -1904,9 +1960,14 @@
           النقد» الأسبوعي، وتأكيدات التتبّع التلقائي، ومربع الإضافة السريعة.
         </p>
         <p>
-          <strong>لا يوجد خادم إشعارات دفع</strong>. التطبيق لا يسجّل رمز دفع (push token) أبدًا، ولا
-          يُرسل أي شيء عن إنفاقك إلى أي مكان من أجل إنتاج تنبيه. وبنية الدفع تأتي داخل مكتبة الإشعارات
-          التي نعتمد عليها، ونحن لا نرسل أي رسالة عبرها.
+          لا يُرسل أي شيء عن إنفاقك إلى أي مكان من أجل إنتاج تنبيه. والإشعار الوحيد الذي نرسله من
+          الخادم هو <strong>إشارة مزامنة صامتة</strong>، وفقط للحسابات التي يمكن أن يكتب في سجلّها
+          هاتف ثانٍ: حساب مصاريف برو على أكثر من جهاز، أو أسرة مشتركة. حين يحفظ أحد الهواتف تغييرًا،
+          يطلب خادمنا من خدمة إشعارات Expo إيقاظ الهواتف الأخرى لتجلبه خلال ثوانٍ بدل صباح اليوم
+          التالي. ولهذا يسجّل كل هاتف من هذه الهواتف رمز الدفع (push token) الخاص به ومعرّف جهازنا
+          المموَّه لدى خادمنا. والرسالة لا تحمل سوى معرّف داخلي للسجل — لا عنوان ولا نص ولا مبلغ —
+          ولا يظهر منها شيء على الشاشة. ويُحذف الرمز عند تسجيل الخروج، وحين يتوقف الحساب عن
+          استيفاء الشرط، وعند حذف حسابك.
         </p>
 
         <h2 id="ar-11">١١. أسعار الصرف ووضع السفر</h2>
@@ -2105,7 +2166,8 @@
                 <td>يُطلب</td>
                 <td>
                   تصوير إيصال، من زر الإرفاق داخل المعاملة. تبقى الصورة في تخزين خاص بالتطبيق على
-                  جهازك — لا تُرفع ولا تُزامَن
+                  جهازك ولا تُزامَن. ولا تُرسل إلينا إلا إذا طلبتَ، كمشترك في برو، أن يقرأها مصاريف،
+                  ولا نحتفظ بها (القسم ٢٢)
                 </td>
               </tr>
               <tr>
@@ -2115,8 +2177,11 @@
                   الإضافة السريعة بالصوت. يستمع من لحظة الضغط على الميكروفون حتى تضغط مرة أخرى أو
                   تتوقف عن الكلام، ويتحوّل كلامك إلى سطر الكتابة نفسه الذي كنت ستكتبه، ويُعرض عليك
                   قبل أن يُحفظ أي شيء. أما التعرّف على الكلام فيقوم به برنامج جهازك نفسه — وهو في
-                  أغلب هواتف أندرويد برنامج جوجل، وقد يرسل الصوت إلى جوجل وفق سياسة خصوصية جوجل. ولا
-                  يصل الصوت إلى مصاريف أبدًا، ولا يغادر النص جهازك
+                  أغلب هواتف أندرويد برنامج جوجل، وقد يرسل الصوت إلى جوجل وفق سياسة خصوصية جوجل —
+                  أو الهاتف نفسه حين يكون نموذج اللغة دون اتصال مثبّتًا. وافتراضيًا لا يصل الصوت إلى
+                  مصاريف ولا يغادر النص جهازك. أما إذا كنت مشتركًا في برو وفعّلت
+                  <b>التعرّف السحابي</b> من الإعدادات (وهو مغلق افتراضيًا)، فيُرسل المقطع القصير أيضًا
+                  إلى خادمنا ليُحوَّل إلى نص، ولا نحتفظ به (القسم ٢٢)
                 </td>
               </tr>
               <tr>
@@ -2250,7 +2315,8 @@
           <li>
             <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">Cloudflare</a> تشغّل
             خادمنا (Workers) وتخزّن سجلاتك المتزامنة وصور الملف الشخصي وذاكرة ماكينات الصرّاف وبيانات
-            تسجيل الدخول في قواعد بياناتها D1 (جهازك يتصل بها)
+            تسجيل الدخول في قواعد بياناتها D1، وتشغّل نماذج الذكاء الاصطناعي الخاصة بميزات مصاريف برو
+            على Workers AI (جهازك يتصل بها)
           </li>
           <li>
             <a href="https://www.revenuecat.com/privacy/" rel="noopener">RevenueCat</a> تسجّل ما إذا
@@ -2272,7 +2338,8 @@
           </li>
           <li>
             <a href="https://expo.dev/privacy" rel="noopener">Expo</a> للتحديثات الفورية ومقاييس
-            الأداء (جهازك يتصل بها)
+            الأداء (جهازك يتصل بها)، وخدمة الإشعارات التي توصل إشارة المزامنة الصامتة في القسم ١٠ (على
+            الخادم، مع تسجيل الرمز من جهازك)
           </li>
           <li>
             <a href="https://openfreemap.org/" rel="noopener">OpenFreeMap</a> لبلاطات الخريطة، وهي
@@ -2283,7 +2350,7 @@
           <li>
             مرايا
             <a href="https://wiki.openstreetmap.org/wiki/Overpass_API" rel="noopener">Overpass API</a>
-            لبيانات الماكينات كبديل بلا مفاتيح (جهازك يتصل بها فقط عند تعذّر خادمنا)
+            لبيانات الماكينات كملاذ أخير بلا مفاتيح (على الخادم فقط)
           </li>
           <li>
             <a href="https://www.tomtom.com/privacy/" rel="noopener">TomTom</a> و
@@ -2304,6 +2371,10 @@
           <li>
             <a href="https://www.exchangerate-api.com/terms" rel="noopener">ExchangeRate-API</a> لأسعار
             العملات (جهازك يتصل بها ويرسل رمز عملة)
+          </li>
+          <li>
+            <a href="https://gold-api.com/" rel="noopener">Gold API</a> لسعر الذهب المباشر الذي يُقيَّم
+            به الذهب الذي تتابعه كأصل (جهازك يتصل بها ويرسل رمز المعدن)
           </li>
         </ul>
         <p>
@@ -2326,6 +2397,37 @@
           مُسترجَع، وأي منتج وأي تواريخ). معرّف حسابك هو ما يجعل برو يتبعك إلى هاتف جديد بدل أن يبقى
           حبيس القديم. ولا تستلم RevenueCat أي سجلات مالية من التطبيق: لا مبالغ، ولا تجّار، ولا
           أرصدة، ولا معاملات.
+        </p>
+        <h3>ميزات الذكاء الاصطناعي</h3>
+        <p>
+          تضم برو أربع ميزات ترسل شيئًا إلى خادمنا ليقرأه نموذج ذكاء اصطناعي. كل منها
+          <strong>لا يعمل إلا حين تبدأه أنت</strong>، ولا يرسل إلا ما هو مذكور هنا:
+        </p>
+        <ul>
+          <li>
+            <strong>إنقاذ رسالة</strong>: حين يعجز التتبّع التلقائي عن قراءة رسالة بنكية وتضغط لإعادة
+            المحاولة بالذكاء الاصطناعي، يُرسل نص تلك الرسالة وحدها وأسماء فئاتك ورمز عملتك. والنتيجة
+            تعود مسوّدة تؤكّدها أنت، ولا تُحفظ معاملةً أبدًا من تلقاء نفسها.
+          </li>
+          <li>
+            <strong>قراءة إيصال</strong>: صورة الإيصال الواحدة التي تختارها، بعد تصغيرها، مع أسماء
+            فئاتك ورمز عملتك.
+          </li>
+          <li>
+            <strong>التعرّف السحابي</strong> للإضافة السريعة بالصوت، وهو إعداد مغلق حتى تفعّله: المقطع
+            الصوتي القصير الذي سجّلته للتو، ولغته، وكلمات قليلة تساعد على الفهم.
+          </li>
+          <li>
+            <strong>المدرّب (Coach)</strong>: الملخّص الذي يعرضه لك مصاريف أصلًا — إجماليات الشهر،
+            والميزانيات، وأكثر التجّار، وآخر سبعة أيام كإجماليات يومية حسب الفئة — ومحادثتك مع المدرّب،
+            وأسماء فئاتك. ولا معاملاتك الفردية أبدًا.
+          </li>
+        </ul>
+        <p>
+          تعمل النماذج على Cloudflare Workers AI، وهي الشركة نفسها التي تستضيف خادمنا، وتعمل لحسابنا.
+          ما ترسله يُعالَج في الذاكرة لإنتاج الإجابة و<strong>لا يُخزَّن</strong> — لا لدينا، ولا
+          يُستخدم لتدريب أي نموذج. وسجلاتنا لا تحفظ إلا أي ميزة عملت وكم استغرقت وهل نجحت، ولا تحفظ
+          أبدًا ما كان فيها. ونعدّ مرات استخدام كل ميزة اليوم مقابل حسابك لتطبيق الحد اليومي.
         </p>
         <p>
           وحذف حسابك في مصاريف يحذف معه سجل العميل لدى RevenueCat. أما سجل جوجل للعملية فيبقى: جوجل

@@ -416,7 +416,7 @@
           your phone.
         </p>
         <p class="meta">
-          Last updated: <b><time datetime="2026-09-02">2 September 2026</time></b> · App
+          Last updated: <b><time datetime="2026-10-08">8 October 2026</time></b> · App
           <code>com.mohamedgado.masareef</code> · Full policy:
           <a href="./">privacy policy</a>
         </p>
@@ -468,7 +468,7 @@
         <p>
           A lot of what Masareef knows never reaches our server at all: the auto-track review inbox
           and the message text behind it, trusted senders, the capture diagnostics log, every
-          setting, your cached coordinates, and Travel mode trips. You can delete all of that
+          setting and your cached coordinates. You can delete all of that
           yourself, no request needed:
         </p>
         <ul>
@@ -505,7 +505,8 @@
               <tr>
                 <td>
                   Transactions, wallets, categories, budgets, spend targets, recurring items, planned
-                  items, merchant rules, savings goals, trips, and your country and currency
+                  items, merchant rules, savings goals, trips, installment plans, assets (gold,
+                  savings, certificates), and your country and currency
                 </td>
                 <td>Your device and our database (synced)</td>
                 <td>
@@ -517,6 +518,11 @@
                 <td>Profile photo you uploaded</td>
                 <td>Our Cloudflare D1 database, plus a local copy</td>
                 <td>Deleted the moment you remove the photo in Settings, and with the account</td>
+              </tr>
+              <tr>
+                <td>Push token and salted device id for the sync signal (Pro and shared households only)</td>
+                <td>Our Cloudflare D1 database</td>
+                <td>Deleted when you sign out, when the account stops qualifying, and with the account</td>
               </tr>
               <tr>
                 <td>Masareef Pro subscription record</td>
@@ -611,7 +617,7 @@
           زُومن تحته، وكيف تمحو ما يخزّنه التطبيق على هاتفك.
         </p>
         <p class="meta">
-          آخر تحديث: <b><time datetime="2026-09-02">٢ سبتمبر ٢٠٢٦</time></b> · التطبيق
+          آخر تحديث: <b><time datetime="2026-10-08">٨ أكتوبر ٢٠٢٦</time></b> · التطبيق
           <code>com.mohamedgado.masareef</code> · السياسة الكاملة:
           <a href="./">سياسة الخصوصية</a>
         </p>
@@ -659,8 +665,8 @@
         <h2>٢. محو البيانات على جهازك</h2>
         <p>
           كثير من معلومات مصاريف لا تصل خادمنا من الأصل: صندوق مراجعة التتبّع التلقائي ونصوص الرسائل
-          خلفه، والمرسِلون الموثوقون، وسجل التشخيص، وكل الإعدادات، والإحداثيات المحفوظة، ورحلات وضع
-          السفر. ويمكنك حذف ذلك كله بنفسك بلا أي طلب:
+          خلفه، والمرسِلون الموثوقون، وسجل التشخيص، وكل الإعدادات، والإحداثيات المحفوظة. ويمكنك حذف
+          ذلك كله بنفسك بلا أي طلب:
         </p>
         <ul>
           <li><strong>احذف التطبيق</strong>، أو</li>
@@ -695,7 +701,8 @@
               <tr>
                 <td>
                   المعاملات والمحافظ والفئات والميزانيات وحدود الإنفاق والعناصر المتكرّرة والمتوقّعة
-                  وقواعد التجّار وأهداف الادّخار والرحلات ودولتك وعملتك
+                  وقواعد التجّار وأهداف الادّخار والرحلات وخطط التقسيط والأصول (الذهب والمدّخرات
+                  والشهادات) ودولتك وعملتك
                 </td>
                 <td>جهازك وقاعدة بياناتنا (مزامَنة)</td>
                 <td>
@@ -706,6 +713,11 @@
                 <td>صورة الملف الشخصي التي رفعتَها</td>
                 <td>قاعدة بيانات Cloudflare D1 لدينا، مع نسخة محلية</td>
                 <td>تُحذف فور إزالتك للصورة من الإعدادات، وتُحذف مع الحساب</td>
+              </tr>
+              <tr>
+                <td>رمز الدفع ومعرّف الجهاز المموَّه لإشارة المزامنة (برو والأسرة المشتركة فقط)</td>
+                <td>قاعدة بيانات Cloudflare D1 لدينا</td>
+                <td>يُحذف عند تسجيل الخروج، وحين يتوقف الحساب عن استيفاء الشرط، ومع الحساب</td>
               </tr>
               <tr>
                 <td>سجل اشتراك مصاريف برو</td>
