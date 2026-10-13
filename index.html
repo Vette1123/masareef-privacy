@@ -541,8 +541,8 @@
             <h2>The short version</h2>
             <p>
               Masareef needs an account, so your transactions, wallets, budgets, categories and
-              bills are synced to our own server and stored there. Everything auto-track reads from
-              your notifications stays on your phone. No ads, no data selling, no third-party
+              bills are synced to our own server and stored there. Auto-track reads your notifications
+              on your phone, and their text stays there. No ads, no data selling, no third-party
               advertising, and analytics never receive a single amount, merchant or balance.
             </p>
           </div>
@@ -630,7 +630,9 @@
         <p>
           One design rule drives everything below: <strong>the raw material stays local</strong>.
           Your bank's notification text, the drafts parsed from it, and the diagnostics about that
-          parsing never leave your phone. What does leave is the finished record you kept, so your
+          parsing never leave your phone, with one narrow exception: when the reader cannot read an
+          alert, analytics receives that alert's outline, with every figure, name and shop masked
+          (section 12). What does leave is the finished record you kept, so your
           own devices can agree on it. The only exceptions are the Masareef Pro AI features in
           section 22, and each of those runs only when you start it.
         </p>
@@ -838,7 +840,14 @@
             <strong>Parsing happens entirely on your device.</strong> Amount, currency, direction,
             merchant, card tail, timestamp and balance are extracted by code inside the app. The
             message text is never sent anywhere — unless the parser gives up on a message and you,
-            as a Pro subscriber, tap to have that one message read by AI (section 22).
+            as a Pro subscriber, tap to have that one message read by AI (section 22). When the
+            parser gives up, analytics receives only that message's masked outline (section 12).
+          </li>
+          <li>
+            <strong>Your banking apps, at setup.</strong> On the auto-track step of setup, the app
+            checks which banking apps from its own built-in list are installed, so it can name them.
+            Android lets it see only the apps on that list, never the rest of your installed apps.
+            The names stay on your phone; analytics receives only how many it found.
           </li>
           <li>
             <strong>The result is a draft in a local inbox.</strong> You review it and confirm, edit
@@ -1039,6 +1048,14 @@
             traces.
           </li>
           <li>
+            When auto-track cannot read a bank alert, or Ask does not understand a question: an
+            outline of its wording, so the next version can read it. Words from the app's own
+            built-in vocabulary (verbs such as "debited", currency codes, connecting words) are
+            kept; every other word becomes <code>_</code> and every figure <code>#</code>. "Your card
+            ending 1234 was charged EGP 250.00 at SHOP" arrives as "your card ending # was charged
+            egp # at _". No amount, card number, name or shop survives it.
+          </li>
+          <li>
             An identifier: while you are signed in, events are attached to your
             <strong>account's random id</strong> so one person's events are not counted as many. That
             id is the internal UUID from our auth system, <strong>never your email address</strong>.
@@ -1048,7 +1065,10 @@
         <h3>What is never sent</h3>
         <ul>
           <li>Any amount, balance, running total, merchant name or account number.</li>
-          <li>Any notification, SMS or pasted message text, and any parsed draft.</li>
+          <li>
+            Any notification, SMS or pasted message text beyond the masked outline above, and any
+            parsed draft.
+          </li>
           <li>Your coordinates, your name, your email address, your contacts or your app list.</li>
           <li>
             No session replay, no screen recording, no keystroke capture, no console capture, no
@@ -1559,7 +1579,7 @@
             <h2>باختصار</h2>
             <p>
               مصاريف يتطلّب حسابًا، لذلك تُزامَن معاملاتك ومحافظك وميزانياتك وفئاتك وفواتيرك مع
-              خادمنا وتُخزَّن عليه. أما كل ما يقرأه التتبّع التلقائي من إشعاراتك فيبقى على هاتفك. لا
+              خادمنا وتُخزَّن عليه. ويقرأ التتبّع التلقائي إشعاراتك على هاتفك، ويبقى نصّها عليه. لا
               إعلانات، ولا بيع بيانات، ولا أي شبكة إعلانية، وقياسات الاستخدام لا تستلم أي مبلغ أو اسم
               تاجر أو رصيد.
             </p>
@@ -1645,7 +1665,9 @@
         </p>
         <p>
           قاعدة واحدة تحكم كل ما يأتي بعدها: <strong>المادة الخام تبقى محليًا</strong>. نص إشعار بنكك،
-          والمسوّدات المستخرَجة منه، وسجل تشخيص هذا التحليل، لا تغادر هاتفك. الذي يغادر هو السجل
+          والمسوّدات المستخرَجة منه، وسجل تشخيص هذا التحليل، لا تغادر هاتفك، مع استثناء ضيّق واحد:
+          حين يعجز القارئ عن قراءة تنبيه، تستلم القياسات شكل صياغته بعد إخفاء كل رقم واسم ومتجر
+          (القسم ١٢). الذي يغادر هو السجل
           النهائي الذي احتفظتَ به أنت، حتى تتفق عليه أجهزتك. والاستثناءات الوحيدة هي ميزات الذكاء
           الاصطناعي في مصاريف برو (القسم ٢٢)، وكل منها لا يعمل إلا حين تبدأه أنت.
         </p>
@@ -1839,7 +1861,14 @@
             <strong>التحليل يجري بالكامل على جهازك.</strong> المبلغ والعملة والاتجاه واسم التاجر
             وآخر أرقام البطاقة والوقت والرصيد تُستخرج بكود داخل التطبيق. نص الرسالة لا يُرسل إلى أي
             مكان — إلا إذا عجز المحلّل عن قراءة رسالة وضغطتَ أنت، كمشترك في برو، لتُقرأ تلك الرسالة
-            وحدها بالذكاء الاصطناعي (القسم ٢٢).
+            وحدها بالذكاء الاصطناعي (القسم ٢٢). وحين يعجز المحلّل، تستلم القياسات شكل تلك الرسالة
+            المُقنّع فقط (القسم ١٢).
+          </li>
+          <li>
+            <strong>تطبيقاتك البنكية، عند الإعداد.</strong> في خطوة التتبّع التلقائي من الإعداد، يتحقق
+            التطبيق من المثبَّت من التطبيقات البنكية الموجودة في قائمته المدمجة، ليذكرها بالاسم. ولا
+            يُريه أندرويد من تطبيقاتك إلا ما في تلك القائمة. تبقى الأسماء على هاتفك، ولا تستلم
+            القياسات إلا عددها.
           </li>
           <li>
             <strong>الناتج مسوّدة في صندوق محلي.</strong> تراجعها فتؤكّدها أو تعدّلها أو تحذفها. وإن
@@ -2016,6 +2045,13 @@
           </li>
           <li>الأخطاء: استثناءات JavaScript غير المعالَجة ورفض الوعود، مع أثر التنفيذ.</li>
           <li>
+            حين يعجز التتبّع التلقائي عن قراءة تنبيه بنكي، أو لا يفهم «اسأل» سؤالًا: شكل صياغته، لتقرأه
+            النسخة التالية. تبقى الكلمات الموجودة في قاموس التطبيق المدمج (أفعال مثل «خصم»، ورموز
+            العملات، وكلمات الربط)، وتصبح كل كلمة أخرى <code>_</code> وكل رقم <code>#</code>. فرسالة
+            «تم خصم 500 جنيه من حسابك رقم 1234 لدى SHOP» تصل هكذا: «تم خصم # جنيه من حسابك رقم # لدي
+            _». لا يبقى منها مبلغ ولا رقم بطاقة ولا اسم ولا متجر.
+          </li>
+          <li>
             معرّف: أثناء تسجيل دخولك تُربط الأحداث <strong>بالمعرّف العشوائي لحسابك</strong> كي لا
             يُحسب شخص واحد كعدة أشخاص. وهذا المعرّف هو الـ UUID الداخلي من نظام المصادقة،
             <strong>وليس بريدك الإلكتروني أبدًا</strong>. أي أن الأحداث مستعارة الهوية لا مجهولة
@@ -2025,7 +2061,7 @@
         <h3>ما لا يُرسل أبدًا</h3>
         <ul>
           <li>أي مبلغ أو رصيد أو مجموع أو اسم تاجر أو رقم حساب.</li>
-          <li>أي نص إشعار أو رسالة نصية أو نص ملصوق، وأي مسوّدة مستخرَجة.</li>
+          <li>أي نص إشعار أو رسالة نصية أو نص ملصوق بخلاف الشكل المُقنّع أعلاه، وأي مسوّدة مستخرَجة.</li>
           <li>إحداثياتك أو اسمك أو بريدك أو جهات اتصالك أو قائمة تطبيقاتك.</li>
           <li>
             لا تسجيل للجلسة، ولا تسجيل للشاشة، ولا التقاط لما تكتبه، ولا التقاط لسجل الأخطاء النصي،
