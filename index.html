@@ -448,7 +448,7 @@
         "alternateName": "سياسة الخصوصية لتطبيق مصاريف",
         "url": "https://vette1123.github.io/masareef-privacy/",
         "inLanguage": ["en", "ar"],
-        "dateModified": "2026-09-02",
+        "dateModified": "2026-10-13",
         "about": {
           "@type": "MobileApplication",
           "name": "Masareef",
@@ -532,8 +532,8 @@
           page explains exactly what it stores, what it sends, and to whom.
         </p>
         <p class="meta">
-          Last updated: <b><time datetime="2026-10-08">8 October 2026</time></b> · Covers app version
-          <b>1.120.2</b> and later · Package <code>com.mohamedgado.masareef</code>
+          Last updated: <b><time datetime="2026-10-13">13 October 2026</time></b> · Covers app version
+          <b>1.125.0</b> and later · Package <code>com.mohamedgado.masareef</code>
         </p>
 
         <div class="glance">
@@ -867,14 +867,15 @@
           <p>
             <strong>SMS and call logs:</strong> the Google Play build of Masareef does not declare
             <code>RECEIVE_SMS</code>, contains no SMS receiver, and cannot read your messages or call
-            history. Bank SMS is picked up only in the form Android shows it as a notification. A
+            history. Bank SMS is picked up only in the form Android shows it as a notification, or from
+            an SMS backup file you pick yourself (section 6). A
             separate sideload-only build behind a compile-time flag can read SMS directly; that build
             is never published to Google Play.
           </p>
         </div>
 
         <h2 id="en-6">6. Typing, pasting and sharing a message</h2>
-        <p>Three manual paths exist, and all three parse on the device:</p>
+        <p>Four manual paths exist, and all four parse on the device:</p>
         <ul>
           <li>
             <strong>Quick add:</strong> an optional persistent notification with a reply box, so you
@@ -888,6 +889,13 @@
             <strong>Share into Masareef:</strong> you share a message's text from another app through
             Android's share sheet. Masareef receives that text, parses it locally, and proposes a
             draft. Nothing is uploaded by the act of sharing.
+          </li>
+          <li>
+            <strong>Past SMS from a backup file (Android):</strong> you export your messages with an
+            SMS backup app and pick the file in Masareef through Android's file picker. Masareef
+            reads it on the device, keeps only the bank alerts, and shows them for you to review
+            before anything is added. The file is never uploaded, and the working copy the
+            picker hands the app is deleted as soon as it has been read.
           </li>
         </ul>
         <p>
@@ -1542,8 +1550,8 @@
           التطبيق، وما يرسله، وإلى مَن.
         </p>
         <p class="meta">
-          آخر تحديث: <b><time datetime="2026-10-08">٨ أكتوبر ٢٠٢٦</time></b> · تغطي الإصدار
-          <b>1.120.2</b> وما بعده · معرّف الحزمة <code>com.mohamedgado.masareef</code>
+          آخر تحديث: <b><time datetime="2026-10-13">١٣ أكتوبر ٢٠٢٦</time></b> · تغطي الإصدار
+          <b>1.125.0</b> وما بعده · معرّف الحزمة <code>com.mohamedgado.masareef</code>
         </p>
 
         <div class="glance">
@@ -1857,14 +1865,15 @@
           <p>
             <strong>الرسائل النصية وسجل المكالمات:</strong> نسخة جوجل بلاي من مصاريف لا تُعلن إذن
             <code>RECEIVE_SMS</code>، ولا تحتوي أي مستقبِل رسائل، ولا تستطيع قراءة رسائلك أو سجل
-            مكالماتك. رسائل البنك تُلتقط فقط بالشكل الذي يعرضه أندرويد كإشعار. وتوجد نسخة تُثبَّت
+            مكالماتك. رسائل البنك تُلتقط فقط بالشكل الذي يعرضه أندرويد كإشعار، أو من ملف نسخة
+            احتياطية للرسائل تختاره أنت بنفسك (القسم ٦). وتوجد نسخة تُثبَّت
             يدويًا خلف مفتاح في وقت البناء تستطيع قراءة الرسائل مباشرة، وهذه النسخة لا تُنشر على جوجل
             بلاي أبدًا.
           </p>
         </div>
 
         <h2 id="ar-6">٦. الكتابة واللصق والمشاركة</h2>
-        <p>توجد ثلاثة مسارات يدوية، وكلها تُحلَّل على الجهاز:</p>
+        <p>توجد أربعة مسارات يدوية، وكلها تُحلَّل على الجهاز:</p>
         <ul>
           <li>
             <strong>الإضافة السريعة:</strong> إشعار ثابت اختياري فيه مربع رد، لتسجيل مصروف بسطر واحد.
@@ -1876,6 +1885,12 @@
           <li>
             <strong>المشاركة إلى مصاريف:</strong> تشارك نص رسالة من تطبيق آخر عبر قائمة المشاركة في
             أندرويد. يستلم مصاريف النص ويحلّله محليًا ويقترح مسوّدة. ولا يُرفع أي شيء بمجرد المشاركة.
+          </li>
+          <li>
+            <strong>الرسائل القديمة من ملف نسخة احتياطية (أندرويد):</strong> تصدّر رسائلك بتطبيق نسخ
+            احتياطي للرسائل، ثم تختار الملف في مصاريف عبر منتقي الملفات في أندرويد. يقرأه مصاريف على
+            الجهاز، ويحتفظ برسائل البنك فقط، ويعرضها عليك لتراجعها قبل إضافة أي شيء. ولا يُرفع الملف
+            أبدًا، والنسخة المؤقتة التي يسلّمها منتقي الملفات للتطبيق تُحذف فور قراءتها.
           </li>
         </ul>
         <p>
