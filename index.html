@@ -448,7 +448,7 @@
         "alternateName": "سياسة الخصوصية لتطبيق مصاريف",
         "url": "https://vette1123.github.io/masareef-privacy/",
         "inLanguage": ["en", "ar"],
-        "dateModified": "2026-10-13",
+        "dateModified": "2026-10-18",
         "about": {
           "@type": "MobileApplication",
           "name": "Masareef",
@@ -532,7 +532,7 @@
           page explains exactly what it stores, what it sends, and to whom.
         </p>
         <p class="meta">
-          Last updated: <b><time datetime="2026-10-13">13 October 2026</time></b> · Covers app version
+          Last updated: <b><time datetime="2026-10-18">18 October 2026</time></b> · Covers app version
           <b>1.125.0</b> and later · Package <code>com.mohamedgado.masareef</code>
         </p>
 
@@ -793,7 +793,8 @@
         <p>
           So yes: <strong>amounts and merchant names are stored on our server</strong>. Being
           straight about that matters more than a nicer sentence. They are sent over TLS, scoped to
-          your user id, and held in our Cloudflare D1 database, reached through our backend, which
+          your user id, and held in our Cloudflare D1 databases and Cloudflare Durable Objects (two
+          kinds of database storage that Cloudflare runs for us), reached through our backend, which
           also runs on Cloudflare. Your sign-in details are kept apart from them, in a separate Cloudflare D1
           database.
           They are never used for advertising, never sold, never shared with a data broker, and never
@@ -1399,8 +1400,9 @@
         <ul>
           <li>
             <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">Cloudflare</a> runs our
-            backend (Workers) and stores your synced records, uploaded profile photos, the ATM
-            cache and your sign-in details in its D1 databases, and runs the AI models behind the
+            backend (Workers), stores your synced records in its D1 databases and Durable Objects,
+            stores your uploaded profile photos, the ATM cache and your sign-in details in its D1
+            databases, and runs the AI models behind the
             Masareef Pro AI features on Workers AI (device contacts it)
           </li>
           <li>
@@ -1570,7 +1572,7 @@
           التطبيق، وما يرسله، وإلى مَن.
         </p>
         <p class="meta">
-          آخر تحديث: <b><time datetime="2026-10-13">١٣ أكتوبر ٢٠٢٦</time></b> · تغطي الإصدار
+          آخر تحديث: <b><time datetime="2026-10-18">١٨ أكتوبر ٢٠٢٦</time></b> · تغطي الإصدار
           <b>1.125.0</b> وما بعده · معرّف الحزمة <code>com.mohamedgado.masareef</code>
         </p>
 
@@ -1817,8 +1819,9 @@
         </div>
         <p>
           إذن نعم: <strong>المبالغ وأسماء التجّار تُخزَّن على خادمنا</strong>. الصراحة في هذه الجزئية
-          أهم من جملة ألطف. تُرسل عبر TLS، ومحصورة بمعرّف المستخدم الخاص بك، ومحفوظة في قاعدة بيانات
-          Cloudflare D1 يجري الوصول إليها عبر خادمنا العامل على Cloudflare Workers. أما بيانات تسجيل
+          أهم من جملة ألطف. تُرسل عبر TLS، ومحصورة بمعرّف المستخدم الخاص بك، ومحفوظة في قواعد بيانات
+          Cloudflare D1 وفي Cloudflare Durable Objects (نوعان من تخزين قواعد البيانات تديرهما
+          Cloudflare لحسابنا)، ويجري الوصول إليها عبر خادمنا العامل على Cloudflare Workers. أما بيانات تسجيل
           الدخول فمحفوظة منفصلة عنها، في قاعدة بيانات Cloudflare D1 مستقلة. لا تُستخدم
           للإعلانات، ولا تُباع،
           ولا تُشارَك مع أي وسيط بيانات، ولا تُمرَّر إلى خدمات القياس في القسم ١٢.
@@ -2365,8 +2368,9 @@
         <ul>
           <li>
             <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">Cloudflare</a> تشغّل
-            خادمنا (Workers) وتخزّن سجلاتك المتزامنة وصور الملف الشخصي وذاكرة ماكينات الصرّاف وبيانات
-            تسجيل الدخول في قواعد بياناتها D1، وتشغّل نماذج الذكاء الاصطناعي الخاصة بميزات مصاريف برو
+            خادمنا (Workers)، وتخزّن سجلاتك المتزامنة في قواعد بياناتها D1 وفي Durable Objects، وتخزّن
+            صور الملف الشخصي وذاكرة ماكينات الصرّاف وبيانات تسجيل الدخول في قواعد بياناتها D1، وتشغّل
+            نماذج الذكاء الاصطناعي الخاصة بميزات مصاريف برو
             على Workers AI (جهازك يتصل بها)
           </li>
           <li>

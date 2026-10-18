@@ -72,7 +72,7 @@ rights, children, third parties, changes, contact.
 
 | Host | Why |
 |---|---|
-| `masareef-server.vercel.app` | Our backend: auth, sync, avatar upload, ATM proxy |
+| `masareef-api.radioheadd1337.workers.dev` | Our backend on Cloudflare Workers: auth, sync, avatar upload, ATM proxy, Pro AI |
 | `eu.i.posthog.com` | Usage analytics and error tracking, EU region |
 | `u.expo.dev` and EAS | Over-the-air updates, Insights, Observe |
 | `tiles.openfreemap.org` | Vector map tiles for the ATM map |
@@ -83,9 +83,9 @@ rights, children, third parties, changes, contact.
 | Google (Sign-In, Play, Maps links) | Optional sign-in, distribution and updates, directions |
 
 Server side only, never contacted by the device: TomTom, Foursquare and Geoapify (ATM
-data, queried with a coarse cell), Neon (sign-in details), Resend (account email).
-Everything else the backend stores — synced records, avatars, the ATM cache — is in
-Cloudflare D1.
+data, queried with a coarse cell), Resend (account email). Everything the backend stores
+is on Cloudflare: synced records in D1 databases and Durable Objects; sign-in details,
+avatars, push tokens and the ATM cache in D1.
 
 ### Permissions disclosed
 
