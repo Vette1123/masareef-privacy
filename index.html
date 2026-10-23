@@ -532,8 +532,8 @@
           page explains exactly what it stores, what it sends, and to whom.
         </p>
         <p class="meta">
-          Last updated: <b><time datetime="2026-10-18">18 October 2026</time></b> · Covers app version
-          <b>1.125.0</b> and later · Package <code>com.mohamedgado.masareef</code>
+          Last updated: <b><time datetime="2026-10-23">23 October 2026</time></b> · Covers app version
+          <b>1.139.0</b> and later · Package <code>com.mohamedgado.masareef</code>
         </p>
 
         <div class="glance">
@@ -784,6 +784,14 @@
                 <td>Trip name, country, currency, home currency, the rate you locked, start and end dates</td>
               </tr>
               <tr>
+                <td>Reminders</td>
+                <td>
+                  What a reminder is for (a bill, a planned item, or one you wrote yourself), its title,
+                  note, amount, wallet and category, how it repeats, the time of day and how many days
+                  ahead it warns you
+                </td>
+              </tr>
+              <tr>
                 <td>Country and currency</td>
                 <td>The two settings a new phone needs to open in the right place. No other setting syncs</td>
               </tr>
@@ -1002,6 +1010,12 @@
           confirmations, and the quick-add reply box.
         </p>
         <p>
+          The reminders you set up sync with the rest of your ledger (see the table in section 4),
+          so another phone shows the same ones. The history on the Notifications screen — every
+          notification the app has shown you, with its text — stays on this device and is never
+          uploaded.
+        </p>
+        <p>
           Nothing about your spending is sent anywhere in order to produce a reminder. The one push
           we send is a <strong>silent sync signal</strong>, and only for accounts that can have a
           second phone writing to the same ledger: a Masareef Pro account on more than one device, or
@@ -1043,6 +1057,15 @@
           <li>
             Technical context: app version, platform and OS version, device model, launch and
             navigation timings, and whether an update was downloaded.
+          </li>
+          <li>
+            Where the install came from, read once on Android from Google Play's own install
+            referrer: the source, medium and campaign of the store link that brought you (for
+            example <code>tiktok</code> / <code>social</code> / <code>release</code>, or
+            <code>google-play</code> / <code>organic</code> for a store search), each cut to a short
+            code. It is the same link information Play already reports to us in aggregate, and it
+            shows which channels bring people who keep using the app. There is no attribution SDK:
+            the app asks Play directly.
           </li>
           <li>
             Errors: uncaught JavaScript exceptions and unhandled promise rejections, with stack
@@ -1572,8 +1595,8 @@
           التطبيق، وما يرسله، وإلى مَن.
         </p>
         <p class="meta">
-          آخر تحديث: <b><time datetime="2026-10-18">١٨ أكتوبر ٢٠٢٦</time></b> · تغطي الإصدار
-          <b>1.125.0</b> وما بعده · معرّف الحزمة <code>com.mohamedgado.masareef</code>
+          آخر تحديث: <b><time datetime="2026-10-23">٢٣ أكتوبر ٢٠٢٦</time></b> · تغطي الإصدار
+          <b>1.139.0</b> وما بعده · معرّف الحزمة <code>com.mohamedgado.masareef</code>
         </p>
 
         <div class="glance">
@@ -1811,6 +1834,13 @@
                 <td>اسم الرحلة والدولة والعملة والعملة الأساسية وسعر الصرف المثبَّت وتاريخا البداية والنهاية</td>
               </tr>
               <tr>
+                <td>التذكيرات</td>
+                <td>
+                  ما يخصّه التذكير (فاتورة أو عنصر مخطَّط أو تذكير كتبته بنفسك)، وعنوانه وملاحظته ومبلغه
+                  والمحفظة والفئة، وكيف يتكرّر، ووقته من اليوم، وكم يومًا قبل الموعد ينبّهك
+                </td>
+              </tr>
+              <tr>
                 <td>الدولة والعملة</td>
                 <td>الإعدادان اللذان يحتاجهما هاتف جديد ليفتح على الوضع الصحيح. ولا يُزامَن أي إعداد آخر</td>
               </tr>
@@ -2007,6 +2037,11 @@
           النقد» الأسبوعي، وتأكيدات التتبّع التلقائي، ومربع الإضافة السريعة.
         </p>
         <p>
+          التذكيرات التي تضبطها تُزامَن مع بقية سجلّك (انظر الجدول في القسم ٤)، فتجدها نفسها على
+          هاتف آخر. أمّا سجلّ شاشة الإشعارات — كل إشعار عرضه التطبيق عليك، بنصّه — فيبقى على هذا
+          الجهاز ولا يُرفع أبدًا.
+        </p>
+        <p>
           لا يُرسل أي شيء عن إنفاقك إلى أي مكان من أجل إنتاج تنبيه. والإشعار الوحيد الذي نرسله من
           الخادم هو <strong>إشارة مزامنة صامتة</strong>، وفقط للحسابات التي يمكن أن يكتب في سجلّها
           هاتف ثانٍ: حساب مصاريف برو على أكثر من جهاز، أو أسرة مشتركة. حين يحفظ أحد الهواتف تغييرًا،
@@ -2045,6 +2080,14 @@
           <li>
             سياق تقني: إصدار التطبيق والمنصّة وإصدار النظام وطراز الجهاز وأزمنة الإقلاع والتنقّل، وهل
             نُزّل تحديث.
+          </li>
+          <li>
+            من أين جاء التثبيت، يُقرأ مرة واحدة على أندرويد من «مُحيل التثبيت» الخاص بمتجر Google Play
+            نفسه: مصدر رابط المتجر الذي أوصلك ووسيطه وحملته (مثل <code>tiktok</code> /
+            <code>social</code> / <code>release</code>، أو <code>google-play</code> /
+            <code>organic</code> للبحث في المتجر)، مختصرًا إلى رمز قصير. وهي معلومة الرابط نفسها التي
+            يعطينا إياها Play مُجمَّعة، وتُرينا أي القنوات تأتي بمن يستمرّون في استخدام التطبيق. ولا
+            يحتوي التطبيق أي حزمة إحالة؛ إنه يسأل Play مباشرة.
           </li>
           <li>الأخطاء: استثناءات JavaScript غير المعالَجة ورفض الوعود، مع أثر التنفيذ.</li>
           <li>
