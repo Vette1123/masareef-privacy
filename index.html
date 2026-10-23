@@ -617,7 +617,7 @@
         <h2 id="en-1">1. Who we are and what this covers</h2>
         <p>
           Masareef (<code>com.mohamedgado.masareef</code>) is built and operated by one person,
-          Mohamed Gado. This policy covers the Masareef Android app, any future iOS release, the
+          Mohamed Gado. This policy covers the Masareef apps for Android and iPhone, the
           backend the app talks to (<code>masareef-api.radioheadd1337.workers.dev</code>), and this
           page itself.
           The page sets no cookies and loads nothing from another host.
@@ -640,7 +640,7 @@
         <h2 id="en-2">2. Your account</h2>
         <p>
           Masareef requires an account, so signing in is not optional. You can sign up with an email
-          address and password, or sign in with Google. Authentication runs on our backend using
+          address and password, or sign in with Google (on iPhone, also Sign in with Apple). Authentication runs on our backend using
           better-auth.
         </p>
         <p>Stored on our server for your account:</p>
@@ -826,6 +826,13 @@
             anything outside the meter. A Pro account sends no device identifier at all.
           </p>
         </div>
+        <div class="note">
+          <p>
+            <strong>A shared household ledger is shared.</strong> If you create or join one
+            (Masareef Pro), what you add to it is stored under that ledger and every member of it
+            can see it, each record remembering who added it.
+          </p>
+        </div>
 
         <h2 id="en-5">5. Auto-track and notification access</h2>
         <p>
@@ -923,7 +930,7 @@
 
         <h2 id="en-7">7. Location</h2>
         <p>
-          Location is <strong>optional</strong> and requested only while you are using the app. Two
+          Location is <strong>optional</strong> and requested only while you are using the app. These
           features ask for it:
         </p>
         <ul>
@@ -937,9 +944,14 @@
             currency and bank list. Only the resulting country, city and currency are saved; if you
             picked a region by hand, GPS never overwrites it.
           </li>
+          <li>
+            <strong>Stores, Compare prices and trips:</strong> to find shops and prices near you, to
+            pin a shop, and to detect a trip's country (section 8). Compare prices and a shop pin use
+            a point rounded to about 1 km.
+          </li>
         </ul>
         <p>
-          Coordinates go to two places: our ATM endpoint (section 8) and
+          Coordinates go to two places: our own endpoints for ATMs, stores and prices (section 8) and
           <strong>BigDataCloud</strong> for reverse geocoding into a place name. Your last
           coordinates are cached on your device so the ATM screen does not have to ask again. There
           is <strong>no background location</strong>, no location history, no movement profile, and
@@ -984,6 +996,19 @@
           </li>
         </ul>
         <p>Bank logos and pin artwork are bundled inside the app. No logo is fetched at runtime.</p>
+        <p>
+          <strong>Stores and Compare prices</strong> work the same way, through our backend. Compare
+          prices sends our server the product name or barcode you search or scan, your country and,
+          if you allowed location, a point <strong>rounded to two decimals</strong> (about 1 km), so
+          the precise fix never leaves the phone. The server looks a barcode up at Open Prices and
+          Open Food Facts; your phone never contacts them. The barcode scanner reads the code on the
+          device; no image is kept or sent. If you add a price or list a shop, that entry (the
+          product, the price, the shop name, the rounded point and the time; for a shop its name,
+          address, optional phone, WhatsApp and website, and its prices) is stored against your
+          account id and shown to other signed-in users, without your account id. Deleting your
+          account does not yet remove these automatically: delete your shop in the app, or email the
+          address in section 24 for the rest.
+        </p>
 
         <h2 id="en-9">9. Profile photo</h2>
         <p>
@@ -1040,7 +1065,8 @@
           To see which screens are actually used, whether sync and auto-track are working in the
           field, and where the app crashes, Masareef sends usage events to
           <strong>PostHog</strong> (EU region, <code>eu.i.posthog.com</code>) and performance data to
-          <strong>Expo EAS</strong> (Insights and Observe).
+          <strong>Expo EAS</strong> (Insights and Observe). Expo receives the same event names and
+          settings labels, without your account id.
         </p>
         <h3>What is sent</h3>
         <ul>
@@ -1052,7 +1078,8 @@
           </li>
           <li>
             Low-cardinality properties beside the event: counts, enums, booleans, a currency or
-            country code, a reason code such as why a capture was held for review.
+            country code, a reason code such as why a capture was held for review, and a few of your
+            settings as labels (theme, whether auto-track or hide balances is on, the screen you are on).
           </li>
           <li>
             Technical context: app version, platform and OS version, device model, launch and
@@ -1068,8 +1095,9 @@
             the app asks Play directly.
           </li>
           <li>
-            Errors: uncaught JavaScript exceptions and unhandled promise rejections, with stack
-            traces.
+            Errors: uncaught JavaScript exceptions, unhandled promise rejections and native crashes,
+            with stack traces, plus Android's own record of why the app last exited (a crash, a
+            freeze, being closed for memory). Only the error type is sent as an event, never its message.
           </li>
           <li>
             When auto-track cannot read a bank alert, or Ask does not understand a question: an
@@ -1077,7 +1105,8 @@
             built-in vocabulary (verbs such as "debited", currency codes, connecting words) are
             kept; every other word becomes <code>_</code> and every figure <code>#</code>. "Your card
             ending 1234 was charged EGP 250.00 at SHOP" arrives as "your card ending # was charged
-            egp # at _". No amount, card number, name or shop survives it.
+            egp # at _". No amount, card number, name or shop survives it. The name of the bank and the
+            package name of the app that posted the alert travel with it.
           </li>
           <li>
             An identifier: while you are signed in, events are attached to your
@@ -1251,10 +1280,19 @@
                 <td>Rescheduling your reminders after a reboot</td>
               </tr>
               <tr>
+                <td>Google Play Billing, install referrer and push messaging</td>
+                <td>Automatic</td>
+                <td>
+                  Masareef Pro purchases, reading where the install came from (section 12), and
+                  receiving the silent sync signal (section 10)
+                </td>
+              </tr>
+              <tr>
                 <td>Camera</td>
                 <td>Asked</td>
                 <td>
-                  Photographing a receipt, from the attach button on a transaction. The photo stays
+                  Photographing a receipt, from the attach button on a transaction, or scanning a
+                  product barcode in Compare prices (read on the device; no image is kept or sent). The photo stays
                   in app-private storage on your device and is not synced. It is sent to us only if
                   you, as a Pro subscriber, ask Masareef to read it, and is not kept (section 22)
                 </td>
@@ -1359,7 +1397,7 @@
             record that the erasure is still owed and retry it nightly until it is done.
           </li>
           <li>
-            <strong>Expo's launch and performance data</strong> (Insights and Observe) carries no
+            <strong>Expo's launch, performance and event data</strong> (Insights and Observe) carries no
             account id at all, so there is nothing in it to look up and delete. It ages out under
             Expo's own retention window.
           </li>
@@ -1368,6 +1406,11 @@
             or reset message was sent to. We keep no contact list or audience there, only messages
             already sent, and Resend offers no way to delete one of those, so that log is not erased
             with your account: it ages out on Resend's own 30-day window.
+          </li>
+          <li>
+            <strong>Prices and shops you added</strong> are kept against your account id and are not
+            yet erased by deleting the account. Delete a shop yourself in the app, or email us and
+            we remove the rest.
           </li>
           <li>
             <strong>The ATM cache</strong> on our server holds map data for coarse geographic cells.
@@ -1450,7 +1493,7 @@
           </li>
           <li>
             <a href="https://expo.dev/privacy" rel="noopener">Expo</a> for over-the-air updates,
-            performance metrics (device contacts it), and the push service that delivers the silent
+            performance metrics and usage events (device contacts it), and the push service that delivers the silent
             sync signal in section 10 (server side, plus the token registration on your device)
           </li>
           <li>
@@ -1484,6 +1527,11 @@
             currency rates (device contacts it, sends a currency code)
           </li>
           <li>
+            <a href="https://world.openfoodfacts.org/terms-of-use" rel="noopener">Open Food Facts</a>
+            and its Open Prices project for product names and shop prices behind Compare prices
+            (server side only, queried with a barcode and a country)
+          </li>
+          <li>
             <a href="https://gold-api.com/" rel="noopener">Gold API</a> for the live gold price used to
             value gold you track as an asset (device contacts it, sends a metal symbol)
           </li>
@@ -1513,7 +1561,7 @@
         </p>
         <h3>The AI features</h3>
         <p>
-          Pro includes four features that send something to our server so an AI model can read it.
+          Pro includes five features that send something to our server so an AI model can read it.
           Each one runs <strong>only when you start it</strong>, and sends only what is listed:
         </p>
         <ul>
@@ -1535,6 +1583,12 @@
             <strong>Coach</strong>: the summary Masareef already shows you — monthly totals, budgets,
             top merchants, the last seven days as daily totals by category — your conversation with
             Coach, and your category names. Never your individual transactions.
+          </li>
+          <li>
+            <strong>Income coach</strong>: the work profile you typed (role, years, skills, free
+            hours, where your income comes from), your monthly income and hourly value, the options
+            the phone already worked out, and the progress of plans you started. Never your
+            transactions.
           </li>
         </ul>
         <p>
@@ -1679,7 +1733,7 @@
         <h2 id="ar-1">١. من نحن ونطاق السياسة</h2>
         <p>
           مصاريف (<code>com.mohamedgado.masareef</code>) يطوّره ويشغّله فرد واحد: محمد جادو. تغطي هذه
-          السياسة تطبيق مصاريف على أندرويد، وأي إصدار مستقبلي على iOS، والخادم الذي يتصل به التطبيق
+          السياسة تطبيقَي مصاريف على أندرويد وآيفون، والخادم الذي يتصل به التطبيق
           (<code>masareef-api.radioheadd1337.workers.dev</code>)، وتغطي كذلك هذه الصفحة نفسها.
           الصفحة لا تضع كوكيز
           ولا تحمّل أي ملف من خادم آخر.
@@ -1700,7 +1754,7 @@
         <h2 id="ar-2">٢. حسابك</h2>
         <p>
           مصاريف يتطلّب حسابًا، فتسجيل الدخول ليس اختياريًا. يمكنك التسجيل ببريد إلكتروني وكلمة مرور،
-          أو الدخول بحساب جوجل. المصادقة تعمل على خادمنا عبر better-auth.
+          أو الدخول بحساب جوجل (وعلى آيفون أيضًا الدخول بحساب Apple). المصادقة تعمل على خادمنا عبر better-auth.
         </p>
         <p>ما يُخزَّن على خادمنا لحسابك:</p>
         <ul>
@@ -1873,6 +1927,13 @@
             الإعلانات ولا تُربَط بأي شيء خارج العدّاد. أما حساب برو فلا يرسل أي معرّف جهاز.
           </p>
         </div>
+        <div class="note">
+          <p>
+            <strong>دفتر الأسرة المشترك مشترك فعلًا.</strong> إذا أنشأتَ دفترًا مشتركًا أو انضممتَ إلى
+            واحد (مصاريف برو)، فما تضيفه إليه يُخزَّن تحت ذلك الدفتر ويراه كل أعضائه، ويتذكّر كل سجل
+            من أضافه.
+          </p>
+        </div>
 
         <h2 id="ar-5">٥. التتبّع التلقائي والوصول للإشعارات</h2>
         <p>
@@ -1961,7 +2022,7 @@
 
         <h2 id="ar-7">٧. الموقع</h2>
         <p>
-          إذن الموقع <strong>اختياري</strong> ويُطلب فقط أثناء استخدامك للتطبيق، وميزتان تطلبانه:
+          إذن الموقع <strong>اختياري</strong> ويُطلب فقط أثناء استخدامك للتطبيق، وهذه الميزات تطلبه:
         </p>
         <ul>
           <li><strong>ماكينات الصرف القريبة:</strong> تُستخدم إحداثياتك للبحث عن ماكينات حولك.</li>
@@ -1970,9 +2031,14 @@
             إحداثياتك إلى اسم دولة ومدينة ليختار التطبيق عملة وقائمة بنوك مناسبة. ولا يُحفظ سوى
             الدولة والمدينة والعملة الناتجة، وإن اخترت المنطقة يدويًا فلن يستبدلها الـ GPS.
           </li>
+          <li>
+            <strong>المتاجر ومقارنة الأسعار والرحلات:</strong> للعثور على متاجر وأسعار قريبة، ولتثبيت
+            متجر، ولمعرفة دولة الرحلة (القسم ٨). وتستخدم مقارنة الأسعار وتثبيت المتجر نقطة مقرَّبة إلى
+            نحو ١ كم.
+          </li>
         </ul>
         <p>
-          تذهب الإحداثيات إلى جهتين: نقطة نهاية ماكينات الصرف الخاصة بنا (القسم ٨)، و
+          تذهب الإحداثيات إلى جهتين: نقاط النهاية الخاصة بنا للماكينات والمتاجر والأسعار (القسم ٨)، و
           <strong>BigDataCloud</strong> لتحويلها إلى اسم مكان. وتُحفظ آخر إحداثيات على جهازك كي لا
           تسأل شاشة الماكينات مرة أخرى. <strong>لا يوجد تتبّع موقع في الخلفية</strong>، ولا سجل
           مواقع، ولا ملف تحرّكات، ولا أي استخدام إعلاني.
@@ -2014,6 +2080,17 @@
           </li>
         </ul>
         <p>شعارات البنوك وصور النقاط مُضمَّنة داخل التطبيق، ولا يُجلب أي شعار من الشبكة.</p>
+        <p>
+          <strong>المتاجر ومقارنة الأسعار</strong> تعمل بالطريقة نفسها عبر خادمنا. ترسل مقارنة
+          الأسعار إلى خادمنا اسم المنتج أو الباركود الذي تبحث عنه أو تمسحه، ودولتك، وإن سمحتَ
+          بالموقع نقطةً <strong>مقرَّبة إلى خانتين عشريتين</strong> (نحو ١ كم)، فلا يغادر الهاتف
+          موقعك الدقيق. ويبحث الخادم عن الباركود لدى Open Prices وOpen Food Facts، ولا يتصل هاتفك
+          بهما. ويقرأ الماسح الرمز على الجهاز، ولا تُحفظ ولا تُرسل أي صورة. وإن أضفتَ سعرًا أو
+          سجّلتَ متجرًا فإن ما أدخلتَه (المنتج والسعر واسم المتجر والنقطة المقرَّبة والوقت؛ وللمتجر
+          اسمه وعنوانه وهاتفه وواتساب وموقعه إن أضفتها، وأسعاره) يُخزَّن مقابل معرّف حسابك ويظهر
+          لمستخدمين آخرين مسجّلين دخولهم، دون معرّف حسابك. وحذف الحساب لا يزيل هذه البيانات تلقائيًا
+          حتى الآن: احذف متجرك من التطبيق، أو راسلنا على العنوان في القسم ٢٤ لإزالة الباقي.
+        </p>
 
         <h2 id="ar-9">٩. صورة الملف الشخصي</h2>
         <p>
@@ -2063,7 +2140,7 @@
           لمعرفة الشاشات المستخدمة فعلًا، وهل تعمل المزامنة والتتبّع التلقائي على أجهزة الناس، وأين
           يتعطّل التطبيق، يرسل مصاريف أحداث استخدام إلى <strong>PostHog</strong> (منطقة الاتحاد
           الأوروبي، <code>eu.i.posthog.com</code>) وبيانات أداء إلى <strong>Expo EAS</strong>
-          (Insights وObserve).
+          (Insights وObserve). وتستلم Expo أسماء الأحداث نفسها ووسوم الإعدادات نفسها، دون معرّف حسابك.
         </p>
         <h3>ما يُرسل</h3>
         <ul>
@@ -2075,7 +2152,7 @@
           </li>
           <li>
             خصائص منخفضة التنوّع مع الحدث: أعداد، وقيم محدّدة مسبقًا، وقيم منطقية، ورمز عملة أو دولة،
-            وسبب مثل لماذا احتُجز عنصر للمراجعة.
+            وسبب مثل لماذا احتُجز عنصر للمراجعة، وبعض إعداداتك كوسوم (السمة، وهل التتبّع التلقائي أو إخفاء الأرصدة مفعّل، والشاشة التي أنت فيها).
           </li>
           <li>
             سياق تقني: إصدار التطبيق والمنصّة وإصدار النظام وطراز الجهاز وأزمنة الإقلاع والتنقّل، وهل
@@ -2089,13 +2166,13 @@
             يعطينا إياها Play مُجمَّعة، وتُرينا أي القنوات تأتي بمن يستمرّون في استخدام التطبيق. ولا
             يحتوي التطبيق أي حزمة إحالة؛ إنه يسأل Play مباشرة.
           </li>
-          <li>الأخطاء: استثناءات JavaScript غير المعالَجة ورفض الوعود، مع أثر التنفيذ.</li>
+          <li>الأخطاء: استثناءات JavaScript غير المعالَجة ورفض الوعود والأعطال الأصلية، مع أثر التنفيذ، وسجلّ أندرويد نفسه عن سبب آخر إغلاق للتطبيق (عطل أو تجمّد أو إغلاق لنقص الذاكرة). يُرسل نوع الخطأ فقط كحدث، لا رسالته.</li>
           <li>
             حين يعجز التتبّع التلقائي عن قراءة تنبيه بنكي، أو لا يفهم «اسأل» سؤالًا: شكل صياغته، لتقرأه
             النسخة التالية. تبقى الكلمات الموجودة في قاموس التطبيق المدمج (أفعال مثل «خصم»، ورموز
             العملات، وكلمات الربط)، وتصبح كل كلمة أخرى <code>_</code> وكل رقم <code>#</code>. فرسالة
             «تم خصم 500 جنيه من حسابك رقم 1234 لدى SHOP» تصل هكذا: «تم خصم # جنيه من حسابك رقم # لدي
-            _». لا يبقى منها مبلغ ولا رقم بطاقة ولا اسم ولا متجر.
+            _». لا يبقى منها مبلغ ولا رقم بطاقة ولا اسم ولا متجر. ويرافقها اسم البنك واسم حزمة التطبيق الذي نشر التنبيه.
           </li>
           <li>
             معرّف: أثناء تسجيل دخولك تُربط الأحداث <strong>بالمعرّف العشوائي لحسابك</strong> كي لا
@@ -2259,10 +2336,19 @@
                 <td>إعادة جدولة تنبيهاتك بعد إعادة تشغيل الجهاز</td>
               </tr>
               <tr>
+                <td>فوترة Google Play ومُحيل التثبيت والإشعارات الدافعة</td>
+                <td>تلقائي</td>
+                <td>
+                  مشتريات مصاريف برو، وقراءة مصدر التثبيت (القسم ١٢)، واستقبال إشارة المزامنة
+                  الصامتة (القسم ١٠)
+                </td>
+              </tr>
+              <tr>
                 <td>الكاميرا</td>
                 <td>يُطلب</td>
                 <td>
-                  تصوير إيصال، من زر الإرفاق داخل المعاملة. تبقى الصورة في تخزين خاص بالتطبيق على
+                  تصوير إيصال، من زر الإرفاق داخل المعاملة، أو مسح باركود منتج في مقارنة الأسعار
+                  (يُقرأ على الجهاز، ولا تُحفظ ولا تُرسل أي صورة). تبقى الصورة في تخزين خاص بالتطبيق على
                   جهازك ولا تُزامَن. ولا تُرسل إلينا إلا إذا طلبتَ، كمشترك في برو، أن يقرأها مصاريف،
                   ولا نحتفظ بها (القسم ٢٢)
                 </td>
@@ -2358,7 +2444,7 @@
             المحاولة كل ليلة حتى يتم.
           </li>
           <li>
-            <strong>بيانات الإقلاع والأداء لدى Expo</strong> (Insights وObserve) لا تحمل أي معرّف
+            <strong>بيانات الإقلاع والأداء والأحداث لدى Expo</strong> (Insights وObserve) لا تحمل أي معرّف
             حساب، فلا يوجد فيها ما يُبحث عنه ويُحذف، وتنتهي مدتها وفق سياسة Expo نفسها.
           </li>
           <li>
@@ -2366,6 +2452,10 @@
             التوثيق أو إعادة التعيين. ولا نحتفظ لديها بأي قائمة جهات اتصال، بل رسائل مُرسَلة فقط، ولا
             تتيح Resend حذف رسالة أُرسلت، فلا يُمحى هذا السجل مع حسابك: بل تنتهي مدته خلال ٣٠ يومًا
             وفق سياستها.
+          </li>
+          <li>
+            <strong>الأسعار والمتاجر التي أضفتها</strong> تُحفظ مقابل معرّف حسابك ولا يمحوها حذف
+            الحساب حتى الآن. احذف متجرك بنفسك من التطبيق، أو راسلنا ونزيل الباقي.
           </li>
           <li>
             <strong>مخزن ماكينات الصرف</strong> على خادمنا يحتوي بيانات خرائط لخلايا جغرافية خشنة، ولا
@@ -2436,7 +2526,7 @@
           </li>
           <li>
             <a href="https://expo.dev/privacy" rel="noopener">Expo</a> للتحديثات الفورية ومقاييس
-            الأداء (جهازك يتصل بها)، وخدمة الإشعارات التي توصل إشارة المزامنة الصامتة في القسم ١٠ (على
+            الأداء وأحداث الاستخدام (جهازك يتصل بها)، وخدمة الإشعارات التي توصل إشارة المزامنة الصامتة في القسم ١٠ (على
             الخادم، مع تسجيل الرمز من جهازك)
           </li>
           <li>
@@ -2471,6 +2561,11 @@
             العملات (جهازك يتصل بها ويرسل رمز عملة)
           </li>
           <li>
+            <a href="https://world.openfoodfacts.org/terms-of-use" rel="noopener">Open Food Facts</a>
+            ومشروع Open Prices التابع لها لأسماء المنتجات وأسعار المتاجر خلف مقارنة الأسعار
+            (على الخادم فقط، وتُسأل بباركود ودولة)
+          </li>
+          <li>
             <a href="https://gold-api.com/" rel="noopener">Gold API</a> لسعر الذهب المباشر الذي يُقيَّم
             به الذهب الذي تتابعه كأصل (جهازك يتصل بها ويرسل رمز المعدن)
           </li>
@@ -2498,7 +2593,7 @@
         </p>
         <h3>ميزات الذكاء الاصطناعي</h3>
         <p>
-          تضم برو أربع ميزات ترسل شيئًا إلى خادمنا ليقرأه نموذج ذكاء اصطناعي. كل منها
+          تضم برو خمس ميزات ترسل شيئًا إلى خادمنا ليقرأه نموذج ذكاء اصطناعي. كل منها
           <strong>لا يعمل إلا حين تبدأه أنت</strong>، ولا يرسل إلا ما هو مذكور هنا:
         </p>
         <ul>
@@ -2519,6 +2614,11 @@
             <strong>المدرّب (Coach)</strong>: الملخّص الذي يعرضه لك مصاريف أصلًا — إجماليات الشهر،
             والميزانيات، وأكثر التجّار، وآخر سبعة أيام كإجماليات يومية حسب الفئة — ومحادثتك مع المدرّب،
             وأسماء فئاتك. ولا معاملاتك الفردية أبدًا.
+          </li>
+          <li>
+            <strong>مدرّب الدخل</strong>: ملفك المهني الذي كتبتَه (الوظيفة والخبرة بالسنوات والمهارات
+            والساعات الفارغة ومصدر دخلك)، ودخلك الشهري وقيمة ساعتك، والخيارات التي حسبها الهاتف أصلًا،
+            وتقدّم الخطط التي بدأتَها. ولا معاملاتك أبدًا.
           </li>
         </ul>
         <p>
