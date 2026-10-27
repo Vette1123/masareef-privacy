@@ -532,7 +532,7 @@
           page explains exactly what it stores, what it sends, and to whom.
         </p>
         <p class="meta">
-          Last updated: <b><time datetime="2026-10-23">23 October 2026</time></b> · Covers app version
+          Last updated: <b><time datetime="2026-10-27">27 October 2026</time></b> · Covers app version
           <b>1.139.0</b> and later · Package <code>com.mohamedgado.masareef</code>
         </p>
 
@@ -713,8 +713,45 @@
           Because the app is account-based, the records you keep are synchronised so your phone, a
           replacement phone, and a reinstall all see the same data. Sync is automatic and offline
           first: it runs after sign-in, when the app comes to the foreground, and on a slow
-          background heartbeat while the app is open. There is no manual "sync now" button, and
-          conflicts resolve by last write wins.
+          background heartbeat while the app is open. The <b>Cloud sync</b> row in Settings can also
+          ask for a pass by hand, and conflicts resolve by last write wins.
+        </p>
+        <h3 id="en-4-home">Choosing where your ledger lives (Masareef Pro)</h3>
+        <p>
+          With Pro you can choose, in <b>Settings, Where your data lives</b>, to keep your ledger
+          somewhere other than our server:
+        </p>
+        <ul>
+          <li>
+            <strong>Your own Google Drive.</strong> Your phones sync through a hidden app folder in
+            your Drive (the <code>drive.appdata</code> scope, which lets the app see only its own
+            files there). The files go from your phone straight to Google.
+          </li>
+          <li>
+            <strong>Your own iCloud</strong> (iPhone and iPad). The same, through the app's own
+            iCloud container.
+          </li>
+          <li>
+            <strong>This phone only.</strong> Nothing syncs anywhere. If the phone is lost or the app
+            is deleted, the data goes with it, so keep an export.
+          </li>
+        </ul>
+        <p>
+          When you choose one of these, the app first writes your whole ledger to the new place and
+          reads it back, then tells our server. Our server deletes its copy of your transactions,
+          wallets, budgets, goals and the other records in the table below within
+          <strong>24 hours</strong>, and stops accepting them. It keeps only what it needs to run
+          your account: your name, email, sign-in, Pro status, which of these options you chose and
+          the Google account your Drive copy is in, and the monthly count of auto-tracked captures
+          that the free limit uses. Moving back to Masareef sync uploads the ledger again from your
+          phone.
+        </p>
+        <p>
+          A copy kept in your Drive or iCloud is in your account with that provider and under its
+          terms. We never receive it, and we cannot reach it or restore it for you. Deleting your
+          Masareef account also deletes the app's files there, when the phone can still reach them.
+          A shared household always syncs through our server, so these options are not available
+          while you are in one.
         </p>
         <div class="table-scroll">
           <table>
@@ -1646,7 +1683,7 @@
           التطبيق، وما يرسله، وإلى مَن.
         </p>
         <p class="meta">
-          آخر تحديث: <b><time datetime="2026-10-23">٢٣ أكتوبر ٢٠٢٦</time></b> · تغطي الإصدار
+          آخر تحديث: <b><time datetime="2026-10-27">٢٧ أكتوبر ٢٠٢٦</time></b> · تغطي الإصدار
           <b>1.139.0</b> وما بعده · معرّف الحزمة <code>com.mohamedgado.masareef</code>
         </p>
 
@@ -1817,8 +1854,43 @@
         <p>
           لأن التطبيق قائم على حساب، تُزامَن السجلات التي تحتفظ بها كي يرى هاتفك، وهاتفك البديل،
           وإعادة التثبيت، البيانات نفسها. المزامنة تلقائية وتعمل بمنطق «الجهاز أولًا»: تجري بعد تسجيل
-          الدخول، وعند عودة التطبيق للمقدمة، وعلى نبضة خلفية بطيئة أثناء فتح التطبيق. لا يوجد زر
-          «زامِن الآن»، والتعارضات تُحسم بمبدأ «آخر كتابة تفوز».
+          الدخول، وعند عودة التطبيق للمقدمة، وعلى نبضة خلفية بطيئة أثناء فتح التطبيق. ويمكن أيضًا طلب
+          مزامنة يدويًا من صف <b>المزامنة السحابية</b> في الإعدادات، والتعارضات تُحسم بمبدأ «آخر كتابة
+          تفوز».
+        </p>
+        <h3 id="ar-4-home">اختيار مكان حفظ بياناتك (مصاريف Pro)</h3>
+        <p>
+          مع Pro يمكنك أن تختار، من <b>الإعدادات، أين تُحفظ بياناتك</b>، حفظ بياناتك في مكان غير
+          خادمنا:
+        </p>
+        <ul>
+          <li>
+            <strong>Google Drive الخاص بك.</strong> تتزامن هواتفك عبر مجلد مخفي للتطبيق في Drive
+            الخاص بك (صلاحية <code>drive.appdata</code> التي لا تسمح للتطبيق برؤية غير ملفاته
+            هناك). تنتقل الملفات من هاتفك إلى Google مباشرة.
+          </li>
+          <li>
+            <strong>iCloud الخاص بك</strong> (iPhone وiPad). بالطريقة نفسها، عبر حاوية التطبيق في
+            iCloud.
+          </li>
+          <li>
+            <strong>هذا الهاتف فقط.</strong> لا يتزامن شيء إلى أي مكان. إن فقدت الهاتف أو حذفت
+            التطبيق ضاعت البيانات معه، فاحتفظ بنسخة مصدّرة.
+          </li>
+        </ul>
+        <p>
+          عند اختيار أحد هذه الخيارات، يكتب التطبيق بياناتك كاملة في المكان الجديد ويقرؤها للتأكد،
+          ثم يُبلغ خادمنا. يحذف خادمنا نسخته من معاملاتك ومحافظك وميزانياتك وأهدافك وبقية السجلات في
+          الجدول أدناه خلال <strong>24 ساعة</strong>، ويتوقف عن قبولها. ويحتفظ فقط بما يلزم لتشغيل
+          حسابك: اسمك وبريدك وتسجيل دخولك وحالة Pro والخيار الذي اخترته وحساب Google الذي فيه نسخة
+          Drive، وعدد الالتقاطات التلقائية الشهري الذي يحسبه الحد المجاني. والعودة إلى مزامنة مصاريف
+          ترفع بياناتك من هاتفك من جديد.
+        </p>
+        <p>
+          النسخة المحفوظة في Drive أو iCloud الخاص بك موجودة في حسابك لدى ذلك المزوّد وتخضع لشروطه.
+          لا نستلمها أبدًا، ولا نستطيع الوصول إليها أو استعادتها لك. وحذف حسابك في مصاريف يحذف أيضًا
+          ملفات التطبيق هناك متى استطاع الهاتف الوصول إليها. الأسرة المشتركة تتزامن دائمًا عبر خادمنا،
+          لذا لا تتوفر هذه الخيارات ما دمت في أسرة.
         </p>
         <div class="table-scroll">
           <table>
