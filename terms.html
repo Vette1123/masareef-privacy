@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Masareef · Terms of Service · شروط الخدمة</title>
+    <meta
+      name="description"
+      content="The terms for using Masareef, the personal spending tracker, and Masareef Pro. English and Arabic."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#020617" media="(prefers-color-scheme: dark)" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://vette1123.github.io/masareef-privacy/terms.html" />
+    <meta property="og:title" content="Masareef · Terms of Service · شروط الخدمة" />
+    <meta
+      property="og:description"
+      content="The terms for using Masareef and Masareef Pro."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://vette1123.github.io/masareef-privacy/terms.html"
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230A1626'/%3E%3Cpath d='M6 21.5 12 14l5 4.5L26 9' stroke='%232DD4BF' stroke-width='2.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"
+    />
+    <style>
+      /* Same tokens and structure as the privacy policy, so the two pages read as one
+         document set. Self-contained: no web fonts, no third-party scripts, no cookies. */
+      :root {
+        --bg: #f8fafc;
+        --surface: #ffffff;
+        --surface-2: #f1f5f9;
+        --text: #0f172a;
+        --muted: #55657c;
+        --line: #dde5ee;
+        --accent: #0d7d70;
+        --accent-soft: #e8f6f4;
+        --radius: 14px;
+        --maxw: 760px;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #020617;
+          --surface: #0b1324;
+          --surface-2: #111c31;
+          --text: #e8edf6;
+          --muted: #93a2b8;
+          --line: #1d2b44;
+          --accent: #2dd4bf;
+          --accent-soft: #0d2029;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+          sans-serif;
+        font-size: 17px;
+        line-height: 1.75;
+        -webkit-font-smoothing: antialiased;
+      }
+      [dir="rtl"] body,
+      [lang="ar"] {
+        font-family: "IBM Plex Sans Arabic", "Noto Sans Arabic", "Segoe UI", Tahoma, system-ui,
+          -apple-system, Arial, sans-serif;
+      }
+      .wrap {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 0 20px 96px;
+      }
+      .top {
+        border-bottom: 1px solid var(--line);
+        background: var(--surface);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+      .top-inner {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        min-height: 60px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+      .brand svg {
+        display: block;
+      }
+      .switch {
+        display: inline-flex;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 3px;
+        background: var(--surface-2);
+      }
+      .switch button {
+        appearance: none;
+        border: 0;
+        background: transparent;
+        color: var(--muted);
+        font: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 5px 14px;
+        border-radius: 999px;
+        cursor: pointer;
+        transition: background-color 0.18s ease, color 0.18s ease;
+      }
+      html:not(.lang-ar) #btn-en,
+      html.lang-ar #btn-ar {
+        background: var(--accent);
+        color: #ffffff;
+      }
+      @media (prefers-color-scheme: dark) {
+        html:not(.lang-ar) #btn-en,
+        html.lang-ar #btn-ar {
+          color: #04231f;
+        }
+      }
+      .switch button:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+      h1 {
+        font-size: clamp(1.8rem, 5vw, 2.3rem);
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        margin: 40px 0 10px;
+      }
+      .lede {
+        color: var(--muted);
+        font-size: 1.05rem;
+        margin: 0 0 8px;
+        max-width: 62ch;
+      }
+      .meta {
+        color: var(--muted);
+        font-size: 0.86rem;
+        margin: 0 0 32px;
+        padding-bottom: 22px;
+        border-bottom: 1px solid var(--line);
+      }
+      .meta b {
+        color: var(--text);
+        font-weight: 600;
+      }
+      h2 {
+        font-size: 1.28rem;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+        margin: 40px 0 12px;
+      }
+      p {
+        margin: 0 0 14px;
+        max-width: 68ch;
+      }
+      ul,
+      ol {
+        max-width: 68ch;
+        padding-inline-start: 22px;
+      }
+      li {
+        margin: 6px 0;
+      }
+      a {
+        color: var(--accent);
+        text-underline-offset: 3px;
+      }
+      a:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+        border-radius: 3px;
+      }
+      code {
+        font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+        font-size: 0.86em;
+        background: var(--surface-2);
+        border: 1px solid var(--line);
+        padding: 1px 6px;
+        border-radius: 6px;
+        direction: ltr;
+        unicode-bidi: embed;
+        display: inline-block;
+      }
+      .subject {
+        font-weight: 600;
+        background: var(--accent-soft);
+        border: 1px solid var(--line);
+        padding: 2px 10px;
+        border-radius: 8px;
+        white-space: nowrap;
+        direction: ltr;
+        unicode-bidi: embed;
+        display: inline-block;
+      }
+      .steps {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--surface);
+        padding: 18px 22px;
+        margin: 18px 0 8px;
+      }
+      .steps ol {
+        margin: 0;
+      }
+      .table-scroll {
+        overflow-x: auto;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        margin: 18px 0 24px;
+        background: var(--surface);
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        min-width: 560px;
+        font-size: 0.92rem;
+      }
+      th,
+      td {
+        text-align: start;
+        padding: 11px 16px;
+        vertical-align: top;
+      }
+      thead th {
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--muted);
+        font-weight: 700;
+      }
+      tbody tr + tr {
+        border-top: 1px solid var(--line);
+      }
+      .note {
+        border-inline-start: 3px solid var(--accent);
+        background: var(--surface-2);
+        border-radius: 0 var(--radius) var(--radius) 0;
+        padding: 12px 18px;
+        margin: 20px 0;
+      }
+      [dir="rtl"] .note {
+        border-radius: var(--radius) 0 0 var(--radius);
+      }
+      .note p:last-child {
+        margin-bottom: 0;
+      }
+      footer.page {
+        border-top: 1px solid var(--line);
+        margin-top: 48px;
+        padding-top: 20px;
+        color: var(--muted);
+        font-size: 0.86rem;
+      }
+      /* The head script stamps html.lang-en / html.lang-ar before the first paint. With
+         no script neither class lands and the page stays the English document it ships as. */
+      html:not(.lang-ar) #doc-ar,
+      html.lang-ar #doc-en {
+        display: none;
+      }
+      .skip {
+        position: absolute;
+        inset-inline-start: -9999px;
+      }
+      .skip:focus {
+        position: static;
+        display: inline-block;
+        padding: 8px 12px;
+      }
+      @media print {
+        :root {
+          --bg: #ffffff;
+          --surface: #ffffff;
+          --surface-2: #ffffff;
+          --text: #000000;
+          --muted: #333333;
+          --line: #999999;
+          --accent: #000000;
+          --accent-soft: #ffffff;
+        }
+        .top,
+        .switch,
+        .skip {
+          display: none;
+        }
+        .wrap {
+          max-width: none;
+          padding: 0;
+        }
+        body {
+          font-size: 11pt;
+          line-height: 1.5;
+        }
+        a[href^="http"]::after {
+          content: " (" attr(href) ")";
+          font-size: 9pt;
+          word-break: break-all;
+        }
+      }
+    </style>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Masareef Terms of Service",
+        "alternateName": "شروط خدمة مصاريف",
+        "url": "https://vette1123.github.io/masareef-privacy/terms.html",
+        "inLanguage": ["en", "ar"],
+        "dateModified": "2026-10-27",
+        "isPartOf": {
+          "@type": "WebSite",
+          "name": "Masareef privacy and data deletion",
+          "url": "https://vette1123.github.io/masareef-privacy/"
+        },
+        "about": {
+          "@type": "MobileApplication",
+          "name": "Masareef",
+          "alternateName": "مصاريف",
+          "applicationCategory": "FinanceApplication",
+          "operatingSystem": "Android",
+          "identifier": "com.mohamedgado.masareef",
+          "installUrl": "https://play.google.com/store/apps/details?id=com.mohamedgado.masareef",
+          "downloadUrl": "https://play.google.com/store/apps/details?id=com.mohamedgado.masareef",
+          "sameAs": "https://play.google.com/store/apps/details?id=com.mohamedgado.masareef"
+        },
+        "publisher": {
+          "@type": "Person",
+          "name": "Mohamed Gado",
+          "email": "boogado@yahoo.com"
+        }
+      }
+    </script>
+    <script>
+      // Resolve the language BEFORE first paint. The whole document flips direction,
+      // so deciding after paint moved the header across the viewport: a visible
+      // LTR to RTL flash and a layout shift on every Arabic visit.
+      (function () {
+        function stored() {
+          try {
+            return localStorage.getItem("masareef-privacy-lang");
+          } catch (e) {
+            return null; // private browsing can block storage
+          }
+        }
+        // A deep link to a section anchor wins over the stored choice, so a shared
+        // section link always lands on the section it names.
+        function pick() {
+          if (/^#ar-/.test(location.hash)) return "ar";
+          if (/^#en-/.test(location.hash)) return "en";
+          var saved = stored();
+          if (saved === "ar" || saved === "en") return saved;
+          if ((navigator.language || "en").toLowerCase().indexOf("ar") === 0) return "ar";
+          return "en";
+        }
+        var lang = pick();
+        var root = document.documentElement;
+        root.lang = lang;
+        root.dir = lang === "ar" ? "rtl" : "ltr";
+        root.classList.add("lang-" + lang);
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content / تخطي إلى المحتوى</a>
+    <header class="top">
+      <div class="top-inner">
+        <span class="brand">
+          <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true">
+            <rect width="32" height="32" rx="8" fill="#0A1626" />
+            <path
+              d="M6 21.5 12 14l5 4.5L26 9"
+              stroke="#2DD4BF"
+              stroke-width="2.8"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          Masareef
+        </span>
+        <div class="switch" role="group" aria-label="Language / اللغة">
+          <button type="button" id="btn-en" aria-pressed="true" lang="en">English</button>
+          <button type="button" id="btn-ar" aria-pressed="false" lang="ar">العربية</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="wrap" id="main">
+      <!-- ================================ ENGLISH ================================ -->
+      <section id="doc-en" lang="en" dir="ltr">
+        <h1>Terms of Service</h1>
+        <p class="lede">
+          Masareef is a personal spending tracker built and run by Mohamed Gado. These terms are the
+          agreement between you and us when you use the app and its sync service. They are short on
+          purpose. Please read them with the <a href="https://www.mohamedgado.com/projects/masareef/privacy">privacy policy</a>, which says what data
+          the app keeps and where.
+        </p>
+        <p class="meta">
+          Last updated: <b><time datetime="2026-10-27">27 October 2026</time></b> · App
+          <code>com.mohamedgado.masareef</code> · Privacy: <a href="https://www.mohamedgado.com/projects/masareef/privacy">privacy policy</a> ·
+          Deletion: <a href="https://www.mohamedgado.com/projects/masareef/delete-account.html">delete your account</a>
+        </p>
+
+        <h2>1. Using Masareef</h2>
+        <p>
+          By creating an account or using the app you agree to these terms. If you do not agree,
+          do not use the app. You need one account per person, and you are responsible for keeping
+          your sign-in safe. You can stop using Masareef and
+          <a href="https://www.mohamedgado.com/projects/masareef/delete-account.html">delete your account</a> at any time.
+        </p>
+
+        <h2>2. What Masareef is, and what it is not</h2>
+        <p>
+          Masareef helps you record and understand your own spending. It is not a bank, it never
+          moves money, and nothing in it is financial, investment, tax or legal advice. Insights,
+          suggestions, auto-tracked transactions and the AI helpers are produced automatically and
+          can be wrong. Check anything you rely on, and keep your bank's records as the source of
+          truth.
+        </p>
+
+        <h2>3. Masareef Pro</h2>
+        <ul>
+          <li>
+            Pro is sold through Google Play or the App Store, and that store handles the payment,
+            the receipt and any refund under its own policy.
+          </li>
+          <li>
+            A subscription renews automatically until you cancel it. Cancel at least 24 hours before
+            the end of the current period, in your store account's subscription settings. Deleting
+            the app or your Masareef account does not cancel it.
+          </li>
+          <li>
+            The Pro page in the app lists what Pro includes. We may add, change or retire
+            individual features over time, but we will not take away what a paid period already
+            covers without a fair replacement or a refund through the store.
+          </li>
+        </ul>
+
+        <h2>4. Your data stays yours</h2>
+        <p>
+          The records you keep in Masareef belong to you. You give us only the permission needed to
+          store them, sync them between your devices and the people you share a household with,
+          and show them back to you, as the <a href="https://www.mohamedgado.com/projects/masareef/privacy">privacy policy</a> describes. Where you
+          choose to keep or back up data in your own Google Drive or iCloud, that copy lives in your
+          account with that provider under its terms; we cannot reach it or restore it for you.
+        </p>
+
+        <h2>5. Fair use</h2>
+        <p>Please do not:</p>
+        <ul>
+          <li>use Masareef for anything unlawful, or to store someone else's data without the right to;</li>
+          <li>
+            attack, overload, scrape or try to get around the limits of our servers, or access
+            another person's account;
+          </li>
+          <li>post prices, shops or reports you know to be false in shared features.</li>
+        </ul>
+        <p>
+          We may remove content that breaks these rules, and suspend an account that keeps breaking
+          them. If we do, we will tell you why where we can.
+        </p>
+
+        <h2>6. Availability</h2>
+        <p>
+          We work to keep Masareef running and your data safe, but the app is provided as it is,
+          without a promise that it will always be available or free of errors. To the extent the
+          law allows, we are not liable for indirect losses or for decisions made using information
+          in the app. Nothing in these terms limits rights you have under the consumer law where you
+          live.
+        </p>
+
+        <h2>7. Changes to these terms</h2>
+        <p>
+          When these terms change we update the date at the top of this page. If a change matters
+          to how you use Masareef, we say so in the app before it applies. Continuing to use the app
+          after that means you accept the new terms.
+        </p>
+
+        <h2>8. Contact</h2>
+        <p>
+          Questions about these terms: <a href="mailto:boogado@yahoo.com">boogado@yahoo.com</a>.
+        </p>
+
+        <footer class="page">
+          <p>
+            This page is static and hosted on GitHub Pages. It sets no cookies, runs no analytics,
+            and loads no fonts or scripts from other servers.
+          </p>
+          <p>
+            The app this page belongs to:
+            <a href="https://play.google.com/store/apps/details?id=com.mohamedgado.masareef"
+              >Masareef on Google Play</a
+            >.
+          </p>
+        </footer>
+      </section>
+
+      <!-- ================================ ARABIC ================================ -->
+      <section id="doc-ar" lang="ar" dir="rtl">
+        <h1>شروط الخدمة</h1>
+        <p class="lede">
+          مصاريف تطبيق شخصي لتتبّع المصروفات، يطوّره ويديره محمد جادو. هذه الشروط هي الاتفاق بينك
+          وبيننا عند استخدامك التطبيق وخدمة المزامنة. جعلناها قصيرة عن قصد، فاقرأها مع
+          <a href="https://www.mohamedgado.com/projects/masareef/privacy">سياسة الخصوصية</a> التي توضّح البيانات التي يحتفظ بها التطبيق وأين.
+        </p>
+        <p class="meta">
+          آخر تحديث: <b><time datetime="2026-10-27">27 أكتوبر 2026</time></b> · التطبيق
+          <code>com.mohamedgado.masareef</code> · الخصوصية: <a href="https://www.mohamedgado.com/projects/masareef/privacy">سياسة الخصوصية</a> ·
+          الحذف: <a href="https://www.mohamedgado.com/projects/masareef/delete-account.html">حذف حسابك</a>
+        </p>
+
+        <h2>1. استخدام مصاريف</h2>
+        <p>
+          بإنشائك حسابًا أو استخدامك التطبيق فأنت توافق على هذه الشروط. إن لم توافق عليها فلا تستخدم
+          التطبيق. لكل شخص حساب واحد، وأنت مسؤول عن حماية تسجيل دخولك. يمكنك التوقف عن استخدام مصاريف
+          و<a href="https://www.mohamedgado.com/projects/masareef/delete-account.html">حذف حسابك</a> في أي وقت.
+        </p>
+
+        <h2>2. ما هو مصاريف، وما ليس هو</h2>
+        <p>
+          يساعدك مصاريف على تسجيل مصروفاتك وفهمها. ليس بنكًا، ولا يحرّك أي أموال، ولا شيء فيه نصيحة
+          مالية أو استثمارية أو ضريبية أو قانونية. الملخصات والاقتراحات والمعاملات المسجّلة تلقائيًا
+          والمساعدات الذكية تُنتَج آليًا وقد تخطئ. راجع أي شيء تعتمد عليه، واعتبر سجلات بنكك هي المرجع.
+        </p>
+
+        <h2>3. مصاريف Pro</h2>
+        <ul>
+          <li>
+            يُباع Pro عبر Google Play أو App Store، والمتجر هو من يتولى الدفع والإيصال وأي استرداد وفق
+            سياسته.
+          </li>
+          <li>
+            يتجدّد الاشتراك تلقائيًا حتى تلغيه. ألغِه قبل نهاية الفترة الحالية بـ 24 ساعة على الأقل من
+            إعدادات الاشتراكات في حسابك على المتجر. حذف التطبيق أو حذف حسابك في مصاريف لا يلغي الاشتراك.
+          </li>
+          <li>
+            تعرض صفحة Pro داخل التطبيق ما يشمله. قد نضيف ميزات أو نغيّرها أو نوقفها مع الوقت، لكننا لن
+            نسحب ما تغطيه فترة مدفوعة دون بديل عادل أو استرداد عبر المتجر.
+          </li>
+        </ul>
+
+        <h2>4. بياناتك تبقى ملكك</h2>
+        <p>
+          السجلات التي تحفظها في مصاريف ملكك. تمنحنا فقط الإذن اللازم لتخزينها ومزامنتها بين أجهزتك
+          ومع من تشاركهم أسرة، وعرضها لك، كما تصف <a href="https://www.mohamedgado.com/projects/masareef/privacy">سياسة الخصوصية</a>. وإن اخترت حفظ
+          بياناتك أو نسخها احتياطيًا في Google Drive أو iCloud الخاص بك، فتلك النسخة في حسابك لدى ذلك
+          المزوّد وتخضع لشروطه، ولا نستطيع الوصول إليها أو استعادتها لك.
+        </p>
+
+        <h2>5. الاستخدام العادل</h2>
+        <p>من فضلك لا:</p>
+        <ul>
+          <li>تستخدم مصاريف في أي أمر غير قانوني، أو لتخزين بيانات شخص آخر دون حق؛</li>
+          <li>تهاجم خوادمنا أو تُثقلها أو تكشط بياناتها أو تتحايل على حدودها، أو تدخل حساب شخص آخر؛</li>
+          <li>تنشر في الميزات المشتركة أسعارًا أو متاجر أو بلاغات تعرف أنها غير صحيحة.</li>
+        </ul>
+        <p>
+          قد نحذف المحتوى المخالف لهذه القواعد، ونوقف الحساب الذي يكرر مخالفتها، وسنخبرك بالسبب متى
+          أمكن.
+        </p>
+
+        <h2>6. توفّر الخدمة</h2>
+        <p>
+          نعمل على إبقاء مصاريف يعمل وبياناتك آمنة، لكن التطبيق مقدَّم كما هو، دون تعهّد بأن يكون
+          متاحًا دائمًا أو خاليًا من الأخطاء. وفي الحدود التي يسمح بها القانون، لسنا مسؤولين عن الخسائر
+          غير المباشرة أو عن قرارات اتُّخذت بناءً على معلومات في التطبيق. ولا شيء في هذه الشروط يقيّد
+          حقوقك بموجب قانون حماية المستهلك في بلدك.
+        </p>
+
+        <h2>7. تغيير هذه الشروط</h2>
+        <p>
+          عند تغيير هذه الشروط نحدّث التاريخ أعلى هذه الصفحة. وإن كان التغيير يمسّ طريقة استخدامك
+          لمصاريف، نخبرك به داخل التطبيق قبل أن يسري. واستمرارك في استخدام التطبيق بعد ذلك يعني قبولك
+          الشروط الجديدة.
+        </p>
+
+        <h2>8. التواصل</h2>
+        <p>
+          لأي سؤال عن هذه الشروط: <a href="mailto:boogado@yahoo.com">boogado@yahoo.com</a>.
+        </p>
+
+        <footer class="page">
+          <p>
+            هذه الصفحة ثابتة ومستضافة على GitHub Pages. لا تضع كوكيز، ولا تشغّل أي قياس، ولا تحمّل
+            خطوطًا أو سكربتات من خوادم أخرى.
+          </p>
+          <p>
+            التطبيق الذي تخصّه هذه الصفحة:
+            <a href="https://play.google.com/store/apps/details?id=com.mohamedgado.masareef"
+              >مصاريف على Google Play</a
+            >.
+          </p>
+        </footer>
+      </section>
+    </main>
+
+    <script>
+      // Both languages ship in the DOM so crawlers and reader modes see the full policy.
+      // The inline head script has already picked one and stamped the root element; this
+      // only wires the toggle and keeps the buttons' announced state in step.
+      (function () {
+        var root = document.documentElement;
+        var en = document.getElementById("btn-en");
+        var ar = document.getElementById("btn-ar");
+        if (!en || !ar) return;
+
+        function apply(lang, remember) {
+          root.lang = lang;
+          root.dir = lang === "ar" ? "rtl" : "ltr";
+          root.classList.toggle("lang-ar", lang === "ar");
+          root.classList.toggle("lang-en", lang === "en");
+          en.setAttribute("aria-pressed", String(lang === "en"));
+          ar.setAttribute("aria-pressed", String(lang === "ar"));
+          if (remember) {
+            try {
+              localStorage.setItem("masareef-privacy-lang", lang);
+            } catch (e) {
+              // Private browsing can block storage. The toggle still works for this visit.
+            }
+          }
+        }
+
+        // The markup ships aria-pressed for English; catch it up to what the head script chose.
+        apply(root.lang === "ar" ? "ar" : "en", false);
+
+        en.addEventListener("click", function () {
+          apply("en", true);
+        });
+        ar.addEventListener("click", function () {
+          apply("ar", true);
+        });
+      })();
+    </script>
+  </body>
+</html>

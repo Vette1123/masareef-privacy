@@ -30,6 +30,7 @@ never leaves the phone.
 | File | Purpose |
 |---|---|
 | `index.html` | The policy. Arabic and English, both in the DOM, one visible at a time |
+| `terms.html` | Terms of Service, both languages. Google's OAuth consent screen links it as `mohamedgado.com/projects/masareef/terms` (rewrite in portfolio-v1) |
 | `delete-account.html` | Play's required account-deletion URL. Same design, both languages |
 | `404.html` | Meta-refresh to the policy, so no old or mistyped link dead-ends |
 | `robots.txt` | Allow all, points at the sitemap |
