@@ -75,6 +75,8 @@
       ul { margin: 0; padding: 0 1.2em 0 0; }
       li { margin: 0 0 8px; }
       li::marker { color: var(--teal); }
+      /* Package ids and alert text run unbroken, wider than a 320px phone. */
+      bdi, p[dir="auto"] { overflow-wrap: anywhere; }
       details { border-bottom: 1px solid var(--rule); padding: 14px 0; }
       summary { cursor: pointer; font-weight: 700; list-style-position: inside; }
       summary::marker { color: var(--teal); }
@@ -140,6 +142,18 @@
           <li>تطبيق آيفون: <bdi dir="ltr">urpay</bdi></li>
           <li>اسم المرسل في رسائل SMS: <bdi dir="ltr">URPAY</bdi></li>
         </ul>
+      </section>
+
+      <section>
+        <h2>مثال على إشعار من urpay</h2>
+        <p dir="auto">تم خصم 40.00 ريال من محفظتك لدى Jahez</p>
+        <p>يسجّله مصاريف هكذا:</p>
+        <ul>
+          <li>النوع: مصروف</li>
+          <li>المبلغ: <bdi dir="ltr">40.00 SAR</bdi></li>
+          <li>الجهة: <bdi dir="ltr">Jahez</bdi></li>
+        </ul>
+        <p class="fine">مثال تقريبي، وقد تختلف صياغة الإشعار الفعلي. الأرقام والأسماء فيه غير حقيقية.</p>
       </section>
 
 
