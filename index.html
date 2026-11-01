@@ -448,7 +448,7 @@
         "alternateName": "سياسة الخصوصية لتطبيق مصاريف",
         "url": "https://www.mohamedgado.com/projects/masareef/privacy",
         "inLanguage": ["en", "ar"],
-        "dateModified": "2026-10-18",
+        "dateModified": "2026-11-01",
         "about": {
           "@type": "MobileApplication",
           "name": "Masareef",
@@ -532,8 +532,8 @@
           page explains exactly what it stores, what it sends, and to whom.
         </p>
         <p class="meta">
-          Last updated: <b><time datetime="2026-10-27">27 October 2026</time></b> · Covers app version
-          <b>1.139.0</b> and later · Package <code>com.mohamedgado.masareef</code>
+          Last updated: <b><time datetime="2026-11-01">1 November 2026</time></b> · Covers app version
+          <b>1.145.0</b> and later · Package <code>com.mohamedgado.masareef</code>
         </p>
 
         <div class="glance">
@@ -640,24 +640,25 @@
         <h2 id="en-2">2. Your account</h2>
         <p>
           Masareef requires an account, so signing in is not optional. You can sign up with an email
-          address and password, or sign in with Google (on iPhone, also Sign in with Apple). Authentication runs on our backend using
-          better-auth.
+          address and password, or sign in with Google (on iPhone, also Sign in with Apple). Authentication is our own code, running on our backend.
         </p>
         <p>Stored on our server for your account:</p>
         <ul>
           <li>Your display name and email address, and whether that email is verified.</li>
           <li>
-            A one-way hash of your password (never the password itself). Google sign-in stores no
-            password at all.
+            For an email account, a salted one-way hash. Your phone first turns your password into a
+            key and sends us that key, so we never receive the password itself, and we store only a
+            hash of the key. Google and Apple sign-in store no password at all.
           </li>
           <li>
-            Sessions: an opaque session token, creation and expiry times, and the user agent of the
-            device that signed in.
+            Sessions: a signed cookie on your phone and a session record on our server. They hold your
+            name and email, the IP address and device type you signed in from, and the creation and
+            expiry times. A session lasts up to a year. Signing out ends it and removes its record.
           </li>
           <li>
-            For Google sign-in: the account link Google gives us (a provider account id and the
-            tokens needed to verify it), plus the email, name and profile picture URL from your
-            Google profile. We never see your Google password.
+            For Google or Apple sign-in: the id that provider gives your account, plus the email and
+            name it shares and, for Google, your profile picture URL. We check the provider's sign-in
+            token and do not keep it. We never see your Google or Apple password.
           </li>
           <li>An optional profile photo, if you upload one (section 9).</li>
         </ul>
@@ -670,7 +671,7 @@
         <h2 id="en-3">3. What stays on your device</h2>
         <p>
           The app keeps a local SQLite database, a key-value store (MMKV), an app-private files
-          directory, and an encrypted keystore (Android Keystore, through expo-secure-store) for
+          directory, and an encrypted keystore (Android Keystore or the iPhone Keychain, through expo-secure-store) for
           your session. The following lives in those and is <strong>never uploaded</strong>:
         </p>
         <ul>
@@ -684,10 +685,11 @@
             did).
           </li>
           <li>
-            <strong>Every setting:</strong> theme, language, currency, country, default wallet,
+            <strong>Your settings:</strong> theme, language, default wallet,
             notification preferences, haptics, App Lock and its grace period, screen privacy, hidden
             balance cards, dismissed hints.
           </li>
+          <li><strong>Your shopping list.</strong> It does not sync. It travels only inside a backup file you make yourself (section 13).</li>
           <li><strong>Your last known coordinates</strong>, cached so the ATM screen need not ask again.</li>
                     <li>
             <strong>Your profile photo's local copy</strong>, and the session cookie in the encrypted
@@ -738,9 +740,10 @@
         </ul>
         <p>
           When you choose one of these, the app first writes your whole ledger to the new place and
-          reads it back, then tells our server. Our server deletes its copy of your transactions,
-          wallets, budgets, goals and the other records in the table below within
-          <strong>24 hours</strong>, and stops accepting them. It keeps only what it needs to run
+          reads it back, then tells our server. Our server stops accepting those records at once. It
+          deletes its copy of your transactions, wallets, budgets, goals and the other records in the
+          table below in a nightly cleanup that runs once <strong>24 hours</strong> have passed,
+          normally within 48 hours. It keeps only what it needs to run
           your account: your name, email, sign-in, Pro status, which of these options you chose and
           the Google account your Drive copy is in, and the monthly count of auto-tracked captures
           that the free limit uses. Moving back to Masareef sync uploads the ledger again from your
@@ -767,13 +770,18 @@
                 <td>Transactions</td>
                 <td>
                   Amount, currency, type (expense, income, transfer), date and time, note, merchant
-                  name, category, wallet, and the balance a bank message reported, when there was
-                  one
+                  name, category, wallet, whether it was typed or auto-tracked, whether it needs your
+                  review, its exchange rate and home currency, the amount received on a transfer, and
+                  the balance a bank message reported, when there was one
                 </td>
               </tr>
               <tr>
                 <td>Wallets</td>
-                <td>Name, kind (cash, bank, card, wallet), currency, balance, archived flag</td>
+                <td>
+                  Name, kind (cash, bank, card, wallet), currency, opening balance, icon and colour,
+                  and for a card or account: the last four digits if you enter them, statement and due
+                  days, statement amount, the period paid through and the interest rate
+                </td>
               </tr>
               <tr>
                 <td>Categories</td>
@@ -793,7 +801,10 @@
               </tr>
               <tr>
                 <td>Planned items</td>
-                <td>Expected one-off income or expense, until you confirm or cancel it</td>
+                <td>
+                  Expected one-off income or expense: amount, due date, label, who it is with, any
+                  interest rate, and its status
+                </td>
               </tr>
               <tr>
                 <td>Merchant rules</td>
@@ -803,7 +814,7 @@
               </tr>
               <tr>
                 <td>Goals</td>
-                <td>Name, target amount, amount saved so far, target date, wallet and colour</td>
+                <td>Name, target amount, amount saved so far, target date, wallet, colour, kind and the household member it is for</td>
               </tr>
               <tr>
                 <td>Installment plans</td>
@@ -813,7 +824,8 @@
                 <td>Assets</td>
                 <td>
                   What you own outside a wallet: kind (gold, foreign cash, a certificate), name,
-                  quantity, karat, value, maturity date and note
+                  quantity, karat, value, maturity date, note, cost, fees, date acquired, unit price and
+                  its date, market symbol, expected return and linked goal
                 </td>
               </tr>
               <tr>
@@ -829,8 +841,15 @@
                 </td>
               </tr>
               <tr>
-                <td>Country and currency</td>
-                <td>The two settings a new phone needs to open in the right place. No other setting syncs</td>
+                <td>Preferences and plans</td>
+                <td>
+                  Your country and currency, when you finished setup, your income plan (the monthly
+                  income you typed and how your categories are grouped), and your finance profile if
+                  you fill it in: risk preference, emergency-fund target, assumed return and inflation,
+                  the people in your household with a name, relationship and birth year, your work role,
+                  years, skills, free hours, income and its source, and your income-growth plans. No
+                  other setting syncs
+                </td>
               </tr>
             </tbody>
           </table>
@@ -848,27 +867,34 @@
         <div class="note">
           <p>
             <strong>Never synced, by design:</strong> auto-track captures and their message text,
-            trusted senders, the diagnostics trace, every app setting except your country and currency, and your
-            coordinates. Deleting a record in the app deletes it on the server too: the deletion
-            propagates as a tombstone on the next sync pass rather than lingering as a hidden row.
+            trusted senders, the diagnostics trace, every other app setting, your shopping list, and your
+            coordinates. Deleting a record in the app removes it from your phones. On our server the
+            record is marked deleted on the next sync pass and stays, contents included, so your
+            other phones learn about the deletion. It is erased when you delete your account, or
+            when our server deletes its copy after you move your ledger (see above).
           </p>
         </div>
         <div class="note">
           <p>
-            <strong>One identifier travels with a free account.</strong> The free tier is metered — a
+            <strong>One device identifier travels with sync.</strong> The free tier is metered — a
             fixed number of auto-captures a month, syncing on one phone — so a sync pass from a free
-            account carries a <strong>salted SHA-256 digest of the Android device id</strong>. Without
-            it the meter would reset by clearing the app’s data or signing up again. We receive the
-            digest, never the device id itself; it is not used for advertising and it is not joined to
-            anything outside the meter. A Pro account sends no device identifier at all.
+            account carries a <strong>salted SHA-256 digest of the device id</strong> (the Android
+            device id, or on iPhone the id Apple gives this app's maker). Without it the meter would
+            reset by clearing the app’s data or signing up again. A Pro account or household member
+            sends the same digest for a different job: to tell the server which phone made a change,
+            so it wakes only your other phones, and to register for the silent sync signal (section
+            10). We receive the digest, never the device id itself, and it is not used for
+            advertising.
           </p>
         </div>
         <div class="note">
           <p>
             <strong>A shared household ledger is shared.</strong> If you create or join one
             (Masareef Pro), what you add to it is stored under that ledger and every member of it
-            can see it, each record remembering who added it. Deleting your account removes what you
-            added and takes you out of the ledger; what the other members added stays theirs.
+            can see it, each record remembering who added it. Deleting your account takes you out
+            of the ledger, but what you added stays in it for the other members to see, with your
+            account id recorded beside it, until the last member leaves. If you want those records
+            gone, delete them in the app first.
           </p>
         </div>
 
@@ -879,6 +905,12 @@
           completely <strong>inert</strong> until you grant Android's notification-access special
           permission yourself, in the system settings screen the app sends you to. Until then it
           reads nothing.
+        </p>
+        <p>
+          <strong>On iPhone</strong> there is no notification access. Auto-track runs through a
+          Shortcuts automation you add yourself. When the automation fires, Apple's Shortcuts app
+          hands the message or notification text to Masareef, and the same reader handles it on the
+          phone, under the same rules below. You can remove the automation in Shortcuts at any time.
         </p>
         <h3>What it does once you grant access</h3>
         <ul>
@@ -1046,9 +1078,21 @@
           account id and shown to other signed-in users, without your account id. Deleting your account erases them: your shops, every price you added, and your reports. A product someone else also priced stays listed, with nothing linking it to you.
         </p>
 
+        <p>
+          When you search Stores by typing a name, the words you typed and your position rounded to
+          <strong>three decimals</strong> (about 100 m) go from our server to TomTom, Foursquare and
+          the Overpass mirrors. A search with no typed name uses the coarse cell.
+        </p>
+        <p>
+          A price is stored under a salted hash of your account id, and a shop under your account id.
+          A new or renamed shop waits until the operator approves it, and the operator sees its
+          name. If you report a shop or a price, the report is stored for the operator to review. If
+          you give a shop a product feed address, our server fetches it periodically.
+        </p>
+
         <h2 id="en-9">9. Profile photo</h2>
         <p>
-          A profile photo is optional. Masareef uses Android's system photo picker, so the app never
+          A profile photo is optional. Masareef uses the system photo picker, so the app never
           receives photo-library permission and never sees any image other than the one you pick. The
           chosen image is copied into the app's private directory so it survives.
         </p>
@@ -1059,8 +1103,9 @@
           — no sign-in is checked when the picture is fetched, so anyone holding that address can see
           it. Treat it as a photo published on the open web, and do not use a picture you would not
           want there. <strong>Removing the photo in Settings deletes the stored file</strong> from
-          our database, so that address stops resolving — no request to us needed. It is also
-          deleted with the account.
+          our database, so that address stops resolving — no request to us needed. A browser or
+          network that already fetched the picture may keep its own copy for up to a year. The
+          stored file is also deleted with the account.
         </p>
 
         <h2 id="en-10">10. Notifications and reminders</h2>
@@ -1218,15 +1263,16 @@
             version and the platform. No personal or financial data is involved.
           </li>
           <li>
-            <strong>Store updates:</strong> when a new version is on Google Play, the app can show
-            Play's own in-app update prompt. That exchange is between your device and Google Play.
+            <strong>Store updates:</strong> on Android, when a new version is on Google Play, the app can
+            show Play's own in-app update prompt. That exchange is between your device and Google
+            Play. On iPhone, updates come through the App Store.
           </li>
           <li>
-            <strong>Rating:</strong> the rate row opens Google Play's rating dialog. We never see what
+            <strong>Rating:</strong> the rate row opens Google Play's or the App Store's rating dialog. We never see what
             you type there beyond the public review anyone can read.
           </li>
           <li>
-            <strong>Sharing the app:</strong> the share sheet sends a Play Store link, as plain text,
+            <strong>Sharing the app:</strong> the share sheet sends a store link, as plain text,
             to whoever you choose. Nothing about your data is attached.
           </li>
         </ul>
@@ -1235,22 +1281,23 @@
         <ul>
           <li>
             <strong>App Lock:</strong> optional fingerprint, face or device-PIN gate on opening the
-            app, with a grace period you choose. The check is performed by Android; the app receives
+            app, with a grace period you choose. The check is performed by your phone's operating system; the app receives
             a yes or no and never any biometric data. If a device cannot satisfy the lock any more,
             the setting disables itself rather than locking you out.
           </li>
           <li>
             <strong>Screen privacy:</strong> on by default. It blocks screenshots and screen
             recording and blanks the app's preview in the recent-apps switcher, using Android's
-            secure-window flag. Turn it off in Settings if you need to take a screenshot.
+            secure-window flag. iPhone gives apps less control, so a screenshot may still be possible
+            there. Turn it off in Settings if you need to take a screenshot.
           </li>
           <li>
             <strong>Hide balances:</strong> mask every amount on the dashboard, or hide individual
             money cards.
           </li>
           <li>
-            <strong>Session storage:</strong> your session lives in the encrypted keystore and is
-            excluded from Android's cloud backup, so it cannot travel to another device inside a
+            <strong>Session storage:</strong> your session lives in the encrypted keystore and, on
+            Android, is excluded from cloud backup, so it cannot travel to another device inside a
             device backup.
           </li>
         </ul>
@@ -1360,6 +1407,14 @@
                   Drawing an unread count on the app icon on launchers that support it. Cosmetic only
                 </td>
               </tr>
+              <tr>
+                <td>Change audio settings</td>
+                <td>Automatic</td>
+                <td>
+                  Comes with the audio library. Used to play the app's short sounds, such as the cue
+                  when voice quick-add starts. It records nothing
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -1375,6 +1430,13 @@
           </p>
         </div>
 
+        <p>
+          <strong>On iPhone</strong> the app asks, at the moment you use the feature, for location,
+          camera, the photo you pick, microphone, speech recognition and Face ID. Voice quick-add uses
+          Apple's speech recogniser, which may send audio to Apple under Apple's privacy policy.
+          Location is only ever used while the app is open.
+        </p>
+
         <h2 id="en-17">17. How we secure data</h2>
         <ul>
           <li>
@@ -1383,13 +1445,18 @@
           </li>
           <li>
             On the device, your database, settings and files live in
-            <strong>app-private storage</strong> that Android isolates from other apps. Your session
+            <strong>app-private storage</strong> that the operating system isolates from other apps. Your session
             token sits in the OS keystore.
           </li>
           <li>
-            On the server, passwords are stored only as one-way hashes by better-auth, every sync
+            On the server, passwords are stored only as salted one-way hashes (section 2), every sync
             query is scoped to your own user id, and the API keys for the map and place services stay
             server side, never inside the app.
+          </li>
+          <li>
+            Synced records are <strong>not end-to-end encrypted</strong>. The operator has a
+            token-protected admin tool that can export one account's synced records. Each export is
+            logged.
           </li>
           <li>
             The message text that auto-track reads is the most sensitive material the app touches,
@@ -1410,12 +1477,13 @@
         <ul>
           <li>
             <strong>On-device data</strong> is kept until you delete it, uninstall the app, or clear
-            its storage in Android settings. Any of those removes it permanently, including the
+            its storage. Any of those removes it permanently, including the
             capture inbox and the diagnostics log.
           </li>
           <li>
             <strong>Synced records</strong> are kept while your account exists. Deleting a record in
-            the app deletes it on the server on the next sync pass.
+            the app marks it deleted on the server on the next sync pass; the marked record stays until
+            your account is deleted (section 4).
           </li>
           <li>
             <strong>Your account</strong> and everything synced under it are deleted from our
@@ -1423,6 +1491,19 @@
             Settings, Delete account. If you cannot sign in and ask us by email instead, it is done
             within 30 days. See the
             <a href="./delete-account.html">account deletion page</a>.
+          </li>
+          <li>
+            <strong>What outlasts a deleted account.</strong> Records you added to a shared household
+            stay with its other members (section 4). A monthly counter that pairs a salted device
+            hash with your former account id stays for up to 90 days, so deleting and signing up
+            again does not reset the free limit. A sign-out record holding your former account id and
+            timestamps stays for up to a year, so that old sessions cannot come back.
+          </li>
+          <li>
+            <strong>Server logs.</strong> Our backend keeps operational logs for a few days on
+            Cloudflare, which also handles your IP address to answer each request. The logs can
+            include your account id, the route called and, when an email fails, the recipient
+            address. They hold no amounts and no message text.
           </li>
           <li>
             <strong>Analytics events at PostHog</strong> go with the account, not on a separate
@@ -1444,7 +1525,7 @@
             with your account: it ages out on Resend's own 30-day window.
           </li>
           <li>
-            <strong>Prices and shops you added</strong> are kept against your account id and are erased with the account. You can also delete a shop yourself in the app at any time.
+            <strong>Prices and shops you added</strong> are kept against your account and are erased with the account. You can also delete a shop yourself in the app at any time.
           </li>
           <li>
             <strong>The ATM cache</strong> on our server holds map data for coarse geographic cells.
@@ -1452,11 +1533,11 @@
           </li>
           <li>
             <strong>A Masareef Pro purchase.</strong> The RevenueCat customer record keyed to your
-            account id is deleted with the account, on the same path as the PostHog one. Google
-            Play's own record of the transaction is not ours to delete: Google is the seller and the
-            payment processor, and it keeps that record under its own policies (section 22).
-            Deleting the account does not cancel a live subscription either — cancel that in Google
-            Play.
+            account id is deleted with the account, on the same path as the PostHog one. The store's
+            own record of the transaction is not ours to delete: Google Play or the App Store is the
+            seller and the payment processor, and keeps that record under its own policies (section
+            22). Deleting the account does not cancel a live subscription either — cancel that in
+            Google Play or in your Apple ID subscriptions.
           </li>
         </ul>
 
@@ -1508,7 +1589,8 @@
           <li>
             <a href="https://www.revenuecat.com/privacy/" rel="noopener">RevenueCat</a> records
             whether your Masareef Pro subscription is active, against your account id (device
-            contacts it, only if you subscribe)
+            contacts it if you subscribe; our server also asks it whether an account is Pro, sending
+            only the account id)
           </li>
           <li>
             <a href="https://resend.com/legal/privacy-policy" rel="noopener">Resend</a> delivers
@@ -1520,6 +1602,12 @@
             subscribe to Masareef Pro, Google Drive for receipt backup if you switch it on
             (<code>drive.file</code> scope — the app sees only the files it created), and Maps
             directions when you tap them (device contacts it)
+          </li>
+          <li>
+            <a href="https://www.apple.com/legal/privacy/" rel="noopener">Apple</a> on iPhone: Sign in
+            with Apple, App Store distribution and payments, your own iCloud if you keep your ledger
+            there, and the speech recogniser (device contacts it). Our server fetches Apple's public
+            sign-in keys and sends nothing about you
           </li>
           <li>
             <a href="https://posthog.com/privacy" rel="noopener">PostHog</a> for usage analytics and
@@ -1543,7 +1631,8 @@
             <a href="https://www.tomtom.com/privacy/" rel="noopener">TomTom</a>,
             <a href="https://foursquare.com/legal/privacy" rel="noopener">Foursquare</a> and
             <a href="https://www.geoapify.com/privacy-policy/" rel="noopener">Geoapify</a> for ATM and
-            place data (server side only, queried with a coarse location cell)
+            place data (server side only, queried with a coarse location cell; a typed store search
+            sends the words and a point of about 100 m to TomTom, Foursquare and Overpass, section 8)
           </li>
           <li>
             <a href="https://www.bigdatacloud.com/privacy-and-cookie-policy" rel="noopener"
@@ -1581,14 +1670,15 @@
           section applies to you.
         </p>
         <p>
-          The payment itself is handled entirely by <strong>Google Play Billing</strong>. We never
-          see or receive your card number, bank details or billing address — Google takes the money
-          and tells us only that a purchase succeeded.
+          The payment itself is handled entirely by <strong>Google Play Billing</strong> on Android
+          and by the <strong>App Store</strong> on iPhone. We never see or receive your card number,
+          bank details or billing address — the store takes the money and tells us only that a
+          purchase succeeded.
         </p>
         <p>
           To know whether your subscription is still active, the app uses
-          <strong>RevenueCat</strong>. It receives your Masareef account id, the purchase token Google
-          issues, and the resulting subscription state (active, expired, refunded, which product,
+          <strong>RevenueCat</strong>. It receives your Masareef account id, the purchase token or receipt
+          the store issues, and the resulting subscription state (active, expired, refunded, which product,
           which dates). Your account id is what lets Pro follow you to a new phone instead of being
           stranded on the old one. RevenueCat receives no financial records from the app: no amounts,
           no merchants, no balances, no transactions.
@@ -1634,10 +1724,11 @@
           daily limit.
         </p>
         <p>
-          Deleting your Masareef account deletes the RevenueCat customer record with it. Google's
-          own record of the transaction survives it: Google is the seller and the payment processor,
-          and we can neither reach nor delete that record. Deleting the account does not cancel a
-          live subscription either — cancel that in Google Play first. See
+          Deleting your Masareef account deletes the RevenueCat customer record with it. The store's
+          own record of the transaction survives it: Google or Apple is the seller and the payment
+          processor, and we can neither reach nor delete that record. Deleting the account does not
+          cancel a live subscription either — cancel that first in Google Play or in your Apple ID
+          subscriptions. See
           <a href="./delete-account.html">the deletion page</a> for what that means in practice.
         </p>
 
@@ -1684,8 +1775,8 @@
           التطبيق، وما يرسله، وإلى مَن.
         </p>
         <p class="meta">
-          آخر تحديث: <b><time datetime="2026-10-27">٢٧ أكتوبر ٢٠٢٦</time></b> · تغطي الإصدار
-          <b>1.139.0</b> وما بعده · معرّف الحزمة <code>com.mohamedgado.masareef</code>
+          آخر تحديث: <b><time datetime="2026-11-01">١ نوفمبر ٢٠٢٦</time></b> · تغطي الإصدار
+          <b>1.145.0</b> وما بعده · معرّف الحزمة <code>com.mohamedgado.masareef</code>
         </p>
 
         <div class="glance">
@@ -1789,22 +1880,25 @@
         <h2 id="ar-2">٢. حسابك</h2>
         <p>
           مصاريف يتطلّب حسابًا، فتسجيل الدخول ليس اختياريًا. يمكنك التسجيل ببريد إلكتروني وكلمة مرور،
-          أو الدخول بحساب جوجل (وعلى آيفون أيضًا الدخول بحساب Apple). المصادقة تعمل على خادمنا عبر better-auth.
+          أو الدخول بحساب جوجل (وعلى آيفون أيضًا الدخول بحساب Apple). المصادقة كود خاص بنا يعمل على خادمنا.
         </p>
         <p>ما يُخزَّن على خادمنا لحسابك:</p>
         <ul>
           <li>اسم العرض وبريدك الإلكتروني، وما إذا كان البريد مُوثَّقًا.</li>
           <li>
-            بصمة أحادية الاتجاه (hash) لكلمة المرور، وليس كلمة المرور نفسها. والدخول بجوجل لا يخزّن
-            كلمة مرور من الأصل.
+            لحساب البريد: بصمة مملّحة أحادية الاتجاه (hash). يحوّل هاتفك كلمة المرور أولًا إلى مفتاح ويرسل
+            إلينا هذا المفتاح، فلا نستلم كلمة المرور نفسها أبدًا، ونخزّن بصمة المفتاح فقط. والدخول بجوجل أو
+            Apple لا يخزّن كلمة مرور من الأصل.
           </li>
           <li>
-            الجلسات: رمز جلسة غير مقروء، ووقت الإنشاء والانتهاء، ومعرّف عميل الجهاز الذي سجّل الدخول.
+            الجلسات: ملف كوكي موقَّع على هاتفك وسجل جلسة على خادمنا. يحملان اسمك وبريدك، وعنوان الـ IP ونوع
+            الجهاز اللذين سجّلت الدخول منهما، ووقت الإنشاء والانتهاء. تدوم الجلسة حتى سنة، وتسجيل الخروج ينهيها
+            ويحذف سجلها.
           </li>
           <li>
-            في حالة الدخول بجوجل: رابط الحساب الذي تمنحه جوجل (معرّف الحساب لدى المزوّد والرموز
-            اللازمة للتحقق)، مع البريد والاسم ورابط صورة الملف الشخصي من حسابك في جوجل. نحن لا نرى
-            كلمة مرور جوجل إطلاقًا.
+            في حالة الدخول بجوجل أو Apple: المعرّف الذي يمنحه المزوّد لحسابك، مع البريد والاسم اللذين يشاركهما،
+            ورابط صورة الملف الشخصي في حالة جوجل. نتحقق من رمز الدخول الذي يصدره المزوّد ولا نحتفظ به. ونحن
+            لا نرى كلمة مرور جوجل أو Apple إطلاقًا.
           </li>
           <li>صورة ملف شخصي اختيارية إن رفعتَها (القسم ٩).</li>
         </ul>
@@ -1816,7 +1910,7 @@
         <h2 id="ar-3">٣. ما يبقى على جهازك</h2>
         <p>
           يحفظ التطبيق قاعدة بيانات SQLite محلية، ومخزن مفاتيح وقيم (MMKV)، ومجلد ملفات خاصًا
-          بالتطبيق، ومخزنًا مشفّرًا (Android Keystore عبر expo-secure-store) لجلستك. ما يلي يوجد في
+          بالتطبيق، ومخزنًا مشفّرًا (Android Keystore أو iPhone Keychain عبر expo-secure-store) لجلستك. ما يلي يوجد في
           هذه المخازن و<strong>لا يُرفع أبدًا</strong>:
         </p>
         <ul>
@@ -1829,7 +1923,7 @@
             مُنقّح ومقتصر لكل رسالة ذات شكل مالي، لتعرف ما فعله القارئ).
           </li>
           <li>
-            <strong>كل الإعدادات:</strong> السمة، اللغة، العملة، الدولة، المحفظة الافتراضية، تفضيلات
+            <strong>إعداداتك:</strong> السمة، اللغة، المحفظة الافتراضية، تفضيلات
             الإشعارات، الاهتزاز، قفل التطبيق ومدة السماح، خصوصية الشاشة، البطاقات المخفية، التلميحات
             المستبعدة.
           </li>
@@ -1881,8 +1975,9 @@
         </ul>
         <p>
           عند اختيار أحد هذه الخيارات، يكتب التطبيق بياناتك كاملة في المكان الجديد ويقرؤها للتأكد،
-          ثم يُبلغ خادمنا. يحذف خادمنا نسخته من معاملاتك ومحافظك وميزانياتك وأهدافك وبقية السجلات في
-          الجدول أدناه خلال <strong>24 ساعة</strong>، ويتوقف عن قبولها. ويحتفظ فقط بما يلزم لتشغيل
+          ثم يُبلغ خادمنا. يتوقف خادمنا عن قبول تلك السجلات فورًا، ويحذف نسخته من معاملاتك ومحافظك وميزانياتك
+          وأهدافك وبقية السجلات في الجدول أدناه في تنظيف ليلي يعمل بعد مرور <strong>24 ساعة</strong>، وعادةً
+          خلال 48 ساعة. ويحتفظ فقط بما يلزم لتشغيل
           حسابك: اسمك وبريدك وتسجيل دخولك وحالة Pro والخيار الذي اخترته وحساب Google الذي فيه نسخة
           Drive، وعدد الالتقاطات التلقائية الشهري الذي يحسبه الحد المجاني. والعودة إلى مزامنة مصاريف
           ترفع بياناتك من هاتفك من جديد.
@@ -1907,12 +2002,17 @@
                 <td>المعاملات</td>
                 <td>
                   المبلغ والعملة والنوع (مصروف، دخل، تحويل) والتاريخ والوقت والملاحظة واسم التاجر
-                  والفئة والمحفظة، والرصيد الذي ذكرته رسالة البنك إن وُجد
+                  والفئة والمحفظة، وهل أُدخلت يدويًا أم بالتتبّع التلقائي، وهل تحتاج مراجعتك، وسعر الصرف والعملة
+                  الأساسية، والمبلغ المستلم في التحويل، والرصيد الذي ذكرته رسالة البنك إن وُجد
                 </td>
               </tr>
               <tr>
                 <td>المحافظ</td>
-                <td>الاسم والنوع (نقدي، بنك، بطاقة، محفظة) والعملة والرصيد وحالة الأرشفة</td>
+                <td>
+                  الاسم والنوع (نقدي، بنك، بطاقة، محفظة) والعملة والرصيد الافتتاحي والأيقونة واللون،
+                  وللبطاقة أو الحساب: آخر أربعة أرقام إن أدخلتها، ويوما كشف الحساب والاستحقاق، ومبلغ الكشف،
+                  والفترة المسدَّدة، وسعر الفائدة
+                </td>
               </tr>
               <tr>
                 <td>الفئات</td>
@@ -1965,8 +2065,13 @@
                 </td>
               </tr>
               <tr>
-                <td>الدولة والعملة</td>
-                <td>الإعدادان اللذان يحتاجهما هاتف جديد ليفتح على الوضع الصحيح. ولا يُزامَن أي إعداد آخر</td>
+                <td>التفضيلات والخطط</td>
+                <td>
+                  دولتك وعملتك، ووقت إنهاء الإعداد، وخطة دخلك (الدخل الشهري الذي كتبته وطريقة تجميع فئاتك)،
+                  وملفك المالي إن ملأته: تفضيل المخاطرة، وهدف صندوق الطوارئ، والعائد والتضخم المفترضان، وأفراد
+                  أسرتك بالاسم وصلة القرابة وسنة الميلاد، ووظيفتك وسنوات خبرتك ومهاراتك وساعاتك الفارغة ودخلك
+                  ومصدره، وخطط زيادة الدخل. ولا يُزامَن أي إعداد آخر
+                </td>
               </tr>
             </tbody>
           </table>
@@ -1983,25 +2088,29 @@
         <div class="note">
           <p>
             <strong>ما لا يُزامَن أبدًا بحكم التصميم:</strong> عناصر التتبّع التلقائي ونصوص رسائلها،
-            والمرسِلون الموثوقون، وسجل التشخيص، وكل إعدادات التطبيق عدا الدولة والعملة، وإحداثياتك. وحذف
-            سجل داخل التطبيق يحذفه على الخادم أيضًا: ينتقل الحذف كعلامة قبر في أول دورة مزامنة، ولا
-            يبقى صفًّا مخفيًا.
+            والمرسِلون الموثوقون، وسجل التشخيص، وبقية إعدادات التطبيق، وقائمة التسوق، وإحداثياتك. وحذف
+            سجل داخل التطبيق يزيله من هواتفك. أما على خادمنا فيُعلَّم السجل محذوفًا في أول دورة مزامنة ويبقى
+            بمحتواه، لتعرف هواتفك الأخرى بالحذف. ويُمحى عند حذف حسابك، أو عند حذف خادمنا لنسخته بعد نقل
+            بياناتك (انظر أعلاه).
           </p>
         </div>
         <div class="note">
           <p>
-            <strong>معرّف واحد يسافر مع الحساب المجاني.</strong> الباقة المجانية محدودة بعدد ثابت من
+            <strong>معرّف جهاز واحد يسافر مع المزامنة.</strong> الباقة المجانية محدودة بعدد ثابت من
             عمليات التتبّع التلقائي شهريًا وبهاتف واحد للمزامنة، ولذلك تحمل دورة المزامنة من حساب
-            مجاني <strong>بصمة SHA-256 مملّحة لمعرّف جهاز أندرويد</strong>. وبدونها يُصفَّر العدّاد بمجرد
-            مسح بيانات التطبيق أو إنشاء حساب جديد. نستلم البصمة فقط لا المعرّف نفسه، ولا تُستخدم في
-            الإعلانات ولا تُربَط بأي شيء خارج العدّاد. أما حساب برو فلا يرسل أي معرّف جهاز.
+            مجاني <strong>بصمة SHA-256 مملّحة لمعرّف الجهاز</strong> (معرّف جهاز أندرويد، أو على آيفون
+            المعرّف الذي تمنحه Apple لناشر التطبيق). وبدونها يُصفَّر العدّاد بمجرد مسح بيانات التطبيق أو إنشاء
+            حساب جديد. ويرسل حساب برو أو عضو الأسرة البصمة نفسها لغرض آخر: ليعرف الخادم أي هاتف أجرى التغيير
+            فيوقظ هواتفك الأخرى فقط، وللتسجيل في إشارة المزامنة الصامتة (القسم ١٠). نستلم البصمة فقط لا
+            المعرّف نفسه، ولا تُستخدم في الإعلانات.
           </p>
         </div>
         <div class="note">
           <p>
             <strong>دفتر الأسرة المشترك مشترك فعلًا.</strong> إذا أنشأتَ دفترًا مشتركًا أو انضممتَ إلى
             واحد (مصاريف برو)، فما تضيفه إليه يُخزَّن تحت ذلك الدفتر ويراه كل أعضائه، ويتذكّر كل سجل
-            من أضافه. وحذف حسابك يزيل ما أضفتَه أنت ويخرجك من الدفتر، ويبقى ما أضافه الأعضاء الآخرون لهم.
+            من أضافه. وحذف حسابك يخرجك من الدفتر، لكن ما أضفتَه يبقى فيه ليراه الأعضاء الآخرون، ومعه معرّف حسابك، حتى
+            يغادر آخر عضو. فإن أردت إزالة تلك السجلات فاحذفها من التطبيق أولًا.
           </p>
         </div>
 
@@ -2011,6 +2120,11 @@
           ويحوّلها إلى معاملات. وهو مفعّل في الإعدادات افتراضيًا، لكنه <strong>خامل تمامًا</strong> حتى
           تمنح بنفسك إذن الوصول للإشعارات من شاشة إعدادات النظام التي يوجّهك التطبيق إليها. قبل ذلك لا
           يقرأ شيئًا.
+        </p>
+        <p>
+          <strong>على آيفون</strong> لا يوجد وصول للإشعارات. يعمل التتبّع التلقائي عبر أتمتة في تطبيق
+          Shortcuts تضيفها أنت. وعند تشغيلها يسلّم Shortcuts من Apple نص الرسالة أو الإشعار إلى مصاريف،
+          ويتولاه القارئ نفسه على الهاتف بالقواعد نفسها أدناه. ويمكنك إزالة الأتمتة من Shortcuts في أي وقت.
         </p>
         <h3>ماذا يفعل بعد منح الإذن</h3>
         <ul>
@@ -2161,9 +2275,20 @@
           لمستخدمين آخرين مسجّلين دخولهم، دون معرّف حسابك. وحذف الحساب يمحوها: متاجرك وكل سعر أضفته وبلاغاتك. ويبقى المنتج الذي سعّره غيرك أيضًا، دون أي صلة بك.
         </p>
 
+        <p>
+          عند البحث في المتاجر بكتابة اسم، تذهب الكلمات التي كتبتها وموقعك مقرَّبًا إلى <strong>ثلاث خانات
+          عشرية</strong> (نحو ١٠٠ متر) من خادمنا إلى TomTom وFoursquare ومرايا Overpass. أما البحث دون اسم
+          مكتوب فيستخدم الخلية الخشنة.
+        </p>
+        <p>
+          يُخزَّن السعر تحت بصمة مملّحة لمعرّف حسابك، والمتجر تحت معرّف حسابك. وينتظر المتجر الجديد أو الذي
+          تغيّر اسمه موافقة المشغّل، ويرى المشغّل اسمه. وإن أبلغت عن متجر أو سعر يُخزَّن البلاغ ليراجعه
+          المشغّل. وإن أضفت عنوان ملف منتجات لمتجر، يجلبه خادمنا دوريًا.
+        </p>
+
         <h2 id="ar-9">٩. صورة الملف الشخصي</h2>
         <p>
-          صورة الملف الشخصي اختيارية. يستخدم مصاريف منتقي الصور في نظام أندرويد، فلا يحصل التطبيق على
+          صورة الملف الشخصي اختيارية. يستخدم مصاريف منتقي الصور في النظام، فلا يحصل التطبيق على
           إذن مكتبة الصور ولا يرى أي صورة غير التي اخترتها. وتُنسخ الصورة المختارة إلى مجلد التطبيق
           الخاص لتبقى.
         </p>
@@ -2173,7 +2298,8 @@
           <strong>رابط عام يحتوي معرّف حسابك</strong> — لا يُفحص تسجيل الدخول عند جلب الصورة، فمن
           يملك الرابط يستطيع رؤيتها. اعتبرها صورة منشورة على الإنترنت المفتوح، ولا تستخدم صورة تكره
           وجودها هناك. <strong>إزالة الصورة من الإعدادات تحذف الملف المخزَّن</strong> من قاعدة
-          بياناتنا، فيتوقّف ذلك الرابط عن العمل — دون الحاجة إلى مراسلتنا. وتُحذف كذلك مع الحساب.
+          بياناتنا، فيتوقّف ذلك الرابط عن العمل — دون الحاجة إلى مراسلتنا. وقد يحتفظ متصفّح أو شبكة جلبا الصورة من قبل
+          بنسختهما مدة تصل إلى سنة. ويُحذف الملف المخزَّن كذلك مع الحساب.
         </p>
 
         <h2 id="ar-10">١٠. الإشعارات والتنبيهات</h2>
@@ -2308,11 +2434,11 @@
             بيانات شخصية أو مالية.
           </li>
           <li>
-            <strong>تحديثات المتجر:</strong> عند وجود إصدار جديد على جوجل بلاي يمكن للتطبيق عرض نافذة
-            التحديث الخاصة ببلاي. وهذا تبادل بين جهازك وجوجل بلاي.
+            <strong>تحديثات المتجر:</strong> على أندرويد، عند وجود إصدار جديد على جوجل بلاي يمكن للتطبيق عرض
+            نافذة التحديث الخاصة ببلاي، وهذا تبادل بين جهازك وجوجل بلاي. وعلى آيفون تأتي التحديثات عبر App Store.
           </li>
           <li>
-            <strong>التقييم:</strong> يفتح صف التقييم نافذة التقييم الخاصة بجوجل بلاي. ولا نرى ما
+            <strong>التقييم:</strong> يفتح صف التقييم نافذة التقييم الخاصة بجوجل بلاي أو App Store. ولا نرى ما
             تكتبه هناك إلا التقييم العام الذي يراه الجميع.
           </li>
           <li>
@@ -2325,22 +2451,22 @@
         <ul>
           <li>
             <strong>قفل التطبيق:</strong> بوابة اختيارية ببصمة الإصبع أو الوجه أو رمز الجهاز عند فتح
-            التطبيق، مع مدة سماح تختارها. أندرويد هو من يتحقق، والتطبيق يستلم موافقة أو رفضًا ولا يرى
+            التطبيق، مع مدة سماح تختارها. نظام هاتفك هو من يتحقق، والتطبيق يستلم موافقة أو رفضًا ولا يرى
             أي بيانات حيوية. وإن لم يعد الجهاز قادرًا على تلبية القفل، يُعطّل الإعداد نفسه بدلًا من
             حجزك خارج تطبيقك.
           </li>
           <li>
             <strong>خصوصية الشاشة:</strong> مفعّلة افتراضيًا. تمنع لقطات الشاشة وتسجيلها، وتُفرّغ
-            معاينة التطبيق في قائمة التطبيقات الأخيرة، عبر علامة النافذة الآمنة في أندرويد. أوقفها من
-            الإعدادات إن احتجت لقطة شاشة.
+            معاينة التطبيق في قائمة التطبيقات الأخيرة، عبر علامة النافذة الآمنة في أندرويد. أما آيفون فيمنح التطبيقات تحكمًا أقل، فقد تبقى لقطة الشاشة ممكنة
+            هناك. أوقفها من الإعدادات إن احتجت لقطة شاشة.
           </li>
           <li>
             <strong>إخفاء الأرصدة:</strong> تقنيع كل المبالغ في الشاشة الرئيسية، أو إخفاء بطاقات مالية
             بعينها.
           </li>
           <li>
-            <strong>تخزين الجلسة:</strong> جلستك في المخزن المشفّر، ومستثناة من النسخ الاحتياطي
-            السحابي لأندرويد، فلا تنتقل إلى جهاز آخر داخل نسخة احتياطية للجهاز.
+            <strong>تخزين الجلسة:</strong> جلستك في المخزن المشفّر، ومستثناة على أندرويد من النسخ
+            الاحتياطي السحابي، فلا تنتقل إلى جهاز آخر داخل نسخة احتياطية للجهاز.
           </li>
         </ul>
 
@@ -2446,6 +2572,14 @@
                 <td>تلقائي</td>
                 <td>رسم عدد غير المقروء على أيقونة التطبيق في المشغّلات التي تدعمه. شكلي فقط</td>
               </tr>
+              <tr>
+                <td>تغيير إعدادات الصوت</td>
+                <td>تلقائي</td>
+                <td>
+                  يأتي مع مكتبة الصوت، ويُستخدم لتشغيل أصوات التطبيق القصيرة مثل إشارة بدء الإضافة بالصوت. ولا
+                  يسجّل شيئًا
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -2460,6 +2594,12 @@
           </p>
         </div>
 
+        <p>
+          <strong>على آيفون</strong> يطلب التطبيق، لحظة استخدامك للميزة، الموقع والكاميرا والصورة التي تختارها
+          والميكروفون والتعرّف على الكلام وFace ID. وتستخدم الإضافة بالصوت معرّف الكلام من Apple، وقد يرسل الصوت
+          إلى Apple وفق سياسة الخصوصية لديها. ولا يُستخدم الموقع إلا والتطبيق مفتوح.
+        </p>
+
         <h2 id="ar-17">١٧. تأمين البيانات</h2>
         <ul>
           <li>
@@ -2468,12 +2608,16 @@
           </li>
           <li>
             على الجهاز، قاعدة بياناتك وإعداداتك وملفاتك في <strong>تخزين خاص بالتطبيق</strong> يعزله
-            أندرويد عن بقية التطبيقات، ورمز جلستك في مخزن مفاتيح النظام.
+            النظام عن بقية التطبيقات، ورمز جلستك في مخزن مفاتيح النظام.
           </li>
           <li>
-            على الخادم، تُحفظ كلمات المرور كبصمات أحادية الاتجاه فقط عبر better-auth، وكل استعلام
+            على الخادم، تُحفظ كلمات المرور كبصمات مملّحة أحادية الاتجاه فقط (القسم ٢)، وكل استعلام
             مزامنة محصور بمعرّف المستخدم الخاص بك، ومفاتيح خدمات الخرائط والأماكن تبقى على الخادم ولا
             توجد داخل التطبيق أبدًا.
+          </li>
+          <li>
+            السجلات المزامَنة <strong>غير مشفّرة من طرف إلى طرف</strong>. ولدى المشغّل أداة إدارة محمية برمز
+            تستطيع تصدير السجلات المزامَنة لحساب واحد، ويُسجَّل كل تصدير.
           </li>
           <li>
             نص الرسائل الذي يقرأه التتبّع التلقائي هو أخطر مادة يلمسها التطبيق، ولهذا بالتحديد لا
@@ -2492,18 +2636,29 @@
         <h2 id="ar-18">١٨. الاحتفاظ بالبيانات وحذفها</h2>
         <ul>
           <li>
-            <strong>بيانات الجهاز</strong> تبقى حتى تحذفها، أو تحذف التطبيق، أو تمسح بياناته من
-            إعدادات أندرويد. وأيٌّ من ذلك يمحوها نهائيًا، بما فيها صندوق المراجعة وسجل التشخيص.
+            <strong>بيانات الجهاز</strong> تبقى حتى تحذفها، أو تحذف التطبيق، أو تمسح بياناته.
+            وأيٌّ من ذلك يمحوها نهائيًا، بما فيها صندوق المراجعة وسجل التشخيص.
           </li>
           <li>
-            <strong>السجلات المزامَنة</strong> تبقى ما دام حسابك موجودًا. وحذف سجل في التطبيق يحذفه على
-            الخادم في أول دورة مزامنة.
+            <strong>السجلات المزامَنة</strong> تبقى ما دام حسابك موجودًا. وحذف سجل في التطبيق يعلّمه محذوفًا على
+            الخادم في أول دورة مزامنة، ويبقى السجل المعلَّم حتى حذف حسابك (القسم ٤).
           </li>
           <li>
             <strong>حسابك</strong> وكل ما زُومن تحته يُحذف من قواعد بياناتنا <strong>فورًا</strong>
             عند حذف الحساب من داخل التطبيق، في الإعدادات ثم حذف الحساب. وإن تعذّر عليك تسجيل الدخول
             وطلبتَ الحذف بالبريد، ننفّذه خلال ٣٠ يومًا. راجع
             <a href="./delete-account.html">صفحة حذف الحساب</a>.
+          </li>
+          <li>
+            <strong>ما يبقى بعد حذف الحساب.</strong> السجلات التي أضفتها إلى دفتر أسرة مشترك تبقى مع أعضائه
+            الآخرين (القسم ٤). ويبقى عدّاد شهري يربط بصمة جهاز مملّحة بمعرّف حسابك السابق مدة تصل إلى ٩٠ يومًا،
+            حتى لا يُصفِّر الحذف ثم التسجيل من جديد الحد المجاني. ويبقى سجل خروج فيه معرّف حسابك السابق وأوقات
+            مدة تصل إلى سنة، حتى لا تعود الجلسات القديمة.
+          </li>
+          <li>
+            <strong>سجلات الخادم.</strong> يحتفظ خادمنا بسجلات تشغيل لبضعة أيام على Cloudflare، التي تتعامل
+            أيضًا مع عنوان الـ IP الخاص بك للرد على كل طلب. وقد تتضمن السجلات معرّف حسابك والمسار المطلوب،
+            وعنوان المستلم عند فشل إرسال بريد. ولا تحتوي مبالغ ولا نصوص رسائل.
           </li>
           <li>
             <strong>أحداث القياس لدى PostHog</strong> تُحذف مع الحساب لا بطلب منفصل: حذف الحساب يطلب
@@ -2523,7 +2678,7 @@
             وفق سياستها.
           </li>
           <li>
-            <strong>الأسعار والمتاجر التي أضفتها</strong> تُحفظ مقابل معرّف حسابك وتُمحى مع الحساب. ويمكنك أيضًا حذف متجرك بنفسك من التطبيق في أي وقت.
+            <strong>الأسعار والمتاجر التي أضفتها</strong> تُحفظ مقابل حسابك وتُمحى مع الحساب. ويمكنك أيضًا حذف متجرك بنفسك من التطبيق في أي وقت.
           </li>
           <li>
             <strong>مخزن ماكينات الصرف</strong> على خادمنا يحتوي بيانات خرائط لخلايا جغرافية خشنة، ولا
@@ -2531,9 +2686,9 @@
           </li>
           <li>
             <strong>شراء مصاريف برو.</strong> سجل العميل لدى RevenueCat المرتبط بمعرّف حسابك يُحذف
-            مع الحساب، بالمسار نفسه الذي يُحذف به سجل PostHog. أما سجل جوجل بلاي للعملية فليس لنا أن
-            نحذفه: جوجل هي البائع ومعالج الدفع، وتحتفظ به وفق سياساتها هي (القسم ٢٢). كما أن حذف
-            الحساب لا يلغي اشتراكًا نشطًا — ألغِ الاشتراك من Google Play.
+            مع الحساب، بالمسار نفسه الذي يُحذف به سجل PostHog. أما سجل المتجر للعملية فليس لنا أن
+            نحذفه: Google Play أو App Store هو البائع ومعالج الدفع، ويحتفظ به وفق سياساته هو (القسم ٢٢). كما أن
+            حذف الحساب لا يلغي اشتراكًا نشطًا — ألغِ الاشتراك من Google Play أو من اشتراكات Apple ID.
           </li>
         </ul>
 
@@ -2576,7 +2731,8 @@
           </li>
           <li>
             <a href="https://www.revenuecat.com/privacy/" rel="noopener">RevenueCat</a> تسجّل ما إذا
-            كان اشتراك مصاريف برو نشطًا، مقابل معرّف حسابك (جهازك يتصل بها، فقط إذا اشتركت)
+            كان اشتراك مصاريف برو نشطًا، مقابل معرّف حسابك (جهازك يتصل بها إذا اشتركت، ويسألها خادمنا أيضًا هل
+            الحساب برو، ولا يرسل سوى معرّف الحساب)
           </li>
           <li>
             <a href="https://resend.com/legal/privacy-policy" rel="noopener">Resend</a> توصّل رسائل
@@ -2587,6 +2743,11 @@
             بجوجل، والتوزيع والتحديث عبر جوجل بلاي، والدفع عبر Google Play Billing إذا اشتركت في
             مصاريف برو، وGoogle Drive لنسخ الإيصالات إذا فعّلته (نطاق <code>drive.file</code> — لا يرى
             التطبيق سوى الملفات التي أنشأها)، والاتجاهات في الخرائط عند طلبك (جهازك يتصل بها)
+          </li>
+          <li>
+            <a href="https://www.apple.com/legal/privacy/" rel="noopener">Apple</a> على آيفون: الدخول بحساب
+            Apple، والتوزيع والدفع عبر App Store، وiCloud الخاص بك إذا حفظت بياناتك فيه، ومعرّف الكلام (جهازك
+            يتصل بها). ويجلب خادمنا مفاتيح الدخول العامة من Apple ولا يرسل أي شيء عنك
           </li>
           <li>
             <a href="https://posthog.com/privacy" rel="noopener">PostHog</a> لقياسات الاستخدام وتتبّع
@@ -2612,7 +2773,8 @@
             <a href="https://www.tomtom.com/privacy/" rel="noopener">TomTom</a> و
             <a href="https://foursquare.com/legal/privacy" rel="noopener">Foursquare</a> و
             <a href="https://www.geoapify.com/privacy-policy/" rel="noopener">Geoapify</a> لبيانات
-            الماكينات والأماكن (على الخادم فقط، وتُسأل بخلية موقع خشنة)
+            الماكينات والأماكن (على الخادم فقط، وتُسأل بخلية موقع خشنة؛ والبحث بكتابة اسم متجر يرسل الكلمات ونقطة
+            بدقة نحو ١٠٠ متر إلى TomTom وFoursquare وOverpass، القسم ٨)
           </li>
           <li>
             <a href="https://www.bigdatacloud.com/privacy-and-cookie-policy" rel="noopener"
@@ -2648,13 +2810,13 @@
           مصاريف برو اشتراك مدفوع اختياري. إن لم تشترك أبدًا فلا ينطبق عليك أي شيء في هذا القسم.
         </p>
         <p>
-          عملية الدفع نفسها تتم بالكامل عبر <strong>Google Play Billing</strong>. لا نرى ولا نستلم
-          رقم بطاقتك ولا بيانات بنكك ولا عنوان الفوترة — جوجل تتولّى تحصيل المبلغ وتخبرنا فقط أن
-          الشراء تم.
+          عملية الدفع نفسها تتم بالكامل عبر <strong>Google Play Billing</strong> على أندرويد وعبر
+          <strong>App Store</strong> على آيفون. لا نرى ولا نستلم رقم بطاقتك ولا بيانات بنكك ولا عنوان
+          الفوترة — المتجر يتولّى تحصيل المبلغ ويخبرنا فقط أن الشراء تم.
         </p>
         <p>
           ولمعرفة ما إذا كان اشتراكك ما زال نشطًا، يستخدم التطبيق <strong>RevenueCat</strong>. تستلم
-          معرّف حسابك في مصاريف، ورمز الشراء الذي تصدره جوجل، وحالة الاشتراك الناتجة (نشط، منتهٍ،
+          معرّف حسابك في مصاريف، ورمز الشراء أو الإيصال الذي يصدره المتجر، وحالة الاشتراك الناتجة (نشط، منتهٍ،
           مُسترجَع، وأي منتج وأي تواريخ). معرّف حسابك هو ما يجعل برو يتبعك إلى هاتف جديد بدل أن يبقى
           حبيس القديم. ولا تستلم RevenueCat أي سجلات مالية من التطبيق: لا مبالغ، ولا تجّار، ولا
           أرصدة، ولا معاملات.
@@ -2696,9 +2858,9 @@
           أبدًا ما كان فيها. ونعدّ مرات استخدام كل ميزة اليوم مقابل حسابك لتطبيق الحد اليومي.
         </p>
         <p>
-          وحذف حسابك في مصاريف يحذف معه سجل العميل لدى RevenueCat. أما سجل جوجل للعملية فيبقى: جوجل
+          وحذف حسابك في مصاريف يحذف معه سجل العميل لدى RevenueCat. أما سجل المتجر للعملية فيبقى: جوجل أو Apple
           هي البائع ومعالج الدفع، ولا نستطيع الوصول إليه ولا حذفه. وحذف الحساب لا يلغي اشتراكًا نشطًا
-          — ألغِ الاشتراك من Google Play أولًا. راجع
+          — ألغِ الاشتراك أولًا من Google Play أو من اشتراكات Apple ID. راجع
           <a href="./delete-account.html">صفحة الحذف</a> لتفاصيل ذلك عمليًا.
         </p>
 

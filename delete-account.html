@@ -327,7 +327,7 @@
         "alternateName": "حذف حسابك وبياناتك في مصاريف",
         "url": "https://www.mohamedgado.com/projects/masareef/delete-account.html",
         "inLanguage": ["en", "ar"],
-        "dateModified": "2026-09-02",
+        "dateModified": "2026-11-01",
         "isPartOf": {
           "@type": "WebSite",
           "name": "Masareef privacy and data deletion",
@@ -416,7 +416,7 @@
           your phone.
         </p>
         <p class="meta">
-          Last updated: <b><time datetime="2026-10-23">23 October 2026</time></b> · App
+          Last updated: <b><time datetime="2026-11-01">1 November 2026</time></b> · App
           <code>com.mohamedgado.masareef</code> · Full policy:
           <a href="./">privacy policy</a>
         </p>
@@ -436,7 +436,10 @@
         <p>
           Receipts you chose to back up to your own Google Drive stay in your Drive, because they
           are in your account rather than ours and we have no way to reach them. Delete them there
-          if you want them gone. A Masareef Pro subscription is billed by the app store, so cancel
+          if you want them gone. A ledger you kept in your own Drive or iCloud (Pro) is different:
+          the app deletes those files, when the phone can still reach them. If you are in a shared
+          household, what you added to it stays with the other members, so delete those records
+          first if you want them gone. A Masareef Pro subscription is billed by the app store, so cancel
           it there separately.
         </p>
 
@@ -495,7 +498,7 @@
             </thead>
             <tbody>
               <tr>
-                <td>Name, email, password hash, sessions, Google account link</td>
+                <td>Name, email, password hash, sessions, Google or Apple account link</td>
                 <td>Our authentication database</td>
                 <td>
                   Deleted immediately when you delete the account in the app; within 30 days if you
@@ -505,8 +508,9 @@
               <tr>
                 <td>
                   Transactions, wallets, categories, budgets, spend targets, recurring items, planned
-                  items, merchant rules, savings goals, trips, installment plans, assets (gold,
-                  savings, certificates), and your country and currency
+                  items, reminders, merchant rules, savings goals, trips, installment plans, assets
+                  (gold, savings, certificates), your country and currency, income plan and finance
+                  profile
                 </td>
                 <td>Your device and our database (synced)</td>
                 <td>
@@ -531,11 +535,11 @@
               </tr>
               <tr>
                 <td>Masareef Pro subscription record</td>
-                <td>Google Play and RevenueCat, against your account id</td>
+                <td>Google Play or the App Store, and RevenueCat, against your account id</td>
                 <td>
-                  The RevenueCat record is <strong>deleted</strong> with your account. Google Play
-                  keeps its own record of the transaction. Cancel the subscription in Google Play
-                  first — deleting the account does not cancel it
+                  The RevenueCat record is <strong>deleted</strong> with your account. The store keeps
+                  its own record of the transaction. Cancel the subscription in Google Play or your
+                  Apple ID subscriptions first — deleting the account does not cancel it
                 </td>
               </tr>
               <tr>
@@ -562,14 +566,18 @@
 
         <h2>4. What is kept</h2>
         <p>
-          Nothing personal is retained after your account is deleted, except where a limited retention period is legally
-          required, for example records tied to a legal obligation or to abuse prevention. Our nearby-ATM cache is not affected: it stores map data for coarse
+          Three small things outlast a deleted account. Records you added to a shared household stay
+          with its other members. A monthly counter pairing a salted device hash with your former
+          account id stays for up to 90 days, so deleting and signing up again does not reset the
+          free limit. A sign-out record holding your former account id and timestamps stays for up to
+          a year, so old sessions cannot come back. Server logs that may name your account id age out
+          in a few days. Our nearby-ATM cache is not affected: it stores map data for coarse
           geographic cells, with no account id and nothing personal in it.
         </p>
         <p>
-          Two things are not ours to erase. The first is <strong>Google Play's record of a Masareef
+          Two things are not ours to erase. The first is <strong>the store's record of a Masareef
           Pro purchase</strong> — the account it was bought under, the product and the dates. Google
-          is the seller and the payment processor, it keeps that record under its own policies, and
+          or Apple is the seller and the payment processor, it keeps that record under its own policies, and
           deleting your Masareef account does not remove it. It holds no financial data from the
           app: no amounts, no merchants, no balances. RevenueCat's copy of it is different: that one
           is deleted with your account.
@@ -621,7 +629,7 @@
           زُومن تحته، وكيف تمحو ما يخزّنه التطبيق على هاتفك.
         </p>
         <p class="meta">
-          آخر تحديث: <b><time datetime="2026-10-23">٢٣ أكتوبر ٢٠٢٦</time></b> · التطبيق
+          آخر تحديث: <b><time datetime="2026-11-01">١ نوفمبر ٢٠٢٦</time></b> · التطبيق
           <code>com.mohamedgado.masareef</code> · السياسة الكاملة:
           <a href="./">سياسة الخصوصية</a>
         </p>
@@ -639,7 +647,10 @@
         </div>
         <p>
           الإيصالات التي اخترت نسخها احتياطيًا إلى Google Drive الخاص بك تبقى في حسابك على Drive،
-          لأنها في حسابك لا في حسابنا ولا سبيل لنا للوصول إليها. احذفها من هناك إن أردت. واشتراك
+          لأنها في حسابك لا في حسابنا ولا سبيل لنا للوصول إليها. احذفها من هناك إن أردت. أما بياناتك التي
+          حفظتها في Drive أو iCloud الخاص بك (برو) فالأمر مختلف: يحذف التطبيق تلك الملفات متى استطاع الهاتف
+          الوصول إليها. وإن كنت في أسرة مشتركة فما أضفته إليها يبقى مع الأعضاء الآخرين، فاحذف تلك السجلات أولًا
+          إن أردت إزالتها. واشتراك
           مصاريف برو يُحصَّل عبر متجر التطبيقات، فألغِه من هناك بشكل منفصل.
         </p>
 
@@ -696,7 +707,7 @@
             </thead>
             <tbody>
               <tr>
-                <td>الاسم والبريد وبصمة كلمة المرور والجلسات ورابط حساب جوجل</td>
+                <td>الاسم والبريد وبصمة كلمة المرور والجلسات ورابط حساب جوجل أو Apple</td>
                 <td>قاعدة بيانات المصادقة لدينا</td>
                 <td>
                   تُحذف فورًا عند حذف الحساب من داخل التطبيق، وخلال ٣٠ يومًا إن طلبتَ الحذف بالبريد
@@ -705,8 +716,8 @@
               <tr>
                 <td>
                   المعاملات والمحافظ والفئات والميزانيات وحدود الإنفاق والعناصر المتكرّرة والمتوقّعة
-                  وقواعد التجّار وأهداف الادّخار والرحلات وخطط التقسيط والأصول (الذهب والمدّخرات
-                  والشهادات) ودولتك وعملتك
+                  والتذكيرات وقواعد التجّار وأهداف الادّخار والرحلات وخطط التقسيط والأصول (الذهب
+                  والمدّخرات والشهادات) ودولتك وعملتك وخطة دخلك وملفك المالي
                 </td>
                 <td>جهازك وقاعدة بياناتنا (مزامَنة)</td>
                 <td>
@@ -730,10 +741,10 @@
               </tr>
               <tr>
                 <td>سجل اشتراك مصاريف برو</td>
-                <td>Google Play وRevenueCat، مقابل معرّف حسابك</td>
+                <td>Google Play أو App Store، وRevenueCat، مقابل معرّف حسابك</td>
                 <td>
-                  سجل RevenueCat <strong>يُحذف</strong> مع حسابك، وتحتفظ Google Play بسجلها هي
-                  للعملية. ألغِ الاشتراك من Google Play أولًا — حذف الحساب لا يلغيه
+                  سجل RevenueCat <strong>يُحذف</strong> مع حسابك، ويحتفظ المتجر بسجله هو
+                  للعملية. ألغِ الاشتراك من Google Play أو اشتراكات Apple ID أولًا — حذف الحساب لا يلغيه
                 </td>
               </tr>
               <tr>
@@ -761,12 +772,12 @@
 
         <h2>٤. ما يُحتفظ به</h2>
         <p>
-          لا نحتفظ بأي بيانات شخصية بعد حذف حسابك، إلا حيث تُلزمنا مدة احتفاظ محدودة قانونًا، مثل سجلات مرتبطة بالتزام قانوني أو بمنع الإساءة. ولا يتأثر مخزن ماكينات الصرف لدينا: فهو يخزّن
+          ثلاثة أشياء صغيرة تبقى بعد حذف الحساب. السجلات التي أضفتها إلى أسرة مشتركة تبقى مع أعضائها الآخرين. وعدّاد شهري يربط بصمة جهاز مملّحة بمعرّف حسابك السابق يبقى مدة تصل إلى ٩٠ يومًا، حتى لا يُصفِّر الحذف ثم التسجيل من جديد الحد المجاني. وسجل خروج فيه معرّف حسابك السابق وأوقات يبقى مدة تصل إلى سنة، حتى لا تعود الجلسات القديمة. وسجلات الخادم التي قد تذكر معرّف حسابك تنتهي خلال بضعة أيام. ولا يتأثر مخزن ماكينات الصرف لدينا: فهو يخزّن
           بيانات خرائط لخلايا جغرافية خشنة، بلا أي معرّف حساب وبلا أي بيانات شخصية.
         </p>
         <p>
-          هناك أمران ليس لنا أن نمحوهما. الأول <strong>سجل جوجل بلاي لشراء مصاريف برو</strong> —
-          الحساب الذي تم الشراء تحته والمنتج والتواريخ. جوجل هي البائع ومعالج الدفع، وتحتفظ بهذا
+          هناك أمران ليس لنا أن نمحوهما. الأول <strong>سجل المتجر لشراء مصاريف برو</strong> —
+          الحساب الذي تم الشراء تحته والمنتج والتواريخ. جوجل أو Apple هي البائع ومعالج الدفع، وتحتفظ بهذا
           السجل وفق سياساتها هي، وحذف حسابك في مصاريف لا يزيله. ولا يحتوي أي بيانات مالية من
           التطبيق: لا مبالغ ولا تجّار ولا أرصدة. أما نسخة RevenueCat منه فمختلفة: تلك تُحذف مع حسابك.
         </p>
