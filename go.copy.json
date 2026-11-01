@@ -6,7 +6,7 @@
   "category": "FinanceApplication",
   "image": "icon.png",
   "en": {
-    "title": "Download Masareef: Automatic Expense Tracker | Android & iPhone",
+    "title": "Download Masareef: Expense Tracker for Android & iPhone",
     "description": "Get Masareef, a private expense tracker and budget planner that turns your bank's payment alerts into transactions. 1,200+ banks and wallets, any currency.",
     "ldName": "Masareef",
     "ldAlt": "مصاريف",
@@ -35,10 +35,10 @@
       ["Does Masareef need my banking password?", "No. It never asks for your banking password, and it is not affiliated with any bank or wallet."],
       ["Which phones can run Masareef?", "Masareef is on Google Play for Android and on the App Store for iPhone."]
     ],
-    "foot": "Free to start · No ads · Works offline once you sign in<br /><a href=\"/masareef-privacy/banks/\">Supported banks</a> · <a href=\"/masareef-privacy/\">Privacy policy</a>"
+    "foot": "Free to start · No ads · Works offline once you sign in<br /><a href=\"https://www.mohamedgado.com/projects/masareef/banks\">Supported banks</a> · <a href=\"https://www.mohamedgado.com/projects/masareef/privacy\">Privacy policy</a>"
   },
   "ar": {
-    "title": "تحميل تطبيق مصاريف: متتبع المصروفات تلقائي للأندرويد والآيفون",
+    "title": "تحميل مصاريف: متتبع المصروفات تلقائي للأندرويد والآيفون",
     "description": "حمّل مصاريف، تطبيق خاص لتتبع المصروفات وتخطيط الميزانية يحوّل إشعارات بنكك إلى معاملات. أكثر من ١٢٠٠ بنك ومحفظة، وبأي عملة.",
     "ldName": "مصاريف",
     "ldAlt": "Masareef",
@@ -67,6 +67,6 @@
       ["هل يحتاج مصاريف إلى كلمة مرور بنكي؟", "لا، لا يطلب مصاريف كلمة مرور بنكك أبدًا، وهو غير تابع لأي بنك أو محفظة."],
       ["ما الأجهزة التي يعمل عليها مصاريف؟", "مصاريف متوفر على Google Play لأجهزة Android وعلى App Store لأجهزة iPhone."]
     ],
-    "foot": "ابدأ مجانًا · بلا إعلانات · يعمل دون إنترنت بعد تسجيل الدخول<br /><a href=\"/masareef-privacy/banks/\">البنوك المدعومة</a> · <a href=\"/masareef-privacy/\">سياسة الخصوصية</a>"
+    "foot": "ابدأ مجانًا · بلا إعلانات · يعمل دون إنترنت بعد تسجيل الدخول<br /><a href=\"https://www.mohamedgado.com/projects/masareef/banks\">البنوك المدعومة</a> · <a href=\"https://www.mohamedgado.com/projects/masareef/privacy\">سياسة الخصوصية</a>"
   }
 }

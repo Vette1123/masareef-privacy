@@ -18,3 +18,6 @@ Keeping /go as the English URL: printed QR codes cannot be updated.
 ## Rules
 
 Edit the template or the copy file, never go.html. Page copy comes from the store listing.
+
+Later the same day the canonical moved to mohamedgado.com/projects/masareef/go, which proxies
+these pages, because Google never read the github.io sitemap. /go here still serves the QR codes.

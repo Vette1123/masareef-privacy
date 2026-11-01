@@ -5,7 +5,10 @@ import fs from 'fs'
 import path from 'path'
 const repo = '.'
 const c = JSON.parse(fs.readFileSync(path.join(repo, 'go.copy.json'), 'utf8'))
-const base = `https://vette1123.github.io/${c.slug}-privacy/`
+// Canonical on the domain Google crawls, which proxies these pages. The github.io URLs keep
+// serving: printed QR codes open them, and they cannot be updated.
+const base = `https://www.mohamedgado.com/projects/${c.slug}/`
+const site = `https://vette1123.github.io/${c.slug}-privacy/`
 const esc = (s) => s.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;')
 const tpl = fs.readFileSync(path.join(repo, 'go.template.html'), 'utf8')
 
@@ -70,12 +73,12 @@ function page(l) {
     `<meta property="og:site_name" content="${esc(t.ldName)}" />`,
     `<meta property="og:locale" content="${l === 'ar' ? 'ar_AR' : 'en_US'}" />`,
     `<meta property="og:locale:alternate" content="${l === 'ar' ? 'en_US' : 'ar_AR'}" />`,
-    `<meta property="og:image" content="${base}${c.image}" />`,
+    `<meta property="og:image" content="${site}${c.image}" />`,
     `<meta property="og:image:alt" content="${esc(t.ldName)}" />`,
     `<meta name="twitter:card" content="summary" />`,
     `<meta name="twitter:title" content="${esc(t.title)}" />`,
     `<meta name="twitter:description" content="${esc(t.description)}" />`,
-    `<meta name="twitter:image" content="${base}${c.image}" />`,
+    `<meta name="twitter:image" content="${site}${c.image}" />`,
     `<meta name="apple-itunes-app" content="app-id=${c.appleId}" />`,
     `<link rel="preconnect" href="https://apps.apple.com" />`,
   ].join('\n    ')
