@@ -136,3 +136,7 @@ travels over TLS, and account deletion is available on request.
 ## Contact
 
 boogado@yahoo.com
+
+## Install page
+
+`go.html` and `go-ar.html` are generated: edit `go.template.html` or `go.copy.json`, then run `node scripts/build-go.mjs`.

@@ -1,0 +1,72 @@
+{
+  "slug": "masareef",
+  "appleId": "6806735875",
+  "apple": "https://apps.apple.com/app/id6806735875",
+  "play": "https://play.google.com/store/apps/details?id=com.mohamedgado.masareef",
+  "category": "FinanceApplication",
+  "image": "icon.png",
+  "en": {
+    "title": "Download Masareef: Automatic Expense Tracker | Android & iPhone",
+    "description": "Get Masareef, a private expense tracker and budget planner that turns your bank's payment alerts into transactions. 1,200+ banks and wallets, any currency.",
+    "ldName": "Masareef",
+    "ldAlt": "مصاريف",
+    "h1": "Masareef: Automatic Expense Tracker",
+    "sub": "مصاريف",
+    "tagline": "Know where your money went.",
+    "nav": "Download Masareef",
+    "open": "",
+    "appleTop": "For iPhone",
+    "apple": "Download on the App Store",
+    "playTop": "For Android",
+    "play": "Get it on Google Play",
+    "aboutH": "The boring part, done for you",
+    "about": "Most money apps make you type in every purchase, and after a week you stop. Masareef is a fast, private expense tracker and budget planner that turns your bank's payment alerts into transactions on your device.",
+    "featuresH": "What is inside",
+    "features": [
+      ["Automatic capture", "Card payments, transfers, top-ups, ATM withdrawals and income, each to the right wallet. Free includes 25 automatic captures a month; Masareef Pro lifts the cap."],
+      ["Works with your bank", "Reads alerts from 1,200+ banks, wallets and payment apps. It never asks for your banking password."],
+      ["Wallets and any currency", "Cash, bank accounts and mobile wallets side by side, in any country and currency."],
+      ["Budgets and planning", "Per-category budgets, a monthly target and a cash flow view that shows whether your balance lasts to payday."],
+      ["Add in seconds", "Say or type it in Arabic or English: \"spent 250 coffee\" posts instantly."]
+    ],
+    "faqH": "Questions",
+    "faq": [
+      ["Is Masareef free?", "Masareef is free to start, with 25 automatic captures a month. Masareef Pro lifts the cap."],
+      ["Does Masareef need my banking password?", "No. It never asks for your banking password, and it is not affiliated with any bank or wallet."],
+      ["Which phones can run Masareef?", "Masareef is on Google Play for Android and on the App Store for iPhone."]
+    ],
+    "foot": "Free to start · No ads · Works offline once you sign in<br /><a href=\"/masareef-privacy/banks/\">Supported banks</a> · <a href=\"/masareef-privacy/\">Privacy policy</a>"
+  },
+  "ar": {
+    "title": "تحميل تطبيق مصاريف: متتبع المصروفات تلقائي للأندرويد والآيفون",
+    "description": "حمّل مصاريف، تطبيق خاص لتتبع المصروفات وتخطيط الميزانية يحوّل إشعارات بنكك إلى معاملات. أكثر من ١٢٠٠ بنك ومحفظة، وبأي عملة.",
+    "ldName": "مصاريف",
+    "ldAlt": "Masareef",
+    "h1": "مصاريف: متتبع المصروفات تلقائي",
+    "sub": "Masareef",
+    "tagline": "اعرف أين ذهبت أموالك.",
+    "nav": "تحميل مصاريف",
+    "open": "",
+    "appleTop": "لأجهزة iPhone",
+    "apple": "حمّل من App Store",
+    "playTop": "لأجهزة Android",
+    "play": "حمّل من Google Play",
+    "aboutH": "الجزء الممل نقوم به نيابةً عنك",
+    "about": "معظم تطبيقات إدارة الأموال تطلب منك إدخال كل عملية شراء يدويًا، وبعد أسبوع تتوقف. مصاريف تطبيق سريع وخاص لتتبع المصروفات وتخطيط الميزانية، يحوّل إشعارات الدفع من بنكك إلى معاملات على جهازك.",
+    "featuresH": "ماذا ستجد فيه",
+    "features": [
+      ["التقاط الإنفاق تلقائيًا", "مدفوعات البطاقات والتحويلات وشحن المحافظ والسحب من الصراف والأموال الواردة، كلٌّ إلى محفظته. المجاني يشمل ٢٥ عملية التقاط تلقائي شهريًا، و«مصاريف برو» يرفع هذا الحد."],
+      ["يعمل مع بنكك", "يقرأ إشعارات أكثر من ١٢٠٠ بنك ومحفظة وتطبيق دفع، ولا يطلب كلمة مرور بنكك أبدًا."],
+      ["المحافظ وأي عملة", "النقد والحسابات البنكية والمحافظ الإلكترونية معًا، في أي بلد وبأي عملة."],
+      ["الميزانيات والتخطيط", "ميزانية لكل فئة، وهدف شهري، وعرض للتدفق النقدي يبيّن هل يكفي رصيدك حتى يوم الراتب."],
+      ["أضف في ثوانٍ", "قلها أو اكتبها بالعربية أو الإنجليزية، فتُسجَّل فورًا."]
+    ],
+    "faqH": "أسئلة شائعة",
+    "faq": [
+      ["هل مصاريف مجاني؟", "يمكنك البدء مجانًا مع ٢٥ عملية التقاط تلقائي شهريًا، و«مصاريف برو» يرفع هذا الحد."],
+      ["هل يحتاج مصاريف إلى كلمة مرور بنكي؟", "لا، لا يطلب مصاريف كلمة مرور بنكك أبدًا، وهو غير تابع لأي بنك أو محفظة."],
+      ["ما الأجهزة التي يعمل عليها مصاريف؟", "مصاريف متوفر على Google Play لأجهزة Android وعلى App Store لأجهزة iPhone."]
+    ],
+    "foot": "ابدأ مجانًا · بلا إعلانات · يعمل دون إنترنت بعد تسجيل الدخول<br /><a href=\"/masareef-privacy/banks/\">البنوك المدعومة</a> · <a href=\"/masareef-privacy/\">سياسة الخصوصية</a>"
+  }
+}
