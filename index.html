@@ -1044,7 +1044,8 @@
         <ul>
           <li>
             The app asks <strong>our own endpoint</strong> with a latitude, longitude and radius. That
-            endpoint requires no sign-in and receives nothing that identifies you or your money.
+            endpoint requires no sign-in and receives no account details and nothing about your money.
+            Like every request, it reaches our server logs with your IP address (section 18).
           </li>
           <li>
             On a cache miss, the endpoint rounds the point into a <strong>coarse cell of roughly a
@@ -1500,10 +1501,14 @@
             timestamps stays for up to a year, so that old sessions cannot come back.
           </li>
           <li>
-            <strong>Server logs.</strong> Our backend keeps operational logs for a few days on
-            Cloudflare, which also handles your IP address to answer each request. The logs can
-            include your account id, the route called and, when an email fails, the recipient
-            address. They hold no amounts and no message text.
+            <strong>Server logs.</strong> Our backend keeps operational logs on Cloudflare for a few
+            days. For each request they record your IP address, the approximate location Cloudflare
+            works out from it (such as country, city and postal code), your network provider, and
+            your device or app type. They can also include your account id, the address called, and
+            what that address carries: the coordinates of a nearby search, a product name or barcode
+            you searched for. When an email fails or we look an account up for support, they include
+            that email address. They hold no ledger amounts and no message text, and sign-in cookies
+            and tokens are redacted.
           </li>
           <li>
             <strong>Analytics events at PostHog</strong> go with the account, not on a separate
@@ -2243,7 +2248,8 @@
         <ul>
           <li>
             يسأل التطبيق <strong>نقطة النهاية الخاصة بنا</strong> بخط عرض وخط طول ونطاق. وهذه النقطة
-            لا تتطلّب تسجيل دخول، ولا تستلم ما يعرّفك أو يعرّف أموالك.
+            لا تتطلّب تسجيل دخول، ولا تستلم بيانات حساب ولا شيئًا عن أموالك. وككل طلب، يصل إلى سجلات خادمنا
+            مع عنوان الـ IP الخاص بك (القسم ١٨).
           </li>
           <li>
             وعند عدم وجود نسخة مخزّنة، تُقرِّب النقطة إلى <strong>خلية خشنة بحدود كيلومتر</strong>، ثم
@@ -2656,9 +2662,12 @@
             مدة تصل إلى سنة، حتى لا تعود الجلسات القديمة.
           </li>
           <li>
-            <strong>سجلات الخادم.</strong> يحتفظ خادمنا بسجلات تشغيل لبضعة أيام على Cloudflare، التي تتعامل
-            أيضًا مع عنوان الـ IP الخاص بك للرد على كل طلب. وقد تتضمن السجلات معرّف حسابك والمسار المطلوب،
-            وعنوان المستلم عند فشل إرسال بريد. ولا تحتوي مبالغ ولا نصوص رسائل.
+            <strong>سجلات الخادم.</strong> يحتفظ خادمنا بسجلات تشغيل على Cloudflare لبضعة أيام. وتسجّل لكل
+            طلب عنوان الـ IP الخاص بك، والموقع التقريبي الذي تستنتجه Cloudflare منه (مثل البلد والمدينة
+            والرمز البريدي)، ومزوّد الشبكة، ونوع جهازك أو تطبيقك. وقد تتضمن أيضًا معرّف حسابك والعنوان
+            المطلوب وما يحمله: إحداثيات البحث عن الأماكن القريبة، أو اسم المنتج أو الباركود الذي بحثت
+            عنه. وعند فشل إرسال بريد أو عند البحث عن حساب لأغراض الدعم، تتضمن عنوان البريد ذاك. ولا تحتوي
+            مبالغ من دفترك ولا نصوص رسائل، وتُحجب ملفات تعريف تسجيل الدخول ورموزه.
           </li>
           <li>
             <strong>أحداث القياس لدى PostHog</strong> تُحذف مع الحساب لا بطلب منفصل: حذف الحساب يطلب
