@@ -27,7 +27,7 @@
         --bg: #f3f8f6; --bg-2: #e4f1ec; --ink: #0f1d27; --soft: #43555f; --faint: #5f727b;
         --teal: #0e7c70; --mint: #5eead4; --red: #c03a3a; --line: rgba(15, 29, 39, 0.1); --panel: #ffffff;
         --band: #0f1d27; --band-ink: #eef7f5; --band-soft: #b4cbc8;
-        --glow-a: rgba(14, 124, 112, 0.16); --glow-b: rgba(99, 102, 241, 0.11); --grid: rgba(15, 29, 39, 0.06); --glow-ph: rgba(14, 124, 112, 0.22);
+        --glow-a: rgba(14, 124, 112, 0.16); --glow-b: rgba(99, 102, 241, 0.11); --grid: rgba(15, 29, 39, 0.06); --fog: rgba(14, 124, 112, 0.14);
         --ui: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Arabic", sans-serif;
         --display: ui-rounded, "SF Pro Rounded", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
         --arabic: "SF Arabic", "Geeza Pro", "Noto Sans Arabic", "Segoe UI", system-ui, sans-serif;
@@ -39,7 +39,7 @@
           --bg: #07121c; --bg-2: #0c1d2b; --ink: #eaf4f2; --soft: #aec3c6; --faint: #9ab0b4;
           --teal: #2dd4bf; --red: #f87171; --line: rgba(234, 244, 242, 0.1); --panel: #0f2130;
           --band: #0d2233; --band-ink: #eef7f5; --band-soft: #b4cbc8;
-          --glow-a: rgba(45, 212, 191, 0.16); --glow-b: rgba(129, 140, 248, 0.15); --grid: rgba(234, 244, 242, 0.055); --glow-ph: rgba(94, 234, 212, 0.34);
+          --glow-a: rgba(45, 212, 191, 0.16); --glow-b: rgba(129, 140, 248, 0.15); --grid: rgba(234, 244, 242, 0.055); --fog: rgba(94, 234, 212, 0.26);
         }
       }
       * { box-sizing: border-box; }
@@ -89,13 +89,13 @@
         mask-image: radial-gradient(ellipse 60% 70% at 50% 40%, #000 20%, transparent 75%);
       }
       .hero::before {
-        top: -120px; height: 620px;
-        /* Full-bleed past the 1180px wrap; html clips overflow-x, so 100vw can't add a sideways scroll. */
+        top: -120px; bottom: -200px;
+        /* Full-bleed past the 1180px wrap; html clips overflow-x, so 100vw can't add a sideways scroll.
+           The last layer is the fog: a low, wide teal glow along the foot of the hero, behind the phone. */
         background:
-          radial-gradient(min(900px, 80vw) 460px at 22% 32%, var(--glow-a), transparent 70%),
-          radial-gradient(min(800px, 70vw) 420px at 80% 18%, var(--glow-b), transparent 70%);
-        -webkit-mask-image: linear-gradient(#000 60%, transparent);
-        mask-image: linear-gradient(#000 60%, transparent);
+          radial-gradient(min(900px, 80vw) 460px at 22% 26%, var(--glow-a), transparent 70%),
+          radial-gradient(min(800px, 70vw) 420px at 80% 12%, var(--glow-b), transparent 70%),
+          radial-gradient(ellipse 60% 13% at 50% 79%, var(--fog), transparent);
       }
       .kicker { display: block; font: 700 15px/1.4 var(--ui); color: var(--teal); letter-spacing: 0.01em; margin-bottom: 14px; }
       html[lang="ar"] .kicker { font-family: var(--arabic); }
@@ -131,13 +131,13 @@
          made Chrome paint a pale box behind them. */
       .demo picture::after, .feat picture::after { content: ""; position: absolute; z-index: -1; left: 50%; bottom: -18px; translate: -50% 0; width: 70%; height: 64px; border-radius: 50%; background: radial-gradient(closest-side, rgba(4, 14, 22, 0.38), transparent); pointer-events: none; }
       .demo { isolation: isolate; }
-      .demo::before { content: ""; position: absolute; z-index: -1; width: 110%; aspect-ratio: 1; left: 50%; top: 62%; translate: -50% -50%; border-radius: 50%; background: radial-gradient(closest-side, var(--glow-ph), transparent); }
       .demo img { width: min(76%, 300px); height: auto; margin-top: 40px; }
-      .card { position: absolute; inset-inline: 0; display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 14px 16px; border-radius: 22px; border: 1px solid var(--line); box-shadow: 0 24px 48px -22px rgba(15, 29, 39, 0.45); }
+      .card { position: absolute; z-index: 3; inset-inline: 0; display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 14px 16px; border-radius: 22px; border: 1px solid var(--line); box-shadow: 0 24px 48px -22px rgba(15, 29, 39, 0.45); }
       .card .ic { width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center; font: 800 12px var(--ui); color: #fff; background: #0b4a8b; }
       .card b { display: block; font-size: 14px; line-height: 1.3; }
       .card small { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; color: var(--soft); font-size: 13px; line-height: 1.4; }
-      .alert { top: 0; background: color-mix(in srgb, var(--panel) 88%, transparent); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
+      /* Solid, not frosted: a backdrop-filter here veiled the whole phone shot in Chrome. */
+      .alert { top: 0; background: var(--panel); }
       .alert time { align-self: start; color: var(--faint); font-size: 12px; }
       .txn { top: 54%; inset-inline: 18px; background: var(--panel); border-color: color-mix(in srgb, var(--teal) 45%, var(--line)); }
       .txn .ic { background: var(--teal); color: var(--bg); font-size: 18px; }
@@ -167,7 +167,6 @@
       .feat h2 { margin-top: 10px; }
       .feat p { margin-top: 14px; font-size: 18px; color: var(--soft); max-width: 44ch; }
       .feat picture { position: relative; isolation: isolate; justify-self: center; width: min(100%, 270px); }
-      .feat picture::before { content: ""; position: absolute; z-index: -1; width: min(150%, 100vw); aspect-ratio: 1; left: 50%; top: 62%; translate: -50% -50%; border-radius: 50%; background: radial-gradient(closest-side, var(--glow-ph), transparent); }
 
       /* ---- banks: links to the per-bank setup pages ---- */
       .banks { padding-block: 64px 16px; }

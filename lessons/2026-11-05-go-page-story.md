@@ -36,9 +36,11 @@ left.
 ## The background, and a Chrome trap
 
 The page has a fixed aurora (three soft radial glows) behind everything, a fine grid behind
-the hero, and a mint glow under each phone. In Chrome, a `drop-shadow` filter, a mask or a
-clip on the phone shots, or a fixed grain layer, each painted a pale box behind the phone
-(it shows most in light mode). The phones carry no filter or mask: a gradient
+the hero, and a teal glow along the foot of the hero, behind the phone, never over it. In
+Chrome, a `drop-shadow` filter, a mask or a clip on the phone shots, a fixed grain layer, or
+a `backdrop-filter` card over a shot, each painted a pale box or veil behind the phone (it
+shows most in light mode). A radial gradient that runs past its own box leaves a hard edge
+too: end each one inside its box. The phones carry no filter or mask: a gradient
 pseudo-element draws the contact shadow. On desktop the hero is sized by the window's height
 as well as its width, so the headline, badges and phone fit the first screen from 861x560
 up to 2560x1300.
