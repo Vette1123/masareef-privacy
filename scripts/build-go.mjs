@@ -94,12 +94,12 @@ function page(l) {
     `<meta property="og:image" content="${site}${c.image}" />`,
     `<meta property="og:image:width" content="2400" />`,
     `<meta property="og:image:height" content="1260" />`,
-    `<meta property="og:image:alt" content="${esc(t.ldName)}" />`,
+    `<meta property="og:image:alt" content="${esc(t.ogAlt)}" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
     `<meta name="twitter:title" content="${esc(t.title)}" />`,
     `<meta name="twitter:description" content="${esc(t.description)}" />`,
     `<meta name="twitter:image" content="${site}${c.image}" />`,
-    `<meta name="twitter:image:alt" content="${esc(t.ldName)}" />`,
+    `<meta name="twitter:image:alt" content="${esc(t.ogAlt)}" />`,
     `<meta name="apple-itunes-app" content="app-id=${c.appleId}" />`,
     `<link rel="preconnect" href="https://vette1123.github.io" />`,
   ].join('\n    ')
@@ -171,7 +171,9 @@ function page(l) {
     FOOT: esc(t.foot),
     LINKS: t.links.map(([n, u]) => `<a href="${u}">${esc(n)}</a>`).join(''),
   }
-  return tpl.replace(/\{\{(\w+)\}\}/g, (_, k) => {
+  // Inline CSS ships minified: comments out, whitespace collapsed. Lighthouse flags it otherwise.
+  const css = (c) => c.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ').replace(/\s*([{};,>])\s*/g, '$1').replace(/;}/g, '}').trim()
+  return tpl.replace(/<style>([\s\S]*?)<\/style>/g, (_, c) => `<style>${css(c)}</style>`).replace(/\{\{(\w+)\}\}/g, (_, k) => {
     if (!(k in vals)) throw Error('no value for ' + k)
     return vals[k]
   })

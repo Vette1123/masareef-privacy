@@ -8,6 +8,7 @@
   "en": {
     "title": "Download Masareef: Expense Tracker for Android & iPhone",
     "description": "Get Masareef, a private expense tracker and budget planner that turns your bank's payment alerts into transactions. 1,200+ banks and wallets, any currency.",
+    "ogAlt": "Masareef: “Your spending, logged on its own.” beside a bank SMS turned into a logged expense",
     "ldName": "Masareef",
     "ldAlt": "مصاريف",
     "kicker": "Masareef: Automatic Expense Tracker",
@@ -146,6 +147,7 @@
   "ar": {
     "title": "تحميل مصاريف: متتبع المصروفات تلقائي للأندرويد والآيفون",
     "description": "حمّل مصاريف، تطبيق خاص لتتبع المصروفات وتخطيط الميزانية يحوّل إشعارات بنكك إلى معاملات. أكثر من ١٢٠٠ بنك ومحفظة، وبأي عملة.",
+    "ogAlt": "مصاريف: «مصاريفك بتتسجّل لوحدها» بجانب رسالة بنك تحوّلت إلى مصروف مسجّل",
     "ldName": "مصاريف",
     "ldAlt": "Masareef",
     "kicker": "مصاريف: متتبع المصروفات تلقائي",
