@@ -10,8 +10,12 @@ expense tracker for Android and iPhone that logs your spending from bank alerts
 - **Does it work with my bank?** https://www.mohamedgado.com/projects/masareef/banks
 - **App on Google Play:** https://play.google.com/store/apps/details?id=com.mohamedgado.masareef
 - **App on the App Store:** https://apps.apple.com/app/id6806735875
-- **Privacy policy:** https://vette1123.github.io/masareef-privacy/
-- **Account deletion:** https://vette1123.github.io/masareef-privacy/delete-account.html
+- **Install page:** https://www.mohamedgado.com/projects/masareef/go (Arabic: https://www.mohamedgado.com/projects/masareef/go-ar)
+- **Privacy policy:** https://www.mohamedgado.com/projects/masareef/privacy
+- **Terms:** https://www.mohamedgado.com/projects/masareef/terms
+- **Account deletion:** https://www.mohamedgado.com/projects/masareef/delete-account.html
+
+Each page is also served from https://vette1123.github.io/masareef-privacy/, the URL the store listings point at.
 
 `masareef.mohamedgado.com` is the install link every post, bio and reply uses: it 301s to
 the install page on mohamedgado.com with `?s=` kept. `go.html` here stays live for the
