@@ -1,15 +1,21 @@
 # masareef-privacy
 
-The published privacy policy and account-deletion page for **Masareef**, the spending
-tracker (`com.mohamedgado.masareef`).
+The published privacy policy, terms and account-deletion page for **Masareef**, the free
+expense tracker for Android and iPhone that logs your spending from bank alerts
+(`com.mohamedgado.masareef`).
+
+**Get Masareef:** https://masareef.mohamedgado.com/?s=github
 
 - **About the app:** https://www.mohamedgado.com/projects/masareef
 - **Does it work with my bank?** https://www.mohamedgado.com/projects/masareef/banks
 - **App on Google Play:** https://play.google.com/store/apps/details?id=com.mohamedgado.masareef
 - **App on the App Store:** https://apps.apple.com/app/id6806735875
-- **Install page (QR target):** https://vette1123.github.io/masareef-privacy/go
 - **Privacy policy:** https://vette1123.github.io/masareef-privacy/
 - **Account deletion:** https://vette1123.github.io/masareef-privacy/delete-account.html
+
+`masareef.mohamedgado.com` is the install link every post, bio and reply uses: it 301s to
+the install page on mohamedgado.com with `?s=` kept. `go.html` here stays live for the
+app's share sheet and the QR codes already printed; never paste it anywhere new.
 
 Both URLs are referenced from the Google Play listing and from inside the app
 (`Settings, Privacy policy`), so they must always resolve.
