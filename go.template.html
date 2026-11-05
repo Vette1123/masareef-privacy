@@ -25,7 +25,7 @@
     <style>
       :root {
         --bg: #f3f8f6; --bg-2: #e4f1ec; --ink: #0f1d27; --soft: #43555f; --faint: #5f727b;
-        --teal: #0e7c70; --mint: #5eead4; --line: rgba(15, 29, 39, 0.1); --panel: #ffffff;
+        --teal: #0e7c70; --mint: #5eead4; --red: #c03a3a; --line: rgba(15, 29, 39, 0.1); --panel: #ffffff;
         --band: #0f1d27; --band-ink: #eef7f5; --band-soft: #b4cbc8;
         --ui: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Arabic", sans-serif;
         --display: ui-rounded, "SF Pro Rounded", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -36,7 +36,7 @@
       @media (prefers-color-scheme: dark) {
         :root {
           --bg: #07121c; --bg-2: #0c1d2b; --ink: #eaf4f2; --soft: #aec3c6; --faint: #9ab0b4;
-          --teal: #2dd4bf; --line: rgba(234, 244, 242, 0.1); --panel: #0f2130;
+          --teal: #2dd4bf; --red: #f87171; --line: rgba(234, 244, 242, 0.1); --panel: #0f2130;
           --band: #0d2233; --band-ink: #eef7f5; --band-soft: #b4cbc8;
         }
       }
@@ -66,7 +66,7 @@
       .lang:hover { border-color: var(--teal); }
 
       /* ---- hero: the headline is the first paint ---- */
-      .hero { position: relative; isolation: isolate; padding-block: 28px 40px; display: grid; gap: 28px; }
+      .hero { position: relative; isolation: isolate; padding-block: 32px 56px; display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr); gap: 48px; align-items: center; }
       .hero::before {
         content: ""; position: absolute; z-index: -1; top: -120px; height: 620px; pointer-events: none;
         /* Full-bleed past the 1180px wrap; html clips overflow-x, so 100vw can't add a sideways scroll. */
@@ -79,11 +79,11 @@
       }
       .kicker { display: block; font: 700 15px/1.4 var(--ui); color: var(--teal); letter-spacing: 0.01em; margin-bottom: 14px; }
       html[lang="ar"] .kicker { font-family: var(--arabic); }
-      .big { display: block; font-family: var(--display); font-size: clamp(40px, 8.4vw, 104px); line-height: 0.99; letter-spacing: -0.045em; font-weight: 850; }
+      .big { display: block; font-family: var(--display); font-size: clamp(40px, 6.2vw, 86px); line-height: 0.99; letter-spacing: -0.045em; font-weight: 850; }
       .big span { color: var(--faint); }
-      html[lang="ar"] .big { font-family: var(--arabic); line-height: 1.22; letter-spacing: 0; font-weight: 800; font-size: clamp(38px, 7.6vw, 92px); }
-      .hero .row { display: flex; flex-wrap: wrap; gap: 24px 48px; align-items: end; justify-content: space-between; }
-      .lede { font-size: clamp(17px, 2vw, 20px); color: var(--soft); max-width: 40ch; }
+      html[lang="ar"] .big { font-family: var(--arabic); line-height: 1.22; letter-spacing: 0; font-weight: 800; font-size: clamp(38px, 5.6vw, 76px); }
+      .lede { font-size: clamp(17px, 1.6vw, 19px); color: var(--soft); max-width: 44ch; margin-top: 22px; }
+      .hero .badges { margin-top: 28px; }
 
       /* ---- official badges, equal visual height ---- */
       .badges { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
@@ -103,27 +103,60 @@
       .facts b { display: block; font-size: 22px; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
       .facts span { font-size: 14px; color: var(--soft); }
 
-      /* ---- story: one sticky phone, the screen follows the reader ---- */
-      .story { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; }
-      .steps { display: grid; }
-      .step { min-height: 76vh; display: grid; align-content: center; gap: 14px; padding-block: 40px; border-top: 1px solid var(--line); transition: opacity 400ms var(--ease); }
-      .step:first-child { border-top: 0; }
-      .js .step:not(.on) { opacity: 0.42; }
-      .step .k { font: 700 14px var(--ui); color: var(--teal); }
-      html[lang="ar"] .step .k { font-family: var(--arabic); font-size: 15px; }
-      .step h2 { font-family: var(--display); font-size: clamp(30px, 4vw, 50px); line-height: 1.08; letter-spacing: -0.025em; }
-      html[lang="ar"] .step h2 { font-family: var(--arabic); line-height: 1.35; letter-spacing: 0; }
-      .step p { font-size: 18px; color: var(--soft); max-width: 42ch; }
-      .step .mini { display: none; }
-      .stage { position: sticky; top: 24px; height: min(calc(100vh - 48px), 820px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; }
-      .halo { position: absolute; width: 78%; aspect-ratio: 1; border-radius: 50%; background: conic-gradient(from 200deg, #5eead4, #a5b4fc, #fde68a, #5eead4); filter: blur(60px); opacity: 0.42; pointer-events: none; }
-      .stack { position: relative; width: min(340px, 82%, calc((100vh - 140px) * 720 / 1471)); aspect-ratio: 720 / 1471; }
-      .stack picture, .stack img { position: absolute; inset: 0; width: 100%; height: 100%; }
-      .stack img { filter: drop-shadow(0 40px 56px rgba(15, 29, 39, 0.28)); transition: opacity 520ms var(--ease), transform 640ms var(--ease); }
-      .stack picture:not(.on) img { opacity: 0; transform: translateY(18px) scale(0.98); }
-      .dots { position: relative; display: flex; gap: 8px; }
-      .dots i { width: 7px; height: 7px; border-radius: 99px; background: var(--line); transition: width 360ms var(--ease), background-color 360ms var(--ease); }
-      .dots i.on { width: 22px; background: var(--teal); }
+      /* ---- live capture: a bank alert becomes a logged expense, in HTML so it costs no image ---- */
+      .demo { position: relative; justify-self: center; width: min(100%, 400px); height: clamp(500px, 50vw, 600px); }
+      .demo picture { position: absolute; inset: 0; display: flex; justify-content: center; overflow: hidden; -webkit-mask-image: linear-gradient(#000 72%, transparent); mask-image: linear-gradient(#000 72%, transparent); }
+      .demo picture::before { content: ""; position: absolute; z-index: -1; width: 120%; aspect-ratio: 1; top: 8%; border-radius: 50%; background: radial-gradient(closest-side, rgba(94, 234, 212, 0.32), transparent); }
+      .demo img { width: min(76%, 300px); height: auto; align-self: flex-start; margin-top: 36px; filter: drop-shadow(0 34px 46px rgba(15, 29, 39, 0.3)); }
+      .card { position: absolute; inset-inline: 0; display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 14px 16px; border-radius: 22px; border: 1px solid var(--line); box-shadow: 0 24px 48px -22px rgba(15, 29, 39, 0.45); }
+      .card .ic { width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center; font: 800 12px var(--ui); color: #fff; background: #0b4a8b; }
+      .card b { display: block; font-size: 14px; line-height: 1.3; }
+      .card small { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; color: var(--soft); font-size: 13px; line-height: 1.4; }
+      .alert { top: 0; background: color-mix(in srgb, var(--panel) 88%, transparent); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
+      .alert time { align-self: start; color: var(--faint); font-size: 12px; }
+      .txn { top: 54%; inset-inline: 18px; background: var(--panel); border-color: color-mix(in srgb, var(--teal) 45%, var(--line)); }
+      .txn .ic { background: var(--teal); color: var(--bg); font-size: 18px; }
+      .txn small { -webkit-line-clamp: 1; }
+      .txn .tag { display: block; margin-top: 2px; font: 700 11px var(--ui); color: var(--teal); letter-spacing: 0.04em; text-transform: uppercase; }
+      html[lang="ar"] .txn .tag { font-family: var(--arabic); letter-spacing: 0; }
+      .txn .amt { font: 800 17px var(--display); color: var(--red); white-space: nowrap; font-variant-numeric: tabular-nums; direction: ltr; unicode-bidi: isolate; }
+      .txn .amt span { font-size: 11px; font-weight: 600; color: var(--faint); margin-inline-end: 4px; }
+
+      /* ---- how it works ---- */
+      .how { padding-block: 72px 24px; }
+      .how > h2, .feat h2, .banks h2 { font-family: var(--display); font-size: clamp(30px, 4vw, 48px); line-height: 1.06; letter-spacing: -0.03em; }
+      html[lang="ar"] .how > h2, html[lang="ar"] .feat h2, html[lang="ar"] .banks h2 { font-family: var(--arabic); line-height: 1.35; letter-spacing: 0; }
+      .how > p { margin-top: 14px; font-size: 18px; color: var(--soft); max-width: 60ch; }
+      .how ol { list-style: none; margin: 36px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); counter-reset: s; border-block: 1px solid var(--line); }
+      .how li { counter-increment: s; padding: 28px 24px; border-inline-start: 1px solid var(--line); min-width: 0; }
+      .how li:first-child { border-inline-start: 0; padding-inline-start: 0; }
+      .how li::before { content: "0" counter(s); display: block; margin-bottom: 10px; font: 800 13px var(--ui); color: var(--teal); letter-spacing: 0.08em; }
+      .how h3 { font-size: 19px; line-height: 1.3; }
+      .how li p { margin-top: 6px; font-size: 15px; color: var(--soft); }
+
+      /* ---- features: text beside its screen, alternating ---- */
+      .feat { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; align-items: center; padding-block: 48px; border-bottom: 1px solid var(--line); }
+      .feat:nth-child(even) picture { order: -1; }
+      .feat .k { font: 700 14px var(--ui); color: var(--teal); }
+      html[lang="ar"] .feat .k { font-family: var(--arabic); font-size: 15px; }
+      .feat h2 { margin-top: 10px; }
+      .feat p { margin-top: 14px; font-size: 18px; color: var(--soft); max-width: 44ch; }
+      .feat picture { position: relative; isolation: isolate; justify-self: center; width: min(100%, 270px); }
+      .feat picture::before { content: ""; position: absolute; z-index: -1; inset: 10% -25%; border-radius: 50%; background: radial-gradient(closest-side, rgba(94, 234, 212, 0.28), transparent); }
+      .feat img { filter: drop-shadow(0 30px 40px rgba(15, 29, 39, 0.26)); }
+
+      /* ---- banks: links to the per-bank setup pages ---- */
+      .banks { padding-block: 64px 16px; }
+      .banks p { margin-top: 12px; color: var(--soft); max-width: 60ch; }
+      .chips { list-style: none; margin: 24px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+      .chips a { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); font-weight: 600; font-size: 15px; text-decoration: none; transition: border-color 200ms var(--ease), transform 200ms var(--ease); -webkit-tap-highlight-color: transparent; }
+      .chips a:hover { border-color: var(--teal); }
+      .chips a:active { transform: scale(0.97); }
+      .chips .all { color: var(--teal); }
+
+      /* Below the first screen: skip layout and paint until it is near, so a low-end phone
+         paints the hero sooner. The size hint keeps the scrollbar from jumping. */
+      .feat, .banks, .band, .faq { content-visibility: auto; contain-intrinsic-size: auto 640px; }
 
       /* ---- privacy band ---- */
       /* Full-bleed strip: margins pull it to the viewport edges, padding puts the content back on the wrap's column. */
@@ -164,23 +197,27 @@
         .rise { animation: rise 760ms var(--ease) both; }
         .rise.d1 { animation-delay: 80ms; }
         @keyframes rise { from { transform: translateY(14px); } to { transform: none; } }
-        .halo { animation: spin 26s linear infinite; }
-        @keyframes spin { to { rotate: 360deg; } }
+        .alert { animation: drop 6.5s var(--ease) infinite; }
+        .txn { animation: land 6.5s var(--ease) infinite; }
+        @keyframes drop { 0% { opacity: 0; transform: translateY(-22px) scale(0.96); } 7%, 40% { opacity: 1; transform: none; } 52%, 100% { opacity: 0; transform: translateY(90px) scale(0.9); } }
+        @keyframes land { 0%, 44% { opacity: 0; transform: translateY(-46px) scale(0.94); } 56%, 93% { opacity: 1; transform: none; } 100% { opacity: 0; transform: none; } }
       }
       @media (prefers-reduced-motion: reduce) {
         *, *::before, *::after { transition: none !important; animation: none !important; }
       }
 
-      /* ---- phone: every step carries its own screen ---- */
+      /* ---- tablet and phone: one column ---- */
       @media (max-width: 860px) {
-        .story, .band, .faq { grid-template-columns: minmax(0, 1fr); }
-        .stage { display: none; }
-        .js .step:not(.on) { opacity: 1; }
-        .step { min-height: 0; padding-block: 44px; justify-items: center; text-align: center; }
-        .step p { margin-inline: auto; }
-        .step .mini { display: grid; place-items: center; position: relative; isolation: isolate; width: min(270px, 78%); margin-top: 18px; }
-        .step .mini::before { content: ""; position: absolute; z-index: -1; width: 120%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(closest-side, rgba(94, 234, 212, 0.4), transparent); }
-        .step .mini img { filter: drop-shadow(0 28px 40px rgba(15, 29, 39, 0.26)); }
+        .hero, .feat, .band, .faq { grid-template-columns: minmax(0, 1fr); }
+        .hero { gap: 36px; padding-block: 20px 40px; }
+        .demo { height: 520px; }
+        .feat { gap: 32px; padding-block: 48px; }
+        .feat:nth-child(even) picture { order: 0; }
+        .feat picture { width: min(72%, 280px); }
+        .how { padding-block: 48px 8px; }
+        .how ol { grid-template-columns: minmax(0, 1fr); }
+        .how li, .how li:first-child { padding: 22px 0; border-inline-start: 0; }
+        .how li + li { border-top: 1px solid var(--line); }
         .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .facts div:nth-child(3) { border-inline-start: 0; padding-inline-start: 0; }
         .facts div:nth-child(n + 3) { border-top: 1px solid var(--line); }
@@ -193,6 +230,10 @@
         .badges .apple img { width: 138px; height: 46px; }
         .badges .play { margin: -10px -9px; }
         .badges .play img { width: 174px; height: 67px; }
+        .demo { height: 470px; }
+        .card { padding: 12px; gap: 10px; grid-template-columns: 36px minmax(0, 1fr) auto; }
+        .card .ic { width: 36px; height: 36px; }
+        .txn { inset-inline: 8px; }
         .facts div { padding: 18px 12px; }
         .facts div:first-child, .facts div:nth-child(3) { padding-inline-start: 0; }
       }
@@ -206,18 +247,28 @@
       </header>
 
       <section class="hero">
-        <h1 class="rise"><span class="kicker">{{KICKER}}</span><span class="big">{{H1A}} <span>{{H1B}}</span></span></h1>
-        <div class="row rise d1">
-          <p class="lede">{{LEDE}}</p>
-          <nav class="badges" aria-label="{{NAV_LABEL}}">{{BADGES}}</nav>
+        <div>
+          <h1 class="rise"><span class="kicker">{{KICKER}}</span><span class="big">{{H1A}} <span>{{H1B}}</span></span></h1>
+          <p class="lede rise d1">{{LEDE}}</p>
+          <nav class="badges rise d1" aria-label="{{NAV_LABEL}}">{{BADGES}}</nav>
         </div>
+        <div class="demo">{{DEMO}}</div>
       </section>
 
       <div class="facts">{{FACTS}}</div>
 
-      <section class="story">
-        <div class="steps">{{STEPS}}</div>
-        <div class="stage" aria-hidden="true"><div class="halo"></div><div class="stack">{{STACK}}</div><div class="dots">{{DOTS}}</div></div>
+      <section class="how">
+        <h2>{{HOW_H}}</h2>
+        <p>{{HOW_P}}</p>
+        <ol>{{HOW}}</ol>
+      </section>
+
+      <div class="feats">{{FEATS}}</div>
+
+      <section class="banks">
+        <h2>{{BANKS_H}}</h2>
+        <p>{{BANKS_P}}</p>
+        <ul class="chips">{{BANKS}}</ul>
       </section>
 
       <section class="band">
@@ -241,8 +292,6 @@
 
     <script>
       (function () {
-        document.documentElement.classList.add('js');
-
         // The reader's own store goes first, in both badge rows. iPadOS reports itself
         // as a Mac, so Macintosh counts as Apple. Nothing redirects: an in-app browser
         // that blocks the bounce would show the reader nothing at all.
@@ -263,21 +312,6 @@
           });
         }
 
-        // The sticky phone shows the screen of the step being read.
-        var steps = document.querySelectorAll('.step');
-        var shots = document.querySelectorAll('.stack picture');
-        var dots = document.querySelectorAll('.dots i');
-        if (!('IntersectionObserver' in window)) { steps.forEach(function (s) { s.classList.add('on'); }); return; }
-        var io = new IntersectionObserver(function (es) {
-          es.forEach(function (e) {
-            if (!e.isIntersecting) return;
-            var i = +e.target.getAttribute('data-i');
-            steps.forEach(function (s, j) { s.classList.toggle('on', i === j); });
-            shots.forEach(function (s, j) { s.classList.toggle('on', i === j); });
-            dots.forEach(function (s, j) { s.classList.toggle('on', i === j); });
-          });
-        }, { rootMargin: '-45% 0px -45% 0px' });
-        steps.forEach(function (s) { io.observe(s); });
       })();
     </script>
   </body>

@@ -22,3 +22,13 @@ load lazily. Image URLs are absolute github.io, because the mohamedgado.com prox
 Use the official store badges, never redrawn ones. No FAQPage JSON-LD (Google retired FAQ
 rich results in May 2026) and no aggregateRating. Check 320, 360 and 390 for horizontal
 overflow before shipping.
+
+## Later the same day: the live-capture hero
+
+The sticky scroll story gave way to a hero that shows the product working: a bank alert card
+drops in and becomes a logged expense. Both cards are HTML text, so the animation costs no
+bytes and a crawler reads the alert as words. Auto-track heads a "how it works" section, the
+other four features get a row each, and a chip row links every per-bank page in banks/. The
+build reads that folder, so a new bank page is linked without touching /go. JSON-LD is an
+@graph: MobileApplication, BreadcrumbList and the Person behind both. In RTL, arrows point
+left.

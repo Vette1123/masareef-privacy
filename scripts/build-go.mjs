@@ -31,9 +31,10 @@ function ld(l) {
   // App only. Google stopped showing FAQ rich results on 7 May 2026, so the FAQ stays
   // visible HTML and no longer ships as FAQPage markup. No aggregateRating: Google only
   // accepts ratings collected and shown on this page, and store ratings are neither.
-  return JSON.stringify({
-    '@context': 'https://schema.org',
+  const self = base + (l === 'ar' ? 'go-ar' : 'go')
+  const app = {
     '@type': 'MobileApplication',
+    '@id': self + '#app',
     name: t.ldName,
     alternateName: t.ldAlt,
     description: t.description,
@@ -47,8 +48,21 @@ function ld(l) {
     image: site + 'icon.png',
     screenshot: t.features.map(([f]) => `${img}${f}-${l}-720.webp`),
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-    author: { '@type': 'Person', name: 'Mohamed Gado', url: 'https://www.mohamedgado.com/' },
-  }).replaceAll('<', '\\u003c')
+    featureList: t.features.map(([, , h]) => h),
+    author: { '@id': 'https://www.mohamedgado.com/#person' },
+    publisher: { '@id': 'https://www.mohamedgado.com/#person' },
+  }
+  // Breadcrumbs make the result show the site path (mohamedgado.com › Masareef) instead of a bare URL.
+  const crumbs = {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      ['Mohamed Gado', 'https://www.mohamedgado.com/'],
+      [t.ldName, `https://www.mohamedgado.com/projects/${c.slug}`],
+      [t.nav, self],
+    ].map(([name, item], i) => ({ '@type': 'ListItem', position: i + 1, name, item })),
+  }
+  const person = { '@type': 'Person', '@id': 'https://www.mohamedgado.com/#person', name: 'Mohamed Gado', url: 'https://www.mohamedgado.com/' }
+  return JSON.stringify({ '@context': 'https://schema.org', '@graph': [app, crumbs, person] }).replaceAll('<', '\\u003c')
 }
 
 function page(l) {
@@ -87,10 +101,28 @@ function page(l) {
   const badges =
     `<a class="apple" href="${c.apple}?ct=card-qr"><img src="${img}app-store-en.svg" width="156" height="52" alt="${esc(t.apple)}" /></a>` +
     `<a class="play" href="${c.play}&amp;referrer=utm_source%3Dcard%26utm_medium%3Dqr"><img src="${img}google-play-${l}.png" width="197" height="76" alt="${esc(t.play)}" /></a>`
-  const steps = t.features
-    .map(([f, k, h, p], i) => `<article class="step${i ? '' : ' on'}" data-i="${i}"><div class="k">${esc(k)}</div><h2>${esc(h)}</h2><p>${esc(p)}</p>${pic(f, '270px', `${t.ldName}: ${h}`, 'mini', true)}</article>`)
-    .join('\n          ')
-  const stack = t.features.map(([f], i) => pic(f, '340px', '', i ? '' : 'on', i > 0)).join('')
+  // The first feature (auto-track) is the hero's story, so it heads "how it works"; the rest
+  // get a row each, text beside its screen.
+  const [lead, ...rest] = t.features
+  const feats = rest
+    .map(([f, k, h, p]) => `<article class="feat"><div><div class="k">${esc(k)}</div><h2>${esc(h)}</h2><p>${esc(p)}</p></div>${pic(f, '(max-width: 860px) 72vw, 270px', `${t.ldName}: ${h}`, '', true)}</article>`)
+    .join('\n        ')
+  const d = t.demo
+  // The hero screen is the one image above the fold: eager and high priority. The two cards are
+  // text, so the animation costs no bytes and a crawler reads the alert as words.
+  const demo =
+    pic(lead[0], '300px', `${t.ldName}: ${lead[2]}`, '', false).replace('decoding="async"', 'fetchpriority="high"') +
+    `<div class="card alert" aria-hidden="true"><span class="ic">${esc(d.bank)}</span><div><b>${esc(d.bank)}</b><small>${esc(d.alert)}</small></div><time>${esc(d.when)}</time></div>` +
+    `<div class="card txn" aria-hidden="true"><span class="ic">✓</span><div><b>${esc(d.place)}</b><small>${esc(d.meta)}</small><span class="tag">${esc(d.tag)}</span></div><span class="amt"><span>${esc(d.cur)}</span>${esc(d.amt)}</span></div>`
+  // Every per-bank page the site has, in the copy file's order; a page the copy does not name yet
+  // still gets its link, under its Arabic title, so a new bank page never goes unlinked.
+  const pages = fs.readdirSync(path.join(repo, 'banks')).filter((f) => f.endsWith('.html') && f !== 'index.html').map((f) => f.slice(0, -5))
+  const order = [...Object.keys(c.banks).filter((k) => pages.includes(k)), ...pages.filter((k) => !(k in c.banks))]
+  const arName = (k) => /<h1[^>]*>سجّل مصاريف (.*?) تلقائيًا/.exec(fs.readFileSync(path.join(repo, 'banks', k + '.html'), 'utf8'))?.[1] ?? k
+  const bankName = (k) => (l === 'en' && c.banks[k]) || arName(k)
+  const banks =
+    order.map((k) => `<li><a href="${base}banks/${k}">${esc(bankName(k))}</a></li>`).join('') +
+    `<li><a class="all" href="${base}banks">${esc(t.banksMore)} ${l === "ar" ? "←" : "→"}</a></li>`
   const vals = {
     LANG: l,
     DIR: l === 'ar' ? 'rtl' : 'ltr',
@@ -110,9 +142,14 @@ function page(l) {
     NAV_LABEL: esc(t.nav),
     BADGES: badges,
     FACTS: t.facts.map(([b, s]) => `<div><b>${esc(b)}</b><span>${esc(s)}</span></div>`).join(''),
-    STEPS: steps,
-    STACK: stack,
-    DOTS: t.features.map((_, i) => `<i${i ? '' : ' class="on"'}></i>`).join(''),
+    DEMO: demo,
+    HOW_H: esc(lead[2]),
+    HOW_P: esc(lead[3]),
+    HOW: t.how.map(([h, p]) => `<li><h3>${esc(h)}</h3><p>${esc(p)}</p></li>`).join(''),
+    FEATS: feats,
+    BANKS_H: esc(t.banksH),
+    BANKS_P: esc(t.banksP),
+    BANKS: banks,
     PRIV_H: esc(t.privH),
     PRIV_P: esc(t.privP),
     PRIV: t.priv.map((p) => `<li>${esc(p)}</li>`).join(''),
