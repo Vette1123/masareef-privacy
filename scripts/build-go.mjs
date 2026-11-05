@@ -61,8 +61,16 @@ function ld(l) {
       [t.nav, self],
     ].map(([name, item], i) => ({ '@type': 'ListItem', position: i + 1, name, item })),
   }
+  crumbs['@id'] = self + '#breadcrumb'
   const person = { '@type': 'Person', '@id': 'https://www.mohamedgado.com/#person', name: 'Mohamed Gado', url: 'https://www.mohamedgado.com/' }
-  return JSON.stringify({ '@context': 'https://schema.org', '@graph': [app, crumbs, person] }).replaceAll('<', '\\u003c')
+  const website = { '@type': 'WebSite', '@id': 'https://www.mohamedgado.com/#website', name: 'Mohamed Gado', url: 'https://www.mohamedgado.com/', publisher: { '@id': person['@id'] } }
+  // The page itself: what it is about (the app), where it sits (breadcrumb, site) and its language.
+  const webpage = {
+    '@type': 'WebPage', '@id': self + '#webpage', url: self, name: t.title, description: t.description, inLanguage: l,
+    isPartOf: { '@id': website['@id'] }, breadcrumb: { '@id': crumbs['@id'] }, mainEntity: { '@id': app['@id'] },
+    primaryImageOfPage: { '@type': 'ImageObject', url: `${img}${t.features[0][0]}-${l}-720.webp`, width: 720, height: 1471 },
+  }
+  return JSON.stringify({ '@context': 'https://schema.org', '@graph': [webpage, app, crumbs, website, person] }).replaceAll('<', '\\u003c')
 }
 
 function page(l) {
@@ -71,7 +79,7 @@ function page(l) {
   const head = [
     `<title>${esc(t.title)}</title>`,
     `<meta name="description" content="${esc(t.description)}" />`,
-    `<meta name="robots" content="index, follow, max-image-preview:large" />`,
+    `<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />`,
     `<link rel="canonical" href="${self}" />`,
     `<link rel="alternate" hreflang="en" href="${base}go" />`,
     `<link rel="alternate" hreflang="ar" href="${base}go-ar" />`,
@@ -91,6 +99,7 @@ function page(l) {
     `<meta name="twitter:title" content="${esc(t.title)}" />`,
     `<meta name="twitter:description" content="${esc(t.description)}" />`,
     `<meta name="twitter:image" content="${site}${c.image}" />`,
+    `<meta name="twitter:image:alt" content="${esc(t.ldName)}" />`,
     `<meta name="apple-itunes-app" content="app-id=${c.appleId}" />`,
     `<link rel="preconnect" href="https://vette1123.github.io" />`,
   ].join('\n    ')
@@ -135,6 +144,9 @@ function page(l) {
     ALT: esc(t.ldAlt),
     OTHER: other[0],
     SWITCH: `<a class="lang" lang="${other[0]}" hreflang="${other[0]}" href="${other[1]}" onclick="try{localStorage.setItem('go-lang','${other[0]}')}catch(e){}">${other[2]}</a>`,
+    CUE: esc(t.cue),
+    THEME_DARK: esc(t.theme[0]),
+    THEME_LIGHT: esc(t.theme[1]),
     KICKER: esc(t.kicker),
     H1A: esc(t.h1a),
     H1B: esc(t.h1b),
