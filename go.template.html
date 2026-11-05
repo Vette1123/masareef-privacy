@@ -27,6 +27,7 @@
         --bg: #f3f8f6; --bg-2: #e4f1ec; --ink: #0f1d27; --soft: #43555f; --faint: #5f727b;
         --teal: #0e7c70; --mint: #5eead4; --red: #c03a3a; --line: rgba(15, 29, 39, 0.1); --panel: #ffffff;
         --band: #0f1d27; --band-ink: #eef7f5; --band-soft: #b4cbc8;
+        --glow-a: rgba(14, 124, 112, 0.16); --glow-b: rgba(99, 102, 241, 0.11); --grid: rgba(15, 29, 39, 0.06); --glow-ph: rgba(14, 124, 112, 0.22);
         --ui: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Arabic", sans-serif;
         --display: ui-rounded, "SF Pro Rounded", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
         --arabic: "SF Arabic", "Geeza Pro", "Noto Sans Arabic", "Segoe UI", system-ui, sans-serif;
@@ -38,6 +39,7 @@
           --bg: #07121c; --bg-2: #0c1d2b; --ink: #eaf4f2; --soft: #aec3c6; --faint: #9ab0b4;
           --teal: #2dd4bf; --red: #f87171; --line: rgba(234, 244, 242, 0.1); --panel: #0f2130;
           --band: #0d2233; --band-ink: #eef7f5; --band-soft: #b4cbc8;
+          --glow-a: rgba(45, 212, 191, 0.16); --glow-b: rgba(129, 140, 248, 0.15); --grid: rgba(234, 244, 242, 0.055); --glow-ph: rgba(94, 234, 212, 0.34);
         }
       }
       * { box-sizing: border-box; }
@@ -47,6 +49,16 @@
         font: 16px/1.6 var(--ui); -webkit-font-smoothing: antialiased;
       }
       html[lang="ar"] body { font-family: var(--arabic); }
+      /* The page's light: a fixed aurora behind everything. Static and fixed, so it is painted
+         once and scrolling repaints nothing. No grain layer: a fixed noise film made Chrome draw
+         pale boxes around the composited phone shots. */
+      body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+      body::before {
+        background:
+          radial-gradient(60vmax 45vmax at 88% -8%, var(--glow-a), transparent 62%),
+          radial-gradient(55vmax 40vmax at -12% 38%, var(--glow-b), transparent 62%),
+          radial-gradient(50vmax 38vmax at 70% 115%, var(--glow-a), transparent 62%);
+      }
       img { max-width: 100%; height: auto; display: block; }
       a { color: inherit; }
       h1, h2, h3 { margin: 0; text-wrap: balance; }
@@ -67,13 +79,21 @@
 
       /* ---- hero: the headline is the first paint ---- */
       .hero { position: relative; isolation: isolate; padding-block: 32px 56px; display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr); gap: 48px; align-items: center; }
+      .hero::before, .hero::after { content: ""; position: absolute; z-index: -1; pointer-events: none; inset-inline: calc(50% - 50vw); }
+      /* A fine grid behind the headline and the phone, fading out from their middle. */
+      .hero::after {
+        top: -140px; bottom: -40px;
+        background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+        background-size: 56px 56px; background-position: center top;
+        -webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 40%, #000 20%, transparent 75%);
+        mask-image: radial-gradient(ellipse 60% 70% at 50% 40%, #000 20%, transparent 75%);
+      }
       .hero::before {
-        content: ""; position: absolute; z-index: -1; top: -120px; height: 620px; pointer-events: none;
+        top: -120px; height: 620px;
         /* Full-bleed past the 1180px wrap; html clips overflow-x, so 100vw can't add a sideways scroll. */
-        inset-inline: calc(50% - 50vw);
         background:
-          radial-gradient(min(900px, 80vw) 460px at 22% 32%, rgba(94, 234, 212, 0.26), transparent 70%),
-          radial-gradient(min(800px, 70vw) 420px at 80% 18%, rgba(165, 180, 252, 0.2), transparent 70%);
+          radial-gradient(min(900px, 80vw) 460px at 22% 32%, var(--glow-a), transparent 70%),
+          radial-gradient(min(800px, 70vw) 420px at 80% 18%, var(--glow-b), transparent 70%);
         -webkit-mask-image: linear-gradient(#000 60%, transparent);
         mask-image: linear-gradient(#000 60%, transparent);
       }
@@ -104,10 +124,15 @@
       .facts span { font-size: 14px; color: var(--soft); }
 
       /* ---- live capture: a bank alert becomes a logged expense, in HTML so it costs no image ---- */
-      .demo { position: relative; justify-self: center; width: min(100%, 400px); height: clamp(500px, 50vw, 600px); }
-      .demo picture { position: absolute; inset: 0; display: flex; justify-content: center; overflow: hidden; -webkit-mask-image: linear-gradient(#000 72%, transparent); mask-image: linear-gradient(#000 72%, transparent); }
-      .demo picture::before { content: ""; position: absolute; z-index: -1; width: 120%; aspect-ratio: 1; top: 8%; border-radius: 50%; background: radial-gradient(closest-side, rgba(94, 234, 212, 0.32), transparent); }
-      .demo img { width: min(76%, 300px); height: auto; align-self: flex-start; margin-top: 36px; filter: drop-shadow(0 34px 46px rgba(15, 29, 39, 0.3)); }
+      .demo { position: relative; justify-self: center; width: min(100%, 400px); }
+      /* The whole phone, uncropped: a mask or a clip on it made Chrome paint a pale box behind it. */
+      .demo picture { position: relative; display: flex; justify-content: center; }
+      /* A contact shadow under each phone, drawn as a gradient: a drop-shadow filter on the shots
+         made Chrome paint a pale box behind them. */
+      .demo picture::after, .feat picture::after { content: ""; position: absolute; z-index: -1; left: 50%; bottom: -18px; translate: -50% 0; width: 70%; height: 64px; border-radius: 50%; background: radial-gradient(closest-side, rgba(4, 14, 22, 0.38), transparent); pointer-events: none; }
+      .demo { isolation: isolate; }
+      .demo::before { content: ""; position: absolute; z-index: -1; width: 110%; aspect-ratio: 1; left: 50%; top: 62%; translate: -50% -50%; border-radius: 50%; background: radial-gradient(closest-side, var(--glow-ph), transparent); }
+      .demo img { width: min(76%, 300px); height: auto; margin-top: 40px; }
       .card { position: absolute; inset-inline: 0; display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 14px 16px; border-radius: 22px; border: 1px solid var(--line); box-shadow: 0 24px 48px -22px rgba(15, 29, 39, 0.45); }
       .card .ic { width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center; font: 800 12px var(--ui); color: #fff; background: #0b4a8b; }
       .card b { display: block; font-size: 14px; line-height: 1.3; }
@@ -142,8 +167,7 @@
       .feat h2 { margin-top: 10px; }
       .feat p { margin-top: 14px; font-size: 18px; color: var(--soft); max-width: 44ch; }
       .feat picture { position: relative; isolation: isolate; justify-self: center; width: min(100%, 270px); }
-      .feat picture::before { content: ""; position: absolute; z-index: -1; inset: 10% -25%; border-radius: 50%; background: radial-gradient(closest-side, rgba(94, 234, 212, 0.28), transparent); }
-      .feat img { filter: drop-shadow(0 30px 40px rgba(15, 29, 39, 0.26)); }
+      .feat picture::before { content: ""; position: absolute; z-index: -1; width: min(150%, 100vw); aspect-ratio: 1; left: 50%; top: 62%; translate: -50% -50%; border-radius: 50%; background: radial-gradient(closest-side, var(--glow-ph), transparent); }
 
       /* ---- banks: links to the per-bank setup pages ---- */
       .banks { padding-block: 64px 16px; }
@@ -206,11 +230,24 @@
         *, *::before, *::after { transition: none !important; animation: none !important; }
       }
 
+      /* ---- desktop: the whole hero fits the first screen, whatever the window's height ----
+         Type and the phone scale with the shorter of width and height; the hero fills the
+         screen below the top bar, so the facts row starts at the fold. */
+      @media (min-width: 861px) {
+        .hero { --ph: min(300px, calc((100svh - 150px) * 480 / 981)); min-height: calc(100svh - 80px); padding-block: 8px 24px; }
+        .big { font-size: clamp(34px, min(6.2vw, 10svh), 86px); }
+        html[lang="ar"] .big { font-size: clamp(32px, min(5.6vw, 9svh), 76px); }
+        .kicker { margin-bottom: min(14px, 1.6svh); }
+        .lede { margin-top: min(22px, 2.6svh); font-size: clamp(15px, min(1.6vw, 2.6svh), 19px); }
+        .hero .badges { margin-top: min(28px, 3.2svh); }
+        .demo { width: min(100%, 400px, max(340px, calc(var(--ph) + 120px))); }
+        .demo img { width: var(--ph); margin-top: min(40px, 5svh); }
+      }
+
       /* ---- tablet and phone: one column ---- */
       @media (max-width: 860px) {
         .hero, .feat, .band, .faq { grid-template-columns: minmax(0, 1fr); }
         .hero { gap: 36px; padding-block: 20px 40px; }
-        .demo { height: 520px; }
         .feat { gap: 32px; padding-block: 48px; }
         .feat:nth-child(even) picture { order: 0; }
         .feat picture { width: min(72%, 280px); }
@@ -230,7 +267,6 @@
         .badges .apple img { width: 138px; height: 46px; }
         .badges .play { margin: -10px -9px; }
         .badges .play img { width: 174px; height: 67px; }
-        .demo { height: 470px; }
         .card { padding: 12px; gap: 10px; grid-template-columns: 36px minmax(0, 1fr) auto; }
         .card .ic { width: 36px; height: 36px; }
         .txn { inset-inline: 8px; }

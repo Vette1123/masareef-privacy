@@ -32,3 +32,13 @@ other four features get a row each, and a chip row links every per-bank page in 
 build reads that folder, so a new bank page is linked without touching /go. JSON-LD is an
 @graph: MobileApplication, BreadcrumbList and the Person behind both. In RTL, arrows point
 left.
+
+## The background, and a Chrome trap
+
+The page has a fixed aurora (three soft radial glows) behind everything, a fine grid behind
+the hero, and a mint glow under each phone. In Chrome, a `drop-shadow` filter, a mask or a
+clip on the phone shots, or a fixed grain layer, each painted a pale box behind the phone
+(it shows most in light mode). The phones carry no filter or mask: a gradient
+pseudo-element draws the contact shadow. On desktop the hero is sized by the window's height
+as well as its width, so the headline, badges and phone fit the first screen from 861x560
+up to 2560x1300.
