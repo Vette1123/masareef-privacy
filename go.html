@@ -99,10 +99,14 @@
       /* ---- hero: the headline is the first paint ---- */
       .hero { position: relative; isolation: isolate; padding-block: 28px 40px; display: grid; gap: 28px; }
       .hero::before {
-        content: ""; position: absolute; z-index: -1; inset: -120px 0 auto; height: 520px; pointer-events: none;
+        content: ""; position: absolute; z-index: -1; top: -120px; height: 620px; pointer-events: none;
+        /* Full-bleed past the 1180px wrap; html clips overflow-x, so 100vw can't add a sideways scroll. */
+        inset-inline: calc(50% - 50vw);
         background:
-          radial-gradient(40% 60% at 15% 30%, rgba(94, 234, 212, 0.28), transparent 70%),
-          radial-gradient(35% 55% at 80% 20%, rgba(165, 180, 252, 0.22), transparent 70%);
+          radial-gradient(min(900px, 80vw) 460px at 22% 32%, rgba(94, 234, 212, 0.26), transparent 70%),
+          radial-gradient(min(800px, 70vw) 420px at 80% 18%, rgba(165, 180, 252, 0.2), transparent 70%);
+        -webkit-mask-image: linear-gradient(#000 60%, transparent);
+        mask-image: linear-gradient(#000 60%, transparent);
       }
       .kicker { display: block; font: 700 15px/1.4 var(--ui); color: var(--teal); letter-spacing: 0.01em; margin-bottom: 14px; }
       html[lang="ar"] .kicker { font-family: var(--arabic); }
@@ -153,7 +157,8 @@
       .dots i.on { width: 22px; background: var(--teal); }
 
       /* ---- privacy band ---- */
-      .band { margin-block: 48px; padding: 56px; border-radius: 32px; background: var(--band); color: var(--band-ink); display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 40px; align-items: center; position: relative; overflow: hidden; isolation: isolate; }
+      /* Full-bleed strip: margins pull it to the viewport edges, padding puts the content back on the wrap's column. */
+      .band { margin-block: 48px; margin-inline: calc(50% - 50vw); padding: 64px max(20px, calc(50vw - 50%)); background: var(--band); color: var(--band-ink); display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 40px; align-items: center; position: relative; overflow: hidden; isolation: isolate; }
       .band::before { content: ""; position: absolute; z-index: -1; inset: auto -10% -60% 40%; height: 120%; background: radial-gradient(closest-side, rgba(94, 234, 212, 0.22), transparent); }
       .band h2 { font-family: var(--display); font-size: clamp(28px, 3.4vw, 42px); line-height: 1.12; letter-spacing: -0.02em; }
       html[lang="ar"] .band h2 { font-family: var(--arabic); line-height: 1.4; letter-spacing: 0; }
@@ -210,7 +215,7 @@
         .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .facts div:nth-child(3) { border-inline-start: 0; padding-inline-start: 0; }
         .facts div:nth-child(n + 3) { border-top: 1px solid var(--line); }
-        .band { padding: 36px 24px; border-radius: 26px; margin-block: 24px; }
+        .band { padding-block: 40px; margin-block: 24px; }
         .faq { gap: 16px; }
         .hero .badges { width: 100%; }
       }
