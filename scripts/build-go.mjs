@@ -9,6 +9,8 @@ const c = JSON.parse(fs.readFileSync(path.join(repo, 'go.copy.json'), 'utf8'))
 // serving: printed QR codes open them, and they cannot be updated.
 const base = `https://www.mohamedgado.com/projects/${c.slug}/`
 const site = `https://vette1123.github.io/${c.slug}-privacy/`
+// Pictures load from github.io on both hosts: the proxy only maps /go and /go-ar.
+const img = `${site}go-img/`
 const esc = (s) => s.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;')
 const tpl = fs.readFileSync(path.join(repo, 'go.template.html'), 'utf8')
 
@@ -26,33 +28,27 @@ const ROUTE = `<script>
 
 function ld(l) {
   const t = c[l]
-  return JSON.stringify([
-    {
-      '@context': 'https://schema.org',
-      '@type': 'MobileApplication',
-      name: t.ldName,
-      alternateName: t.ldAlt,
-      description: t.description,
-      url: base + (l === 'ar' ? 'go-ar' : 'go'),
-      inLanguage: l,
-      applicationCategory: c.category,
-      operatingSystem: 'Android, iOS',
-      downloadUrl: [c.apple, c.play],
-      installUrl: base + (l === 'ar' ? 'go-ar' : 'go'),
-      sameAs: [c.apple, c.play],
-      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-      author: { '@type': 'Person', name: 'Mohamed Gado', url: 'https://www.mohamedgado.com/' },
-    },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: t.faq.map(([q, a]) => ({
-        '@type': 'Question',
-        name: q,
-        acceptedAnswer: { '@type': 'Answer', text: a },
-      })),
-    },
-  ]).replaceAll('<', '\\u003c')
+  // App only. Google stopped showing FAQ rich results on 7 May 2026, so the FAQ stays
+  // visible HTML and no longer ships as FAQPage markup. No aggregateRating: Google only
+  // accepts ratings collected and shown on this page, and store ratings are neither.
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'MobileApplication',
+    name: t.ldName,
+    alternateName: t.ldAlt,
+    description: t.description,
+    url: base + (l === 'ar' ? 'go-ar' : 'go'),
+    inLanguage: l,
+    applicationCategory: c.category,
+    operatingSystem: 'Android, iOS',
+    downloadUrl: [c.apple, c.play],
+    installUrl: base + (l === 'ar' ? 'go-ar' : 'go'),
+    sameAs: [c.apple, c.play],
+    image: site + 'icon.png',
+    screenshot: t.features.map(([f]) => `${img}${f}-${l}-720.webp`),
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    author: { '@type': 'Person', name: 'Mohamed Gado', url: 'https://www.mohamedgado.com/' },
+  }).replaceAll('<', '\\u003c')
 }
 
 function page(l) {
@@ -71,8 +67,8 @@ function page(l) {
     `<meta property="og:type" content="website" />`,
     `<meta property="og:url" content="${self}" />`,
     `<meta property="og:site_name" content="${esc(t.ldName)}" />`,
-    `<meta property="og:locale" content="${l === 'ar' ? 'ar_AR' : 'en_US'}" />`,
-    `<meta property="og:locale:alternate" content="${l === 'ar' ? 'en_US' : 'ar_AR'}" />`,
+    `<meta property="og:locale" content="${l === 'ar' ? 'ar_EG' : 'en_US'}" />`,
+    `<meta property="og:locale:alternate" content="${l === 'ar' ? 'en_US' : 'ar_EG'}" />`,
     `<meta property="og:image" content="${site}${c.image}" />`,
     `<meta property="og:image:width" content="2400" />`,
     `<meta property="og:image:height" content="1260" />`,
@@ -82,35 +78,49 @@ function page(l) {
     `<meta name="twitter:description" content="${esc(t.description)}" />`,
     `<meta name="twitter:image" content="${site}${c.image}" />`,
     `<meta name="apple-itunes-app" content="app-id=${c.appleId}" />`,
-    `<link rel="preconnect" href="https://apps.apple.com" />`,
+    `<link rel="preconnect" href="https://vette1123.github.io" />`,
   ].join('\n    ')
-  const features = t.features.map(([h, p]) => `<li><h3>${esc(h)}</h3><p>${esc(p)}</p></li>`).join('\n          ')
-  const faq = t.faq.map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('\n          ')
   const other = l === 'ar' ? ['en', 'go', 'English'] : ['ar', 'go-ar', 'العربية']
+  const pic = (f, sizes, alt, cls, lazy) =>
+    `<picture${cls ? ` class="${cls}"` : ''}><source type="image/avif" srcset="${img}${f}-${l}-480.avif 480w, ${img}${f}-${l}-720.avif 720w" sizes="${sizes}" />` +
+    `<img src="${img}${f}-${l}-480.webp" srcset="${img}${f}-${l}-480.webp 480w, ${img}${f}-${l}-720.webp 720w" sizes="${sizes}" width="480" height="981" alt="${esc(alt)}"${lazy ? ' loading="lazy"' : ''} decoding="async" /></picture>`
+  const badges =
+    `<a class="apple" href="${c.apple}?ct=card-qr"><img src="${img}app-store-en.svg" width="156" height="52" alt="${esc(t.apple)}" /></a>` +
+    `<a class="play" href="${c.play}&amp;referrer=utm_source%3Dcard%26utm_medium%3Dqr"><img src="${img}google-play-${l}.png" width="197" height="76" alt="${esc(t.play)}" /></a>`
+  const steps = t.features
+    .map(([f, k, h, p], i) => `<article class="step${i ? '' : ' on'}" data-i="${i}"><div class="k">${esc(k)}</div><h2>${esc(h)}</h2><p>${esc(p)}</p>${pic(f, '270px', `${t.ldName}: ${h}`, 'mini', true)}</article>`)
+    .join('\n          ')
+  const stack = t.features.map(([f], i) => pic(f, '340px', '', i ? '' : 'on', i > 0)).join('')
   const vals = {
     LANG: l,
     DIR: l === 'ar' ? 'rtl' : 'ltr',
     HEAD: head,
     JSONLD: ld(l),
-    H1: esc(t.h1),
-    SUB: esc(t.sub),
-    SUBLANG: other[0],
     ROUTE: l === 'en' ? ROUTE : '',
-    TAGLINE: esc(t.tagline),
-    NAV_LABEL: esc(t.nav),
-    OPEN: esc(t.open),
-    APPLE_TOP: esc(t.appleTop),
-    APPLE: esc(t.apple),
-    PLAY_TOP: esc(t.playTop),
-    PLAY: esc(t.play),
+    IMG: img,
+    SELF: l === 'ar' ? 'go-ar' : 'go',
+    BRAND: esc(t.ldName),
+    ALT: esc(t.ldAlt),
+    OTHER: other[0],
     SWITCH: `<a class="lang" lang="${other[0]}" hreflang="${other[0]}" href="${other[1]}" onclick="try{localStorage.setItem('go-lang','${other[0]}')}catch(e){}">${other[2]}</a>`,
-    ABOUT_H: esc(t.aboutH),
-    ABOUT: esc(t.about),
-    FEATURES_H: esc(t.featuresH),
-    FEATURES: features,
+    KICKER: esc(t.kicker),
+    H1A: esc(t.h1a),
+    H1B: esc(t.h1b),
+    LEDE: esc(t.lede),
+    NAV_LABEL: esc(t.nav),
+    BADGES: badges,
+    FACTS: t.facts.map(([b, s]) => `<div><b>${esc(b)}</b><span>${esc(s)}</span></div>`).join(''),
+    STEPS: steps,
+    STACK: stack,
+    DOTS: t.features.map((_, i) => `<i${i ? '' : ' class="on"'}></i>`).join(''),
+    PRIV_H: esc(t.privH),
+    PRIV_P: esc(t.privP),
+    PRIV: t.priv.map((p) => `<li>${esc(p)}</li>`).join(''),
     FAQ_H: esc(t.faqH),
-    FAQ: faq,
-    FOOT: t.foot,
+    FAQ: t.faq.map(([q, a], i) => `<details${i ? '' : ' open'}><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join(''),
+    CTA_H: esc(t.ctaH),
+    FOOT: esc(t.foot),
+    LINKS: t.links.map(([n, u]) => `<a href="${u}">${esc(n)}</a>`).join(''),
   }
   return tpl.replace(/\{\{(\w+)\}\}/g, (_, k) => {
     if (!(k in vals)) throw Error('no value for ' + k)
