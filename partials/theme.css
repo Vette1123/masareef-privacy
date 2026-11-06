@@ -101,14 +101,15 @@ p { margin: 0; text-wrap: pretty; }
   -webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 40%, #000 20%, transparent 75%);
   mask-image: radial-gradient(ellipse 60% 70% at 50% 40%, #000 20%, transparent 75%);
 }
-/* The glow layer fades to nothing before its own edge: a gradient that reaches the box edge
+/* No fog band here: it is the go page's horizon under its phone, and on a text hero it is a
+   stray stripe behind whatever sits at that height (the bank search, 6 Nov).
+   The glow layer fades to nothing before its own edge: a gradient that reaches the box edge
    is cut there, and reads as a hard line across the page (privacy page, 6 Nov). */
 .head::before {
   top: -120px; bottom: -160px;
   background:
     radial-gradient(min(900px, 80vw) 420px at 22% 30%, var(--glow-a), transparent 70%),
-    radial-gradient(min(800px, 70vw) 380px at 80% 10%, var(--glow-b), transparent 70%),
-    radial-gradient(ellipse 55% 16% at 50% 62%, var(--fog), transparent 70%);
+    radial-gradient(min(800px, 70vw) 380px at 80% 10%, var(--glow-b), transparent 70%);
   -webkit-mask-image: linear-gradient(#000 55%, transparent 92%);
   mask-image: linear-gradient(#000 55%, transparent 92%);
 }
