@@ -97,8 +97,46 @@ test('theme: on a phone every nav, footer and brand link is a 44px target', asyn
 
 // 6 Nov: at 390px the doc pages' brand ("Masareef مصاريف") pushed the language pills and theme
 // button onto a second row. Under 420px the brand drops its second-script name to share one row.
-test('doc: a 390px header keeps brand, language and theme on one row', async () => {
+test('lang: a 390px header keeps brand, language and theme on one row', async () => {
   const { readFileSync } = await import('node:fs');
+  const lang = readFileSync(new URL('../partials/lang.css', import.meta.url), 'utf8');
+  assert.match(lang, /@media \(max-width: 420px\)\s*\{[^@]*\.top \.brand small\s*\{\s*display:\s*none/);
+});
+
+// 6 Nov: the language switch lived as three copies inside the legal pages; the bank pages
+// (Arabic only until then) take the same partials. Hide rules key on <html lang>, so a page
+// served in Arabic shows Arabic even with scripts off.
+test('lang: one copy of the switch, keyed on <html lang>, in every two-language page', async () => {
+  const { readFileSync, readdirSync } = await import('node:fs');
+  const root = new URL('../', import.meta.url);
+  const lang = readFileSync(new URL('partials/lang.css', root), 'utf8');
+  assert.match(lang, /html\[lang="ar"\] #doc-en/);
+  assert.doesNotMatch(lang, /\.lang-ar/);
+  const pages = ['index.html', 'terms.html', 'delete-account.html',
+    ...readdirSync(new URL('banks/', root)).map((f) => 'banks/' + f)].filter((f) => f.endsWith('.html'));
+  for (const f of pages) {
+    const html = readFileSync(new URL(f, root), 'utf8');
+    for (const p of ['lang.css', 'lang-pick.js', 'lang.js']) assert.ok(html.includes(`<!--partial:${p}-->`), `${f}: no ${p}`);
+    assert.equal(html.split('Resolve the language BEFORE first paint').length, 2, `${f}: picker inlined more than once`);
+    assert.ok(html.includes('id="doc-en"') && html.includes('id="doc-ar"'), `${f}: not both languages`);
+  }
+});
+
+// 6 Nov: the Contents sidebar never showed which section was being read.
+test('toc: the marked row is the last heading past the reading line', async () => {
+  const { readFileSync } = await import('node:fs');
+  const vm = await import('node:vm');
+  const ctx = { document: { querySelectorAll: () => [] }, matchMedia: () => ({ matches: true }) };
+  vm.runInNewContext(readFileSync(new URL('../partials/toc.js', import.meta.url), 'utf8'), ctx);
+  const pick = ctx.masareefTocPick;
+  assert.equal(pick([], 200, false), -1);
+  assert.equal(pick([400, 900], 200, false), -1, 'above the first section');
+  assert.equal(pick([-500, 150, 900], 200, false), 1, 'the heading just past the line');
+  assert.equal(pick([-900, -400, 50], 200, false), 2);
+  assert.equal(pick([-900, 300, 500], 200, true), 2, 'the page bottom marks the last');
   const doc = readFileSync(new URL('../partials/doc.css', import.meta.url), 'utf8');
-  assert.match(doc, /@media \(max-width: 420px\)\s*\{[^@]*\.top \.brand small\s*\{\s*display:\s*none/);
+  assert.match(doc, /\.toc a\[aria-current\]\s*\{[^}]*color/);
+  assert.match(doc, /\.toc-pill\s*\{[^}]*transition:\s*transform/, 'the pill glides between rows');
+  const policy = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  assert.ok(policy.includes('<!--partial:toc.js-->'), 'the policy carries the scroll-spy');
 });

@@ -1,0 +1,21 @@
+/* The two-language kit: privacy, terms, account deletion and every bank page ship both
+   languages in the DOM, one shown at a time. Keyed on <html lang>, which lang-pick.js sets
+   before the first paint; with no script the language the page is served in shows. */
+html:not([lang="ar"]) #doc-ar, html[lang="ar"] #doc-en,
+html:not([lang="ar"]) #foot-ar, html[lang="ar"] #foot-en,
+html:not([lang="ar"]) .topnav[lang="ar"], html[lang="ar"] .topnav[lang="en"] { display: none; }
+
+/* Language switch: one pill with two 44px targets. */
+.switch { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; background: var(--panel); overflow: hidden; }
+.switch button { appearance: none; border: 0; background: transparent; color: var(--soft); font: 600 14px var(--ui); min-width: 44px; min-height: 44px; padding: 0 16px; cursor: pointer; transition: background-color 200ms var(--ease), color 200ms var(--ease); -webkit-tap-highlight-color: transparent; }
+.switch button[lang="ar"] { font-family: var(--arabic); }
+.switch button:focus-visible { outline-offset: -3px; border-radius: 999px; }
+html:not([lang="ar"]) #btn-en, html[lang="ar"] #btn-ar { background: var(--teal); color: var(--bg); }
+/* A 360px phone: brand, theme and the language pills share one row; the nav takes the next. */
+@media (max-width: 420px) {
+  .top { gap: 8px; }
+  .top .brand img { width: 32px; height: 32px; }
+  .top .brand small { display: none; }
+  .switch button { padding: 0 10px; font-size: 13px; }
+}
+@media print { .switch { display: none; } }

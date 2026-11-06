@@ -11,10 +11,12 @@ import { applyPartials, css, labelCells } from './partials.mjs';
 
 const repo = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const base = ['head.html', 'theme.css', 'switch.js'];
+// Every two-language page: the switch (lang.*) and both navs and footers.
+const bilingual = [...base, 'lang.css', 'lang-pick.js', 'lang.js', 'doc.css', 'footer.en.html', 'footer.ar.html', 'topnav.en.html', 'topnav.ar.html'];
 const PAGES = {
-  'index.html': [...base, 'doc.css', 'footer.en.html', 'footer.ar.html', 'topnav.en.html', 'topnav.ar.html'],
-  'terms.html': [...base, 'doc.css', 'footer.en.html', 'footer.ar.html', 'topnav.en.html', 'topnav.ar.html'],
-  'delete-account.html': [...base, 'doc.css', 'footer.en.html', 'footer.ar.html', 'topnav.en.html', 'topnav.ar.html'],
+  'index.html': [...bilingual, 'toc.js'],
+  'terms.html': bilingual,
+  'delete-account.html': bilingual,
   '404.html': [...base, 'footer.en.html', 'topnav.en.html'],
 };
 
