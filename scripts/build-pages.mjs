@@ -7,7 +7,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { applyPartials, css } from './partials.mjs';
+import { applyPartials, css, labelCells } from './partials.mjs';
 
 const repo = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const base = ['head.html', 'theme.css', 'switch.js'];
@@ -19,7 +19,7 @@ const PAGES = {
 };
 
 const build = (html, require) =>
-  applyPartials(html, { require }).replace(/<style>([\s\S]*?)<\/style>/g, (_, c) => `<style>${css(c)}</style>`);
+  labelCells(applyPartials(html, { require })).replace(/<style>([\s\S]*?)<\/style>/g, (_, c) => `<style>${css(c)}</style>`);
 
 const check = process.argv.includes('--check');
 const stale = [];

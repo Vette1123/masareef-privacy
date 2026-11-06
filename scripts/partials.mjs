@@ -55,3 +55,19 @@ export const css = (c) => c.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' '
 
 // The markers a page carries, ready to paste into a template.
 export const slot = (name) => `<!--partial:${name}--><!--/partial:${name}-->`;
+
+// A phone shows a table as one card per row, each cell under its column's name. The name is the
+// <th> above it, copied onto the cells at build time so a new table needs no extra markup.
+export function labelCells(html) {
+  return html.replace(/<table[\s\S]*?<\/table>/g, (table) => {
+    const heads = [...table.matchAll(/<th[^>]*>([\s\S]*?)<\/th>/g)].map((m) => m[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim());
+    if (!heads.length) return table;
+    return table.replace(/<tr>[\s\S]*?<\/tr>/g, (row) => {
+      let i = 0;
+      return row.replace(/<td((?:\s[^>]*)?)>/g, (td, attrs) => {
+        const label = heads[i++];
+        return /data-label/.test(attrs) || !label ? td : `<td${attrs} data-label="${label.replaceAll('"', '&quot;')}">`;
+      });
+    });
+  });
+}

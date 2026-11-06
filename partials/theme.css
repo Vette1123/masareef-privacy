@@ -228,6 +228,13 @@ html[lang="ar"] .cta h2 { font-family: var(--arabic); letter-spacing: 0; line-he
 .topnav a[aria-current] { color: var(--teal); background: color-mix(in srgb, var(--teal) 14%, var(--panel)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--teal) 38%, transparent), 0 6px 16px -10px color-mix(in srgb, var(--teal) 70%, transparent); }
 .topnav a[aria-current]::before { content: ""; flex: none; width: 6px; height: 6px; margin-inline-end: 8px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 18%, transparent); }
 @media (max-width: 720px) { .top { flex-wrap: wrap; } .topnav { order: 3; width: 100%; justify-content: space-between; } .topnav a { flex: 1; justify-content: center; } }
+/* tap targets */
+@media (max-width: 720px), (pointer: coarse) {
+  .sitefoot li a { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; padding-block: 0; }
+  .topnav a { min-height: 44px; }
+  .brand, .switch button, .crumbs a { min-height: 44px; }
+  .crumbs a { display: inline-flex; align-items: center; min-width: 44px; }
+}
 
 /* ---- motion: transform only, so the first frame is already the page ---- */
 @media (prefers-reduced-motion: no-preference) {

@@ -128,7 +128,7 @@ function page(l) {
   // still gets its link, under its Arabic title, so a new bank page never goes unlinked.
   const pages = fs.readdirSync(path.join(repo, 'banks')).filter((f) => f.endsWith('.html') && f !== 'index.html').map((f) => f.slice(0, -5))
   const order = [...Object.keys(c.banks).filter((k) => pages.includes(k)), ...pages.filter((k) => !(k in c.banks))]
-  const arName = (k) => /<h1[^>]*>سجّل مصاريف (.*?) تلقائيًا/.exec(fs.readFileSync(path.join(repo, 'banks', k + '.html'), 'utf8'))?.[1] ?? k
+  const arName = (k) => /<h1[^>]*>سجّل مصاريف (.*?) تلقائيًا/.exec(fs.readFileSync(path.join(repo, 'banks', k + '.html'), 'utf8'))?.[1]?.replaceAll('&lt;', '<').replaceAll('&quot;', '"').replaceAll('&amp;', '&') ?? k
   const bankName = (k) => (l === 'en' && c.banks[k]) || arName(k)
   const banks =
     order.map((k) => `<li><a href="${base}banks/${k}">${esc(bankName(k))}</a></li>`).join('') +

@@ -51,3 +51,54 @@ test('theme: the current nav item is clearly marked', async () => {
   assert.match(on, /inset 0 0 0 1px/);
   assert.match(theme, /\.topnav a\[aria-current\]::before\s*\{[^}]*border-radius:\s*50%/);
 });
+
+// 6 Nov: a data table was 560px wide inside a 348px phone frame, so its third column ("On
+// deletion") sat off-screen behind a sideways scroll nobody sees. A phone gets each row as a
+// labelled card; the labels come from the header cells at build time.
+test('labelCells copies each header cell onto the cells under it', async () => {
+  const { labelCells } = await import('./partials.mjs');
+  const out = labelCells('<table><thead><tr><th scope="col">Data</th><th scope="col">Where</th></tr></thead><tbody><tr><td>A</td><td class="x">B</td></tr></tbody></table>');
+  assert.match(out, /<td data-label="Data">A<\/td>/);
+  assert.match(out, /<td class="x" data-label="Where">B<\/td>/);
+  assert.equal(labelCells(out), out, 'idempotent');
+});
+
+test('doc: tables stack into labelled cards on a phone, and every built table carries its labels', async () => {
+  const { readFileSync } = await import('node:fs');
+  const doc = readFileSync(new URL('../partials/doc.css', import.meta.url), 'utf8');
+  assert.match(doc, /@media \(max-width: 620px\)\s*\{[^@]*td::before\s*\{[^}]*attr\(data-label\)/);
+  for (const f of ['index.html', 'delete-account.html']) {
+    const html = readFileSync(new URL('../' + f, import.meta.url), 'utf8');
+    const tds = [...html.matchAll(/<td(?![^>]*data-label)[^>]*>/g)];
+    assert.equal(tds.length, 0, `${f}: ${tds.length} cells without data-label`);
+  }
+});
+
+// 6 Nov: the Arabic bank names are read back out of the generated bank pages (already HTML
+// escaped) and were escaped a second time, so the install page showed "e&amp; cash".
+test('no built page shows a double-escaped entity', async () => {
+  const { readFileSync, readdirSync } = await import('node:fs');
+  const root = new URL('../', import.meta.url);
+  const files = ['go.html', 'go-ar.html', 'index.html', 'terms.html', 'delete-account.html',
+    ...readdirSync(new URL('banks/', root)).map((f) => 'banks/' + f)].filter((f) => f.endsWith('.html'));
+  for (const f of files) assert.doesNotMatch(readFileSync(new URL(f, root), 'utf8'), /&amp;amp;|&amp;quot;|&amp;lt;/, f);
+});
+
+// 6 Nov: footer links, the top nav and the brand were 36-40px tall: under the 44px a thumb needs.
+test('theme: on a phone every nav, footer and brand link is a 44px target', async () => {
+  const { readFileSync } = await import('node:fs');
+  const theme = readFileSync(new URL('../partials/theme.css', import.meta.url), 'utf8');
+  const at = theme.indexOf('/* tap targets */');
+  assert.ok(at > 0, 'tap-target block missing');
+  const m = theme.slice(at, at + 700);
+  for (const sel of [".sitefoot li a", ".topnav a", ".brand", ".switch button"]) assert.ok(m.includes(sel), `${sel} missing from the tap-target block`);
+  assert.match(m, /min-height:\s*44px/);
+});
+
+// 6 Nov: at 390px the doc pages' brand ("Masareef مصاريف") pushed the language pills and theme
+// button onto a second row. Under 420px the brand drops its second-script name to share one row.
+test('doc: a 390px header keeps brand, language and theme on one row', async () => {
+  const { readFileSync } = await import('node:fs');
+  const doc = readFileSync(new URL('../partials/doc.css', import.meta.url), 'utf8');
+  assert.match(doc, /@media \(max-width: 420px\)\s*\{[^}]*\.top \.brand small\s*\{\s*display:\s*none/);
+});
