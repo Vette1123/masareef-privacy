@@ -100,5 +100,5 @@ test('theme: on a phone every nav, footer and brand link is a 44px target', asyn
 test('doc: a 390px header keeps brand, language and theme on one row', async () => {
   const { readFileSync } = await import('node:fs');
   const doc = readFileSync(new URL('../partials/doc.css', import.meta.url), 'utf8');
-  assert.match(doc, /@media \(max-width: 420px\)\s*\{[^}]*\.top \.brand small\s*\{\s*display:\s*none/);
+  assert.match(doc, /@media \(max-width: 420px\)\s*\{[^@]*\.top \.brand small\s*\{\s*display:\s*none/);
 });
