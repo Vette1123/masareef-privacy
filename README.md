@@ -63,8 +63,13 @@ independently of app releases. Keeping it here means:
 
 ## How the pages work
 
-- **Self-contained.** No web fonts, no CDN, no scripts from other hosts, no cookies, no
-  analytics. A privacy page should not be the thing that tracks you.
+- **Self-contained.** No web fonts, no CDN, no scripts from other hosts, no cookies.
+- **Counted, not tracked.** On mohamedgado.com (which proxies these pages) `partials/head.html`
+  loads that site's own Vercel Web Analytics, same origin and cookieless, so visits show in its
+  dashboard; a link's `?s=` arrives as `utm_source`. The github.io copies load nothing. The policy
+  says so in section 12 and every page's footer; keep them in step if this ever changes.
+- **Header:** one partial (`partials/header.html` + `header.js`), sticky, hides going down and
+  slides back going up. It must sit directly in `<body>` or `position: sticky` does nothing.
 - **Bilingual, both in the DOM.** Arabic and English ship in the same document, so
   crawlers and reader modes see the full policy in both languages. The toggle only flips
   visibility plus `lang` and `dir`, and stores the choice in `localStorage`

@@ -15,7 +15,7 @@ export const PARTIALS = path.join(path.dirname(fileURLToPath(import.meta.url)), 
 // What every page carries, install page and bank pages included: the look, the one header
 // (both languages) and both switches, which share one stored language and one stored theme, so
 // the site reads as one place. Pass it in `require` so a page that dropped a piece fails to build.
-export const SITE = ['head.html', 'theme.css', 'header.html', 'lang-pick.js', 'lang.js', 'switch.js'];
+export const SITE = ['head.html', 'theme.css', 'header.html', 'header.js', 'lang-pick.js', 'lang.js', 'switch.js'];
 const MARK = /<!--partial:([\w.-]+)-->[\s\S]*?<!--\/partial:\1-->/g;
 
 export function partial(name, dir = PARTIALS) {

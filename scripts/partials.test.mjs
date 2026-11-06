@@ -114,7 +114,7 @@ test('site: every page carries the one shared header and nothing else', async ()
     ...readdirSync(new URL('banks/', root)).filter((f) => f.endsWith('.html')).map((f) => 'banks/' + f)];
   for (const f of pages) {
     const html = readFileSync(new URL(f, root), 'utf8');
-    for (const p of ['header.html', 'lang-pick.js', 'lang.js', 'switch.js']) assert.ok(html.includes(`<!--partial:${p}-->`), `${f}: no ${p}`);
+    for (const p of ['header.html', 'header.js', 'lang-pick.js', 'lang.js', 'switch.js']) assert.ok(html.includes(`<!--partial:${p}-->`), `${f}: no ${p}`);
     assert.equal(html.split('<header').length, 2, `${f}: a header besides the shared one`);
     assert.ok(!/go-lang'\s*,/.test(html.replace(/<!--partial:lang(-pick)?\.js-->[\s\S]*?<!--\/partial:lang(-pick)?\.js-->/g, '')), `${f}: writes its own language key`);
   }
@@ -208,4 +208,110 @@ test('build-pages --check passes on a current checkout, whatever its line ending
   const { fileURLToPath } = await import('node:url');
   const r = spawnSync(process.execPath, [fileURLToPath(new URL('./build-pages.mjs', import.meta.url)), '--check'], { encoding: 'utf8' });
   assert.equal(r.status, 0, r.stderr || r.stdout);
+});
+
+// 6 Nov: the header became sticky and smart: it scrolls away going down and slides back going up.
+// position: sticky only holds inside a parent as tall as the page, so the header must sit directly
+// in <body>; inside the legal pages' header-only .wrap it would have scrolled away like before.
+test('header: every page puts it straight in <body>, sticky, with the Contents clear of it', async () => {
+  const { readFileSync, readdirSync } = await import('node:fs');
+  const root = new URL('../', import.meta.url);
+  const pages = ['go.html', 'go-ar.html', 'index.html', 'terms.html', 'delete-account.html', '404.html',
+    ...readdirSync(new URL('banks/', root)).filter((f) => f.endsWith('.html')).map((f) => 'banks/' + f)];
+  for (const f of pages) {
+    const html = readFileSync(new URL(f, root), 'utf8');
+    assert.match(html, /<body[^>]*>\s*(<a class="skip"[^>]*>[^<]*<\/a>\s*)?<!--partial:header\.html-->/, `${f}: header is not a direct child of <body>`);
+  }
+  const theme = readFileSync(new URL('partials/theme.css', root), 'utf8');
+  assert.match(theme, /\.top \{ position: sticky; top: 0;/);
+  assert.match(theme, /\.top-hidden \.top \{ transform: translateY\(-100%\); \}/);
+  assert.match(theme, /\.top::before \{[^}]*background: var\(--bg\);/, 'the bar is solid: see-through let text ghost under it');
+  assert.match(readFileSync(new URL('partials/doc.css', root), 'utf8'), /\.toc \{ position: sticky; top: calc\(24px \+ var\(--top-on\)\)/);
+});
+
+// The scroll logic, run against a fake window: direction with an 8px dead zone, never hidden
+// near the top or while it holds focus, and kept away for a moment after an in-page jump.
+test('header.js: hides going down, returns going up, ignores jitter and keeps focus visible', async () => {
+  const { readFileSync } = await import('node:fs');
+  const vm = await import('node:vm');
+  const classes = new Set();
+  const handlers = {};
+  let focusInside = false;
+  let now = 0;
+  const top = { offsetHeight: 80, contains: () => focusInside, addEventListener: (t, f) => (handlers['top:' + t] = f) };
+  const ctx = {
+    scrollY: 0,
+    document: {
+      documentElement: { classList: { toggle: (c, on) => (on ? classes.add(c) : classes.delete(c)), contains: (c) => classes.has(c), remove: (c) => classes.delete(c) }, style: { setProperty() {} } },
+      querySelector: () => top,
+      addEventListener: (t, f) => (handlers['doc:' + t] = f),
+      activeElement: null,
+    },
+    addEventListener: (t, f) => (handlers[t] = f),
+    requestAnimationFrame: (f) => f(),
+    performance: { now: () => now },
+    window: {},
+  };
+  vm.runInNewContext(readFileSync(new URL('../partials/header.js', import.meta.url), 'utf8'), ctx);
+  const to = (y) => { ctx.scrollY = y; handlers.scroll(); return { stuck: classes.has('top-stuck'), hidden: classes.has('top-hidden') }; };
+  assert.deepEqual(to(0), { stuck: false, hidden: false });
+  assert.deepEqual(to(60), { stuck: true, hidden: false }, 'still within the header: never hidden');
+  assert.deepEqual(to(600), { stuck: true, hidden: true }, 'going down');
+  assert.deepEqual(to(596), { stuck: true, hidden: true }, '4px back is jitter');
+  assert.deepEqual(to(560), { stuck: true, hidden: false }, 'going up');
+  focusInside = true;
+  assert.equal(to(900).hidden, false, 'focus inside keeps it shown');
+  focusInside = false;
+  handlers['doc:click']({ target: { closest: () => ({}) } });
+  assert.equal(to(400).hidden, true, 'an in-page jump up keeps it away');
+  now = 2000;
+  assert.equal(to(300).hidden, false, 'then scrolling up brings it back');
+  assert.deepEqual(to(0), { stuck: false, hidden: false });
+});
+
+// 6 Nov: visits to these pages were invisible: mohamedgado.com proxies them from github.io, so they
+// never got the portfolio's <Analytics/>. The head now loads Vercel Web Analytics on that host only.
+function runHead(hostname) {
+  return import('node:fs').then(async ({ readFileSync }) => {
+    const vm = await import('node:vm');
+    const head = readFileSync(new URL('../partials/head.html', import.meta.url), 'utf8');
+    const js = head.match(/<script>([\s\S]*?)<\/script>/)[1];
+    const added = [];
+    const win = {};
+    const ctx = {
+      window: win, location: { hostname },
+      localStorage: { getItem: () => null },
+      document: { documentElement: { setAttribute() {} }, querySelectorAll: () => [], createElement: () => ({}), head: { appendChild: (n) => added.push(n) } },
+      Object,
+    };
+    vm.runInNewContext(js, ctx);
+    return { added, win };
+  });
+}
+
+test('head: Vercel Web Analytics loads on mohamedgado.com only, and ?s= becomes utm_source', async () => {
+  for (const host of ['vette1123.github.io', 'localhost', 'mohamedgado.com.evil.example']) {
+    const { added, win } = await runHead(host);
+    assert.equal(added.length, 0, `${host} loads nothing`);
+    assert.equal(win.va, undefined);
+  }
+  for (const host of ['www.mohamedgado.com', 'mohamedgado.com']) {
+    const { added } = await runHead(host);
+    assert.deepEqual(added.map((n) => n.src), ['/_vercel/insights/script.js'], `${host}: same-origin script`);
+  }
+  const { win } = await runHead('www.mohamedgado.com');
+  const [kind, beforeSend] = win.vaq[0];
+  assert.equal(kind, 'beforeSend');
+  const url = (u) => beforeSend({ type: 'pageview', url: u }).url;
+  assert.equal(url('https://www.mohamedgado.com/projects/masareef/go?s=IG'), 'https://www.mohamedgado.com/projects/masareef/go?s=IG&utm_source=ig');
+  assert.equal(url('https://www.mohamedgado.com/projects/masareef/privacy#en-12'), 'https://www.mohamedgado.com/projects/masareef/privacy#en-12', 'no tag, untouched');
+  assert.equal(url('https://www.mohamedgado.com/projects/masareef/go?s=x&utm_source=y'), 'https://www.mohamedgado.com/projects/masareef/go?s=x&utm_source=y', 'an explicit utm wins');
+  // The policy says so, in both languages, and no page still claims to run none.
+  const { readFileSync } = await import('node:fs');
+  for (const f of ['index.html', 'terms.html', 'delete-account.html']) {
+    const html = readFileSync(new URL('../' + f, import.meta.url), 'utf8');
+    assert.doesNotMatch(html, /runs no analytics|ولا تشغّل أي قياس/, `${f} still says no analytics`);
+    assert.match(html, /Vercel Web Analytics, without cookies/);
+    assert.match(html, /تُعدّ الزيارة عبر Vercel Web Analytics بلا كوكيز/);
+  }
 });
