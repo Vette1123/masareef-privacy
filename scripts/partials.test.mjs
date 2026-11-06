@@ -140,3 +140,12 @@ test('toc: the marked row is the last heading past the reading line', async () =
   const policy = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   assert.ok(policy.includes('<!--partial:toc.js-->'), 'the policy carries the scroll-spy');
 });
+
+// 6 Nov: on Windows (core.autocrlf) the checkout holds CRLF, so --check called every page
+// stale while the rebuild changed nothing git could see. A gate that always fails gets skipped.
+test('build-pages --check passes on a current checkout, whatever its line endings', async () => {
+  const { spawnSync } = await import('node:child_process');
+  const { fileURLToPath } = await import('node:url');
+  const r = spawnSync(process.execPath, [fileURLToPath(new URL('./build-pages.mjs', import.meta.url)), '--check'], { encoding: 'utf8' });
+  assert.equal(r.status, 0, r.stderr || r.stdout);
+});

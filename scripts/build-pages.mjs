@@ -27,7 +27,8 @@ const check = process.argv.includes('--check');
 const stale = [];
 for (const [file, require] of Object.entries(PAGES)) {
   const p = path.join(repo, file);
-  const old = fs.readFileSync(p, 'utf8');
+  // A Windows checkout holds CRLF (core.autocrlf); compare as git stores it, or every page reads stale.
+  const old = fs.readFileSync(p, 'utf8').replace(/\r\n/g, '\n');
   const next = build(old, require);
   if (next === old) continue;
   stale.push(file);
