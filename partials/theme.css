@@ -60,17 +60,37 @@ p { margin: 0; text-wrap: pretty; }
 .skip { position: absolute; inset-inline-start: 12px; top: -60px; z-index: 10; padding: 10px 16px; border-radius: 999px; background: var(--panel); border: 1px solid var(--teal); text-decoration: none; font-weight: 600; }
 .skip:focus { top: 12px; }
 
-/* ---- top bar ---- */
+/* ---- top bar: one header on every page (partials/header.html), both languages in it.
+   Keyed on <html lang>, so the half that shows is right before any script runs. ---- */
+html:not([lang="ar"]) .top > [lang="ar"], html[lang="ar"] .top > [lang="en"] { display: none; }
 .top { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-block: max(18px, env(safe-area-inset-top)) 18px; }
-.brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; font-size: 18px; text-decoration: none; }
+.brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; font-size: 18px; text-decoration: none; white-space: nowrap; }
 .brand img { width: 40px; height: 40px; border-radius: 10px; }
 .brand small { font-weight: 500; color: var(--faint); font-size: 15px; }
-.lang { font: 600 14px var(--ui); padding: 10px 16px; min-height: 44px; display: inline-flex; align-items: center; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); text-decoration: none; transition: border-color 200ms var(--ease); }
-.lang:hover { border-color: var(--teal); }
+.brand[lang="ar"] { font-family: var(--arabic); }
+.brand small[lang="en"] { font-family: var(--ui); }
 .tools { display: flex; align-items: center; gap: 8px; }
 .theme { width: 44px; height: 44px; display: grid; place-items: center; padding: 0; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); cursor: pointer; transition: border-color 200ms var(--ease), transform 160ms var(--ease); -webkit-tap-highlight-color: transparent; }
-.theme:hover { border-color: var(--teal); }
 .theme:active { transform: scale(0.94); }
+/* Language: one pill, English then Arabic, two 44px targets; the page's language is filled. */
+.switch { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; background: var(--panel); overflow: hidden; }
+.switch button { appearance: none; border: 0; background: transparent; color: var(--soft); font: 600 14px var(--ui); min-width: 44px; min-height: 44px; padding: 0 16px; cursor: pointer; transition: background-color 200ms var(--ease), color 200ms var(--ease), transform 160ms var(--ease); -webkit-tap-highlight-color: transparent; }
+.switch button[lang="ar"] { font-family: var(--arabic); }
+.switch button:active { transform: scale(0.97); }
+.switch button:focus-visible { outline-offset: -3px; border-radius: 999px; }
+html:not([lang="ar"]) #btn-en, html[lang="ar"] #btn-ar { background: var(--teal); color: var(--bg); }
+@media (hover: hover) and (pointer: fine) {
+  .theme:hover { border-color: var(--teal); }
+  html:not([lang="ar"]) #btn-ar:hover, html[lang="ar"] #btn-en:hover { color: var(--ink); }
+}
+/* A phone: brand, theme and the language pill share one row; the tabs take the next. */
+@media (max-width: 420px) {
+  .top { gap: 8px; }
+  .brand { gap: 10px; }
+  .brand img { width: 36px; height: 36px; }
+  .brand small { display: none; }
+  .switch button { padding: 0 12px; font-size: 13px; }
+}
 .theme svg { width: 20px; height: 20px; }
 /* The icon shows where the switch goes: a sun on the dark page, a moon on the light one. */
 .theme .sun { display: none; }
@@ -85,7 +105,7 @@ p { margin: 0; text-wrap: pretty; }
 .crumbs ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 8px; font-size: 14px; color: var(--faint); }
 .crumbs li { display: inline-flex; align-items: center; gap: 8px; }
 .crumbs li + li::before { content: ""; width: 5px; height: 5px; border-top: 1.5px solid currentColor; border-inline-end: 1.5px solid currentColor; transform: rotate(45deg); opacity: 0.7; }
-[dir="rtl"] .crumbs li + li::before { transform: rotate(-135deg); }
+[dir="rtl"] .crumbs li + li::before { transform: rotate(-45deg); }
 .crumbs a { color: var(--soft); text-decoration: none; padding-block: 10px; }
 .crumbs a:hover { color: var(--teal); }
 .crumbs [aria-current] { color: var(--ink); font-weight: 600; }
@@ -98,9 +118,17 @@ p { margin: 0; text-wrap: pretty; }
   top: -140px; bottom: -40px;
   background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
   background-size: 56px 56px; background-position: center top;
-  -webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 40%, #000 20%, transparent 75%);
-  mask-image: radial-gradient(ellipse 60% 70% at 50% 40%, #000 20%, transparent 75%);
+  /* The second layer fades the grid in from its top edge (see --rise below). */
+  -webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 40%, #000 20%, transparent 75%), var(--rise);
+  mask-image: radial-gradient(ellipse 60% 70% at 50% 40%, #000 20%, transparent 75%), var(--rise);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
 }
+/* Every hero layer starts 120-140px above its hero, under the header. On a phone the header
+   wraps to two rows (~130px), so that top edge landed inside the page as a hard band across
+   the header (6 Nov). Each layer fades in over its first 160px instead: no edge, whatever
+   the header's height. */
+:root { --rise: linear-gradient(transparent, #000 160px); }
 /* No fog band here: it is the go page's horizon under its phone, and on a text hero it is a
    stray stripe behind whatever sits at that height (the bank search, 6 Nov).
    The glow layer fades to nothing before its own edge: a gradient that reaches the box edge
@@ -110,8 +138,8 @@ p { margin: 0; text-wrap: pretty; }
   background:
     radial-gradient(min(900px, 80vw) 420px at 22% 30%, var(--glow-a), transparent 70%),
     radial-gradient(min(800px, 70vw) 380px at 80% 10%, var(--glow-b), transparent 70%);
-  -webkit-mask-image: linear-gradient(#000 55%, transparent 92%);
-  mask-image: linear-gradient(#000 55%, transparent 92%);
+  -webkit-mask-image: linear-gradient(transparent, #000 160px, #000 55%, transparent 92%);
+  mask-image: linear-gradient(transparent, #000 160px, #000 55%, transparent 92%);
 }
 .head .crumbs { margin-bottom: 22px; }
 .title { font-family: var(--display); font-size: clamp(36px, 5.4vw, 72px); line-height: 1.02; letter-spacing: -0.04em; font-weight: 850; max-width: 18ch; }
@@ -220,9 +248,10 @@ html[lang="ar"] .cta h2 { font-family: var(--arabic); letter-spacing: 0; line-he
 @media (max-width: 1000px) { .sitefoot { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .sitefoot { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 20px; } }
 /* ---- the top bar's links: every page one tap from the others ---- */
-.topnav { display: flex; gap: 2px; padding: 4px; border-radius: 999px; border: 1px solid var(--line); background: color-mix(in srgb, var(--panel) 70%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.topnav { display: flex; gap: 2px; padding: 4px; border-radius: 999px; border: 1px solid var(--line); background: color-mix(in srgb, var(--panel) 70%, transparent); }
 .topnav a { display: inline-flex; align-items: center; min-height: 36px; padding: 6px 16px; border-radius: 999px; color: var(--soft); font: 600 14px var(--ui); text-decoration: none; white-space: nowrap; transition: color 160ms var(--ease), background-color 160ms var(--ease), box-shadow 160ms var(--ease), transform 120ms var(--ease); }
-.topnav a:hover { color: var(--ink); background: color-mix(in srgb, var(--teal) 8%, transparent); }
+@media (hover: hover) and (pointer: fine) { .topnav a:hover { color: var(--ink); background: color-mix(in srgb, var(--teal) 8%, transparent); } }
+.topnav[lang="ar"] a { font-family: var(--arabic); font-size: 15px; }
 .topnav a:active { transform: scale(0.97); }
 /* The page you are on: brand tint, a hairline ring and a lit dot, readable in both themes. */
 .topnav a[aria-current] { color: var(--teal); background: color-mix(in srgb, var(--teal) 14%, var(--panel)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--teal) 38%, transparent), 0 6px 16px -10px color-mix(in srgb, var(--teal) 70%, transparent); }
@@ -255,7 +284,6 @@ html[lang="ar"] .cta h2 { font-family: var(--arabic); letter-spacing: 0; line-he
   .sec { padding-block: 44px 4px; }
 }
 @media (max-width: 380px) {
-  .brand small { display: none; }
   .badges .apple img { width: 138px; height: 46px; }
   .badges .play { margin: -10px -9px; }
   .badges .play img { width: 174px; height: 67px; }

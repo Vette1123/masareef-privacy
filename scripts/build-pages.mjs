@@ -7,17 +7,16 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { applyPartials, css, labelCells } from './partials.mjs';
+import { applyPartials, css, labelCells, SITE } from './partials.mjs';
 
 const repo = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
-const base = ['head.html', 'theme.css', 'switch.js'];
-// Every two-language page: the switch (lang.*) and both navs and footers.
-const bilingual = [...base, 'lang.css', 'lang-pick.js', 'lang.js', 'doc.css', 'footer.en.html', 'footer.ar.html', 'topnav.en.html', 'topnav.ar.html'];
+// Every two-language page: the show-one-language rules and both footers.
+const bilingual = [...SITE, 'lang.css', 'doc.css', 'footer.en.html', 'footer.ar.html'];
 const PAGES = {
   'index.html': [...bilingual, 'toc.js'],
   'terms.html': bilingual,
   'delete-account.html': bilingual,
-  '404.html': [...base, 'footer.en.html', 'topnav.en.html'],
+  '404.html': [...SITE, 'footer.en.html'],
 };
 
 const build = (html, require) =>

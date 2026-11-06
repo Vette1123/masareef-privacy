@@ -99,8 +99,68 @@ test('theme: on a phone every nav, footer and brand link is a 44px target', asyn
 // button onto a second row. Under 420px the brand drops its second-script name to share one row.
 test('lang: a 390px header keeps brand, language and theme on one row', async () => {
   const { readFileSync } = await import('node:fs');
-  const lang = readFileSync(new URL('../partials/lang.css', import.meta.url), 'utf8');
-  assert.match(lang, /@media \(max-width: 420px\)\s*\{[^@]*\.top \.brand small\s*\{\s*display:\s*none/);
+  const theme = readFileSync(new URL('../partials/theme.css', import.meta.url), 'utf8');
+  assert.match(theme, /@media \(max-width: 420px\)\s*\{[^@]*\.brand small\s*\{\s*display:\s*none/);
+});
+
+// 6 Nov: every page drew its own header. The install page had a lone "العربية" link and its own
+// stored language (go-lang), the bank pages put Arabic first and named the brand in Arabic on the
+// English page, and a language picked on one page never reached the next. One header now, inlined
+// from partials/header.html, with the same switches on every page.
+test('site: every page carries the one shared header and nothing else', async () => {
+  const { readFileSync, readdirSync } = await import('node:fs');
+  const root = new URL('../', import.meta.url);
+  const pages = ['go.html', 'go-ar.html', 'index.html', 'terms.html', 'delete-account.html', '404.html',
+    ...readdirSync(new URL('banks/', root)).filter((f) => f.endsWith('.html')).map((f) => 'banks/' + f)];
+  for (const f of pages) {
+    const html = readFileSync(new URL(f, root), 'utf8');
+    for (const p of ['header.html', 'lang-pick.js', 'lang.js', 'switch.js']) assert.ok(html.includes(`<!--partial:${p}-->`), `${f}: no ${p}`);
+    assert.equal(html.split('<header').length, 2, `${f}: a header besides the shared one`);
+    assert.ok(!/go-lang'\s*,/.test(html.replace(/<!--partial:lang(-pick)?\.js-->[\s\S]*?<!--\/partial:lang(-pick)?\.js-->/g, '')), `${f}: writes its own language key`);
+  }
+});
+
+// The head script: one stored language for the whole site; the install page (one URL per
+// language, <html data-alt>) is swapped for its other URL instead of flipped in place.
+function runPick({ served, alt, stored = {}, nav = 'en-US', hash = '' }) {
+  return import('node:fs').then(async ({ readFileSync }) => {
+    const vm = await import('node:vm');
+    const attrs = { 'data-alt': alt ?? null };
+    const root = { lang: served, dir: '', style: {}, classList: { add() {} }, getAttribute: (k) => attrs[k] ?? null };
+    let replaced = null;
+    const ctx = {
+      document: { documentElement: root },
+      location: { hash, search: '?s=ig', replace: (u) => (replaced = u) },
+      navigator: { language: nav, userAgent: 'Mozilla/5.0' },
+      localStorage: { getItem: (k) => stored[k] ?? null },
+    };
+    vm.runInNewContext(readFileSync(new URL('../partials/lang-pick.js', import.meta.url), 'utf8'), ctx);
+    return { lang: root.lang, replaced };
+  });
+}
+
+test('lang-pick: a language chosen on any page carries to the install page and back', async () => {
+  assert.deepEqual(await runPick({ served: 'en', alt: 'go-ar', stored: { 'masareef-privacy-lang': 'ar' } }), { lang: 'en', replaced: 'go-ar?s=ig' });
+  assert.deepEqual(await runPick({ served: 'ar', alt: 'go', stored: { 'masareef-privacy-lang': 'en' } }), { lang: 'ar', replaced: 'go?s=ig' });
+  assert.equal((await runPick({ served: 'en', alt: 'go-ar', stored: { 'go-lang': 'ar' } })).replaced, 'go-ar?s=ig', 'the old install-page key still counts');
+  assert.equal((await runPick({ served: 'en', stored: { 'go-lang': 'ar' } })).lang, 'ar', 'and reaches the two-language pages');
+  assert.equal((await runPick({ served: 'en', alt: 'go-ar', nav: 'ar-EG' })).replaced, 'go-ar?s=ig', 'an Arabic browser goes to go-ar');
+  assert.deepEqual(await runPick({ served: 'ar', alt: 'go', nav: 'en-US' }), { lang: 'ar', replaced: null }, 'the Arabic link stays Arabic');
+  assert.deepEqual(await runPick({ served: 'en', stored: { 'masareef-privacy-lang': 'ar' } }), { lang: 'ar', replaced: null }, 'a two-language page flips in place');
+  assert.equal((await runPick({ served: 'en', stored: { 'masareef-privacy-lang': 'ar' }, hash: '#en-4' })).lang, 'en', 'a section link wins');
+});
+
+// 6 Nov: on a phone the header wraps to two rows, and the hero glow and grid (which start 120-140px
+// above the hero) began inside it as a hard band; the tabs' backdrop blur sat on top of it.
+test('theme: hero layers fade in from their top edge, and nothing in the header is frosted', async () => {
+  const { readFileSync } = await import('node:fs');
+  const theme = readFileSync(new URL('../partials/theme.css', import.meta.url), 'utf8');
+  assert.doesNotMatch(theme, /backdrop-filter/);
+  assert.match(theme, /--rise:\s*linear-gradient\(transparent,/);
+  assert.match(theme, /\.head::after, \.hero::after\s*\{[^}]*mask-image:[^;]*var\(--rise\)/);
+  assert.match(theme, /\.head::before\s*\{[^}]*mask-image:\s*linear-gradient\(transparent,/);
+  const go = readFileSync(new URL('../go.template.html', import.meta.url), 'utf8');
+  assert.match(go, /\.hero::before\s*\{[^}]*mask-image:\s*var\(--rise\)/);
 });
 
 // 6 Nov: the language switch lived as three copies inside the legal pages; the bank pages
