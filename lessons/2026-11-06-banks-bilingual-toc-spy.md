@@ -17,6 +17,9 @@ with a glowing bar on the reading-start edge and the row's number in teal.
 - Pure scroll-spy marked the wrong row after a jump: a short section (20, Children's privacy)
   lets the next heading cross the reading line as soon as the jump lands. A clicked or
   deep-linked section now stays marked until the reader scrolls by hand.
+- `build-pages --check` called every page stale on the Windows main checkout (CRLF from
+  `core.autocrlf`) while a rebuild changed nothing git could see. It now compares LF, and a
+  test runs the real `--check`; a probe edit to a partial still fails it.
 - The English lede first read "in a Al Rajhi Bank wallet"; generated English copy needs reading
   on a real page, not just a passing test.
 
