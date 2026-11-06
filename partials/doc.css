@@ -2,19 +2,6 @@
    theme.css (same tokens, same hero) and holds what a long, two-language legal page
    needs and the install page does not. Inlined by scripts/build-pages.mjs. */
 
-/* The head script stamps html.lang-en / html.lang-ar before the first paint. With no script
-   neither class lands and the page stays the English document it ships as. */
-html:not(.lang-ar) #doc-ar, html.lang-ar #doc-en,
-html:not(.lang-ar) #foot-ar, html.lang-ar #foot-en,
-html:not(.lang-ar) .topnav[lang="ar"], html.lang-ar .topnav[lang="en"] { display: none; }
-
-/* Language switch: one pill with two 44px targets. */
-.switch { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; background: var(--panel); overflow: hidden; }
-.switch button { appearance: none; border: 0; background: transparent; color: var(--soft); font: 600 14px var(--ui); min-width: 44px; min-height: 44px; padding: 0 16px; cursor: pointer; transition: background-color 200ms var(--ease), color 200ms var(--ease); -webkit-tap-highlight-color: transparent; }
-.switch button[lang="ar"] { font-family: var(--arabic); }
-.switch button:focus-visible { outline-offset: -3px; border-radius: 999px; }
-html:not(.lang-ar) #btn-en, html.lang-ar #btn-ar { background: var(--teal); color: var(--bg); }
-
 /* Reading text */
 .head .title { max-width: 22ch; }
 .head .lede { max-width: 62ch; }
@@ -64,33 +51,40 @@ footer.page a { color: var(--soft); }
 .toc { margin-top: 8px; border: 1px solid var(--line); border-radius: 18px; background: color-mix(in srgb, var(--panel) 86%, transparent); }
 .toc details, .toc details:last-child { border: 0; }
 .toc summary { padding-inline: 20px; font-size: 16px; }
-.toc ol { margin: 0; padding: 0 20px 14px; padding-inline-start: 42px; font-size: 15px; columns: 2; column-gap: 28px; }
-.toc li { break-inside: avoid; margin: 0; }
-.toc li::marker { color: var(--faint); font-variant-numeric: tabular-nums; }
-.toc a { display: flex; align-items: center; min-height: 44px; padding-block: 4px; color: var(--soft); text-decoration: none; }
-.toc a:hover { color: var(--teal); }
+.toc ol { margin: 0; padding: 0 8px 10px; list-style: none; counter-reset: toc; font-size: 15px; columns: 2; column-gap: 20px; }
+.toc li { break-inside: avoid; margin: 0; counter-increment: toc; }
+/* Each row is a pill holding its own number, so a wrapped title hangs under the text, and the
+   marked row's tint, bar and number never collide with a list marker outside it. */
+.toc a { position: relative; display: flex; align-items: baseline; gap: 8px; min-height: 44px; padding: 9px 8px; padding-inline-start: 12px; border-radius: 12px; line-height: 1.4; color: var(--soft); text-decoration: none; transition: color 160ms var(--ease), background-color 160ms var(--ease); -webkit-tap-highlight-color: transparent; }
+.toc a::before { content: counter(toc) "."; flex: none; min-width: 2.2ch; text-align: end; color: var(--faint); font-variant-numeric: tabular-nums; transition: color 160ms var(--ease); }
+[lang="ar"] .toc a::before { content: counter(toc, arabic-indic) "."; }
+@media (hover: hover) and (pointer: fine) { .toc a:hover { color: var(--ink); background: color-mix(in srgb, var(--ink) 5%, transparent); } }
+/* The section being read (toc.js marks it). The row turns ink with a teal number, no weight
+   change so it never re-wraps; behind it one pill glides from row to row: a teal wash fading
+   toward the reading end, a hairline edge, and a glowing bar on the reading-start side. */
+.toc ol { position: relative; }
+.toc a { z-index: 1; }
+.toc a[aria-current] { color: var(--ink); }
+.toc a[aria-current]::before { color: var(--teal); }
+.toc-pill { position: absolute; top: 0; left: 0; z-index: 0; opacity: 0; border-radius: 12px; pointer-events: none; background: linear-gradient(to right, color-mix(in srgb, var(--teal) 22%, transparent), color-mix(in srgb, var(--teal) 6%, transparent)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--teal) 28%, transparent), 0 8px 24px -14px color-mix(in srgb, var(--teal) 70%, transparent); transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), height 280ms cubic-bezier(0.22, 1, 0.36, 1), width 280ms cubic-bezier(0.22, 1, 0.36, 1), opacity 200ms ease; }
+[dir="rtl"] .toc-pill { background: linear-gradient(to left, color-mix(in srgb, var(--teal) 22%, transparent), color-mix(in srgb, var(--teal) 6%, transparent)); }
+.toc-pill::before { content: ""; position: absolute; inset-block: 9px; inset-inline-start: 0; width: 3px; border-radius: 3px; background: var(--teal); box-shadow: 0 0 10px 1px color-mix(in srgb, var(--teal) 65%, transparent); }
+@media (prefers-reduced-motion: reduce) { .toc a, .toc a::before, .toc-pill { transition: opacity 200ms ease; } }
 @media (max-width: 620px) { .toc ol { columns: 1; } }
 @media (min-width: 961px) {
   .doc { grid-template-columns: 280px minmax(0, 72ch); gap: 56px; }
-  .toc { position: sticky; top: 24px; margin-top: 0; max-height: calc(100vh - 48px); overflow-y: auto; overscroll-behavior: contain; }
+  .toc { position: sticky; top: 24px; margin-top: 0; max-height: calc(100vh - 48px); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
   .toc ol { columns: 1; }
   .prose h2:first-child { margin-top: 0; }
 }
 
 @media (max-width: 380px) { .prose { font-size: 16px; } .prose th, .prose td { padding: 10px 12px; } }
 @media print {
-  .switch, .toc, .skip { display: none; }
+  .toc, .skip { display: none; }
   .doc { display: block; }
   .prose { max-width: none; font-size: 11pt; line-height: 1.5; color: #000; }
   .prose p, .prose li { color: #000; }
   .table-scroll { overflow: visible; border: 0; }
   .table-scroll table { min-width: 0; }
   .prose a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 9pt; word-break: break-all; }
-}
-/* A 360px phone: brand, theme and the language pills share one row; the nav takes the next. */
-@media (max-width: 420px) {
-  .top { gap: 8px; }
-  .top .brand img { width: 32px; height: 32px; }
-  .top .brand small { display: none; }
-  .switch button { padding: 0 10px; font-size: 13px; }
 }
