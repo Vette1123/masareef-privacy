@@ -3,6 +3,7 @@
 // is its own URL so that hreflang and a search engine can tell them apart.
 import fs from 'fs'
 import path from 'path'
+import { applyPartials, css } from './partials.mjs'
 const repo = '.'
 const c = JSON.parse(fs.readFileSync(path.join(repo, 'go.copy.json'), 'utf8'))
 // Canonical on the domain Google crawls, which proxies these pages. The github.io URLs keep
@@ -168,15 +169,14 @@ function page(l) {
     FAQ_H: esc(t.faqH),
     FAQ: t.faq.map(([q, a], i) => `<details${i ? '' : ' open'}><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join(''),
     CTA_H: esc(t.ctaH),
-    FOOT: esc(t.foot),
-    LINKS: t.links.map(([n, u]) => `<a href="${u}">${esc(n)}</a>`).join(''),
   }
-  // Inline CSS ships minified: comments out, whitespace collapsed. Lighthouse flags it otherwise.
-  const css = (c) => c.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ').replace(/\s*([{};,>])\s*/g, '$1').replace(/;}/g, '}').trim()
-  return tpl.replace(/<style>([\s\S]*?)<\/style>/g, (_, c) => `<style>${css(c)}</style>`).replace(/\{\{(\w+)\}\}/g, (_, k) => {
+  const filled = tpl.replace(/\{\{(\w+)\}\}/g, (_, k) => {
     if (!(k in vals)) throw Error('no value for ' + k)
     return vals[k]
   })
+  // The shared look and footer (partials/), then every inline <style> minified, the theme's too.
+  return applyPartials(filled, { require: ['head.html', 'theme.css', 'switch.js', `footer.${l}.html`, `topnav.${l}.html`] })
+    .replace(/<style>([\s\S]*?)<\/style>/g, (_, c) => `<style>${css(c)}</style>`)
 }
 
 fs.writeFileSync(path.join(repo, 'go.html'), page('en'))

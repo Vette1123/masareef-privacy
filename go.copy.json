@@ -96,21 +96,6 @@
       ]
     ],
     "ctaH": "Know where your money went.",
-    "foot": "Free to start · No ads · Works offline once you sign in",
-    "links": [
-      [
-        "Supported banks",
-        "https://www.mohamedgado.com/projects/masareef/banks"
-      ],
-      [
-        "Privacy policy",
-        "https://www.mohamedgado.com/projects/masareef/privacy"
-      ],
-      [
-        "Terms",
-        "https://www.mohamedgado.com/projects/masareef/terms"
-      ]
-    ],
     "demo": {
       "bank": "CIB",
       "alert": "Purchase of EGP 1,250.00 at CARREFOUR MAADI with card **4821",
@@ -235,21 +220,6 @@
       ]
     ],
     "ctaH": "اعرف أين ذهبت أموالك.",
-    "foot": "ابدأ مجانًا · بلا إعلانات · يعمل دون إنترنت بعد تسجيل الدخول",
-    "links": [
-      [
-        "البنوك المدعومة",
-        "https://www.mohamedgado.com/projects/masareef/banks"
-      ],
-      [
-        "سياسة الخصوصية",
-        "https://www.mohamedgado.com/projects/masareef/privacy"
-      ],
-      [
-        "الشروط",
-        "https://www.mohamedgado.com/projects/masareef/terms"
-      ]
-    ],
     "demo": {
       "bank": "CIB",
       "alert": "تم خصم 1,250.00 جنيه من بطاقتك **4821 لدى CARREFOUR MAADI",

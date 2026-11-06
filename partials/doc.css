@@ -1,0 +1,83 @@
+/* The bilingual document kit: privacy policy, terms, account deletion. Sits on top of
+   theme.css (same tokens, same hero) and holds what a long, two-language legal page
+   needs and the install page does not. Inlined by scripts/build-pages.mjs. */
+
+/* The head script stamps html.lang-en / html.lang-ar before the first paint. With no script
+   neither class lands and the page stays the English document it ships as. */
+html:not(.lang-ar) #doc-ar, html.lang-ar #doc-en,
+html:not(.lang-ar) #foot-ar, html.lang-ar #foot-en,
+html:not(.lang-ar) .topnav[lang="ar"], html.lang-ar .topnav[lang="en"] { display: none; }
+
+/* Language switch: one pill with two 44px targets. */
+.switch { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; background: var(--panel); overflow: hidden; }
+.switch button { appearance: none; border: 0; background: transparent; color: var(--soft); font: 600 14px var(--ui); min-width: 44px; min-height: 42px; padding: 0 16px; cursor: pointer; transition: background-color 200ms var(--ease), color 200ms var(--ease); -webkit-tap-highlight-color: transparent; }
+.switch button[lang="ar"] { font-family: var(--arabic); }
+.switch button:focus-visible { outline-offset: -3px; border-radius: 999px; }
+html:not(.lang-ar) #btn-en, html.lang-ar #btn-ar { background: var(--teal); color: var(--bg); }
+
+/* Reading text */
+.head .title { max-width: 22ch; }
+.head .lede { max-width: 62ch; }
+.prose { font-size: 17px; line-height: 1.75; }
+.prose > :first-child { margin-top: 0; }
+.prose p, .prose ul, .prose ol { max-width: none; }
+.prose code { direction: ltr; unicode-bidi: embed; display: inline-block; }
+.prose td code { white-space: nowrap; }
+.subject { display: inline-block; font-weight: 600; padding: 2px 10px; border-radius: 8px; border: 1px solid var(--line); background: color-mix(in srgb, var(--teal) 10%, var(--panel)); white-space: nowrap; direction: ltr; unicode-bidi: embed; color: var(--ink); }
+
+/* Tables scroll inside their own rounded frame on a phone. */
+.table-scroll { overflow-x: auto; margin-top: 18px; border: 1px solid var(--line); border-radius: 18px; background: color-mix(in srgb, var(--panel) 86%, transparent); }
+.table-scroll table { margin: 0; min-width: 560px; }
+.prose th, .prose td { padding: 12px 16px; }
+.prose thead th { font-size: 13px; letter-spacing: 0.04em; color: var(--faint); border-bottom: 1px solid var(--line); }
+.prose tbody tr:last-child td { border-bottom: 0; }
+.prose caption { caption-side: top; text-align: start; color: var(--faint); font-size: 14px; padding: 14px 16px 0; }
+
+/* Steps and notes sit in cards. */
+.steps { margin-top: 18px; }
+.steps ol { margin: 0; }
+.prose .steps ol { margin-top: 0; }
+.note { margin-top: 22px; padding: 16px 20px; border-radius: 18px; border: 1px solid var(--line); border-inline-start: 3px solid var(--teal); background: color-mix(in srgb, var(--teal) 7%, var(--panel)); }
+.note p { margin: 0; }
+.note p + p { margin-top: 12px; }
+.contact { margin-top: 22px; }
+
+/* Closing note under each language */
+footer.page { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 14px; color: var(--faint); }
+footer.page p { margin-top: 8px; }
+footer.page a { color: var(--soft); }
+
+/* On this page: a card on a phone, a sticky column beside the text on a wide screen. */
+.doc { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; align-items: start; }
+.toc { margin-top: 8px; border: 1px solid var(--line); border-radius: 18px; background: color-mix(in srgb, var(--panel) 86%, transparent); }
+.toc details, .toc details:last-child { border: 0; }
+.toc summary { padding-inline: 20px; font-size: 16px; }
+.toc ol { margin: 0; padding: 0 20px 14px; padding-inline-start: 42px; font-size: 15px; columns: 2; column-gap: 28px; }
+.toc li { break-inside: avoid; margin: 0; }
+.toc li::marker { color: var(--faint); font-variant-numeric: tabular-nums; }
+.toc a { display: block; padding-block: 8px; color: var(--soft); text-decoration: none; }
+.toc a:hover { color: var(--teal); }
+@media (max-width: 620px) { .toc ol { columns: 1; } }
+@media (min-width: 961px) {
+  .doc { grid-template-columns: 280px minmax(0, 72ch); gap: 56px; }
+  .toc { position: sticky; top: 24px; margin-top: 0; max-height: calc(100vh - 48px); overflow-y: auto; overscroll-behavior: contain; }
+  .toc ol { columns: 1; }
+  .prose h2:first-child { margin-top: 0; }
+}
+
+@media (max-width: 380px) { .prose { font-size: 16px; } .prose th, .prose td { padding: 10px 12px; } }
+@media print {
+  .switch, .toc, .skip { display: none; }
+  .doc { display: block; }
+  .prose { max-width: none; font-size: 11pt; line-height: 1.5; color: #000; }
+  .prose p, .prose li { color: #000; }
+  .table-scroll { overflow: visible; border: 0; }
+  .table-scroll table { min-width: 0; }
+  .prose a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 9pt; word-break: break-all; }
+}
+/* A 360px phone: brand, theme and the language pills share one row; the nav takes the next. */
+@media (max-width: 420px) {
+  .top { gap: 8px; }
+  .top .brand img { width: 32px; height: 32px; }
+  .switch button { padding: 0 10px; font-size: 13px; }
+}

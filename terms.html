@@ -8,9 +8,19 @@
       name="description"
       content="The terms for using Masareef, the personal spending tracker, and Masareef Pro. English and Arabic."
     />
+    <!--partial:head.html--><meta name="theme-color" media="(prefers-color-scheme: light)" content="#f3f8f6" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#07121c" />
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#020617" media="(prefers-color-scheme: dark)" />
+    <script>
+      // A theme picked with the switch applies before the first paint, so the page never flashes.
+      try {
+        var t = localStorage.getItem('go-theme');
+        if (t === 'light' || t === 'dark') {
+          document.documentElement.setAttribute('data-theme', t);
+          document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) { m.content = t === 'dark' ? '#07121c' : '#f3f8f6'; });
+        }
+      } catch (e) {}
+    </script><!--/partial:head.html-->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <link rel="canonical" href="https://www.mohamedgado.com/projects/masareef/terms" />
     <meta property="og:site_name" content="Masareef" />
@@ -32,299 +42,8 @@
       content="https://www.mohamedgado.com/projects/masareef/terms"
     />
     <link rel="icon" href="https://vette1123.github.io/masareef-privacy/icon.png" type="image/png" />
-    <style>
-      /* Same tokens and structure as the privacy policy, so the two pages read as one
-         document set. Self-contained: no web fonts, no third-party scripts, no cookies. */
-      :root {
-        --bg: #f8fafc;
-        --surface: #ffffff;
-        --surface-2: #f1f5f9;
-        --text: #0f172a;
-        --muted: #55657c;
-        --line: #dde5ee;
-        --accent: #0d7d70;
-        --accent-soft: #e8f6f4;
-        --radius: 14px;
-        --maxw: 760px;
-      }
-      @media (prefers-color-scheme: dark) {
-        :root {
-          --bg: #020617;
-          --surface: #0b1324;
-          --surface-2: #111c31;
-          --text: #e8edf6;
-          --muted: #93a2b8;
-          --line: #1d2b44;
-          --accent: #2dd4bf;
-          --accent-soft: #0d2029;
-        }
-      }
-      * {
-        box-sizing: border-box;
-      }
-      html {
-        -webkit-text-size-adjust: 100%;
-      }
-      body {
-        margin: 0;
-        background: var(--bg);
-        color: var(--text);
-        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
-          sans-serif;
-        font-size: 17px;
-        line-height: 1.75;
-        -webkit-font-smoothing: antialiased;
-      }
-      [dir="rtl"] body,
-      [lang="ar"] {
-        font-family: "IBM Plex Sans Arabic", "Noto Sans Arabic", "Segoe UI", Tahoma, system-ui,
-          -apple-system, Arial, sans-serif;
-      }
-      .wrap {
-        max-width: var(--maxw);
-        margin: 0 auto;
-        padding: 0 20px 96px;
-      }
-      .top {
-        border-bottom: 1px solid var(--line);
-        background: var(--surface);
-        position: sticky;
-        top: 0;
-        z-index: 10;
-      }
-      .top-inner {
-        max-width: var(--maxw);
-        margin: 0 auto;
-        padding: 12px 20px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        min-height: 60px;
-      }
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-weight: 700;
-        letter-spacing: -0.01em;
-      }
-      .brand svg {
-        display: block;
-      }
-      .switch {
-        display: inline-flex;
-        border: 1px solid var(--line);
-        border-radius: 999px;
-        padding: 3px;
-        background: var(--surface-2);
-      }
-      .switch button {
-        appearance: none;
-        border: 0;
-        background: transparent;
-        color: var(--muted);
-        font: inherit;
-        font-size: 14px;
-        font-weight: 600;
-        padding: 5px 14px;
-        border-radius: 999px;
-        cursor: pointer;
-        transition: background-color 0.18s ease, color 0.18s ease;
-      }
-      html:not(.lang-ar) #btn-en,
-      html.lang-ar #btn-ar {
-        background: var(--accent);
-        color: #ffffff;
-      }
-      @media (prefers-color-scheme: dark) {
-        html:not(.lang-ar) #btn-en,
-        html.lang-ar #btn-ar {
-          color: #04231f;
-        }
-      }
-      .switch button:focus-visible {
-        outline: 2px solid var(--accent);
-        outline-offset: 2px;
-      }
-      h1,
-      .h1 {
-        font-size: clamp(1.8rem, 5vw, 2.3rem);
-        line-height: 1.2;
-        letter-spacing: -0.02em;
-        margin: 40px 0 10px;
-      }
-      .lede {
-        color: var(--muted);
-        font-size: 1.05rem;
-        margin: 0 0 8px;
-        max-width: 62ch;
-      }
-      .meta {
-        color: var(--muted);
-        font-size: 0.86rem;
-        margin: 0 0 32px;
-        padding-bottom: 22px;
-        border-bottom: 1px solid var(--line);
-      }
-      .meta b {
-        color: var(--text);
-        font-weight: 600;
-      }
-      h2 {
-        font-size: 1.28rem;
-        line-height: 1.3;
-        letter-spacing: -0.01em;
-        margin: 40px 0 12px;
-      }
-      p {
-        margin: 0 0 14px;
-        max-width: 68ch;
-      }
-      ul,
-      ol {
-        max-width: 68ch;
-        padding-inline-start: 22px;
-      }
-      li {
-        margin: 6px 0;
-      }
-      a {
-        color: var(--accent);
-        text-underline-offset: 3px;
-      }
-      a:focus-visible {
-        outline: 2px solid var(--accent);
-        outline-offset: 2px;
-        border-radius: 3px;
-      }
-      code {
-        font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-        font-size: 0.86em;
-        background: var(--surface-2);
-        border: 1px solid var(--line);
-        padding: 1px 6px;
-        border-radius: 6px;
-        direction: ltr;
-        unicode-bidi: embed;
-        display: inline-block;
-      }
-      .subject {
-        font-weight: 600;
-        background: var(--accent-soft);
-        border: 1px solid var(--line);
-        padding: 2px 10px;
-        border-radius: 8px;
-        white-space: nowrap;
-        direction: ltr;
-        unicode-bidi: embed;
-        display: inline-block;
-      }
-      .steps {
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        background: var(--surface);
-        padding: 18px 22px;
-        margin: 18px 0 8px;
-      }
-      .steps ol {
-        margin: 0;
-      }
-      .table-scroll {
-        overflow-x: auto;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        margin: 18px 0 24px;
-        background: var(--surface);
-      }
-      table {
-        border-collapse: collapse;
-        width: 100%;
-        min-width: 560px;
-        font-size: 0.92rem;
-      }
-      th,
-      td {
-        text-align: start;
-        padding: 11px 16px;
-        vertical-align: top;
-      }
-      thead th {
-        font-size: 0.78rem;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        color: var(--muted);
-        font-weight: 700;
-      }
-      tbody tr + tr {
-        border-top: 1px solid var(--line);
-      }
-      .note {
-        border-inline-start: 3px solid var(--accent);
-        background: var(--surface-2);
-        border-radius: 0 var(--radius) var(--radius) 0;
-        padding: 12px 18px;
-        margin: 20px 0;
-      }
-      [dir="rtl"] .note {
-        border-radius: var(--radius) 0 0 var(--radius);
-      }
-      .note p:last-child {
-        margin-bottom: 0;
-      }
-      footer.page {
-        border-top: 1px solid var(--line);
-        margin-top: 48px;
-        padding-top: 20px;
-        color: var(--muted);
-        font-size: 0.86rem;
-      }
-      /* The head script stamps html.lang-en / html.lang-ar before the first paint. With
-         no script neither class lands and the page stays the English document it ships as. */
-      html:not(.lang-ar) #doc-ar,
-      html.lang-ar #doc-en {
-        display: none;
-      }
-      .skip {
-        position: absolute;
-        inset-inline-start: -9999px;
-      }
-      .skip:focus {
-        position: static;
-        display: inline-block;
-        padding: 8px 12px;
-      }
-      @media print {
-        :root {
-          --bg: #ffffff;
-          --surface: #ffffff;
-          --surface-2: #ffffff;
-          --text: #000000;
-          --muted: #333333;
-          --line: #999999;
-          --accent: #000000;
-          --accent-soft: #ffffff;
-        }
-        .top,
-        .switch,
-        .skip {
-          display: none;
-        }
-        .wrap {
-          max-width: none;
-          padding: 0;
-        }
-        body {
-          font-size: 11pt;
-          line-height: 1.5;
-        }
-        a[href^="http"]::after {
-          content: " (" attr(href) ")";
-          font-size: 9pt;
-          word-break: break-all;
-        }
-      }
-    </style>
+    <!--partial:theme.css--><style>:root{--bg: #f3f8f6;--bg-2: #e4f1ec;--ink: #0f1d27;--soft: #43555f;--faint: #5f727b;--teal: #0e7c70;--mint: #5eead4;--red: #c03a3a;--line: rgba(15,29,39,0.1);--panel: #ffffff;--band: #0f1d27;--band-ink: #eef7f5;--band-soft: #b4cbc8;--glow-a: rgba(14,124,112,0.16);--glow-b: rgba(99,102,241,0.11);--grid: rgba(15,29,39,0.06);--fog: rgba(14,124,112,0.14);--ui: system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Arabic",sans-serif;--display: ui-rounded,"SF Pro Rounded",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--arabic: "SF Arabic","Geeza Pro","Noto Sans Arabic","Segoe UI",system-ui,sans-serif;--ease: cubic-bezier(0.16,1,0.3,1);color-scheme: light dark}@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg: #07121c;--bg-2: #0c1d2b;--ink: #eaf4f2;--soft: #aec3c6;--faint: #9ab0b4;--teal: #2dd4bf;--red: #f87171;--line: rgba(234,244,242,0.1);--panel: #0f2130;--band: #0d2233;--band-ink: #eef7f5;--band-soft: #b4cbc8;--glow-a: rgba(45,212,191,0.16);--glow-b: rgba(129,140,248,0.15);--grid: rgba(234,244,242,0.055);--fog: rgba(94,234,212,0.26);color-scheme: dark}}:root[data-theme="dark"]{--bg: #07121c;--bg-2: #0c1d2b;--ink: #eaf4f2;--soft: #aec3c6;--faint: #9ab0b4;--teal: #2dd4bf;--red: #f87171;--line: rgba(234,244,242,0.1);--panel: #0f2130;--band: #0d2233;--band-ink: #eef7f5;--band-soft: #b4cbc8;--glow-a: rgba(45,212,191,0.16);--glow-b: rgba(129,140,248,0.15);--grid: rgba(234,244,242,0.055);--fog: rgba(94,234,212,0.26);color-scheme: dark}:root[data-theme="light"]{color-scheme: light}*{box-sizing: border-box}html{-webkit-text-size-adjust: 100%;text-size-adjust: 100%;overflow-x: clip;scrollbar-color: color-mix(in srgb,var(--teal) 45%,var(--line)) transparent}body{margin: 0;background: var(--bg);color: var(--ink);font: 16px/1.6 var(--ui);-webkit-font-smoothing: antialiased}html[lang="ar"] body,[lang="ar"]{font-family: var(--arabic)}::selection{background: color-mix(in srgb,var(--teal) 30%,transparent);color: var(--ink)}body::before{content: "";position: fixed;inset: 0;z-index: -1;pointer-events: none}body::before{background: radial-gradient(60vmax 45vmax at 88% -8%,var(--glow-a),transparent 62%),radial-gradient(55vmax 40vmax at -12% 38%,var(--glow-b),transparent 62%),radial-gradient(50vmax 38vmax at 70% 115%,var(--glow-a),transparent 62%)}img{max-width: 100%;height: auto;display: block}a{color: inherit;text-underline-offset: 3px;text-decoration-thickness: 1px}h1,h2,h3{margin: 0;text-wrap: balance}p{margin: 0;text-wrap: pretty}:focus-visible{outline: 3px solid var(--teal);outline-offset: 3px;border-radius: 10px}.wrap{width: 100%;max-width: 1180px;margin-inline: auto;padding-left: max(20px,env(safe-area-inset-left));padding-right: max(20px,env(safe-area-inset-right))}.skip{position: absolute;inset-inline-start: 12px;top: -60px;z-index: 10;padding: 10px 16px;border-radius: 999px;background: var(--panel);border: 1px solid var(--teal);text-decoration: none;font-weight: 600}.skip:focus{top: 12px}.top{display: flex;justify-content: space-between;align-items: center;gap: 12px;padding-block: max(18px,env(safe-area-inset-top)) 18px}.brand{display: inline-flex;align-items: center;gap: 12px;font-weight: 700;font-size: 18px;text-decoration: none}.brand img{width: 40px;height: 40px;border-radius: 10px}.brand small{font-weight: 500;color: var(--faint);font-size: 15px}.lang{font: 600 14px var(--ui);padding: 10px 16px;min-height: 44px;display: inline-flex;align-items: center;border-radius: 999px;border: 1px solid var(--line);background: var(--panel);text-decoration: none;transition: border-color 200ms var(--ease)}.lang:hover{border-color: var(--teal)}.tools{display: flex;align-items: center;gap: 8px}.theme{width: 44px;height: 44px;display: grid;place-items: center;padding: 0;border-radius: 999px;border: 1px solid var(--line);background: var(--panel);color: var(--ink);cursor: pointer;transition: border-color 200ms var(--ease),transform 160ms var(--ease);-webkit-tap-highlight-color: transparent}.theme:hover{border-color: var(--teal)}.theme:active{transform: scale(0.94)}.theme svg{width: 20px;height: 20px}.theme .sun{display: none}:root[data-theme="dark"] .theme .sun{display: block}:root[data-theme="dark"] .theme .moon{display: none}@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .theme .sun{display: block}:root:not([data-theme="light"]) .theme .moon{display: none}}.crumbs ol{list-style: none;margin: 0;padding: 0;display: flex;flex-wrap: wrap;gap: 4px 8px;font-size: 14px;color: var(--faint)}.crumbs li{display: inline-flex;align-items: center;gap: 8px}.crumbs li + li::before{content: "";width: 5px;height: 5px;border-top: 1.5px solid currentColor;border-inline-end: 1.5px solid currentColor;transform: rotate(45deg);opacity: 0.7}[dir="rtl"] .crumbs li + li::before{transform: rotate(-135deg)}.crumbs a{color: var(--soft);text-decoration: none;padding-block: 10px}.crumbs a:hover{color: var(--teal)}.crumbs [aria-current]{color: var(--ink);font-weight: 600}.head{position: relative;isolation: isolate;padding-block: 28px 48px}.head::before,.head::after{content: "";position: absolute;z-index: -1;pointer-events: none;inset-inline: calc(50% - 50vw)}.head::after,.hero::after{top: -140px;bottom: -40px;background-image: linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size: 56px 56px;background-position: center top;-webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 40%,#000 20%,transparent 75%);mask-image: radial-gradient(ellipse 60% 70% at 50% 40%,#000 20%,transparent 75%)}.head::before{top: -120px;bottom: -160px;background: radial-gradient(min(900px,80vw) 420px at 22% 30%,var(--glow-a),transparent 70%),radial-gradient(min(800px,70vw) 380px at 80% 10%,var(--glow-b),transparent 70%),radial-gradient(ellipse 55% 16% at 50% 62%,var(--fog),transparent 70%);-webkit-mask-image: linear-gradient(#000 55%,transparent 92%);mask-image: linear-gradient(#000 55%,transparent 92%)}.head .crumbs{margin-bottom: 22px}.title{font-family: var(--display);font-size: clamp(36px,5.4vw,72px);line-height: 1.02;letter-spacing: -0.04em;font-weight: 850;max-width: 18ch}.title span{color: var(--faint)}html[lang="ar"] .title,[lang="ar"] .title{font-family: var(--arabic);line-height: 1.25;letter-spacing: 0;font-weight: 800}.lede{font-size: clamp(17px,1.6vw,19px);color: var(--soft);max-width: 56ch;margin-top: 20px}.head .badges{margin-top: 28px}.meta{margin-top: 18px;font-size: 14px;color: var(--faint)}.sec{padding-block: 56px 8px}.sec>h2,.h2{font-family: var(--display);font-size: clamp(28px,3.6vw,44px);line-height: 1.08;letter-spacing: -0.03em}html[lang="ar"] .sec>h2,html[lang="ar"] .h2,[lang="ar"] .sec>h2{font-family: var(--arabic);line-height: 1.35;letter-spacing: 0}.sec>p{margin-top: 14px;font-size: 18px;color: var(--soft);max-width: 62ch}.prose{max-width: 72ch}.prose h2{font-family: var(--display);font-size: clamp(24px,2.6vw,32px);line-height: 1.2;letter-spacing: -0.02em;margin-top: 56px;scroll-margin-top: 24px}.prose h3{font-size: 19px;line-height: 1.35;margin-top: 32px;scroll-margin-top: 24px}html[lang="ar"] .prose h2,[lang="ar"] .prose h2{font-family: var(--arabic);letter-spacing: 0;line-height: 1.45}.prose p,.prose ul,.prose ol,.prose table{margin-top: 14px}.prose p,.prose li{color: var(--soft)}.prose strong,.prose b{color: var(--ink)}.prose ul,.prose ol{padding-inline-start: 22px}.prose li + li{margin-top: 8px}.prose li::marker{color: var(--teal)}.prose a{color: var(--teal)}.prose code{font-size: 0.92em;padding: 2px 6px;border-radius: 6px;background: color-mix(in srgb,var(--teal) 10%,transparent)}.prose table{width: 100%;border-collapse: collapse;font-size: 15px;font-variant-numeric: tabular-nums}.prose th,.prose td{text-align: start;padding: 12px 14px 12px 0;border-bottom: 1px solid var(--line);vertical-align: top}.prose th{color: var(--ink);font-weight: 650}.panel{background: color-mix(in srgb,var(--panel) 86%,transparent);border: 1px solid var(--line);border-radius: 22px;padding: clamp(20px,3vw,32px);box-shadow: 0 24px 48px -32px rgba(15,29,39,0.4)}.badges{display: flex;flex-wrap: wrap;align-items: center;gap: 12px}.badges a{display: block;border-radius: 10px;transition: transform 220ms var(--ease);-webkit-tap-highlight-color: transparent}.badges a:hover{transform: translateY(-2px)}.badges a:active{transform: scale(0.97)}.badges .apple img{width: 156px;height: 52px}.badges .play{margin: -12px -10px}.badges .play img{width: 197px;height: 76px}.chips{list-style: none;margin: 24px 0 0;padding: 0;display: flex;flex-wrap: wrap;gap: 10px}.chips a{display: inline-flex;align-items: center;gap: 8px;min-height: 44px;padding: 10px 16px;border-radius: 999px;border: 1px solid var(--line);background: var(--panel);font-weight: 600;font-size: 15px;text-decoration: none;transition: border-color 200ms var(--ease),transform 200ms var(--ease);-webkit-tap-highlight-color: transparent}.chips a:hover{border-color: var(--teal)}.chips a:active{transform: scale(0.97)}.chips small{font-weight: 500;color: var(--faint);font-size: 13px}.chips .all{color: var(--teal)}.band,.faq,.cv{content-visibility: auto;contain-intrinsic-size: auto 640px}.band{margin-block: 48px;margin-inline: calc(50% - 50vw);padding: 64px max(20px,calc(50vw - 50%));background: var(--band);color: var(--band-ink);display: grid;grid-template-columns: minmax(0,1.1fr) minmax(0,1fr);gap: 40px;align-items: center;position: relative;overflow: hidden;isolation: isolate}.band::before{content: "";position: absolute;z-index: -1;inset: auto -10% -60% 40%;height: 120%;background: radial-gradient(closest-side,rgba(94,234,212,0.22),transparent)}.band h2{font-family: var(--display);font-size: clamp(28px,3.4vw,42px);line-height: 1.12;letter-spacing: -0.02em}html[lang="ar"] .band h2{font-family: var(--arabic);line-height: 1.4;letter-spacing: 0}.band p{margin-top: 14px;color: var(--band-soft);max-width: 48ch}.band ul{margin: 0;padding: 0;list-style: none;display: grid;gap: 14px}.band li{display: flex;gap: 12px;align-items: baseline}.band li::before{content: "";flex: none;width: 12px;height: 7px;border-left: 2px solid var(--mint);border-bottom: 2px solid var(--mint);transform: translateY(-3px) rotate(-45deg)}.faq{display: grid;grid-template-columns: minmax(0,0.8fr) minmax(0,1.2fr);gap: 40px;padding-block: 32px 40px}.faq h2{font-family: var(--display);font-size: clamp(28px,3.4vw,40px);letter-spacing: -0.02em}html[lang="ar"] .faq h2{font-family: var(--arabic);letter-spacing: 0}details{border-top: 1px solid var(--line)}details:last-child{border-bottom: 1px solid var(--line)}summary{cursor: pointer;list-style: none;display: flex;justify-content: space-between;gap: 16px;padding-block: 18px;font-weight: 650;font-size: 17px;min-height: 44px}summary::-webkit-details-marker{display: none}summary::after{content: "+";flex: none;font-weight: 400;font-size: 24px;line-height: 1;color: var(--teal);transition: transform 260ms var(--ease)}details[open] summary::after{transform: rotate(45deg)}details p{padding-bottom: 18px;color: var(--soft);max-width: 62ch}.cta{text-align: center;padding-block: 56px 64px;padding-left: max(20px,env(safe-area-inset-left));padding-right: max(20px,env(safe-area-inset-right));display: grid;justify-items: center;gap: 22px}.cta img.ic{width: 88px;height: 88px;border-radius: 22px;box-shadow: 0 24px 40px -14px rgba(15,29,39,0.45)}.cta h2{font-family: var(--display);font-size: clamp(32px,4.4vw,54px);letter-spacing: -0.025em;line-height: 1.1}html[lang="ar"] .cta h2{font-family: var(--arabic);letter-spacing: 0;line-height: 1.35}.cta p{color: var(--soft);max-width: 52ch}.cta .badges{justify-content: center}.foot{padding-block: 28px max(40px,env(safe-area-inset-bottom));font-size: 14px;color: var(--faint);display: flex;flex-wrap: wrap;gap: 10px 24px;justify-content: space-between;border-top: 1px solid var(--line)}.foot nav{display: flex;gap: 6px 20px;flex-wrap: wrap}.foot a{color: var(--soft);padding-block: 6px}.foot a:hover{color: var(--teal)}.sitefoot{display: grid;grid-template-columns: repeat(6,minmax(0,1fr));gap: 36px 28px;padding-block: 64px max(32px,env(safe-area-inset-bottom));margin-top: 32px;border-top: 1px solid var(--line);font-size: 15px}.sf-brand{grid-column: 1 / -1;display: flex;flex-wrap: wrap;justify-content: space-between;align-items: center;gap: 20px 32px;padding-bottom: 32px;border-bottom: 1px solid var(--line)}.sf-brand p{margin-top: 14px;color: var(--soft);max-width: 42ch;font-size: 15px}.sf-stores{display: flex;flex-wrap: wrap;gap: 10px}.sf-stores a{display: inline-flex;align-items: center;min-height: 44px;padding: 10px 18px;border-radius: 999px;border: 1px solid var(--line);background: var(--panel);color: var(--ink);font: 600 14px var(--ui);text-decoration: none;transition: border-color 200ms var(--ease),transform 160ms var(--ease)}.sf-stores a:hover{border-color: var(--teal)}.sf-stores a:active{transform: scale(0.97)}.sf-h{font-weight: 650;font-size: 13px;letter-spacing: 0.04em;color: var(--ink);margin-bottom: 10px}.sitefoot ul{list-style: none;margin: 0;padding: 0}.sitefoot li a{display: inline-block;padding-block: 6px;color: var(--soft);text-decoration: none;text-wrap: balance;transition: color 160ms var(--ease)}.sitefoot li a:hover,.sitefoot li a[aria-current]{color: var(--teal)}.sitefoot li:last-child a[href$="/banks"]{color: var(--teal);font-weight: 600}.sf-base{grid-column: 1 / -1;padding-top: 22px;border-top: 1px solid var(--line);font-size: 13px;color: var(--faint)}@media (max-width: 1000px){.sitefoot{grid-template-columns: repeat(3,minmax(0,1fr))}}@media (max-width: 560px){.sitefoot{grid-template-columns: repeat(2,minmax(0,1fr));gap: 28px 20px}}.topnav{display: flex;gap: 2px;padding: 4px;border-radius: 999px;border: 1px solid var(--line);background: color-mix(in srgb,var(--panel) 70%,transparent);-webkit-backdrop-filter: blur(10px);backdrop-filter: blur(10px)}.topnav a{display: inline-flex;align-items: center;min-height: 36px;padding: 6px 16px;border-radius: 999px;color: var(--soft);font: 600 14px var(--ui);text-decoration: none;white-space: nowrap;transition: color 160ms var(--ease),background-color 160ms var(--ease)}.topnav a:hover{color: var(--ink)}.topnav a[aria-current]{color: var(--ink);background: var(--panel);box-shadow: 0 1px 0 var(--line)}@media (max-width: 720px){.top{flex-wrap: wrap}.topnav{order: 3;width: 100%;justify-content: space-between}.topnav a{flex: 1;justify-content: center}}@media (prefers-reduced-motion: no-preference){html{scroll-behavior: smooth}.rise{animation: rise 760ms var(--ease) both}.rise.d1{animation-delay: 80ms}@keyframes rise{from{transform: translateY(14px)}to{transform: none}}}@media (prefers-reduced-motion: reduce){*,*::before,*::after{transition: none !important;animation: none !important}}@media (max-width: 860px){.band,.faq{grid-template-columns: minmax(0,1fr)}.band{padding-block: 40px;margin-block: 24px}.faq{gap: 16px}.head{padding-block: 16px 36px}.sec{padding-block: 44px 4px}}@media (max-width: 380px){.brand small{display: none}.badges .apple img{width: 138px;height: 46px}.badges .play{margin: -10px -9px}.badges .play img{width: 174px;height: 67px}}@media print{body::before,.head::before,.head::after,.tools,.badges,.cta{display: none}body{background: #fff;color: #000}}</style><!--/partial:theme.css-->
+    <!--partial:doc.css--><style>html:not(.lang-ar) #doc-ar,html.lang-ar #doc-en,html:not(.lang-ar) #foot-ar,html.lang-ar #foot-en,html:not(.lang-ar) .topnav[lang="ar"],html.lang-ar .topnav[lang="en"]{display: none}.switch{display: inline-flex;border: 1px solid var(--line);border-radius: 999px;background: var(--panel);overflow: hidden}.switch button{appearance: none;border: 0;background: transparent;color: var(--soft);font: 600 14px var(--ui);min-width: 44px;min-height: 42px;padding: 0 16px;cursor: pointer;transition: background-color 200ms var(--ease),color 200ms var(--ease);-webkit-tap-highlight-color: transparent}.switch button[lang="ar"]{font-family: var(--arabic)}.switch button:focus-visible{outline-offset: -3px;border-radius: 999px}html:not(.lang-ar) #btn-en,html.lang-ar #btn-ar{background: var(--teal);color: var(--bg)}.head .title{max-width: 22ch}.head .lede{max-width: 62ch}.prose{font-size: 17px;line-height: 1.75}.prose>:first-child{margin-top: 0}.prose p,.prose ul,.prose ol{max-width: none}.prose code{direction: ltr;unicode-bidi: embed;display: inline-block}.prose td code{white-space: nowrap}.subject{display: inline-block;font-weight: 600;padding: 2px 10px;border-radius: 8px;border: 1px solid var(--line);background: color-mix(in srgb,var(--teal) 10%,var(--panel));white-space: nowrap;direction: ltr;unicode-bidi: embed;color: var(--ink)}.table-scroll{overflow-x: auto;margin-top: 18px;border: 1px solid var(--line);border-radius: 18px;background: color-mix(in srgb,var(--panel) 86%,transparent)}.table-scroll table{margin: 0;min-width: 560px}.prose th,.prose td{padding: 12px 16px}.prose thead th{font-size: 13px;letter-spacing: 0.04em;color: var(--faint);border-bottom: 1px solid var(--line)}.prose tbody tr:last-child td{border-bottom: 0}.prose caption{caption-side: top;text-align: start;color: var(--faint);font-size: 14px;padding: 14px 16px 0}.steps{margin-top: 18px}.steps ol{margin: 0}.prose .steps ol{margin-top: 0}.note{margin-top: 22px;padding: 16px 20px;border-radius: 18px;border: 1px solid var(--line);border-inline-start: 3px solid var(--teal);background: color-mix(in srgb,var(--teal) 7%,var(--panel))}.note p{margin: 0}.note p + p{margin-top: 12px}.contact{margin-top: 22px}footer.page{margin-top: 56px;padding-top: 20px;border-top: 1px solid var(--line);font-size: 14px;color: var(--faint)}footer.page p{margin-top: 8px}footer.page a{color: var(--soft)}.doc{display: grid;grid-template-columns: minmax(0,1fr);gap: 8px;align-items: start}.toc{margin-top: 8px;border: 1px solid var(--line);border-radius: 18px;background: color-mix(in srgb,var(--panel) 86%,transparent)}.toc details,.toc details:last-child{border: 0}.toc summary{padding-inline: 20px;font-size: 16px}.toc ol{margin: 0;padding: 0 20px 14px;padding-inline-start: 42px;font-size: 15px;columns: 2;column-gap: 28px}.toc li{break-inside: avoid;margin: 0}.toc li::marker{color: var(--faint);font-variant-numeric: tabular-nums}.toc a{display: block;padding-block: 8px;color: var(--soft);text-decoration: none}.toc a:hover{color: var(--teal)}@media (max-width: 620px){.toc ol{columns: 1}}@media (min-width: 961px){.doc{grid-template-columns: 280px minmax(0,72ch);gap: 56px}.toc{position: sticky;top: 24px;margin-top: 0;max-height: calc(100vh - 48px);overflow-y: auto;overscroll-behavior: contain}.toc ol{columns: 1}.prose h2:first-child{margin-top: 0}}@media (max-width: 380px){.prose{font-size: 16px}.prose th,.prose td{padding: 10px 12px}}@media print{.switch,.toc,.skip{display: none}.doc{display: block}.prose{max-width: none;font-size: 11pt;line-height: 1.5;color: #000}.prose p,.prose li{color: #000}.table-scroll{overflow: visible;border: 0}.table-scroll table{min-width: 0}.prose a[href^="http"]::after{content: " (" attr(href) ")";font-size: 9pt;word-break: break-all}}@media (max-width: 420px){.top{gap: 8px}.top .brand img{width: 32px;height: 32px}.switch button{padding: 0 10px;font-size: 13px}}</style><!--/partial:doc.css-->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -386,25 +105,18 @@
     <meta property="og:image:alt" content="Masareef: expenses logged from your bank alerts" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:locale:alternate" content="ar_EG" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Masareef","item":"https://www.mohamedgado.com/projects/masareef/go"},{"@type":"ListItem","position":2,"name":"Terms of Service","item":"https://www.mohamedgado.com/projects/masareef/terms"}]}</script>
   </head>
   <body>
     <a class="skip" href="#main">Skip to content / تخطي إلى المحتوى</a>
-    <header class="top">
-      <div class="top-inner">
-        <span class="brand">
-          <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true">
-            <rect width="32" height="32" rx="8" fill="#0A1626" />
-            <path
-              d="M6 21.5 12 14l5 4.5L26 9"
-              stroke="#2DD4BF"
-              stroke-width="2.8"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-          Masareef
-        </span>
+    <header class="top wrap">
+      <a class="brand" href="https://www.mohamedgado.com/projects/masareef/go"><img src="https://vette1123.github.io/masareef-privacy/go-img/icon-96.webp" width="40" height="40" alt="" />Masareef <small lang="ar">مصاريف</small></a>
+      <!--partial:topnav.en.html--><nav class="topnav" lang="en" aria-label="Masareef"><a href="https://www.mohamedgado.com/projects/masareef/go">Download</a><a href="https://www.mohamedgado.com/projects/masareef/banks" hreflang="ar">Banks</a><a href="https://www.mohamedgado.com/projects/masareef/privacy">Privacy</a></nav><!--/partial:topnav.en.html--><!--partial:topnav.ar.html--><nav class="topnav" lang="ar" aria-label="مصاريف"><a href="https://www.mohamedgado.com/projects/masareef/go-ar">التحميل</a><a href="https://www.mohamedgado.com/projects/masareef/banks">البنوك</a><a href="https://www.mohamedgado.com/projects/masareef/privacy">الخصوصية</a></nav><!--/partial:topnav.ar.html-->
+        <div class="tools">
+        <button class="theme" type="button" data-dark="Switch to dark theme · التبديل إلى الوضع الداكن" data-light="Switch to light theme · التبديل إلى الوضع الفاتح" aria-label="Switch to dark theme · التبديل إلى الوضع الداكن">
+          <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z" /></svg>
+          <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4" /></svg>
+        </button>
         <div class="switch" role="group" aria-label="Language / اللغة">
           <button type="button" id="btn-en" aria-pressed="true" lang="en">English</button>
           <button type="button" id="btn-ar" aria-pressed="false" lang="ar">العربية</button>
@@ -415,7 +127,9 @@
     <main class="wrap" id="main">
       <!-- ================================ ENGLISH ================================ -->
       <section id="doc-en" lang="en" dir="ltr">
-        <h1>Terms of Service</h1>
+        <div class="head">
+          <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="https://www.mohamedgado.com/projects/masareef/go">Masareef</a></li><li aria-current="page">Terms of Service</li></ol></nav>
+          <h1 class="title">Terms of Service</h1>
         <p class="lede">
           Masareef is a personal spending tracker built and run by Mohamed Gado. These terms are the
           agreement between you and us when you use the app and its sync service. They are short on
@@ -427,6 +141,8 @@
           <code>com.mohamedgado.masareef</code> · Privacy: <a href="https://www.mohamedgado.com/projects/masareef/privacy">privacy policy</a> ·
           Deletion: <a href="https://www.mohamedgado.com/projects/masareef/delete-account.html">delete your account</a>
         </p>
+        </div>
+        <div class="prose">
 
         <h2>1. Using Masareef</h2>
         <p>
@@ -508,6 +224,8 @@
           Questions about these terms: <a href="mailto:boogado@yahoo.com">boogado@yahoo.com</a>.
         </p>
 
+        </div>
+
         <footer class="page">
           <p>
             This page is static and hosted on GitHub Pages. It sets no cookies, runs no analytics,
@@ -524,7 +242,9 @@
 
       <!-- ================================ ARABIC ================================ -->
       <section id="doc-ar" lang="ar" dir="rtl">
-        <h2 class="h1">شروط الخدمة</h2>
+        <div class="head">
+          <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="https://www.mohamedgado.com/projects/masareef/go">مصاريف</a></li><li aria-current="page">شروط الخدمة</li></ol></nav>
+          <h2 class="title">شروط الخدمة</h2>
         <p class="lede">
           مصاريف تطبيق شخصي لتتبّع المصروفات، يطوّره ويديره محمد جادو. هذه الشروط هي الاتفاق بينك
           وبيننا عند استخدامك التطبيق وخدمة المزامنة. جعلناها قصيرة عن قصد، فاقرأها مع
@@ -535,6 +255,8 @@
           <code>com.mohamedgado.masareef</code> · الخصوصية: <a href="https://www.mohamedgado.com/projects/masareef/privacy">سياسة الخصوصية</a> ·
           الحذف: <a href="https://www.mohamedgado.com/projects/masareef/delete-account.html">حذف حسابك</a>
         </p>
+        </div>
+        <div class="prose">
 
         <h2>1. استخدام مصاريف</h2>
         <p>
@@ -606,6 +328,8 @@
           لأي سؤال عن هذه الشروط: <a href="mailto:boogado@yahoo.com">boogado@yahoo.com</a>.
         </p>
 
+        </div>
+
         <footer class="page">
           <p>
             هذه الصفحة ثابتة ومستضافة على GitHub Pages. لا تضع كوكيز، ولا تشغّل أي قياس، ولا تحمّل
@@ -620,6 +344,148 @@
         </footer>
       </section>
     </main>
+    <div id="foot-en"><!--partial:footer.en.html--><footer class="sitefoot wrap" lang="en" dir="ltr">
+      <div class="sf-brand">
+        <div>
+          <a class="brand" href="https://www.mohamedgado.com/projects/masareef/go"><img src="https://vette1123.github.io/masareef-privacy/go-img/icon-96.webp" width="40" height="40" alt="" loading="lazy" decoding="async" />Masareef <small lang="ar">مصاريف</small></a>
+          <p>Your bank texts become your expense log, on your phone. Free on Android and iPhone.</p>
+        </div>
+        <div class="sf-stores">
+          <a href="https://play.google.com/store/apps/details?id=com.mohamedgado.masareef&amp;referrer=utm_source%3Dsite%26utm_medium%3Dfooter" rel="noopener">Get it on Google Play</a>
+          <a href="https://apps.apple.com/app/id6806735875?ct=site-footer" rel="noopener">Download on the App Store</a>
+        </div>
+      </div>
+      <nav aria-label="Masareef">
+        <p class="sf-h">Masareef</p>
+        <ul>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/go">Download Masareef</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/go-ar" lang="ar" hreflang="ar">تحميل مصاريف</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks">All supported banks</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef">How it is built</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Saudi Arabia">
+        <p class="sf-h">Saudi Arabia</p>
+        <ul>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/alrajhi" hreflang="ar">Al Rajhi Bank</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/snb" hreflang="ar">Saudi National Bank</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/alinma" hreflang="ar">Alinma Bank</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/riyad-bank" hreflang="ar">Riyad Bank</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/stcpay" hreflang="ar">STC Bank</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks">All banks →</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Egypt">
+        <p class="sf-h">Egypt</p>
+        <ul>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/nbe" hreflang="ar">National Bank of Egypt</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/banque-misr" hreflang="ar">Banque Misr</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/cib" hreflang="ar">CIB</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/instapay" hreflang="ar">InstaPay</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/vodafone-cash" hreflang="ar">Vodafone Cash</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks">All banks →</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="UAE">
+        <p class="sf-h">UAE</p>
+        <ul>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/emirates-nbd" hreflang="ar">Emirates NBD</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/fab" hreflang="ar">First Abu Dhabi Bank</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/adcb" hreflang="ar">ADCB</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/mashreq" hreflang="ar">Mashreq</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/wio-ae" hreflang="ar">Wio Bank</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks">All banks →</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Legal">
+        <p class="sf-h">Legal</p>
+        <ul>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/privacy">Privacy policy</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/terms" aria-current="page">Terms of service</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/delete-account.html">Delete your account</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="More apps">
+        <p class="sf-h">More apps</p>
+        <ul>
+          <li><a href="https://www.mohamedgado.com/projects/nafis/go">Nafis: gold prices</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/rafiq/go">Rafiq: prayer times</a></li>
+          <li><a href="https://www.mohamedgado.com/">Mohamed Gado</a></li>
+        </ul>
+      </nav>
+      <p class="sf-base">© 2026 Mohamed Gado · Free to start · No ads · Works offline once you sign in</p>
+    </footer><!--/partial:footer.en.html--></div>
+    <div id="foot-ar"><!--partial:footer.ar.html--><footer class="sitefoot wrap" lang="ar" dir="rtl">
+      <div class="sf-brand">
+        <div>
+          <a class="brand" href="https://www.mohamedgado.com/projects/masareef/go-ar"><img src="https://vette1123.github.io/masareef-privacy/go-img/icon-96.webp" width="40" height="40" alt="" loading="lazy" decoding="async" />مصاريف <small lang="en">Masareef</small></a>
+          <p>رسائل بنكك تصبح سجل مصروفاتك، على هاتفك. مجاني على أندرويد وآيفون.</p>
+        </div>
+        <div class="sf-stores">
+          <a href="https://play.google.com/store/apps/details?id=com.mohamedgado.masareef&amp;referrer=utm_source%3Dsite%26utm_medium%3Dfooter" rel="noopener">احصل عليه من Google Play</a>
+          <a href="https://apps.apple.com/app/id6806735875?ct=site-footer" rel="noopener">حمّله من App Store</a>
+        </div>
+      </div>
+      <nav aria-label="مصاريف">
+        <p class="sf-h">مصاريف</p>
+        <ul>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/go-ar">تحميل مصاريف</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/go" lang="en" hreflang="en">Download Masareef</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks">كل البنوك المدعومة</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef" lang="en" hreflang="en">How it is built</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="السعودية">
+        <p class="sf-h">السعودية</p>
+        <ul>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/alrajhi">مصرف الراجحي</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/snb">البنك الأهلي السعودي</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/alinma">مصرف الإنماء</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/riyad-bank">بنك الرياض</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/stcpay">STC Bank (STC Pay)</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks">كل البنوك ←</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="مصر">
+        <p class="sf-h">مصر</p>
+        <ul>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/nbe">البنك الأهلي المصري</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/banque-misr">بنك مصر</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/cib">البنك التجاري الدولي</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/instapay">InstaPay (انستاباي)</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/vodafone-cash">فودافون كاش</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks">كل البنوك ←</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="الإمارات">
+        <p class="sf-h">الإمارات</p>
+        <ul>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/emirates-nbd">بنك الإمارات دبي الوطني</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/fab">بنك أبوظبي الأول</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/adcb">بنك أبوظبي التجاري</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/mashreq">بنك المشرق</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/wio-ae">بنك ويو (Wio)</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks">كل البنوك ←</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="قانوني">
+        <p class="sf-h">قانوني</p>
+        <ul>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/privacy">سياسة الخصوصية</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/terms" aria-current="page">شروط الخدمة</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/delete-account.html">حذف حسابك</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="تطبيقات أخرى">
+        <p class="sf-h">تطبيقات أخرى</p>
+        <ul>
+          <li><a href="https://www.mohamedgado.com/projects/nafis/go-ar">نفيس: أسعار الذهب</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/rafiq/go-ar">رفيق: مواقيت الصلاة</a></li>
+          <li><a href="https://www.mohamedgado.com/" lang="en" hreflang="en">Mohamed Gado</a></li>
+        </ul>
+      </nav>
+      <p class="sf-base">© 2026 <span lang="en">Mohamed Gado</span> · ابدأ مجانًا · بلا إعلانات · يعمل دون إنترنت بعد تسجيل الدخول</p>
+    </footer><!--/partial:footer.ar.html--></div>
 
     <script>
       // Both languages ship in the DOM so crawlers and reader modes see the full policy.
@@ -658,5 +524,26 @@
         });
       })();
     </script>
+  
+    <!--partial:switch.js--><script>
+// Light/dark switch, shared by every page. With no choice stored the page follows the
+// system; a click stores the opposite of what is showing now. The choice is one
+// localStorage key for the whole site, so it follows the reader from page to page.
+(function () {
+  var root = document.documentElement;
+  var sw = document.querySelector('.theme');
+  if (!sw) return;
+  var dark = function () { var t = root.getAttribute('data-theme'); return t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches; };
+  var label = function () { sw.setAttribute('aria-label', dark() ? sw.getAttribute('data-light') : sw.getAttribute('data-dark')); };
+  label();
+  sw.addEventListener('click', function () {
+    var t = dark() ? 'light' : 'dark';
+    root.setAttribute('data-theme', t);
+    try { localStorage.setItem('go-theme', t); } catch (e) {}
+    document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) { m.content = t === 'dark' ? '#07121c' : '#f3f8f6'; });
+    label();
+  });
+})();
+</script><!--/partial:switch.js-->
   </body>
 </html>
