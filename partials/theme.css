@@ -141,6 +141,9 @@ html[lang="ar"] .prose h2, [lang="ar"] .prose h2 { font-family: var(--arabic); l
 .prose table { width: 100%; border-collapse: collapse; font-size: 15px; font-variant-numeric: tabular-nums; }
 .prose th, .prose td { text-align: start; padding: 12px 14px 12px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
 .prose th { color: var(--ink); font-weight: 650; }
+/* Blocks bring their own top margin; one that brings none (the bank facts .panel) sat on its
+   heading at 0px. The heading spaces whatever follows it, a lede paragraph excepted. */
+.sec > h2 + :not(p) { margin-top: 28px; }
 .panel { background: color-mix(in srgb, var(--panel) 86%, transparent); border: 1px solid var(--line); border-radius: 22px; padding: clamp(20px, 3vw, 32px); box-shadow: 0 24px 48px -32px rgba(15, 29, 39, 0.4); }
 
 /* ---- official store badges, equal visual height ---- */

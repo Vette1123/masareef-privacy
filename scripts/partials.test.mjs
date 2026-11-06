@@ -19,3 +19,11 @@ test('the top nav marks the page and the section a bank page lives under', () =>
 test('a noindex page with a borrowed canonical marks nothing', () => {
   assert.doesNotMatch(markCurrent(page(`${B}/banks`, '<meta name="robots" content="noindex" />')), /aria-current/);
 });
+
+// A section heading never touches the block under it (6 Nov: the bank facts panel sat on its
+// heading at 0px, because each block brought its own margin and .panel brought none).
+test('theme gives every block after a section heading its own air', async () => {
+  const { readFileSync } = await import('node:fs');
+  const theme = readFileSync(new URL('../partials/theme.css', import.meta.url), 'utf8');
+  assert.match(theme, /\.sec > h2 \+ :not\(p\)\s*\{[^}]*margin-top:\s*28px/);
+});
