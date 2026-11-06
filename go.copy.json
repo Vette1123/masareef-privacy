@@ -123,10 +123,6 @@
     "banksH": "Works with your bank",
     "banksP": "Masareef reads alerts from 1,200+ banks, wallets and payment apps. Setup guides for the most used:",
     "banksMore": "All supported banks",
-    "theme": [
-      "Switch to dark theme",
-      "Switch to light theme"
-    ],
     "cue": "Scroll to explore"
   },
   "ar": {
@@ -247,10 +243,6 @@
     "banksH": "يعمل مع بنكك",
     "banksP": "يقرأ مصاريف إشعارات أكثر من ١٢٠٠ بنك ومحفظة وتطبيق دفع. أدلة الإعداد للأكثر استخدامًا:",
     "banksMore": "كل البنوك المدعومة",
-    "theme": [
-      "التبديل إلى الوضع الداكن",
-      "التبديل إلى الوضع الفاتح"
-    ],
     "cue": "مرّر للمزيد"
   },
   "banks": {
