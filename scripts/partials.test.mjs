@@ -346,3 +346,20 @@ test('every indexable page lists our profiles in sameAs', async () => {
     for (const u of PERSON_SAME_AS) assert.ok(person?.sameAs?.includes(u), `${f}: person sameAs is missing ${u}`);
   }
 });
+
+// Every footer icon is the network's real mark from scripts/icons.mjs, so no page can drift back
+// to a hand-drawn outline: one source, inlined at build time into every page.
+test('footer social icons are the marks in icons.mjs', async () => {
+  const { readFileSync } = await import('node:fs');
+  const { SOCIAL } = await import('./social.mjs');
+  const { icon, ICONS } = await import('./icons.mjs');
+  for (const l of ['en', 'ar']) {
+    const foot = readFileSync(new URL(`../partials/footer.${l}.html`, import.meta.url), 'utf8');
+    const links = [...foot.match(/<ul class="sf-social"[\s\S]*?<\/ul>/)[0].matchAll(/<a href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/g)];
+    for (const [, href, inner] of links) {
+      const s = SOCIAL.find((x) => x.url === href);
+      assert.equal(inner, icon(s.key), `footer.${l}: ${s.key} icon`);
+      if (ICONS[s.key].brand) assert.ok(foot.includes(`<a href="${href}" rel="noopener" style="--b:${ICONS[s.key].brand}"`), `footer.${l}: ${s.key} brand colour`);
+    }
+  }
+});

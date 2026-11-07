@@ -259,11 +259,15 @@ html[lang="ar"] .cta h2 { font-family: var(--arabic); letter-spacing: 0; line-he
 /* The app's own follow and message links, the same glyphs Settings draws: one 44px tile each. */
 .sf-follow { margin: 22px 0 10px; }
 /* One row, never a lone wrapped tile: a phone shrinks the tiles a little (about 42px at 375). */
-.sitefoot .sf-social { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 44px); gap: 8px; }
-@media (max-width: 420px) { .sitefoot .sf-social { gap: 4px; } }
-.sitefoot .sf-social a { display: grid; place-items: center; width: 100%; height: auto; aspect-ratio: 1; min-width: 0; min-height: 0; padding: 0; border-radius: 12px; border: 1px solid var(--line); background: var(--panel); color: var(--soft); transition: color 160ms var(--ease), border-color 160ms var(--ease), transform 120ms var(--ease); }
-.sf-social svg { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-@media (hover: hover) and (pointer: fine) { .sitefoot .sf-social a:hover { color: var(--teal); border-color: color-mix(in srgb, var(--teal) 45%, transparent); } }
+/* 44px targets that wrap to a second line on a narrow phone, never shrink below a thumb. */
+.sitefoot .sf-social { display: flex; flex-wrap: wrap; gap: 8px; }
+.sitefoot .sf-social a { display: grid; place-items: center; width: 44px; height: 44px; min-width: 0; min-height: 0; padding: 0; border-radius: 12px; border: 1px solid var(--line); background: var(--panel); color: var(--soft); transition: color 160ms var(--ease), border-color 160ms var(--ease), transform 120ms var(--ease); }
+/* The networks' own marks, filled; the portfolio badge's G is cut out in the chip's own colour. */
+.sf-social svg { fill: currentColor; }
+.sf-social svg .cut { fill: none; stroke: var(--panel); stroke-width: 2.9; }
+/* Each mark takes its network's colour (--b on the link); X, TikTok and the G take the ink. */
+@media (hover: hover) and (pointer: fine) { .sitefoot .sf-social a:hover { color: var(--b, var(--ink)); border-color: color-mix(in srgb, var(--b, var(--ink)) 45%, transparent); } }
+.sitefoot .sf-social a:focus-visible { color: var(--b, var(--ink)); }
 .sitefoot .sf-social a:active { transform: scale(0.94); }
 .sf-base { grid-column: 1 / -1; padding-top: 22px; border-top: 1px solid var(--line); font-size: 13px; color: var(--faint); }
 @media (max-width: 1000px) { .sitefoot { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
