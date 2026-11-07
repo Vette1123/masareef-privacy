@@ -19,8 +19,11 @@ const PAGES = {
   '404.html': [...SITE, 'footer.en.html'],
 };
 
-const build = (html, require) =>
-  labelCells(applyPartials(html, { require })).replace(/<style>([\s\S]*?)<\/style>/g, (_, c) => `<style>${css(c)}</style>`);
+const minify = (html) => html.replace(/<style>([\s\S]*?)<\/style>/g, (_, c) => `<style>${css(c)}</style>`);
+const build = (html, require) => minify(labelCells(applyPartials(html, { require })));
+// The bank pages are masareef-app's (`pnpm site:banks`), but they carry these same partials, so a
+// partial edit re-stamps them here too: partials and minify only, their content stays the app's.
+for (const f of fs.readdirSync(path.join(repo, 'banks')).filter((f) => f.endsWith('.html'))) PAGES[`banks/${f}`] = null;
 
 const check = process.argv.includes('--check');
 const stale = [];
@@ -28,7 +31,7 @@ for (const [file, require] of Object.entries(PAGES)) {
   const p = path.join(repo, file);
   // A Windows checkout holds CRLF (core.autocrlf); compare as git stores it, or every page reads stale.
   const old = fs.readFileSync(p, 'utf8').replace(/\r\n/g, '\n');
-  const next = build(old, require);
+  const next = require ? build(old, require) : minify(applyPartials(old));
   if (next === old) continue;
   stale.push(file);
   if (!check) fs.writeFileSync(p, next);
