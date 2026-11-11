@@ -83,6 +83,10 @@
         "Masareef is free to start, with 25 automatic captures a month. Masareef Pro lifts the cap."
       ],
       [
+        "How do I track expenses from bank alerts?",
+        "Turn on auto-track and allow notification access once. Each payment alert from your bank then becomes a transaction with the amount, place and wallet filled in, and you confirm it with one tap."
+      ],
+      [
         "Does Masareef need my banking password?",
         "No. It never asks for your banking password, and it is not affiliated with any bank or wallet."
       ],
@@ -201,6 +205,10 @@
       [
         "هل مصاريف مجاني؟",
         "يمكنك البدء مجانًا مع ٢٥ عملية التقاط تلقائي شهريًا، و«مصاريف برو» يرفع هذا الحد."
+      ],
+      [
+        "كيف أتتبع مصاريفي من إشعارات البنك؟",
+        "فعّل التتبع التلقائي واسمح بالوصول إلى الإشعارات مرة واحدة. بعدها يصبح كل إشعار دفع من بنكك معاملة فيها المبلغ والمكان والمحفظة، وتؤكدها بلمسة واحدة."
       ],
       [
         "هل يحتاج مصاريف إلى كلمة مرور بنكي؟",
