@@ -173,12 +173,22 @@ test('lang: one copy of the switch, keyed on <html lang>, in every two-language 
   assert.match(lang, /html\[lang="ar"\] #doc-en/);
   assert.doesNotMatch(lang, /\.lang-ar/);
   const pages = ['index.html', 'terms.html', 'delete-account.html',
-    ...readdirSync(new URL('banks/', root)).map((f) => 'banks/' + f)].filter((f) => f.endsWith('.html'));
+    ...readdirSync(new URL('banks/', root)).map((f) => 'banks/' + f),
+    ...readdirSync(new URL('banks/en/', root)).map((f) => 'banks/en/' + f)].filter((f) => f.endsWith('.html'));
   for (const f of pages) {
     const html = readFileSync(new URL(f, root), 'utf8');
     for (const p of ['lang.css', 'lang-pick.js', 'lang.js']) assert.ok(html.includes(`<!--partial:${p}-->`), `${f}: no ${p}`);
     assert.equal(html.split('Resolve the language BEFORE first paint').length, 2, `${f}: picker inlined more than once`);
-    assert.ok(html.includes('id="doc-en"') && html.includes('id="doc-ar"'), `${f}: not both languages`);
+    // 13 Nov: a bank page is one language per URL; the switch goes to its twin via data-alt.
+    if (!f.startsWith('banks/')) {
+      assert.ok(html.includes('id="doc-en"') && html.includes('id="doc-ar"'), `${f}: not both languages`);
+    } else if (f.startsWith('banks/en/')) {
+      assert.ok(html.includes('id="doc-en"') && !html.includes('id="doc-ar"'), `${f}: not English only`);
+      assert.match(html, /<html lang="en"[^>]*data-alt="[^"]*\/banks/, `${f}: no Arabic twin`);
+    } else {
+      assert.ok(html.includes('id="doc-ar"') && !html.includes('id="doc-en"'), `${f}: not Arabic only`);
+      assert.match(html, /data-alt="[^"]*\/banks\/en/, `${f}: no English twin`);
+    }
   }
 });
 
