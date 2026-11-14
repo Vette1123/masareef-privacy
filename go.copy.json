@@ -16,6 +16,10 @@
     "h1b": "Masareef writes it down.",
     "lede": "Masareef turns your bank's payment alerts into transactions on your phone, so there is no daily typing. 1,200+ banks and wallets, any currency.",
     "nav": "Download Masareef",
+    "refH": "Your friend's code",
+    "refCopy": "Copy",
+    "refDone": "Copied",
+    "refP": "After installing, open Settings › Invite friends › Add a code for a month of Pro free.",
     "apple": "Download on the App Store",
     "play": "Get it on Google Play",
     "facts": [
@@ -140,6 +144,10 @@
     "h1b": "مصاريف يسجّله.",
     "lede": "مصاريف يحوّل إشعارات الدفع من بنكك إلى معاملات على هاتفك، فلا كتابة يومية. أكثر من ١٢٠٠ بنك ومحفظة، وبأي عملة.",
     "nav": "تحميل مصاريف",
+    "refH": "رمز صديقك",
+    "refCopy": "نسخ",
+    "refDone": "تم النسخ",
+    "refP": "بعد التثبيت، افتح الإعدادات › ادعُ أصدقاءك › أضف رمزًا لتحصل على شهر Pro مجانًا.",
     "apple": "حمّل من App Store",
     "play": "احصل عليه من Google Play",
     "facts": [
