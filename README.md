@@ -153,7 +153,7 @@ travels over TLS, and account deletion is available on request.
 
 ## Contact
 
-boogado@yahoo.com
+booogado@gmail.com
 
 ## Install page
 
