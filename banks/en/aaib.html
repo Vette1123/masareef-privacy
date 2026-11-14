@@ -150,7 +150,22 @@
         </nav>
           <p class="meta">Free · 25 automatic captures a month · No ads · Arabic and English</p>
         </div>
-        <figure class="demo"><picture><source type="image/avif" srcset="https://www.mohamedgado.com/projects/masareef/go-img/2f-en-480.avif 480w, https://www.mohamedgado.com/projects/masareef/go-img/2f-en-720.avif 720w" sizes="300px" /><img src="https://www.mohamedgado.com/projects/masareef/go-img/2f-en-480.webp" srcset="https://www.mohamedgado.com/projects/masareef/go-img/2f-en-480.webp 480w, https://www.mohamedgado.com/projects/masareef/go-img/2f-en-720.webp 720w" sizes="300px" width="480" height="981" alt="Masareef: your spending, logged on its own" loading="lazy" decoding="async" /></picture></figure>
+        <figure class="demo">
+          <picture><source type="image/avif" srcset="https://www.mohamedgado.com/projects/masareef/go-img/2f-en-480.avif 480w, https://www.mohamedgado.com/projects/masareef/go-img/2f-en-720.avif 720w" sizes="300px" /><img src="https://www.mohamedgado.com/projects/masareef/go-img/2f-en-480.webp" srcset="https://www.mohamedgado.com/projects/masareef/go-img/2f-en-480.webp 480w, https://www.mohamedgado.com/projects/masareef/go-img/2f-en-720.webp 720w" sizes="300px" width="480" height="981" alt="Masareef: your spending, logged on its own" loading="lazy" decoding="async" /></picture>
+          <div class="note">
+            <span class="tile" style="--h:97" aria-hidden="true">AA</span>
+            <div>
+              <div class="row"><b><bdi dir="ltr">AAIB</bdi></b><time>now</time></div>
+              <p dir="auto">تم تحويل مبلغ 300.00 جنيه من حسابك إلى حساب سامي يوم 12/10/26</p>
+            </div>
+          </div>
+          <div class="logged">
+            <span class="tile ok" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg></span>
+            <div><b><bdi dir="ltr">سامي</bdi></b><span class="tag">Expense</span></div>
+            <p class="amt"><span class="cur">EGP</span>-300.00</p>
+          </div>
+          <figcaption>An example alert from Arab African International Bank (AAIB): Masareef logs it as an expense, with its amount and payee. An illustration in the bank's own wording; the numbers and names in it are not real.</figcaption>
+        </figure>
       </div>
 
       <section class="sec">
@@ -171,7 +186,7 @@
           <li>On Android: open Masareef and allow "Notification access" once. After that it captures alerts even with the app closed.</li>
           <li>On iPhone: from iOS 27 add the ready-made automation in Shortcuts; from iOS 16.4 to 26 set up one automation for Arab African International Bank (AAIB) texts (sender <bdi dir="ltr">AAIB</bdi>) once.</li>
           <li>Make sure alerts from the Arab African International Bank (AAIB) app are switched on on your phone: Masareef reads the alert you already receive and never contacts the bank.</li>
-          <li>On the first transaction Arab African International Bank (AAIB) sends an alert, and Masareef logs it with its amount, merchant and time.</li>
+          <li>On the first transaction Arab African International Bank (AAIB) sends an alert like: <span class="sample" dir="auto">تم تحويل مبلغ 300.00 جنيه من حسابك إلى حساب سامي يوم 12/10/26</span> and Masareef logs it as an expense of <bdi dir="ltr">300.00 EGP</bdi> at <bdi dir="ltr">سامي</bdi>. An illustration in the bank's wording; the numbers and names are not real.</li>
           <li>Wrong category? Open the transaction and change it, and turn on "Remember this merchant" so this merchant goes there from now on. An unclear alert waits in "To review" for one tap to confirm.</li>
         </ol>
       </section>

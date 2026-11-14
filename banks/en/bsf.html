@@ -150,7 +150,22 @@
         </nav>
           <p class="meta">Free · 25 automatic captures a month · No ads · Arabic and English</p>
         </div>
-        <figure class="demo"><picture><source type="image/avif" srcset="https://www.mohamedgado.com/projects/masareef/go-img/2f-en-480.avif 480w, https://www.mohamedgado.com/projects/masareef/go-img/2f-en-720.avif 720w" sizes="300px" /><img src="https://www.mohamedgado.com/projects/masareef/go-img/2f-en-480.webp" srcset="https://www.mohamedgado.com/projects/masareef/go-img/2f-en-480.webp 480w, https://www.mohamedgado.com/projects/masareef/go-img/2f-en-720.webp 720w" sizes="300px" width="480" height="981" alt="Masareef: your spending, logged on its own" loading="lazy" decoding="async" /></picture></figure>
+        <figure class="demo">
+          <picture><source type="image/avif" srcset="https://www.mohamedgado.com/projects/masareef/go-img/2f-en-480.avif 480w, https://www.mohamedgado.com/projects/masareef/go-img/2f-en-720.avif 720w" sizes="300px" /><img src="https://www.mohamedgado.com/projects/masareef/go-img/2f-en-480.webp" srcset="https://www.mohamedgado.com/projects/masareef/go-img/2f-en-480.webp 480w, https://www.mohamedgado.com/projects/masareef/go-img/2f-en-720.webp 720w" sizes="300px" width="480" height="981" alt="Masareef: your spending, logged on its own" loading="lazy" decoding="async" /></picture>
+          <div class="note">
+            <span class="tile" style="--h:285" aria-hidden="true">BS</span>
+            <div>
+              <div class="row"><b><bdi dir="ltr">BSF</bdi></b><time>now</time></div>
+              <p dir="auto">عملية حوالة مالية صادرة مقبولة<br />خصمت من حساب ****1234<br />إلى ACME TRADING****<br />القيمة SAR 250.00<br />الرسوم SAR 0.58<br />في12-10-2026 18:30:00</p>
+            </div>
+          </div>
+          <div class="logged">
+            <span class="tile ok" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg></span>
+            <div><b><bdi dir="ltr">ACME TRADING</bdi></b><span class="tag">Expense</span></div>
+            <p class="amt"><span class="cur">SAR</span>-250.00</p>
+          </div>
+          <figcaption>An example alert from Banque Saudi Fransi: Masareef logs it as an expense, with its amount and payee. An illustration in the bank's own wording; the numbers and names in it are not real.</figcaption>
+        </figure>
       </div>
 
       <section class="sec">
@@ -171,7 +186,7 @@
           <li>On Android: open Masareef and allow "Notification access" once. After that it captures alerts even with the app closed.</li>
           <li>On iPhone: from iOS 27 add the ready-made automation in Shortcuts; from iOS 16.4 to 26 set up one automation for Banque Saudi Fransi texts (sender <bdi dir="ltr">BSF</bdi>) once.</li>
           <li>Make sure alerts from the Banque Saudi Fransi app are switched on on your phone: Masareef reads the alert you already receive and never contacts the bank.</li>
-          <li>On the first transaction Banque Saudi Fransi sends an alert, and Masareef logs it with its amount, merchant and time.</li>
+          <li>On the first transaction Banque Saudi Fransi sends an alert like: <span class="sample" dir="auto">عملية حوالة مالية صادرة مقبولة<br />خصمت من حساب ****1234<br />إلى ACME TRADING****<br />القيمة SAR 250.00<br />الرسوم SAR 0.58<br />في12-10-2026 18:30:00</span> and Masareef logs it as an expense of <bdi dir="ltr">250.00 SAR</bdi> at <bdi dir="ltr">ACME TRADING</bdi>. An illustration in the bank's wording; the numbers and names are not real.</li>
           <li>Wrong category? Open the transaction and change it, and turn on "Remember this merchant" so this merchant goes there from now on. An unclear alert waits in "To review" for one tap to confirm.</li>
         </ol>
       </section>
