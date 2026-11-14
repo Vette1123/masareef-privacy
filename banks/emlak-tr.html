@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-alt="https://www.mohamedgado.com/projects/masareef/banks/en/emlak-tr" data-title-ar="تسجيل مصاريف Emlak Katılım تلقائيًا | مجانًا" data-title-en="Log Emlak Katılım spending automatically | Free" data-desc-en="Free app that logs Emlak Katılım payments from the alert, with no password and no bank link. Android and iPhone.">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>تسجيل مصاريف Emlak Katılım تلقائيًا | مجانًا</title>
+    <meta name="description" content="تطبيق مجاني لأندرويد وآيفون يسجّل مدفوعات Emlak Katılım من الإشعار: المبلغ والتاجر والفئة. بلا كلمة مرور ولا ربط بنكي، والإشعار لا يغادر هاتفك." />
+    <link rel="canonical" href="https://www.mohamedgado.com/projects/masareef/banks/emlak-tr" />
+    <link rel="alternate" hreflang="ar" href="https://www.mohamedgado.com/projects/masareef/banks/emlak-tr" />
+    <link rel="alternate" hreflang="en" href="https://www.mohamedgado.com/projects/masareef/banks/en/emlak-tr" />
+    <link rel="alternate" hreflang="x-default" href="https://www.mohamedgado.com/projects/masareef/banks/en/emlak-tr" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="apple-itunes-app" content="app-id=6806735875" />
+    <!--partial:head.html--><meta name="theme-color" media="(prefers-color-scheme: light)" content="#f3f8f6" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#07121c" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="twitter:creator" content="@Sadge1996" />
+    <script>
+      // A theme picked with the switch applies before the first paint, so the page never flashes.
+      try {
+        var t = localStorage.getItem('go-theme');
+        if (t === 'light' || t === 'dark') {
+          document.documentElement.setAttribute('data-theme', t);
+          document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) { m.content = t === 'dark' ? '#07121c' : '#f3f8f6'; });
+        }
+      } catch (e) {}
+      // Visits on mohamedgado.com, which proxies every page here, count in its Vercel Web
+      // Analytics: cookieless, same origin, and stated in the policy (section 12). The github.io
+      // copies load nothing. A link's ?s=<source> (masareef.mohamedgado.com/?s=ig) reaches the
+      // dashboard as utm_source, so sources can be compared.
+      if (/(^|\.)mohamedgado\.com$/.test(location.hostname)) {
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+        window.va('beforeSend', function (e) {
+          // masareef.mohamedgado.com serves the install page in place (no 301 to www), so its
+          // pageview would count as that host's `/`, mixed with the portfolio home. It counts
+          // under the page's canonical www URL instead, with the query kept.
+          var c = location.hostname !== 'www.mohamedgado.com' && document.querySelector('link[rel="canonical"]');
+          if (c) { var q = e.url.search(/[?#]/); e = Object.assign({}, e, { url: c.href + (q < 0 ? "" : e.url.slice(q)) }); }
+          var m = /[?&]s=([a-z0-9_-]{1,40})(&|#|$)/i.exec(e.url);
+          if (!m || /[?&]utm_source=/.test(e.url)) return e;
+          return Object.assign({}, e, { url: e.url.replace(/#.*$/, '') + '&utm_source=' + m[1].toLowerCase() });
+        });
+        var va = document.createElement('script');
+        va.defer = true;
+        va.src = '/_vercel/insights/script.js';
+        document.head.appendChild(va);
+      }
+    </script><!--/partial:head.html-->
+    <!--partial:lang-pick.js--><script>
+// Resolve the language BEFORE first paint. The whole document flips direction, so deciding
+// after paint moved the header across the viewport: a visible LTR to RTL flash and a layout
+// shift on every Arabic visit. ONE storage key for the whole site, install page included, so a
+// choice made on any page holds on every other.
+//
+// Two kinds of page: most carry both languages and flip in place; the install page is one URL
+// per language (go, go-ar), names the other in <html data-alt>, and is swapped for it instead.
+(function () {
+  var root = document.documentElement;
+  var served = root.lang === "ar" ? "ar" : "en";
+  var alt = root.getAttribute("data-alt");
+  function stored() {
+    try {
+      // go-lang: the install page's own key until 6 Nov 2026, read so an old choice still counts.
+      return localStorage.getItem("masareef-privacy-lang") || localStorage.getItem("go-lang");
+    } catch (e) {
+      return null; // private browsing can block storage
+    }
+  }
+  // A deep link to a section anchor wins over the stored choice, so a shared section link
+  // always lands on the section it names.
+  function pick() {
+    if (/^#ar-/.test(location.hash)) return "ar";
+    if (/^#en-/.test(location.hash)) return "en";
+    var saved = stored();
+    if (saved === "ar" || saved === "en") return saved;
+    // A crawler reads the page in the language it is served in: the bank pages earn their
+    // impressions in Arabic, and Googlebot's en-US would otherwise hide that copy.
+    if (/bot|crawl|spider|slurp/i.test(navigator.userAgent || "")) return served;
+    // Someone who opened the Arabic install URL asked for Arabic, whatever their phone's locale.
+    if (alt && served === "ar") return "ar";
+    return (navigator.language || "en").toLowerCase().indexOf("ar") === 0 ? "ar" : "en";
+  }
+  var lang = pick();
+  if (alt && lang !== served) {
+    // Nothing paints in the wrong language on the way out.
+    root.style.visibility = "hidden";
+    location.replace(alt + location.search + location.hash);
+    return;
+  }
+  root.lang = lang;
+  root.dir = lang === "ar" ? "rtl" : "ltr";
+  root.classList.add("lang-" + lang);
+})();
+</script><!--/partial:lang-pick.js-->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="مصاريف" />
+    <meta property="og:locale" content="ar_EG" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:title" content="تسجيل مصاريف Emlak Katılım تلقائيًا | مجانًا" />
+    <meta property="og:description" content="تطبيق مجاني لأندرويد وآيفون يسجّل مدفوعات Emlak Katılım من الإشعار: المبلغ والتاجر والفئة. بلا كلمة مرور ولا ربط بنكي، والإشعار لا يغادر هاتفك." />
+    <meta property="og:url" content="https://www.mohamedgado.com/projects/masareef/banks/emlak-tr" />
+    <meta property="og:image" content="https://vette1123.github.io/masareef-privacy/og.jpg" />
+    <meta property="og:image:width" content="2400" />
+    <meta property="og:image:height" content="1260" />
+    <meta property="og:image:alt" content="مصاريف: مصروفاتك تُسجَّل من إشعارات بنكك" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="تسجيل مصاريف Emlak Katılım تلقائيًا | مجانًا" />
+    <meta name="twitter:description" content="تطبيق مجاني لأندرويد وآيفون يسجّل مدفوعات Emlak Katılım من الإشعار: المبلغ والتاجر والفئة. بلا كلمة مرور ولا ربط بنكي، والإشعار لا يغادر هاتفك." />
+    <meta name="twitter:image" content="https://vette1123.github.io/masareef-privacy/og.jpg" />
+    <link rel="icon" href="https://vette1123.github.io/masareef-privacy/icon.png" />
+    <link rel="apple-touch-icon" href="https://vette1123.github.io/masareef-privacy/icon.png" />
+    <!-- Generated by scripts/site/bank-pages.mjs in the masareef app repo, from the bank
+         registry. Edit the generator, not this file: the next run overwrites it. -->
+    <!--partial:theme.css--><style>:root{--bg: #f3f8f6;--bg-2: #e4f1ec;--ink: #0f1d27;--soft: #43555f;--faint: #5f727b;--teal: #0e7c70;--mint: #5eead4;--red: #c03a3a;--line: rgba(15,29,39,0.1);--panel: #ffffff;--band: #0f1d27;--band-ink: #eef7f5;--band-soft: #b4cbc8;--glow-a: rgba(14,124,112,0.16);--glow-b: rgba(99,102,241,0.11);--grid: rgba(15,29,39,0.06);--fog: rgba(14,124,112,0.14);--ui: system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Arabic",sans-serif;--display: ui-rounded,"SF Pro Rounded",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--arabic: "SF Arabic","Geeza Pro","Noto Sans Arabic","Segoe UI",system-ui,sans-serif;--ease: cubic-bezier(0.16,1,0.3,1);color-scheme: light dark}@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg: #07121c;--bg-2: #0c1d2b;--ink: #eaf4f2;--soft: #aec3c6;--faint: #9ab0b4;--teal: #2dd4bf;--red: #f87171;--line: rgba(234,244,242,0.1);--panel: #0f2130;--band: #0d2233;--band-ink: #eef7f5;--band-soft: #b4cbc8;--glow-a: rgba(45,212,191,0.16);--glow-b: rgba(129,140,248,0.15);--grid: rgba(234,244,242,0.055);--fog: rgba(94,234,212,0.26);color-scheme: dark}}:root[data-theme="dark"]{--bg: #07121c;--bg-2: #0c1d2b;--ink: #eaf4f2;--soft: #aec3c6;--faint: #9ab0b4;--teal: #2dd4bf;--red: #f87171;--line: rgba(234,244,242,0.1);--panel: #0f2130;--band: #0d2233;--band-ink: #eef7f5;--band-soft: #b4cbc8;--glow-a: rgba(45,212,191,0.16);--glow-b: rgba(129,140,248,0.15);--grid: rgba(234,244,242,0.055);--fog: rgba(94,234,212,0.26);color-scheme: dark}:root[data-theme="light"]{color-scheme: light}*{box-sizing: border-box}html{-webkit-text-size-adjust: 100%;text-size-adjust: 100%;overflow-x: clip;scrollbar-color: color-mix(in srgb,var(--teal) 45%,var(--line)) transparent}body{margin: 0;background: var(--bg);color: var(--ink);font: 16px/1.6 var(--ui);-webkit-font-smoothing: antialiased}html[lang="ar"] body,[lang="ar"]{font-family: var(--arabic)}::selection{background: color-mix(in srgb,var(--teal) 30%,transparent);color: var(--ink)}body::before{content: "";position: fixed;inset: 0;z-index: -1;pointer-events: none}body::before{background: radial-gradient(60vmax 45vmax at 88% -8%,var(--glow-a),transparent 62%),radial-gradient(55vmax 40vmax at -12% 38%,var(--glow-b),transparent 62%),radial-gradient(50vmax 38vmax at 70% 115%,var(--glow-a),transparent 62%)}img{max-width: 100%;height: auto;display: block}a{color: inherit;text-underline-offset: 3px;text-decoration-thickness: 1px}h1,h2,h3{margin: 0;text-wrap: balance}p{margin: 0;text-wrap: pretty}:focus-visible{outline: 3px solid var(--teal);outline-offset: 3px;border-radius: 10px}.wrap{width: 100%;max-width: 1180px;margin-inline: auto;padding-left: max(20px,env(safe-area-inset-left));padding-right: max(20px,env(safe-area-inset-right))}.skip{position: absolute;inset-inline-start: 12px;top: -60px;z-index: 10;padding: 10px 16px;border-radius: 999px;background: var(--panel);border: 1px solid var(--teal);text-decoration: none;font-weight: 600}.skip:focus{top: 12px}html:not([lang="ar"]) .top-in>[lang="ar"],html[lang="ar"] .top-in>[lang="en"]{display: none}.top-in{display: flex;justify-content: space-between;align-items: center;gap: 12px;padding-block: max(18px,env(safe-area-inset-top)) 18px}.top{position: sticky;top: 0;z-index: 30;isolation: isolate;transition: transform 240ms var(--ease)}.top::before{content: "";position: absolute;inset: 0;z-index: -1;pointer-events: none;opacity: 0;background: var(--bg);box-shadow: 0 1px 0 var(--line),0 12px 32px -24px rgba(4,14,22,0.5);transition: opacity 200ms var(--ease)}.top-stuck .top::before{opacity: 1}.top-hidden .top{transform: translateY(-100%)}:root{--top-h: 80px;--top-on: 0px}.top-stuck:not(.top-hidden){--top-on: var(--top-h)}.brand{display: inline-flex;align-items: center;gap: 12px;font-weight: 700;font-size: 18px;text-decoration: none;white-space: nowrap}.brand img{width: 40px;height: 40px;border-radius: 10px}.brand small{font-weight: 500;color: var(--faint);font-size: 15px}.brand[lang="ar"]{font-family: var(--arabic)}.brand small[lang="en"]{font-family: var(--ui)}.tools{display: flex;align-items: center;gap: 8px}.theme{width: 44px;height: 44px;display: grid;place-items: center;padding: 0;border-radius: 999px;border: 1px solid var(--line);background: var(--panel);color: var(--ink);cursor: pointer;transition: border-color 200ms var(--ease),transform 160ms var(--ease);-webkit-tap-highlight-color: transparent}.theme:active{transform: scale(0.94)}.switch{display: inline-flex;border: 1px solid var(--line);border-radius: 999px;background: var(--panel);overflow: hidden}.switch button{appearance: none;border: 0;background: transparent;color: var(--soft);font: 600 14px var(--ui);min-width: 44px;min-height: 44px;padding: 0 16px;cursor: pointer;transition: background-color 200ms var(--ease),color 200ms var(--ease),transform 160ms var(--ease);-webkit-tap-highlight-color: transparent}.switch button[lang="ar"]{font-family: var(--arabic)}.switch button:active{transform: scale(0.97)}.switch button:focus-visible{outline-offset: -3px;border-radius: 999px}html:not([lang="ar"]) #btn-en,html[lang="ar"] #btn-ar{background: var(--teal);color: var(--bg)}@media (hover: hover) and (pointer: fine){.theme:hover{border-color: var(--teal)}html:not([lang="ar"]) #btn-ar:hover,html[lang="ar"] #btn-en:hover{color: var(--ink)}}@media (max-width: 420px){.top-in{gap: 8px}.brand{gap: 10px}.brand img{width: 36px;height: 36px}.brand small{display: none}.switch button{padding: 0 12px;font-size: 13px}}.theme svg{width: 20px;height: 20px}.theme .sun{display: none}:root[data-theme="dark"] .theme .sun{display: block}:root[data-theme="dark"] .theme .moon{display: none}@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .theme .sun{display: block}:root:not([data-theme="light"]) .theme .moon{display: none}}.crumbs ol{list-style: none;margin: 0;padding: 0;display: flex;flex-wrap: wrap;gap: 4px 8px;font-size: 14px;color: var(--faint)}.crumbs li{display: inline-flex;align-items: center;gap: 8px}.crumbs li + li::before{content: "";width: 5px;height: 5px;border-top: 1.5px solid currentColor;border-inline-end: 1.5px solid currentColor;transform: rotate(45deg);opacity: 0.7}[dir="rtl"] .crumbs li + li::before{transform: rotate(-45deg)}.crumbs a{color: var(--soft);text-decoration: none;padding-block: 10px}.crumbs a:hover{color: var(--teal)}.crumbs [aria-current]{color: var(--ink);font-weight: 600}.head{position: relative;isolation: isolate;padding-block: 28px 48px}.head::before,.head::after{content: "";position: absolute;z-index: -1;pointer-events: none;inset-inline: calc(50% - 50vw)}.head::after,.hero::after{top: -140px;bottom: -40px;background-image: linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size: 56px 56px;background-position: center top;-webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 40%,#000 20%,transparent 75%),var(--rise);mask-image: radial-gradient(ellipse 60% 70% at 50% 40%,#000 20%,transparent 75%),var(--rise);-webkit-mask-composite: source-in;mask-composite: intersect}:root{--rise: linear-gradient(transparent,#000 160px)}.head::before{top: -120px;bottom: -160px;background: radial-gradient(min(900px,80vw) 420px at 22% 30%,var(--glow-a),transparent 70%),radial-gradient(min(800px,70vw) 380px at 80% 10%,var(--glow-b),transparent 70%);-webkit-mask-image: linear-gradient(transparent,#000 160px,#000 55%,transparent 92%);mask-image: linear-gradient(transparent,#000 160px,#000 55%,transparent 92%)}.head .crumbs{margin-bottom: 22px}.title{font-family: var(--display);font-size: clamp(36px,5.4vw,72px);line-height: 1.02;letter-spacing: -0.04em;font-weight: 850;max-width: 18ch}.title span{color: var(--faint)}html[lang="ar"] .title,[lang="ar"] .title{font-family: var(--arabic);line-height: 1.25;letter-spacing: 0;font-weight: 800}.lede{font-size: clamp(17px,1.6vw,19px);color: var(--soft);max-width: 56ch;margin-top: 20px}.head .badges{margin-top: 28px}.meta{margin-top: 18px;font-size: 14px;color: var(--faint)}.sec{padding-block: 56px 8px}.sec>h2,.h2{font-family: var(--display);font-size: clamp(28px,3.6vw,44px);line-height: 1.08;letter-spacing: -0.03em}html[lang="ar"] .sec>h2,html[lang="ar"] .h2,[lang="ar"] .sec>h2{font-family: var(--arabic);line-height: 1.35;letter-spacing: 0}.sec>p{margin-top: 14px;font-size: 18px;color: var(--soft);max-width: 62ch}.prose{max-width: 72ch}.prose h2{font-family: var(--display);font-size: clamp(24px,2.6vw,32px);line-height: 1.2;letter-spacing: -0.02em;margin-top: 56px;scroll-margin-top: 24px}.prose h3{font-size: 19px;line-height: 1.35;margin-top: 32px;scroll-margin-top: 24px}html[lang="ar"] .prose h2,[lang="ar"] .prose h2{font-family: var(--arabic);letter-spacing: 0;line-height: 1.45}.prose p,.prose ul,.prose ol,.prose table{margin-top: 14px}.prose p,.prose li{color: var(--soft)}.prose strong,.prose b{color: var(--ink)}.prose ul,.prose ol{padding-inline-start: 22px}.prose li + li{margin-top: 8px}.prose li::marker{color: var(--teal)}.prose a{color: var(--teal)}.prose code{font-size: 0.92em;padding: 2px 6px;border-radius: 6px;background: color-mix(in srgb,var(--teal) 10%,transparent)}.prose table{width: 100%;border-collapse: collapse;font-size: 15px;font-variant-numeric: tabular-nums}.prose th,.prose td{text-align: start;padding: 12px 14px 12px 0;border-bottom: 1px solid var(--line);vertical-align: top}.prose th{color: var(--ink);font-weight: 650}.sec>h2 + :not(p){margin-top: 28px}.panel{background: color-mix(in srgb,var(--panel) 86%,transparent);border: 1px solid var(--line);border-radius: 22px;padding: clamp(20px,3vw,32px);box-shadow: 0 24px 48px -32px rgba(15,29,39,0.4)}.panel>:first-child{margin-top: 0}a[href],button,summary,[role="button"],label[for],select,input[type="checkbox"],input[type="radio"],input[type="submit"]{cursor: pointer}.badges{display: flex;flex-wrap: wrap;align-items: center;gap: 12px}.badges a{display: block;border-radius: 10px;transition: transform 220ms var(--ease);-webkit-tap-highlight-color: transparent}.badges a:hover{transform: translateY(-2px)}.badges a:active{transform: scale(0.97)}.badges .apple img{width: 156px;height: 52px}.badges .play{margin: -12px -10px}.badges .play img{width: 197px;height: 76px}.chips{list-style: none;margin: 24px 0 0;padding: 0;display: flex;flex-wrap: wrap;gap: 10px}.chips a{display: inline-flex;align-items: center;gap: 8px;min-height: 44px;padding: 10px 16px;border-radius: 999px;border: 1px solid var(--line);background: var(--panel);font-weight: 600;font-size: 15px;text-decoration: none;transition: border-color 200ms var(--ease),transform 200ms var(--ease);-webkit-tap-highlight-color: transparent}.chips a:hover{border-color: var(--teal)}.chips a:active{transform: scale(0.97)}.chips small{font-weight: 500;color: var(--faint);font-size: 13px}.chips .all{color: var(--teal)}.band,.faq,.cv{content-visibility: auto;contain-intrinsic-size: auto 640px}.band{margin-block: 48px;margin-inline: calc(50% - 50vw);padding: 64px max(20px,calc(50vw - 50%));background: var(--band);color: var(--band-ink);display: grid;grid-template-columns: minmax(0,1.1fr) minmax(0,1fr);gap: 40px;align-items: center;position: relative;overflow: hidden;isolation: isolate}.band::before{content: "";position: absolute;z-index: -1;inset: auto -10% -60% 40%;height: 120%;background: radial-gradient(closest-side,rgba(94,234,212,0.22),transparent)}.band h2{font-family: var(--display);font-size: clamp(28px,3.4vw,42px);line-height: 1.12;letter-spacing: -0.02em}html[lang="ar"] .band h2{font-family: var(--arabic);line-height: 1.4;letter-spacing: 0}.band p{margin-top: 14px;color: var(--band-soft);max-width: 48ch}.band ul{margin: 0;padding: 0;list-style: none;display: grid;gap: 14px}.band li{display: flex;gap: 12px;align-items: baseline}.band li::before{content: "";flex: none;width: 12px;height: 7px;border-left: 2px solid var(--mint);border-bottom: 2px solid var(--mint);transform: translateY(-3px) rotate(-45deg)}.faq{display: grid;grid-template-columns: minmax(0,0.8fr) minmax(0,1.2fr);gap: 40px;padding-block: 32px 40px}.faq h2{font-family: var(--display);font-size: clamp(28px,3.4vw,40px);letter-spacing: -0.02em}html[lang="ar"] .faq h2{font-family: var(--arabic);letter-spacing: 0}details{border-top: 1px solid var(--line)}details:last-child{border-bottom: 1px solid var(--line)}summary{cursor: pointer;list-style: none;display: flex;justify-content: space-between;gap: 16px;padding-block: 18px;font-weight: 650;font-size: 17px;min-height: 44px}summary::-webkit-details-marker{display: none}summary::after{content: "+";flex: none;font-weight: 400;font-size: 24px;line-height: 1;color: var(--teal);transition: transform 260ms var(--ease)}details[open] summary::after{transform: rotate(45deg)}details p{padding-bottom: 18px;color: var(--soft);max-width: 62ch}.cta{text-align: center;padding-block: 56px 64px;padding-left: max(20px,env(safe-area-inset-left));padding-right: max(20px,env(safe-area-inset-right));display: grid;justify-items: center;gap: 22px}.cta img.ic{width: 88px;height: 88px;border-radius: 22px;box-shadow: 0 24px 40px -14px rgba(15,29,39,0.45)}.cta h2{font-family: var(--display);font-size: clamp(32px,4.4vw,54px);letter-spacing: -0.025em;line-height: 1.1}html[lang="ar"] .cta h2{font-family: var(--arabic);letter-spacing: 0;line-height: 1.35}.cta p{color: var(--soft);max-width: 52ch}.cta .badges{justify-content: center}.foot{padding-block: 28px max(40px,env(safe-area-inset-bottom));font-size: 14px;color: var(--faint);display: flex;flex-wrap: wrap;gap: 10px 24px;justify-content: space-between;border-top: 1px solid var(--line)}.foot nav{display: flex;gap: 6px 20px;flex-wrap: wrap}.foot a{color: var(--soft);padding-block: 6px}.foot a:hover{color: var(--teal)}.sitefoot{display: grid;grid-template-columns: repeat(6,minmax(0,1fr));gap: 36px 28px;padding-block: 64px max(32px,env(safe-area-inset-bottom));margin-top: 32px;border-top: 1px solid var(--line);font-size: 15px}.sf-brand{grid-column: 1 / -1;display: flex;flex-wrap: wrap;justify-content: space-between;align-items: center;gap: 20px 32px;padding-bottom: 32px;border-bottom: 1px solid var(--line)}.sf-stores{gap: 8px}.sf-brand p{margin-top: 14px;color: var(--soft);max-width: 42ch;font-size: 15px}.sf-h{font-weight: 650;font-size: 13px;letter-spacing: 0.04em;color: var(--ink);margin-bottom: 10px}.sitefoot ul{list-style: none;margin: 0;padding: 0}.sitefoot li a{display: inline-block;padding-block: 6px;color: var(--soft);text-decoration: none;text-wrap: balance;transition: color 160ms var(--ease)}.sitefoot li a:hover,.sitefoot li a[aria-current]{color: var(--teal)}.sitefoot li:last-child a[href$="/banks"]{color: var(--teal);font-weight: 600}.sf-follow{margin: 22px 0 10px}.sitefoot .sf-social{display: flex;flex-wrap: wrap;gap: 8px}.sitefoot .sf-social a{display: grid;place-items: center;width: 44px;height: 44px;min-width: 0;min-height: 0;padding: 0;border-radius: 12px;border: 1px solid var(--line);background: var(--panel);color: var(--soft);transition: color 160ms var(--ease),border-color 160ms var(--ease),transform 120ms var(--ease)}.sf-social svg{fill: currentColor}.sf-social svg .cut{fill: none;stroke: var(--panel);stroke-width: 2.9}@media (hover: hover) and (pointer: fine){.sitefoot .sf-social a:hover{color: var(--b,var(--ink));border-color: color-mix(in srgb,var(--b,var(--ink)) 45%,transparent)}}.sitefoot .sf-social a:focus-visible{color: var(--b,var(--ink))}.sitefoot .sf-social a:active{transform: scale(0.94)}.sf-base{grid-column: 1 / -1;padding-top: 22px;border-top: 1px solid var(--line);font-size: 13px;color: var(--faint)}@media (max-width: 1000px){.sitefoot{grid-template-columns: repeat(3,minmax(0,1fr))}}@media (max-width: 560px){.sitefoot{grid-template-columns: repeat(2,minmax(0,1fr));gap: 28px 20px}}.topnav{display: flex;gap: 2px;padding: 4px;border-radius: 999px;border: 1px solid var(--line);background: color-mix(in srgb,var(--panel) 70%,transparent)}.topnav a{display: inline-flex;align-items: center;min-height: 36px;padding: 6px 16px;border-radius: 999px;color: var(--soft);font: 600 14px var(--ui);text-decoration: none;white-space: nowrap;transition: color 160ms var(--ease),background-color 160ms var(--ease),box-shadow 160ms var(--ease),transform 120ms var(--ease)}@media (hover: hover) and (pointer: fine){.topnav a:hover{color: var(--ink);background: color-mix(in srgb,var(--teal) 8%,transparent)}}.topnav[lang="ar"] a{font-family: var(--arabic);font-size: 15px}.topnav a:active{transform: scale(0.97)}.topnav a[aria-current]{color: var(--teal);background: color-mix(in srgb,var(--teal) 14%,var(--panel));box-shadow: inset 0 0 0 1px color-mix(in srgb,var(--teal) 38%,transparent),0 6px 16px -10px color-mix(in srgb,var(--teal) 70%,transparent)}.topnav a[aria-current]::before{content: "";flex: none;width: 6px;height: 6px;margin-inline-end: 8px;border-radius: 50%;background: currentColor;box-shadow: 0 0 0 3px color-mix(in srgb,currentColor 18%,transparent)}@media (max-width: 720px){.top-in{flex-wrap: wrap}.topnav{order: 3;width: 100%;justify-content: space-between}.topnav a{flex: 1;justify-content: center}}@media (max-width: 720px),(pointer: coarse){.sitefoot li a{display: inline-flex;align-items: center;min-height: 44px;min-width: 44px;padding-block: 0}.topnav a{min-height: 44px}.brand,.switch button,.crumbs a{min-height: 44px}.crumbs a{display: inline-flex;align-items: center;min-width: 44px}}@media (prefers-reduced-motion: no-preference){html{scroll-behavior: smooth}.rise{animation: rise 760ms var(--ease) both}.rise.d1{animation-delay: 80ms}@keyframes rise{from{transform: translateY(14px)}to{transform: none}}}@media (prefers-reduced-motion: reduce){*,*::before,*::after{transition: none !important;animation: none !important}}@media (max-width: 860px){.band,.faq{grid-template-columns: minmax(0,1fr)}.band{padding-block: 40px;margin-block: 24px}.faq{gap: 16px}.head{padding-block: 16px 36px}.sec{padding-block: 44px 4px}}@media (max-width: 380px){.badges .apple img{width: 138px;height: 46px}.badges .play{margin: -10px -9px}.badges .play img{width: 174px;height: 67px}}@media print{body::before,.head::before,.head::after,.tools,.badges,.cta{display: none}.top{position: static;transform: none}.top::before{display: none}body{background: #fff;color: #000}}</style><!--/partial:theme.css-->
+    <!--partial:lang.css--><style>html:not([lang="ar"]) #doc-ar,html[lang="ar"] #doc-en,html:not([lang="ar"]) #foot-ar,html[lang="ar"] #foot-en{display: none}</style><!--/partial:lang.css-->
+    <style>[hidden]{display: none !important}.head .title{font-size: clamp(32px,4.6vw,58px);max-width: 24ch}.head .lede{max-width: 54ch}.tile{flex: none;width: 44px;height: 44px;border-radius: 12px;display: grid;place-items: center;font: 800 13px var(--ui);letter-spacing: 0.02em;direction: ltr;color: color-mix(in oklab,hsl(var(--h,210) 70% 50%) 45%,var(--ink));background: color-mix(in oklab,hsl(var(--h,210) 65% 50%) 18%,var(--panel));box-shadow: inset 0 0 0 1px color-mix(in oklab,hsl(var(--h,210) 60% 55%) 30%,transparent)}.tile svg{width: 22px;height: 22px}.tile.ok{background: var(--teal);color: var(--bg)}.head.split{display: grid;grid-template-columns: minmax(0,1.08fr) minmax(0,0.92fr);gap: 48px;align-items: center}.demo{position: relative;isolation: isolate;justify-self: center;width: min(100%,400px);margin: 0}.demo picture{position: relative;display: flex;justify-content: center}.demo picture::after{content: "";position: absolute;z-index: -1;left: 50%;bottom: -18px;translate: -50% 0;width: 70%;height: 64px;border-radius: 50%;background: radial-gradient(closest-side,rgba(4,14,22,0.38),transparent);pointer-events: none}.demo img{width: min(76%,300px);height: auto;margin-top: 56px}.note,.logged{position: absolute;z-index: 3;display: grid;gap: 12px;align-items: center;padding: 14px 16px;border-radius: 22px;border: 1px solid var(--line);background: var(--panel);box-shadow: 0 24px 48px -22px rgba(15,29,39,0.45)}.note{top: 0;inset-inline: 0;grid-template-columns: 40px minmax(0,1fr);align-items: start}.logged{top: 56%;inset-inline: 18px;grid-template-columns: 40px minmax(0,1fr) auto;border-color: color-mix(in srgb,var(--teal) 45%,var(--line))}.note .tile,.logged .tile{width: 40px;height: 40px;border-radius: 11px;font-size: 12px}.note .row{display: flex;justify-content: space-between;align-items: baseline;gap: 12px}.note b,.logged b{display: block;font-size: 14px;line-height: 1.35;overflow-wrap: anywhere}.note time{color: var(--faint);font-size: 12px;white-space: nowrap}.note p{margin-top: 4px;font-size: 13px;line-height: 1.55;color: var(--soft);overflow-wrap: anywhere;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 8;overflow: hidden}.logged .tag{display: block;margin-top: 2px;font-size: 12px;font-weight: 700;color: var(--teal)}.logged .amt{font: 800 22px/1.1 var(--display);color: var(--red);white-space: nowrap;font-variant-numeric: tabular-nums;direction: ltr;unicode-bidi: isolate}.logged .amt.plain{color: var(--ink)}.logged .cur{font-size: 11px;font-weight: 600;color: var(--faint);margin-inline-end: 4px}.demo figcaption{margin-top: 30px;font-size: 13px;line-height: 1.6;color: var(--faint);text-align: center;text-wrap: pretty}@media (prefers-reduced-motion: no-preference){.note{animation: drop 6.5s var(--ease) infinite}.logged{animation: land 6.5s var(--ease) infinite}@keyframes drop{0%{opacity: 0;transform: translateY(-22px) scale(0.96)}7%,40%{opacity: 1;transform: none}52%,100%{opacity: 0;transform: translateY(90px) scale(0.9)}}@keyframes land{0%,44%{opacity: 0;transform: translateY(-46px) scale(0.94)}56%,93%{opacity: 1;transform: none}100%{opacity: 0;transform: none}}}.points{list-style: none;margin: 28px 0 0;padding: 0;display: grid;grid-template-columns: repeat(2,minmax(0,1fr));gap: 12px}.points li{display: flex;gap: 14px;align-items: flex-start;padding: 18px 20px;border-radius: 18px;border: 1px solid var(--line);background: var(--panel);color: var(--soft)}.points li::before{content: "";flex: none;width: 12px;height: 7px;margin-top: 11px;border-left: 2px solid var(--teal);border-bottom: 2px solid var(--teal);transform: rotate(-45deg)}.duo{display: grid;grid-template-columns: repeat(2,minmax(0,1fr));gap: 16px;margin-top: 28px}.duo h3{font-size: 20px;line-height: 1.3}.duo p{margin-top: 12px;font-size: 16px;color: var(--soft)}.ids{margin: 0;display: grid;grid-template-columns: repeat(auto-fit,minmax(15rem,1fr));gap: 22px 32px}.ids dt{font-size: 13px;color: var(--faint)}.ids dd{margin: 6px 0 0;display: flex;flex-wrap: wrap;gap: 6px}.tok{display: inline-block;padding: 4px 10px;border-radius: 8px;background: color-mix(in srgb,var(--teal) 9%,transparent);color: var(--ink);font-size: 14px;font-weight: 600;overflow-wrap: anywhere}.band + .sec{padding-top: 24px}.band .meta{color: var(--band-soft)}.steps{margin: 24px 0 0;padding-inline-start: 26px;display: grid;gap: 14px;color: var(--soft);max-width: 68ch}.steps li{padding-inline-start: 8px;line-height: 1.7}.steps li::marker{color: var(--teal);font-weight: 700}.steps .sample{display: block;margin: 8px 0;padding: 10px 14px;border-radius: 12px;border: 1px solid var(--line);background: var(--panel);font-size: 14px;line-height: 1.6}.sec h3{font-size: 19px;line-height: 1.35;margin-top: 32px}.cta .meta{max-width: 60ch}.find{margin-top: 32px;max-width: 34rem}.find label{display: block;margin-bottom: 10px;font-weight: 650;font-size: 15px}.field{position: relative}.field svg{position: absolute;z-index: 1;inset-inline-start: 20px;top: 50%;width: 20px;height: 20px;translate: 0 -50%;color: var(--faint);pointer-events: none;transition: color 200ms var(--ease)}.find input{width: 100%;min-height: 56px;padding: 12px 22px;padding-inline-start: 54px;border-radius: 999px;border: 1px solid var(--line);background: color-mix(in srgb,var(--panel) 82%,transparent);-webkit-backdrop-filter: blur(12px);backdrop-filter: blur(12px);box-shadow: inset 0 1px 0 rgba(255,255,255,0.05),0 18px 40px -26px rgba(4,14,22,0.55);color: var(--ink);font: 500 16px var(--ui);outline: none;transition: border-color 200ms var(--ease),box-shadow 200ms var(--ease)}[lang="ar"] .find input{font-family: var(--arabic)}.find input::placeholder{color: var(--faint)}.find input:hover{border-color: color-mix(in srgb,var(--teal) 35%,var(--line))}.find input:focus-visible{border-color: var(--teal);box-shadow: inset 0 1px 0 rgba(255,255,255,0.05),0 0 0 4px color-mix(in srgb,var(--teal) 18%,transparent),0 18px 40px -26px rgba(4,14,22,0.55)}.field:focus-within svg{color: var(--teal)}.find input::-webkit-search-cancel-button{cursor: pointer}.none{margin-top: 28px;color: var(--soft)}.results{margin-top: 28px}.jump{margin-top: 28px}.jump a{font-size: 15px}.tally{display: inline-block;vertical-align: middle;margin-inline-start: 10px;padding: 2px 12px;border-radius: 999px;border: 1px solid var(--line);background: var(--panel);color: var(--soft);font: 600 15px var(--ui);letter-spacing: 0}[lang="ar"] .tally{font-family: var(--arabic)}.region{padding-block: 48px 8px;scroll-margin-top: 16px;content-visibility: auto;contain-intrinsic-size: auto 480px}.region h2{scroll-margin-top: 16px}.cards{list-style: none;margin: 24px 0 0;padding: 0;display: grid;grid-template-columns: repeat(auto-fill,minmax(17rem,1fr));gap: 12px}.cards li{display: flex}.cards a{flex: 1;display: flex;align-items: flex-start;gap: 14px;min-height: 68px;padding: 12px 16px;border-radius: 18px;border: 1px solid var(--line);background: var(--panel);text-decoration: none;transition: border-color 200ms var(--ease),transform 200ms var(--ease);-webkit-tap-highlight-color: transparent}.cards a:hover{border-color: var(--teal)}.cards a:active{transform: scale(0.98)}.cards .nm{min-width: 0;display: grid;align-content: start;padding-top: 1px}.cards b{font-size: 16px;line-height: 1.4;overflow-wrap: anywhere}.cards .alt{justify-self: start;font-size: 13px;line-height: 1.45;color: var(--faint);unicode-bidi: isolate;overflow-wrap: anywhere}.grp .sub{margin-top: 32px;font-size: 16px;font-weight: 650;color: var(--soft)}.more{margin-top: 24px}.more:last-child{border-bottom: 1px solid var(--line)}.more summary{font-size: 16px;color: var(--soft)}.more summary:hover{color: var(--ink)}.more .names{margin-top: 0;padding-bottom: 18px}.names{list-style: none;margin: 14px 0 0;padding: 0;columns: 3 16rem;column-gap: 32px}.names li{break-inside: avoid;padding: 7px 0;border-bottom: 1px solid var(--line);line-height: 1.5;overflow-wrap: anywhere}.names .alt{color: var(--faint);font-size: 14px;unicode-bidi: isolate;display: inline-block}@media (prefers-reduced-motion: reduce){.cards a,.cards a:active{transition: none;transform: none}}@media (max-width: 860px){.head.split{grid-template-columns: minmax(0,1fr);gap: 36px}.points,.duo{grid-template-columns: minmax(0,1fr)}.region{padding-block: 36px 4px}}</style>
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"MobileApplication","@id":"https://www.mohamedgado.com/projects/masareef/go#app","name":"مصاريف — Masareef","operatingSystem":"Android, iOS","applicationCategory":"FinanceApplication","url":"https://www.mohamedgado.com/projects/masareef/go","publisher":{"@id":"https://www.mohamedgado.com/#person"},"image":"https://vette1123.github.io/masareef-privacy/icon.png","downloadUrl":"https://play.google.com/store/apps/details?id=com.mohamedgado.masareef","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"متتبّع مصروفات يقرأ إشعارات الدفع من أكثر من ١٢٠٠ بنك ومحفظة ويسجّل كل عملية تلقائيًا."},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"مصاريف","item":"https://www.mohamedgado.com/projects/masareef"},{"@type":"ListItem","position":2,"name":"البنوك والمحافظ","item":"https://www.mohamedgado.com/projects/masareef/banks"},{"@type":"ListItem","position":3,"name":"تركيا","item":"https://www.mohamedgado.com/projects/masareef/banks/turkiye"},{"@type":"ListItem","position":4,"name":"Emlak Katılım","item":"https://www.mohamedgado.com/projects/masareef/banks/emlak-tr"}]}]}</script>
+  </head>
+  <body>
+    <!--partial:header.html--><header class="top">
+  <div class="wrap top-in">
+  <a class="brand" lang="en" href="https://www.mohamedgado.com/projects/masareef/go"><img src="https://www.mohamedgado.com/projects/masareef/go-img/icon-96.webp" width="40" height="40" alt="" />Masareef <small lang="ar">مصاريف</small></a>
+  <a class="brand" lang="ar" href="https://www.mohamedgado.com/projects/masareef/go-ar"><img src="https://www.mohamedgado.com/projects/masareef/go-img/icon-96.webp" width="40" height="40" alt="" />مصاريف <small lang="en">Masareef</small></a>
+  <nav class="topnav" lang="en" aria-label="Masareef"><a href="https://www.mohamedgado.com/projects/masareef/go">Download</a><a href="https://www.mohamedgado.com/projects/masareef/banks" aria-current="true">Banks</a><a href="https://www.mohamedgado.com/projects/masareef/privacy">Privacy</a></nav>
+  <nav class="topnav" lang="ar" aria-label="مصاريف"><a href="https://www.mohamedgado.com/projects/masareef/go-ar">التحميل</a><a href="https://www.mohamedgado.com/projects/masareef/banks" aria-current="true">البنوك</a><a href="https://www.mohamedgado.com/projects/masareef/privacy">الخصوصية</a></nav>
+  <div class="tools">
+    <button class="theme" type="button" data-dark-en="Switch to dark theme" data-light-en="Switch to light theme" data-dark-ar="التبديل إلى الوضع الداكن" data-light-ar="التبديل إلى الوضع الفاتح" aria-label="Switch to dark theme">
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z" /></svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4" /></svg>
+    </button>
+    <div class="switch" role="group" aria-label="Language · اللغة">
+      <button type="button" id="btn-en" lang="en" aria-pressed="true">English</button>
+      <button type="button" id="btn-ar" lang="ar" aria-pressed="false">العربية</button>
+    </div>
+  </div>
+  </div>
+</header><!--/partial:header.html-->
+
+    <main>
+      <div id="doc-ar" data-doc lang="ar" dir="rtl">
+        <div class="wrap">
+      <div class="head split">
+        <div>
+          <nav class="crumbs" aria-label="مسار التنقل"><ol><li><a href="https://www.mohamedgado.com/projects/masareef">مصاريف</a></li><li><a href="https://www.mohamedgado.com/projects/masareef/banks">البنوك والمحافظ</a></li><li><a href="https://www.mohamedgado.com/projects/masareef/banks/turkiye">تركيا</a></li><li aria-current="page">Emlak Katılım</li></ol></nav>
+          <h1 class="title rise">سجّل مصاريف Emlak Katılım تلقائيًا</h1>
+          <p class="lede rise d1">مصاريف يقرأ إشعار الدفع الذي يرسله تطبيق Emlak Katılım إلى هاتفك، ويسجّل كل عملية في محفظة Emlak Katılım بمبلغها وتاجرها ووقتها. من غير ما تكتب رقمًا.</p>
+          <nav class="badges" aria-label="تحميل مصاريف">
+          <a class="apple" href="https://apps.apple.com/app/id6806735875?ct=bank-emlak-tr"><img src="https://www.mohamedgado.com/projects/masareef/go-img/app-store-en.svg" width="156" height="52" alt="حمّل من App Store" /></a>
+          <a class="play" href="https://play.google.com/store/apps/details?id=com.mohamedgado.masareef&amp;referrer=utm_source%3Dsite%26utm_medium%3Dbank_page%26utm_campaign%3Demlak-tr"><img src="https://www.mohamedgado.com/projects/masareef/go-img/google-play-ar.png" width="197" height="76" alt="احصل عليه من Google Play" /></a>
+        </nav>
+          <p class="meta">مجاني · ٢٥ تسجيلًا تلقائيًا في الشهر · بلا إعلانات · بالعربية كاملًا</p>
+        </div>
+        <figure class="demo"><picture><source type="image/avif" srcset="https://www.mohamedgado.com/projects/masareef/go-img/2f-ar-480.avif 480w, https://www.mohamedgado.com/projects/masareef/go-img/2f-ar-720.avif 720w" sizes="300px" /><img src="https://www.mohamedgado.com/projects/masareef/go-img/2f-ar-480.webp" srcset="https://www.mohamedgado.com/projects/masareef/go-img/2f-ar-480.webp 480w, https://www.mohamedgado.com/projects/masareef/go-img/2f-ar-720.webp 720w" sizes="300px" width="480" height="981" alt="مصاريف: مصروفاتك تُسجَّل وحدها" fetchpriority="high" /></picture></figure>
+      </div>
+
+      <section class="sec">
+        <h2>ما الذي يُسجَّل من Emlak Katılım</h2>
+        <ul class="points">
+          <li>المدفوعات في المحلات وأونلاين، بمبلغها بالليرة أو بأي عملة دفعت بها.</li>
+          <li>التحويلات الصادرة والواردة، والسحب من الصراف الآلي.</li>
+          <li>كل عملية تذهب إلى فئتها وحدها، وتعدّلها بلمسة إن أردت.</li>
+          <li>عندك أكثر من بطاقة؟ أضف آخر ٤ أرقام لكل بطاقة، فيذهب كل إشعار إلى محفظة بطاقته.</li>
+        </ul>
+        <p>وإذا وصل إشعار غير واضح، لا يضيع: ينتظرك لتؤكده بلمسة واحدة.</p>
+      </section>
+
+      <section class="sec">
+        <h2>كيف تسجّل مصروفات Emlak Katılım تلقائيًا</h2>
+        <ol class="steps">
+          <li>ثبّت مصاريف من Google Play أو App Store، وأنشئ حسابًا مجانيًا لحفظ سجلّك احتياطيًا.</li>
+          <li>على أندرويد: افتح مصاريف واسمح له بـ«الوصول إلى الإشعارات» مرة واحدة. بعدها يلتقط الإشعار والتطبيق مغلق.</li>
+          <li>على آيفون: من iOS 27 أضف التحكّم التلقائي الجاهز في «الاختصارات». وقبله اكتب العملية بجملة مثل «قهوة ٢٥» أو شارك الرسالة مع مصاريف.</li>
+          <li>تأكد أن إشعارات تطبيق Emlak Katılım مفعّلة في هاتفك، فمصاريف يقرأ الإشعار الذي يصلك أصلًا ولا يتصل بالبنك.</li>
+          <li>مع أول عملية يصلك إشعار من Emlak Katılım، فيسجّله مصاريف بمبلغه وتاجره ووقته.</li>
+          <li>الفئة غير مناسبة؟ افتح العملية وغيّرها، وفعّل «تذكّر هذا المتجر» لتذهب عمليات هذا التاجر إليها من الآن. وإشعار غير واضح ينتظرك في «للمراجعة» لتؤكده بلمسة.</li>
+        </ol>
+      </section>
+
+      <section class="sec">
+        <h2>كيف يعمل مع Emlak Katılım</h2>
+        <div class="duo">
+          <div class="panel">
+            <h3>على أندرويد</h3>
+            <p>تسمح لمصاريف مرة واحدة بقراءة الإشعارات، ومن بعدها يتسجّل كل إشعار دفع من تطبيق Emlak Katılım وحده، حتى والتطبيق مغلق.</p>
+          </div>
+          <div class="panel">
+            <h3>على آيفون وآيباد</h3>
+            <p>على iOS 27 أو أحدث تضيف تحكّمًا تلقائيًا واحدًا جاهزًا في تطبيق «الاختصارات»، فيصل إلى مصاريف كل من تنبيهات تطبيق Emlak Katılım Mobile وتنبيهات Apple Pay.</p>
+        <p>قبل iOS 27 أضف عمليات Emlak Katılım بجملة واحدة مثل «قهوة ٢٥»، أو شارك الرسالة مع مصاريف، ويفهم المبلغ والفئة.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec">
+        <h2>كيف يتعرّف مصاريف على Emlak Katılım</h2>
+        <div class="panel">
+          <dl class="ids">
+          <div><dt>الاسم بالإنجليزية</dt><dd><span class="tok" dir="ltr">Emlak Katılım</span></dd></div>
+          <div><dt>تطبيق أندرويد الذي يُقرأ إشعاره</dt><dd><span class="tok" dir="ltr">com.emlakbank.mobil</span></dd></div>
+          <div><dt>تطبيق آيفون</dt><dd><span class="tok" dir="ltr">Emlak Katılım Mobile</span></dd></div>
+          <div><dt>أسماء يتعرّف بها في الرسالة</dt><dd><span class="tok" dir="auto">emlak katilim</span></dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="band">
+        <div>
+          <h2>الإشعار لا يغادر هاتفك</h2>
+          <p>يُقرأ إشعار Emlak Katılım على جهازك، ولا يُرسل نصّه إلى أي خادم. لا يطلب مصاريف كلمة مرور البنك، ولا يربط حسابك البنكي.</p>
+        </div>
+        <ul>
+          <li>بلا كلمة مرور بنكية</li>
+          <li>بلا ربط بالحساب البنكي</li>
+          <li>الإشعار يُقرأ على هاتفك فقط</li>
+        </ul>
+      </section>
+
+      <section class="faq">
+        <h2>أسئلة عن Emlak Katılım</h2>
+        <div>
+          <details><summary>هل مصاريف تابع لـEmlak Katılım؟</summary><p>لا. مصاريف تطبيق مستقل، غير تابع لـEmlak Katılım ولا معتمد منه. هو يقرأ الإشعار الذي يصلك على هاتفك أصلًا.</p></details>
+          <details><summary>هل أحتاج إلى إدخال بيانات حسابي البنكي؟</summary><p>لا. لا كلمة مرور، ولا رقم حساب، ولا ربط بالبنك. التطبيق يحتاج حسابًا مجانيًا في مصاريف فقط، لحفظ سجلّك احتياطيًا.</p></details>
+          <details><summary>هل التطبيق مجاني؟</summary><p>نعم، والنسخة المجانية ليست فترة تجربة: كل ما تدخله، ومحافظك وميزانياتك، و٢٥ تسجيلًا تلقائيًا في الشهر. اشتراك Pro يرفع هذا الحد ويضيف مزايا مثل المحافظ بعملات أخرى والسجلّ العائلي المشترك.</p></details>
+          <details><summary>هل يعمل مصاريف مع Emlak Katılım على أندرويد؟</summary><p>نعم. بعد أن تسمح له بالوصول إلى الإشعارات يقرأ إشعار تطبيق Emlak Katılım (com.emlakbank.mobil) ويسجّل كل عملية وحدها، حتى والتطبيق مغلق.</p></details>
+          <details><summary>هل يخرج إشعار Emlak Katılım أو بياناتي من هاتفي؟</summary><p>لا يُرسل نص الإشعار إلى أي خادم، بل يُقرأ على جهازك. ولا يطلب مصاريف كلمة مرور ولا يربط حسابك البنكي. الحساب المجاني في مصاريف لحفظ سجلّك احتياطيًا فقط.</p></details>
+          <details><summary>ما العملات التي يسجّلها مع Emlak Katılım؟</summary><p>يسجّل العملية بمبلغها بالليرة أو بأي عملة دفعت بها. والمحافظ بعملات أخرى من مزايا Pro.</p></details>
+          <details><summary>هل يعمل مع Emlak Katılım على الآيفون؟</summary><p>نعم على iOS 27 أو أحدث. وقبله تضيف العمليات بجملة واحدة أو تشارك الرسالة مع مصاريف.</p></details>
+          <details><summary>وماذا عن بنوكي ومحافظي الأخرى؟</summary><p>مصاريف يقرأ إشعارات أكثر من ١٢٠٠ بنك ومحفظة حول العالم، وكل بنك أو محفظة له محفظته الخاصة داخل التطبيق.</p></details>
+        </div>
+      </section>
+
+      <section class="sec">
+        <h2>بنوك ومحافظ أخرى في تركيا</h2>
+        <ul class="chips">
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/ziraat-tr">Ziraat Bankasi</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/isbank-tr">Turkiye Is Bankasi</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/garanti-tr">Garanti BBVA</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/yapikredi-tr">Yapi Kredi</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/akbank-tr">Akbank</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/vakifbank-tr">VakifBank</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/halkbank-tr">Halkbank</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/denizbank-tr">DenizBank</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/papara-tr">Papara</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/enpara-tr">Enpara</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/qnbfinansbank-tr">QNB Finansbank</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/kuveytturk-tr">Kuveyt Türk</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/paycell-tr">Paycell</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/ing-tr">ING Türkiye</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/teb-tr">TEB</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/fibabanka-tr">Fibabanka</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/odea-tr">Odeabank</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/seker-tr">Şekerbank</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/tfkb-tr">Türkiye Finans</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/vakifkatilim-tr">Vakıf Katılım</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/ziraatkatilim-tr">Ziraat Katılım</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/albaraka-tr">Albaraka Türk</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/ininal-tr">ininal</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/tosla-tr">Tosla</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/turkiye">كل بنوك تركيا ومحافظها</a></li>
+        </ul>
+        <h3>وخارج تركيا</h3>
+        <ul class="chips">
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/kuwait">الكويت</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/qatar">قطر</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/bahrain">البحرين</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/oman">عُمان</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/jordan">الأردن</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/lebanon">لبنان</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/iraq">العراق</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/palestine">فلسطين</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/morocco">المغرب</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/algeria">الجزائر</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/tunisia">تونس</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/libya">ليبيا</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/sudan">السودان</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/syria">سوريا</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/yemen">اليمن</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/israel">إسرائيل</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/iran">إيران</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/afghanistan">أفغانستان</a></li>
+        </ul>
+        <ul class="chips">
+          <li><a class="all" href="https://www.mohamedgado.com/projects/masareef/banks">كل البنوك والمحافظ، أكثر من ١٢٠٠ بنك ومحفظة</a></li>
+        </ul>
+      </section>
+        </div>
+
+        <section class="cta">
+          <img class="ic" src="https://www.mohamedgado.com/projects/masareef/go-img/icon-192.webp" width="88" height="88" alt="" loading="lazy" decoding="async" />
+          <h2>ابدأ تسجيل مصاريف Emlak Katılım تلقائيًا</h2>
+          <nav class="badges" aria-label="تحميل مصاريف">
+          <a class="apple" href="https://apps.apple.com/app/id6806735875?ct=bank-emlak-tr"><img src="https://www.mohamedgado.com/projects/masareef/go-img/app-store-en.svg" width="156" height="52" alt="حمّل من App Store" /></a>
+          <a class="play" href="https://play.google.com/store/apps/details?id=com.mohamedgado.masareef&amp;referrer=utm_source%3Dsite%26utm_medium%3Dbank_page%26utm_campaign%3Demlak-tr"><img src="https://www.mohamedgado.com/projects/masareef/go-img/google-play-ar.png" width="197" height="76" alt="احصل عليه من Google Play" /></a>
+        </nav>
+          <p class="meta">مصاريف تطبيق مستقل، غير تابع لأي بنك أو محفظة مذكورة هنا ولا معتمد منها. لا يطلب أبدًا كلمة مرور بنكك. <a href="https://www.mohamedgado.com/projects/masareef/go-ar">صفحة تحميل مصاريف</a></p>
+        </section>
+      </div>
+    </main>
+    <div id="foot-ar"><!--partial:footer.ar.html--><footer class="sitefoot wrap" lang="ar" dir="rtl">
+      <div class="sf-brand">
+        <div>
+          <a class="brand" href="https://www.mohamedgado.com/projects/masareef/go-ar"><img src="https://www.mohamedgado.com/projects/masareef/go-img/icon-96.webp" width="40" height="40" alt="" loading="lazy" decoding="async" />مصاريف <small lang="en">Masareef</small></a>
+          <p>رسائل بنكك تصبح سجل مصروفاتك، على هاتفك. مجاني على أندرويد وآيفون.</p>
+          <p class="sf-h sf-follow">تابعنا أو راسلنا</p>
+          <ul class="sf-social" aria-label="تابعنا أو راسلنا">
+            <li><a href="https://www.instagram.com/masareef.global/" rel="noopener" style="--b:#E4405F" aria-label="مصاريف على إنستجرام" title="مصاريف على إنستجرام"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077" /></svg></a></li>
+            <li><a href="https://www.facebook.com/masareef.eg" rel="noopener" style="--b:#0866FF" aria-label="مصاريف على فيسبوك" title="مصاريف على فيسبوك"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z" /></svg></a></li>
+            <li><a href="https://m.me/masareef.eg" rel="noopener" style="--b:#0866FF" aria-label="راسلنا على ماسنجر" title="راسلنا على ماسنجر"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12 0C5.24 0 0 4.952 0 11.64c0 3.499 1.434 6.521 3.769 8.61a.96.96 0 0 1 .323.683l.065 2.135a.96.96 0 0 0 1.347.85l2.381-1.053a.96.96 0 0 1 .641-.046A13 13 0 0 0 12 23.28c6.76 0 12-4.952 12-11.64S18.76 0 12 0m6.806 7.44c.522-.03.971.567.63 1.094l-4.178 6.457a.707.707 0 0 1-.977.208l-3.87-2.504a.44.44 0 0 0-.49.007l-4.363 3.01c-.637.438-1.415-.317-.995-.966l4.179-6.457a.706.706 0 0 1 .977-.21l3.87 2.505c.15.097.344.094.491-.007l4.362-3.008a.7.7 0 0 1 .364-.13" /></svg></a></li>
+            <li><a href="https://t.me/masareefapp" rel="noopener" style="--b:#26A5E4" aria-label="مجتمع مصاريف على تيليجرام" title="مجتمع مصاريف على تيليجرام"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" /></svg></a></li>
+            <li><a href="https://www.tiktok.com/@masareef.global" rel="noopener" aria-label="مصاريف على تيك توك" title="مصاريف على تيك توك"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" /></svg></a></li>
+            <li><a href="https://x.com/Sadge1996" rel="noopener" aria-label="إكس (تويتر)" title="إكس (تويتر)"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z" /></svg></a></li>
+            <li><a href="https://www.linkedin.com/in/mgado" rel="noopener" style="--b:#0A66C2" aria-label="لينكدإن" title="لينكدإن"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg></a></li>
+            <li><a href="https://www.mohamedgado.com/" rel="noopener" style="--b:#2563EB" aria-label="معرض أعمال Mohamed Gado" title="معرض أعمال Mohamed Gado"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="11.5" /><path class="cut" d="M16.03 6.23A7.03 7.03 0 1 0 19.03 12H12" /></svg></a></li>
+          </ul>
+        </div>
+        <div class="badges sf-stores">
+          <a class="apple" href="https://apps.apple.com/app/id6806735875?ct=site-footer" rel="noopener"><img src="https://www.mohamedgado.com/projects/masareef/go-img/app-store-en.svg" width="156" height="52" alt="حمّله من App Store" loading="lazy" decoding="async" /></a>
+          <a class="play" href="https://play.google.com/store/apps/details?id=com.mohamedgado.masareef&amp;referrer=utm_source%3Dsite%26utm_medium%3Dfooter" rel="noopener"><img src="https://www.mohamedgado.com/projects/masareef/go-img/google-play-ar.png" width="197" height="76" alt="احصل عليه من Google Play" loading="lazy" decoding="async" /></a>
+        </div>
+      </div>
+      <nav aria-label="مصاريف">
+        <p class="sf-h">مصاريف</p>
+        <ul>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/go-ar">تحميل مصاريف</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/go" lang="en" hreflang="en">Download Masareef</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks">كل البنوك المدعومة</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef" lang="en" hreflang="en">How it is built</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="السعودية">
+        <p class="sf-h">السعودية</p>
+        <ul>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/alrajhi">مصرف الراجحي</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/snb">البنك الأهلي السعودي</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/alinma">مصرف الإنماء</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/riyad-bank">بنك الرياض</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/stcpay">STC Bank (STC Pay)</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks">كل البنوك ←</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="مصر">
+        <p class="sf-h">مصر</p>
+        <ul>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/nbe">البنك الأهلي المصري</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/banque-misr">بنك مصر</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/cib">البنك التجاري الدولي</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/instapay">InstaPay (انستاباي)</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/vodafone-cash">فودافون كاش</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks">كل البنوك ←</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="الإمارات">
+        <p class="sf-h">الإمارات</p>
+        <ul>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/emirates-nbd">بنك الإمارات دبي الوطني</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/fab">بنك أبوظبي الأول</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/adcb">بنك أبوظبي التجاري</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/mashreq">بنك المشرق</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks/wio-ae">بنك ويو (Wio)</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/banks">كل البنوك ←</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="قانوني">
+        <p class="sf-h">قانوني</p>
+        <ul>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/privacy">سياسة الخصوصية</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/terms">شروط الخدمة</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/delete-account.html">حذف حسابك</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="تطبيقات أخرى">
+        <p class="sf-h">تطبيقات أخرى</p>
+        <ul>
+          <li><a href="https://www.mohamedgado.com/projects/nafis/go-ar">نفيس: أسعار الذهب</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/rafiq/go-ar">رفيق: مواقيت الصلاة</a></li>
+          <li><a href="https://www.mohamedgado.com/" hreflang="en">معرض أعمال <span lang="en">Mohamed Gado</span></a></li>
+        </ul>
+      </nav>
+      <p class="sf-base">© 2026 <a href="https://www.mohamedgado.com/" lang="en">Mohamed Gado</a> · ابدأ مجانًا · بلا إعلانات · يعمل دون إنترنت بعد تسجيل الدخول</p>
+    </footer><!--/partial:footer.ar.html--></div>
+    <script>
+      (function () {
+        var apple = /iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent || "");
+        if (!apple) document.querySelectorAll(".badges").forEach(function (n) { var p = n.querySelector(".play"); if (p) n.prepend(p); });
+      })();
+    </script>
+    <!--partial:lang.js--><script>
+// The language pill, the same two buttons on every page. A two-language page flips in place;
+// the install page (one URL per language, <html data-alt>) goes to its other URL. Either way the
+// choice is stored under the one key every page's head script (lang-pick.js) reads.
+(function () {
+  var root = document.documentElement;
+  var en = document.getElementById("btn-en");
+  var ar = document.getElementById("btn-ar");
+  if (!en || !ar) return;
+  var alt = root.getAttribute("data-alt");
+
+  function remember(lang) {
+    try {
+      localStorage.setItem("masareef-privacy-lang", lang);
+      localStorage.removeItem("go-lang");
+    } catch (e) {
+      // Private browsing can block storage. The switch still works for this visit.
+    }
+  }
+
+  function apply(lang) {
+    root.lang = lang;
+    root.dir = lang === "ar" ? "rtl" : "ltr";
+    root.classList.toggle("lang-ar", lang === "ar");
+    root.classList.toggle("lang-en", lang === "en");
+    en.setAttribute("aria-pressed", String(lang === "en"));
+    ar.setAttribute("aria-pressed", String(lang === "ar"));
+    // A page served under one title (the bank pages: Arabic) names its other one here.
+    var title = root.getAttribute("data-title-" + lang);
+    if (title) document.title = title;
+  }
+
+  function choose(lang) {
+    remember(lang);
+    if (lang === root.lang) return;
+    if (alt) {
+      location.href = alt + location.search;
+      return;
+    }
+    apply(lang);
+    document.dispatchEvent(new Event("langchange"));
+  }
+
+  // The markup ships aria-pressed for English; catch it up to the head's pick.
+  apply(root.lang === "ar" ? "ar" : "en");
+  en.addEventListener("click", function () { choose("en"); });
+  ar.addEventListener("click", function () { choose("ar"); });
+})();
+</script><!--/partial:lang.js-->
+    <!--partial:header.js--><script>
+// The header stays one flick away without covering what is being read: it scrolls away with
+// the page going down and slides back the moment the reader scrolls up. Two classes on <html>,
+// all motion is CSS (theme.css):
+//   top-stuck   scrolled past the top: the header takes its own background
+//   top-hidden  going down, past the header: it is translated out of view
+// --top-h holds the header's height, so pinned things (the policy's Contents) sit below it.
+(function () {
+  var root = document.documentElement;
+  var top = document.querySelector('.top');
+  if (!top) return;
+  var NUDGE = 8; // px of travel before a direction counts: a trackpad's jitter never toggles it
+  var last = scrollY;
+  var hold = 0; // until then an in-page jump keeps the header away
+  var queued = false;
+
+  function measure() { root.style.setProperty('--top-h', top.offsetHeight + 'px'); }
+  function hide(on) { root.classList.toggle('top-hidden', on); }
+
+  function update() {
+    queued = false;
+    var y = Math.max(0, scrollY);
+    root.classList.toggle('top-stuck', y > 0);
+    if (y <= top.offsetHeight) { hide(false); last = y; return; }
+    if (performance.now() < hold) { hide(true); last = y; return; }
+    if (Math.abs(y - last) < NUDGE) return;
+    // Never hide what holds keyboard focus.
+    hide(y > last && !top.contains(document.activeElement));
+    last = y;
+  }
+
+  addEventListener('scroll', function () {
+    if (!queued) { queued = true; requestAnimationFrame(update); }
+  }, { passive: true });
+  // A Contents link or a section anchor is a jump to read: the header stays out of the way,
+  // even when the jump goes up the page.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (a && !top.contains(a)) hold = performance.now() + 1200;
+  });
+  top.addEventListener('focusin', function () { hide(false); });
+  if (window.ResizeObserver) new ResizeObserver(measure).observe(top);
+  measure();
+  update();
+})();
+</script><!--/partial:header.js-->
+    <!--partial:switch.js--><script>
+// Light/dark switch, shared by every page. With no choice stored the page follows the
+// system; a click stores the opposite of what is showing now. The choice is one
+// localStorage key for the whole site, so it follows the reader from page to page.
+// The button's label is in the page's current language and follows the language switch.
+(function () {
+  var root = document.documentElement;
+  var sw = document.querySelector('.theme');
+  if (!sw) return;
+  var dark = function () { var t = root.getAttribute('data-theme'); return t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches; };
+  var label = function () { sw.setAttribute('aria-label', sw.getAttribute('data-' + (dark() ? 'light' : 'dark') + '-' + (root.lang === 'ar' ? 'ar' : 'en'))); };
+  label();
+  document.addEventListener('langchange', label);
+  sw.addEventListener('click', function () {
+    var t = dark() ? 'light' : 'dark';
+    root.setAttribute('data-theme', t);
+    try { localStorage.setItem('go-theme', t); } catch (e) {}
+    document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) { m.content = t === 'dark' ? '#07121c' : '#f3f8f6'; });
+    label();
+  });
+})();
+</script><!--/partial:switch.js-->
+  </body>
+</html>
