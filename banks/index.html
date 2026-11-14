@@ -490,7 +490,7 @@
         var loading = null;
         var load = function () {
           return loading || (loading = fetch(base + "/search.json").then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (d) {
-            d.banks.forEach(function (b) { b.q = fold(b[2] + " " + b[3] + " " + (d.countries[b[1]] || []).join(" ")); });
+            d.banks.forEach(function (b) { b.q = fold(b[2] + " " + b[3] + " " + (b[4] || "") + " " + (d.countries[b[1]] || []).join(" ")); });
             return d;
           }).catch(function (e) { loading = null; throw e; }));
         };
