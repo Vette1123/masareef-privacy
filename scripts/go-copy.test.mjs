@@ -31,7 +31,7 @@ test('go links English bank pages, go-ar links Arabic ones', () => {
   const links = (f) => [...readFileSync(new URL(`../${f}`, import.meta.url), 'utf8').match(/<ul class="chips">.*?<\/ul>/s)[0].matchAll(/href="[^"]*\/projects\/masareef\/banks([^"]*)"/g)].map((m) => m[1]);
   const en = links('go.html');
   const ar = links('go-ar.html');
-  assert.ok(en.length > 10 && en.every((h) => h.startsWith('/en')), en.filter((h) => !h.startsWith('/en')).slice(0, 3).join(' '));
-  assert.ok(ar.length > 10 && ar.every((h) => !h.startsWith('/en')));
+  assert.ok(en.length > 10 && en.every((h) => /^\/en(\/|$)/.test(h)), en.filter((h) => !/^\/en(\/|$)/.test(h)).slice(0, 3).join(' '));
+  assert.ok(ar.length > 10 && ar.every((h) => !/^\/en(\/|$)/.test(h)));
   assert.ok(!/[؀-ۿ]/.test(readFileSync(new URL('../go.html', import.meta.url), 'utf8').match(/<ul class="chips">.*?<\/ul>/s)[0]), 'Arabic name in English chips');
 });

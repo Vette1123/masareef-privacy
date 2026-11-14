@@ -23,7 +23,9 @@ const minify = (html) => html.replace(/<style>([\s\S]*?)<\/style>/g, (_, c) => `
 const build = (html, require) => minify(labelCells(applyPartials(html, { require })));
 // The bank pages are masareef-app's (`pnpm site:banks`), but they carry these same partials, so a
 // partial edit re-stamps them here too: partials and minify only, their content stays the app's.
-for (const f of fs.readdirSync(path.join(repo, 'banks')).filter((f) => f.endsWith('.html'))) PAGES[`banks/${f}`] = null;
+// banks/en and features/ (+ features/en) are the same generator's output and carry the same footer.
+for (const dir of ['banks', 'banks/en', 'features', 'features/en'])
+  for (const f of fs.readdirSync(path.join(repo, dir)).filter((f) => f.endsWith('.html'))) PAGES[`${dir}/${f}`] = null;
 
 const check = process.argv.includes('--check');
 const stale = [];
