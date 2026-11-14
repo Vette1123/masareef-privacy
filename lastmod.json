@@ -1,4 +1,7 @@
 {
+ "go-ar.html": "2026-11-14",
+ "go.html": "2026-11-14",
+ "go.template.html": "2026-11-14",
  "404.html": "2026-11-14",
  "banks/365bank-sk.html": "2026-11-14",
  "banks/aaib.html": "2026-11-14",
@@ -2647,15 +2650,12 @@
  "features/recurring-bills.html": "2026-11-14",
  "features/subscription-tracker.html": "2026-11-14",
  "features/travel-expense-tracker.html": "2026-11-14",
- "go-ar.html": "2026-11-14",
- "go.html": "2026-11-14",
  "index.html": "2026-11-14",
  "partials/footer.ar.html": "2026-11-14",
  "partials/footer.en.html": "2026-11-14",
  "terms.html": "2026-11-14",
  "partials/head.html": "2026-11-07",
  "partials/header.html": "2026-11-07",
- "go.template.html": "2026-11-06",
  "google7349409b25f0c975.html": "2026-10-17",
  "threads-callback/index.html": "2026-09-18"
 }
