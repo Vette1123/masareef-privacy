@@ -27,20 +27,18 @@ jobs:
           set -eu
           sleep 90 # let GitHub Pages publish first
           urls=""
-          for f in $(git diff --name-only "$BEFORE" HEAD -- '*.html' 2>/dev/null || git ls-files '*.html'); do
-            case "$f" in
-              index.html) u="$BASE/privacy" ;;
-              go.html) u="$BASE/go" ;;
-              go-ar.html) u="$BASE/go-ar" ;;
-              banks/index.html) u="$BASE/banks" ;;
-              banks/*.html) b="${f#banks/}"; u="$BASE/banks/${b%.html}" ;;
-              *.html) u="$BASE/${f%.html}" ;;
-            esac
-            code=$(curl -s -o /dev/null -w '%{http_code}' "$u")
+          # One flaky connection among ~400 URLs must skip that URL, not end the run under
+          # set -e (curl exit 35, 13 Nov): every check retries; a failed one prints 000 and goes on.
+          status() { curl -s -o /dev/null -w '%{http_code}' --retry 3 --retry-all-errors -m 20 "$1" || true; }
+          files=$(git diff --name-only "$BEFORE" HEAD -- '*.html' 2>/dev/null || git ls-files '*.html')
+          # File → URL lives in scripts/indexnow-url.mjs, tested: a dir's index.html is the dir.
+          while read -r f u; do
+            [ -n "$f" ] || continue
+            code=$(status "$u")
             # The proxy serves some pages under their file name (delete-account.html).
-            if [ "$code" != 200 ] && [ "$(curl -s -o /dev/null -w '%{http_code}' "$BASE/$f")" = 200 ]; then u="$BASE/$f"; code=200; fi
+            if [ "$code" != 200 ] && [ "$(status "$BASE/$f")" = 200 ]; then u="$BASE/$f"; code=200; fi
             if [ "$code" = 200 ]; then urls="$urls\"$u\","; else echo "skip $u ($code)"; fi
-          done
+          done <<< "$(printf '%s\n' "$files" | node scripts/indexnow-url.mjs "$BASE")"
           [ -n "$urls" ] || { echo "nothing proxied changed"; exit 0; }
           body="{\"host\":\"www.mohamedgado.com\",\"key\":\"$KEY\",\"keyLocation\":\"https://www.mohamedgado.com/$KEY.txt\",\"urlList\":[${urls%,}]}"
           echo "$body"
