@@ -17,6 +17,10 @@ test('the top nav marks the page and the section a bank page lives under', () =>
   assert.doesNotMatch(nbe, /<footer[^]*\/banks" aria-current/);
 });
 
+test('a noindex, follow page keeps its own canonical and marks its section', () => {
+  assert.match(markCurrent(page(`${B}/banks/dkb-de`, '<meta name="robots" content="noindex, follow" />')), /\/banks" aria-current="true">Banks/);
+});
+
 test('a noindex page with a borrowed canonical marks nothing', () => {
   assert.doesNotMatch(markCurrent(page(`${B}/banks`, '<meta name="robots" content="noindex" />')), /aria-current/);
 });

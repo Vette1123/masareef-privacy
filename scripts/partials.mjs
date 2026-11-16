@@ -40,10 +40,11 @@ export function applyPartials(html, { dir = PARTIALS, require = [] } = {}) {
 
 // The shared nav and footer mark the page they sit on, read from its canonical: "page" on
 // the exact link, "true" on the top-nav section a page lives under (Banks, for a bank page).
-// A noindex page (the 404) has a borrowed canonical and marks nothing.
+// A plain noindex page (the 404) has a borrowed canonical and marks nothing. A "noindex, follow"
+// page (a long-tail bank page, 17 Nov) is a real page with its own canonical and marks as usual.
 export function markCurrent(html) {
   const canon = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1];
-  if (!canon || /name="robots" content="[^"]*noindex/.test(html)) return html;
+  if (!canon || /name="robots" content="noindex(, nofollow)?"/.test(html)) return html;
   const mark = (a, href, section) => {
     if (href === canon) return `${a} aria-current="page"`;
     if (section && canon.startsWith(href + '/')) return `${a} aria-current="true"`;
