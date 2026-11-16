@@ -277,7 +277,7 @@
   var top = document.querySelector('.top');
   if (!top) return;
   var NUDGE = 8; // px of travel before a direction counts: a trackpad's jitter never toggles it
-  var last = scrollY;
+  var last = -1; // set on the first frame: reading scrollY while the script runs forces layout
   var hold = 0; // until then an in-page jump keeps the header away
   var queued = false;
 
@@ -290,6 +290,7 @@
     root.classList.toggle('top-stuck', y > 0);
     if (y <= top.offsetHeight) { hide(false); last = y; return; }
     if (performance.now() < hold) { hide(true); last = y; return; }
+    if (last < 0) { last = y; return; }
     if (Math.abs(y - last) < NUDGE) return;
     // Never hide what holds keyboard focus.
     hide(y > last && !top.contains(document.activeElement));
@@ -306,9 +307,11 @@
     if (a && !top.contains(a)) hold = performance.now() + 1200;
   });
   top.addEventListener('focusin', function () { hide(false); });
+  // ResizeObserver reports the first size itself; the first read of scroll position waits for
+  // a frame, so the script never forces a layout the paint was about to do anyway.
   if (window.ResizeObserver) new ResizeObserver(measure).observe(top);
-  measure();
-  update();
+  else measure();
+  requestAnimationFrame(update);
 })();
 </script><!--/partial:header.js-->
     <!--partial:switch.js--><script>

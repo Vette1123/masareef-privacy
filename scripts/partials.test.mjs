@@ -279,6 +279,30 @@ test('header.js: hides going down, returns going up, ignores jitter and keeps fo
   assert.deepEqual(to(0), { stuck: false, hidden: false });
 });
 
+// 16 Nov: Lighthouse flagged a forced reflow (about 125ms on a throttled phone) at the header's
+// first line: `scrollY` and `offsetHeight` were read while the script ran. Nothing may read
+// layout until the first frame.
+test('header.js: reads no layout while it loads, only on the first frame', async () => {
+  const { readFileSync } = await import('node:fs');
+  const vm = await import('node:vm');
+  let reads = 0;
+  let frame;
+  const top = { get offsetHeight() { reads++; return 80; }, contains: () => false, addEventListener() {} };
+  const ctx = {
+    document: { documentElement: { classList: { toggle() {} }, style: { setProperty() {} } }, querySelector: () => top, addEventListener() {}, activeElement: null },
+    addEventListener() {},
+    requestAnimationFrame: (f) => (frame = f),
+    performance: { now: () => 0 },
+    window: { ResizeObserver: class { observe() {} } },
+    ResizeObserver: class { observe() {} },
+  };
+  Object.defineProperty(ctx, 'scrollY', { get() { reads++; return 0; } });
+  vm.runInNewContext(readFileSync(new URL('../partials/header.js', import.meta.url), 'utf8'), ctx);
+  assert.equal(reads, 0, 'layout read while loading');
+  frame();
+  assert.ok(reads > 0, 'the first frame sets the state');
+});
+
 // 6 Nov: visits to these pages were invisible: mohamedgado.com proxies them from github.io, so they
 // never got the portfolio's <Analytics/>. The head now loads Vercel Web Analytics on that host only.
 function runHead(hostname, canonical) {
