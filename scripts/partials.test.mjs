@@ -1,7 +1,8 @@
 // node --test scripts/partials.test.mjs
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { markCurrent } from './partials.mjs';
+import { enLinks, markCurrent } from './partials.mjs';
+import { readFileSync } from 'node:fs';
 
 const B = 'https://www.mohamedgado.com/projects/masareef';
 const page = (canon, extra = '') => `<link rel="canonical" href="${canon}" />${extra}<nav class="topnav"><a href="${B}/go">Download</a><a href="${B}/banks">Banks</a></nav><footer class="sitefoot"><a href="${B}/banks">All</a><a href="${B}">Built</a><a href="${B}/banks/nbe">NBE</a></footer>`;
@@ -408,4 +409,20 @@ test('footer social icons are the marks in icons.mjs', async () => {
       if (ICONS[s.key].brand) assert.ok(foot.includes(`<a href="${href}" rel="noopener" style="--b:${ICONS[s.key].brand}"`), `footer.${l}: ${s.key} brand colour`);
     }
   }
+});
+
+// A partial edit re-stamps banks/en through build-pages.mjs; the English nav must keep linking
+// the English hub, as `pnpm site:banks` wrote it (3fd9838 sent 1,315 English pages to /banks).
+test('English pages link English bank and feature pages, and a second pass changes nothing', () => {
+  const html = `<head><link rel="alternate" hreflang="ar" href="${B}/banks/cib" /></head><body><a href="${B}/banks" aria-current="true">Banks</a><a href="${B}/banks/cib">CIB</a><a href="${B}/features/debt-tracker" hreflang="ar">D</a><a href="${B}/banks/en/nbe">NBE</a><a href="${B}/go">Go</a></body>`;
+  const en = enLinks(html);
+  assert.match(en, /hreflang="ar" href="[^"]+\/banks\/cib"/, 'head hreflang must stay Arabic');
+  assert.match(en, /\/banks\/en" aria-current="true">Banks/);
+  assert.match(en, /\/banks\/en\/cib">CIB/);
+  assert.match(en, /\/features\/en\/debt-tracker">D/);
+  assert.match(en, /\/banks\/en\/nbe">NBE/);
+  assert.match(en, /\/go">Go/);
+  assert.equal(enLinks(en), en);
+  const cib = readFileSync(new URL('../banks/en/cib.html', import.meta.url), 'utf8');
+  assert.match(cib, /<nav class="topnav" lang="en"[^>]*>.*?\/banks\/en" aria-current="true">Banks/, 'banks/en/cib.html nav links the Arabic hub');
 });

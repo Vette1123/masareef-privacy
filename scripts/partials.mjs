@@ -75,3 +75,14 @@ export function labelCells(html) {
     });
   });
 }
+
+// An English page (banks/en, features/en) links English bank and feature pages from its <body>,
+// partials included: the same rewrite as masareef-app's enBody, so re-stamping a partial here
+// leaves those pages exactly as `pnpm site:banks` wrote them. The <head> keeps its hreflang to
+// the Arabic URL. `(?!/en[/"])` leaves an English link alone, so a second pass is a no-op.
+const EN_LINK = /href="(https:\/\/www\.mohamedgado\.com\/projects\/masareef\/(?:banks|features))(?!\/en[/"])((?:\/[a-z0-9-]+)?)"(?: hreflang="ar")?/g;
+export function enLinks(html) {
+  const at = html.indexOf('<body');
+  if (at < 0) throw new Error('enLinks: no <body>');
+  return html.slice(0, at) + html.slice(at).replace(EN_LINK, 'href="$1/en$2"');
+}
