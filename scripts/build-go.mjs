@@ -118,10 +118,10 @@ function page(l) {
     pic(lead[0], '300px', `${t.ldName}: ${lead[2]}`, '', false).replace('decoding="async"', 'fetchpriority="high"') +
     `<div class="card alert" aria-hidden="true"><span class="ic">${esc(d.bank)}</span><div><b>${esc(d.bank)}</b><small>${esc(d.alert)}</small></div><time>${esc(d.when)}</time></div>` +
     `<div class="card txn" aria-hidden="true"><span class="ic">✓</span><div><b>${esc(d.place)}</b><small>${esc(d.meta)}</small><span class="tag">${esc(d.tag)}</span></div><span class="amt"><span>${esc(d.cur)}</span>${esc(d.amt)}</span></div>`
-  // Every per-bank page the site has, in the copy file's order; a page the copy does not name yet
-  // still gets its link, under its Arabic title, so a new bank page never goes unlinked.
-  const pages = fs.readdirSync(path.join(repo, 'banks')).filter((f) => f.endsWith('.html') && f !== 'index.html').map((f) => f.slice(0, -5))
-  const order = [...Object.keys(c.banks).filter((k) => pages.includes(k)), ...pages.filter((k) => !(k in c.banks))]
+  // Only the banks go.copy.json names (the most used), then "All supported banks". Every bank
+  // page is linked from the banks/ hub and listed in mohamedgado.com's sitemap, so /go linking
+  // all 1,300 added nothing for crawling and buried the page under a wall of links.
+  const order = Object.keys(c.banks).filter((k) => fs.existsSync(path.join(repo, 'banks', k + '.html')))
   // English links the English twin under banks/en/ and reads the name from its h1.
   const dir = l === 'en' ? 'banks/en' : 'banks'
   const h1 = l === 'en' ? /<h1[^>]*>Log your (.*?) spending automatically/ : /<h1[^>]*>سجّل مصاريف (.*?) تلقائيًا/

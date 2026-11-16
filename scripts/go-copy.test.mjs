@@ -33,6 +33,9 @@ test('go links English bank pages, go-ar links Arabic ones', () => {
   const ar = links('go-ar.html');
   assert.ok(en.length > 10 && en.every((h) => /^\/en(\/|$)/.test(h)), en.filter((h) => !/^\/en(\/|$)/.test(h)).slice(0, 3).join(' '));
   assert.ok(ar.length > 10 && ar.every((h) => !/^\/en(\/|$)/.test(h)));
+  // Only the curated "most used" banks plus the "all banks" hub link, never every bank page.
+  const max = Object.keys(copy.banks).length + 1;
+  for (const [f, l] of [['go.html', en], ['go-ar.html', ar]]) assert.ok(l.length <= max, `${f}: ${l.length} bank links, max ${max}`);
   assert.ok(!/[؀-ۿ]/.test(readFileSync(new URL('../go.html', import.meta.url), 'utf8').match(/<ul class="chips">.*?<\/ul>/s)[0]), 'Arabic name in English chips');
 });
 
