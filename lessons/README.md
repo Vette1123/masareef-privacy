@@ -16,3 +16,4 @@ One file per unit of work: `YYYY-MM-DD-slug.md`, sections What / Mistakes / What
 | 2026-11-14 | [Contact email moved to Gmail](2026-11-14-contact-email-gmail.md) | Rules section |
 | 2026-11-14 | [Every bank gets a page](2026-11-14-every-bank-page.md) | Rules section |
 | 2026-11-14 | [SEO polish: one audit over every page, sibling-app links](2026-11-14-seo-polish.md) | A partial edit must reach every generated folder; sibling apps link to their own domain root with ?s= |
+| 2026-11-16 | [/go lists the most-used banks only](2026-11-16-go-bank-chips.md) | Hubs and sitemap do discovery; a landing page links its top items plus "all" |
