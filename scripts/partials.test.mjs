@@ -440,3 +440,26 @@ test('English pages link English bank and feature pages, and a second pass chang
   const cib = readFileSync(new URL('../banks/en/cib.html', import.meta.url), 'utf8');
   assert.match(cib, /<nav class="topnav" lang="en"[^>]*>.*?\/banks\/en" aria-current="true">Banks/, 'banks/en/cib.html nav links the Arabic hub');
 });
+
+// 17 Nov: df000e5e fixed the active nav contrast in theme.css and rebuilt 2,658 pages with
+// build-pages.mjs, but go.html and go-ar.html come from build-go.mjs and kept the old rule,
+// so PSI on /go still failed. Every built page must carry the theme as it is now.
+test('every built page inlines the current theme.css', async () => {
+  const { readdirSync } = await import('node:fs');
+  const { css } = await import('./partials.mjs');
+  const root = new URL('../', import.meta.url);
+  const theme = css(readFileSync(new URL('partials/theme.css', root), 'utf8').replace(/\r\n/g, '\n'));
+  const files = readdirSync(root, { recursive: true })
+    .map((f) => String(f).split('\\').join('/'))
+    .filter((f) => f.endsWith('.html') && !f.startsWith('node_modules/') && !f.startsWith('.git/'));
+  let checked = 0;
+  const stale = [];
+  for (const f of files) {
+    const html = readFileSync(new URL(f, root), 'utf8');
+    if (!html.includes('<!--partial:theme.css--><style>')) continue;
+    checked++;
+    if (!html.includes(theme)) stale.push(f);
+  }
+  assert.ok(checked > 100, `only ${checked} built pages carry the theme`);
+  assert.deepEqual(stale.slice(0, 5), [], `${stale.length} of ${checked} pages have an old theme.css; run build-pages.mjs and build-go.mjs`);
+});
