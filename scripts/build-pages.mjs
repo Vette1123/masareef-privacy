@@ -7,7 +7,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { applyPartials, css, enLinks, labelCells, SITE } from './partials.mjs';
+import { applyPartials, css, enLinks, labelCells, localImages, SITE } from './partials.mjs';
 
 const repo = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 // Every two-language page: the show-one-language rules and both footers.
@@ -35,7 +35,8 @@ for (const [file, require] of Object.entries(PAGES)) {
   const old = fs.readFileSync(p, 'utf8').replace(/\r\n/g, '\n');
   const stamped = require ? build(old, require) : minify(applyPartials(old));
   // banks/en and features/en: the partials link Arabic pages, an English page links English ones.
-  const next = /^(banks|features)\/en\//.test(file) ? enLinks(stamped) : stamped;
+  // localImages: their images load from whichever host served the page (partials.mjs says why).
+  const next = localImages(/^(banks|features)\/en\//.test(file) ? enLinks(stamped) : stamped, file);
   if (next === old) continue;
   stale.push(file);
   if (!check) fs.writeFileSync(p, next);

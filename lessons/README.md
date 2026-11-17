@@ -18,3 +18,4 @@ One file per unit of work: `YYYY-MM-DD-slug.md`, sections What / Mistakes / What
 | 2026-11-14 | [SEO polish: one audit over every page, sibling-app links](2026-11-14-seo-polish.md) | A partial edit must reach every generated folder; sibling apps link to their own domain root with ?s= |
 | 2026-11-16 | [/go lists the most-used banks only](2026-11-16-go-bank-chips.md) | Hubs and sitemap do discovery; a landing page links its top items plus "all" |
 | 2026-11-16 | [Site audit: tap targets, forced reflow, link checker](2026-11-16-site-audit.md) | content-visibility on link sections fails target-size; no layout reads while a script loads |
+| 2026-11-17 | [Pages load images from the host that served them](2026-11-17-relative-page-images.md) | Two hosts, one HTML: relative asset URLs, or every mirror crawl bills Vercel |

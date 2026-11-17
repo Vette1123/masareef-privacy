@@ -1,7 +1,7 @@
 // node --test scripts/partials.test.mjs
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { enLinks, markCurrent } from './partials.mjs';
+import { enLinks, localImages, markCurrent } from './partials.mjs';
 import { readFileSync } from 'node:fs';
 
 const B = 'https://www.mohamedgado.com/projects/masareef';
@@ -462,4 +462,22 @@ test('every built page inlines the current theme.css', async () => {
   }
   assert.ok(checked > 100, `only ${checked} built pages carry the theme`);
   assert.deepEqual(stale.slice(0, 5), [], `${stale.length} of ${checked} pages have an old theme.css; run build-pages.mjs and build-go.mjs`);
+});
+
+test('a bank or feature page loads its images from the host that served it', () => {
+  const IMG = `${B}/go-img/`;
+  const html = `<meta property="og:image" content="${IMG}og.png" /><img src="${IMG}app-store-en.svg" /><source srcset="${IMG}2f-ar-480.avif 480w, ${IMG}2f-ar-720.avif 720w" />`;
+  // banks/x is /projects/masareef/banks/x on www and /masareef-privacy/banks/x on github.io:
+  // one level up is go-img/ on both, so a crawl of the github.io copy never bills Vercel.
+  const ar = localImages(html, 'banks/aaib.html');
+  assert.match(ar, /<img src="\.\.\/go-img\/app-store-en\.svg"/);
+  assert.match(ar, /srcset="\.\.\/go-img\/2f-ar-480\.avif 480w, \.\.\/go-img\/2f-ar-720\.avif 720w"/);
+  // Meta and JSON-LD images stay absolute: they are read off the page, not resolved against it.
+  assert.ok(ar.includes(`content="${IMG}og.png"`));
+  assert.match(localImages(html, 'features/en/budget.html'), /src="\.\.\/\.\.\/go-img\/app-store-en\.svg"/);
+  // www serves an index without its trailing slash (/projects/masareef/banks): relative would miss.
+  assert.equal(localImages(html, 'banks/index.html'), html);
+  assert.equal(localImages(html, 'banks/en/index.html'), html);
+  assert.equal(localImages(html, 'go.html'), html);
+  assert.equal(localImages(ar, 'banks/aaib.html'), ar);
 });

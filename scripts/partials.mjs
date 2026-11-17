@@ -87,3 +87,17 @@ export function enLinks(html) {
   if (at < 0) throw new Error('enLinks: no <body>');
   return html.slice(0, at) + html.slice(at).replace(EN_LINK, 'href="$1/en$2"');
 }
+
+// Bank and feature pages are served twice: on www (proxied, canonical) and on github.io (old
+// links, crawlers). With absolute www image URLs every crawl of a github.io copy was a billed
+// Vercel CDN request: 47K of portfolio-v1's 75K in 12 hours on 17 Nov, against 749 page views on
+// www, and the Hobby plan pauses at 1M a month. A relative URL loads from whichever host served
+// the page. `file` is the page's path in this repo (banks/x.html, features/en/x.html). index.html
+// keeps www: www serves it without the trailing slash (/projects/masareef/banks), so a relative
+// path would resolve one level too high. Only src/srcset change; meta and JSON-LD stay absolute.
+const WWW_IMG = 'https://www.mohamedgado.com/projects/masareef/go-img/';
+export function localImages(html, file) {
+  if (!/^(banks|features)\//.test(file) || file.endsWith('/index.html')) return html;
+  const local = `${'../'.repeat(file.split('/').length - 1)}go-img/`;
+  return html.replace(/\b(src|srcset)="([^"]*)"/g, (_, attr, v) => `${attr}="${v.replaceAll(WWW_IMG, local)}"`);
+}
