@@ -20,3 +20,4 @@ One file per unit of work: `YYYY-MM-DD-slug.md`, sections What / Mistakes / What
 | 2026-11-16 | [Site audit: tap targets, forced reflow, link checker](2026-11-16-site-audit.md) | content-visibility on link sections fails target-size; no layout reads while a script loads |
 | 2026-11-17 | [Pages load images from the host that served them](2026-11-17-relative-page-images.md) | Two hosts, one HTML: relative asset URLs, or every mirror crawl bills Vercel |
 | 2026-11-17 | [build-go runs from any folder](2026-11-17-build-go-cwd.md) | Scripts resolve the repo from import.meta.url, never cwd; --check compares through CRLF normalisation. |
+| 2026-11-17 | [IndexNow pinged nobody on full-site pushes](2026-11-17-indexnow-arg-too-long.md) | Bodies that grow with page count go to curl as a file (`--data-binary @f`); check the IndexNow run is green after every SEO push |

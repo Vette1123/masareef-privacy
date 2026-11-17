@@ -48,8 +48,10 @@ jobs:
           # IndexNow takes at most 10,000 URLs a request.
           split -l 10000 ok.txt batch.
           for b in batch.*; do
-            body=$(jq -Rn --arg key "$KEY" '{host: "www.mohamedgado.com", key: $key, keyLocation: "https://www.mohamedgado.com/\($key).txt", urlList: [inputs]}' < "$b")
-            code=$(curl -s -o /dev/null -w '%{http_code}' -H 'Content-Type: application/json; charset=utf-8' -d "$body" https://api.indexnow.org/indexnow)
+            # The body goes through a file: ~2,650 URLs as one curl argument hit "Argument list
+            # too long" (exit 126, 17 Nov) and every full-site push pinged nobody.
+            jq -Rn --arg key "$KEY" '{host: "www.mohamedgado.com", key: $key, keyLocation: "https://www.mohamedgado.com/\($key).txt", urlList: [inputs]}' < "$b" > body.json
+            code=$(curl -s -o /dev/null -w '%{http_code}' -H 'Content-Type: application/json; charset=utf-8' --data-binary @body.json https://api.indexnow.org/indexnow)
             echo "IndexNow answered $code for $(wc -l < "$b") URL(s)"
             case "$code" in 200|202) ;; *) exit 1 ;; esac
           done
