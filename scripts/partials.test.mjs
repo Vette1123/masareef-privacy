@@ -52,7 +52,17 @@ test('theme: the current nav item is clearly marked', async () => {
   const { readFileSync } = await import('node:fs');
   const theme = readFileSync(new URL('../partials/theme.css', import.meta.url), 'utf8');
   const on = theme.match(/\.topnav a\[aria-current\]\s*\{([^}]*)\}/)?.[1] ?? '';
-  assert.match(on, /color:\s*var\(--teal\)/);
+  // 17 Nov: plain --teal on its own 14% tint was 4.20:1 in light (PSI contrast failure); the
+  // text mixes 75% teal with --ink, 5.4:1 light / 7.2:1 dark.
+  assert.match(on, /color:\s*color-mix\(in srgb,\s*var\(--teal\)\s*75%,\s*var\(--ink\)\)/);
+  const hex = (s) => [1, 3, 5].map((i) => parseInt(s.slice(i, i + 2), 16));
+  const mix = (a, b, p) => a.map((v, i) => v * p + b[i] * (1 - p));
+  const lum = (c) => c.map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }).reduce((s, v, i) => s + v * [0.2126, 0.7152, 0.0722][i], 0);
+  const ratio = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+  for (const [teal, panel, ink] of [['#0e7c70', '#ffffff', '#0f1d27'], ['#2dd4bf', '#0f2130', '#eaf4f2']]) {
+    const bg = mix(hex(teal), hex(panel), 0.14);
+    assert.ok(ratio(mix(hex(teal), hex(ink), 0.75), bg) >= 4.5);
+  }
   assert.match(on, /inset 0 0 0 1px/);
   assert.match(theme, /\.topnav a\[aria-current\]::before\s*\{[^}]*border-radius:\s*50%/);
 });

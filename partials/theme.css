@@ -279,7 +279,7 @@ html[lang="ar"] .cta h2 { font-family: var(--arabic); letter-spacing: 0; line-he
 .topnav[lang="ar"] a { font-family: var(--arabic); font-size: 15px; }
 .topnav a:active { transform: scale(0.97); }
 /* The page you are on: brand tint, a hairline ring and a lit dot, readable in both themes. */
-.topnav a[aria-current] { color: var(--teal); background: color-mix(in srgb, var(--teal) 14%, var(--panel)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--teal) 38%, transparent), 0 6px 16px -10px color-mix(in srgb, var(--teal) 70%, transparent); }
+.topnav a[aria-current] { color: color-mix(in srgb, var(--teal) 75%, var(--ink)); background: color-mix(in srgb, var(--teal) 14%, var(--panel)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--teal) 38%, transparent), 0 6px 16px -10px color-mix(in srgb, var(--teal) 70%, transparent); }
 .topnav a[aria-current]::before { content: ""; flex: none; width: 6px; height: 6px; margin-inline-end: 8px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 18%, transparent); }
 @media (max-width: 720px) { .top-in { flex-wrap: wrap; } .topnav { order: 3; width: 100%; justify-content: space-between; } .topnav a { flex: 1; justify-content: center; } }
 /* tap targets */
