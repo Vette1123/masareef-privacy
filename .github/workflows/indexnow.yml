@@ -23,17 +23,20 @@ jobs:
           BEFORE: ${{ github.event.before }}
           KEY: 9ed35449b65e4a60b36e5fda9825e7bc
           BASE: https://www.mohamedgado.com/projects/masareef
+          # Bank and feature pages are probed here, not on www: see probeUrl in scripts/indexnow-url.mjs.
+          ORIGIN: https://vette1123.github.io/masareef-privacy
         run: |
           set -eu
           sleep 90 # let GitHub Pages publish first
           # One flaky connection among thousands of URLs must skip that URL, not end the run under
           # set -e (curl exit 35, 13 Nov): every check retries; a failed one prints 000 and goes on.
           status() { curl -s -o /dev/null -w '%{http_code}' --retry 3 --retry-all-errors -m 20 "$1" || true; }
-          # Prints the URL that answers 200, or a skip line on stderr.
+          # Args: file, the www URL IndexNow gets, the URL probed. Prints the URL to send if the probe
+          # answers 200, or a skip line on stderr.
           check() {
-            f=$1 u=$2 code=$(status "$2")
+            f=$1 u=$2 code=$(status "$3")
             # The proxy serves some pages under their file name (delete-account.html).
-            if [ "$code" != 200 ] && [ "$(status "$BASE/$f")" = 200 ]; then u="$BASE/$f"; code=200; fi
+            if [ "$code" != 200 ] && [ "$3" = "$2" ] && [ "$(status "$BASE/$f")" = 200 ]; then u="$BASE/$f"; code=200; fi
             if [ "$code" = 200 ]; then echo "$u"; else echo "skip $u ($code)" >&2; fi
           }
           export -f status check
@@ -41,8 +44,8 @@ jobs:
           files=$(git diff --name-only "$BEFORE" HEAD -- '*.html' 2>/dev/null || git ls-files '*.html')
           # File → URL lives in scripts/indexnow-url.mjs, tested: a dir's index.html is the dir.
           # 16 checks at a time: one by one, the ~2,650 bank pages took ~15 minutes.
-          printf '%s\n' "$files" | node scripts/indexnow-url.mjs "$BASE" \
-            | xargs -r -P 16 -n 2 bash -c 'check "$0" "$1"' > ok.txt
+          printf '%s\n' "$files" | node scripts/indexnow-url.mjs "$BASE" "$ORIGIN" \
+            | xargs -r -P 16 -n 3 bash -c 'check "$0" "$1" "$2"' > ok.txt
           [ -s ok.txt ] || { echo "nothing proxied changed"; exit 0; }
           echo "$(wc -l < ok.txt) URL(s) answer 200"
           # IndexNow takes at most 10,000 URLs a request.
