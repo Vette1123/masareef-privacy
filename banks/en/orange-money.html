@@ -143,7 +143,7 @@
         <div>
           <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="https://www.mohamedgado.com/projects/masareef">Masareef</a></li><li><a href="https://www.mohamedgado.com/projects/masareef/banks/en">Banks and wallets</a></li><li><a href="https://www.mohamedgado.com/projects/masareef/banks/en/international">International</a></li><li aria-current="page">Orange Money</li></ol></nav>
           <h1 class="title rise">Log your Orange Money spending automatically</h1>
-          <p class="lede rise d1">Masareef reads the payment text Orange Money sends to your phone and logs every transaction in its own Orange Money wallet, with its amount, merchant and time. No typing.</p>
+          <p class="lede rise d1">Masareef reads the payment alert the Orange Money app sends to your phone and logs every transaction in its own Orange Money wallet, with its amount, merchant and time. No typing.</p>
           <nav class="badges" aria-label="Download Masareef">
           <a class="apple" href="https://apps.apple.com/app/id6806735875?ct=bank-orange-money"><img src="../../go-img/app-store-en.svg" width="156" height="52" alt="Download on the App Store" /></a>
           <a class="play" href="https://play.google.com/store/apps/details?id=com.mohamedgado.masareef&amp;referrer=utm_source%3Dsite%26utm_medium%3Dbank_page%26utm_campaign%3Dorange-money"><img src="../../go-img/google-play-en.png" width="197" height="76" alt="Get it on Google Play" /></a>
@@ -169,8 +169,8 @@
         <ol class="steps">
           <li>Install Masareef from Google Play or the App Store, and create a free account to back up your records.</li>
           <li>On Android: open Masareef and allow "Notification access" once. After that it captures alerts even with the app closed.</li>
-          <li>On iPhone: from iOS 27 add the ready-made automation in Shortcuts. Before that, type the transaction as one line such as "coffee 25", or share the message with Masareef.</li>
-          <li>Make sure Orange Money texts reach your phone and your messages app's notifications are on: Masareef reads the message you already receive and never contacts the bank.</li>
+          <li>On iPhone: from iOS 27 add the ready-made automation in Shortcuts; from iOS 16.4 to 26 set up one automation for Orange Money texts (sender <bdi dir="ltr">ORANGEMONEY</bdi>) once.</li>
+          <li>Make sure alerts from the Orange Money app are switched on on your phone: Masareef reads the alert you already receive and never contacts the bank.</li>
           <li>On the first transaction Orange Money sends an alert, and Masareef logs it with its amount, merchant and time.</li>
           <li>Wrong category? Open the transaction and change it, and turn on "Remember this merchant" so this merchant goes there from now on. An unclear alert waits in "To review" for one tap to confirm.</li>
         </ol>
@@ -181,12 +181,12 @@
         <div class="duo">
           <div class="panel">
             <h3>On Android</h3>
-            <p>Let Masareef read notifications once. From then on every Orange Money payment text that shows up in your notifications is logged on its own, even with the app closed.</p>
+            <p>Let Masareef read notifications once. From then on every payment alert from the Orange Money app is logged on its own, even with the app closed.</p>
           </div>
           <div class="panel">
             <h3>On iPhone and iPad</h3>
-            <p>On iOS 27 or later you add one ready-made automation in the Shortcuts app, and Masareef receives alerts from the Orange Money Jordan app and Apple Pay alerts.</p>
-        <p>Before iOS 27, add Orange Money transactions with one line such as “coffee 25”, or share the message with Masareef, and it works out the amount and category.</p>
+            <p>On iOS 27 or later you add one ready-made automation in the Shortcuts app, and Masareef receives alerts from the Orange Money Jordan app, Orange Money text messages and Apple Pay alerts.</p>
+        <p>From iOS 16.4 to 26, SMS from Orange Money reach Masareef through an automation you set up once, and from iOS 17 a second one adds Apple Pay. The bank app's own alerts can't be read before iOS 27, so share the message with Masareef or paste it.</p>
           </div>
         </div>
       </section>
@@ -196,7 +196,9 @@
         <div class="panel">
           <dl class="ids">
           <div><dt>Name in Arabic</dt><dd><span class="tok" dir="rtl">Orange Money</span></dd></div>
+          <div><dt>Android app whose alert is read</dt><dd><a href="https://play.google.com/store/apps/details?id=com.orange.myorange.oci" rel="nofollow noopener"><span class="tok" dir="ltr">com.orange.myorange.oci</span></a> <a href="https://play.google.com/store/apps/details?id=com.orange.myorange.osn" rel="nofollow noopener"><span class="tok" dir="ltr">com.orange.myorange.osn</span></a></dd></div>
           <div><dt>iPhone app</dt><dd><span class="tok" dir="ltr">Orange Money Jordan</span></dd></div>
+          <div><dt>SMS sender name</dt><dd><span class="tok" dir="ltr">ORANGEMONEY</span> <span class="tok" dir="ltr">ORANGE</span></dd></div>
           </dl>
         </div>
       </section>
@@ -217,13 +219,14 @@
         <h2>Questions about Orange Money</h2>
         <div>
           <details><summary>Is Masareef part of Orange Money?</summary><p>No. Masareef is an independent app, not affiliated with or endorsed by Orange Money. It reads the alert your phone already receives.</p></details>
-          <details><summary>Where do I get the Orange Money app?</summary><p>Get the official Orange Money app from the App Store on iPhone, as &quot;Orange Money Jordan&quot;. Then turn its alerts on, and Masareef logs the payments it alerts you about.</p></details>
+          <details><summary>Where do I get the Orange Money app?</summary><p>Get the official Orange Money app from Google Play on Android and from the App Store on iPhone, as &quot;Orange Money Jordan&quot;. Then turn its alerts on, and Masareef logs the payments it alerts you about.</p></details>
           <details><summary>Do I have to enter my bank details?</summary><p>No. No password, no account number, no link to the bank. The app only needs a free Masareef account, to back up your records.</p></details>
           <details><summary>Is the app free?</summary><p>Yes, and the free plan is not a trial: everything you enter, your wallets and budgets, and 25 automatic captures a month. Pro raises that limit and adds features such as wallets in other currencies and a shared family record.</p></details>
-          <details><summary>Does Masareef work with Orange Money on Android?</summary><p>Yes. Once you allow notification access it recognises a Orange Money payment text by the bank&#39;s name in it and logs every transaction on its own.</p></details>
+          <details><summary>Does Masareef work with Orange Money on Android?</summary><p>Yes. Once you allow notification access it reads the Orange Money app&#39;s alert (com.orange.myorange.oci) and logs every transaction on its own, even with the app closed.</p></details>
           <details><summary>Does the Orange Money alert or my data leave my phone?</summary><p>The alert text is never sent to any server; it is read on your device. Masareef never asks for a password and never links your bank account. The free Masareef account only backs up your records.</p></details>
           <details><summary>Which currencies does it log for Orange Money?</summary><p>It logs each transaction in its amount, in any currency you paid in. Wallets in other currencies are a Pro feature.</p></details>
-          <details><summary>Does it work with Orange Money on iPhone?</summary><p>Yes, on iOS 27 or later. Before that, you add transactions with one line or share the message with Masareef.</p></details>
+          <details><summary>Does Masareef read SMS from Orange Money?</summary><p>On iPhone, yes: texts from the sender ORANGEMONEY reach Masareef through an automation you set up once in Shortcuts, from iOS 16.4. On Android it reads the Orange Money app&#39;s notification.</p></details>
+          <details><summary>Does it work with Orange Money on iPhone?</summary><p>Yes. iPhone needs iOS 16.4 or later, and you set it up once in the Shortcuts app. On iOS 27 it also reads alerts from the Orange Money Jordan app.</p></details>
           <details><summary>What about my other banks and wallets?</summary><p>Masareef reads alerts from 1,200+ banks and wallets around the world, and each bank or wallet gets its own wallet in the app.</p></details>
         </div>
       </section>
