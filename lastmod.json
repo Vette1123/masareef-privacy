@@ -1,5 +1,4 @@
 {
- "404.html": "2026-11-19",
  "banks/365bank-sk.html": "2026-11-19",
  "banks/aaib.html": "2026-11-19",
  "banks/abanca-es.html": "2026-11-19",
@@ -2630,7 +2629,6 @@
  "banks/ziraat-tr.html": "2026-11-19",
  "banks/ziraatkatilim-tr.html": "2026-11-19",
  "banks/zkb-ch.html": "2026-11-19",
- "delete-account.html": "2026-11-19",
  "features/auto-log-bank-sms.html": "2026-11-19",
  "features/debt-tracker.html": "2026-11-19",
  "features/en/auto-log-bank-sms.html": "2026-11-19",
@@ -2656,6 +2654,8 @@
  "go-ar.html": "2026-11-19",
  "go.html": "2026-11-19",
  "go.template.html": "2026-11-19",
+ "404.html": "2026-11-19",
+ "delete-account.html": "2026-11-19",
  "index.html": "2026-11-19",
  "partials/footer.ar.html": "2026-11-19",
  "partials/footer.en.html": "2026-11-19",
