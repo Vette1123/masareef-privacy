@@ -22,3 +22,4 @@ One file per unit of work: `YYYY-MM-DD-slug.md`, sections What / Mistakes / What
 | 2026-11-17 | [build-go runs from any folder](2026-11-17-build-go-cwd.md) | Scripts resolve the repo from import.meta.url, never cwd; --check compares through CRLF normalisation. |
 | 2026-11-17 | [IndexNow pinged nobody on full-site pushes](2026-11-17-indexnow-arg-too-long.md) | Bodies that grow with page count go to curl as a file (`--data-binary @f`); check the IndexNow run is green after every SEO push |
 | 2026-11-19 | [Vercel analytics 404s after the Cloudflare move](2026-11-19-vercel-analytics-to-posthog-beacon.md) | Send analytics to an endpoint you own |
+| 2026-11-19 | [Invite code above the fold](2026-11-19-invite-code-above-fold.md) | What a link exists to show goes first in the hero, revealed by an inline script right after it; check every needed element at 375x667 and 320x568 |

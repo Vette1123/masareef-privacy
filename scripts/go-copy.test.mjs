@@ -49,6 +49,22 @@ test('go pages carry the invite-code card and its matcher', () => {
     assert.ok(html.includes('id="refcode" hidden'), f + ': card must be hidden by default');
     assert.ok(html.includes(re.source), f + ': page matcher drifted from the tested one');
   }
+  for (const f of ['go.html', 'go-ar.html']) {
+    // The invited visitor came for the code: it is the hero's first block, above the headline
+    // (on a 375x667 phone it used to start at 585px, below the fold), revealed by a script that
+    // runs right after it so it is there at first paint instead of shoving the page down later.
+    const html = readFileSync(new URL('../' + f, import.meta.url), 'utf8');
+    const card = html.indexOf('id="refcode"');
+    assert.ok(card > 0 && card < html.indexOf('<h1'), f + ': invite card must come before the h1');
+    const after = html.slice(card, html.indexOf('<h1'));
+    assert.ok(/<script>[\s\S]*refcode[\s\S]*<\/script>/.test(after), f + ': card must be revealed by a script placed before the h1');
+    assert.match(html, /\.refcode code ?\{[^}]*white-space: ?nowrap/, f + ': a 12-character code must stay on one line');
+    // The code and the install buttons are the invited visitor's whole job: the badges follow the
+    // card (the card alone pushed them to 676px on a 667px-tall phone). Nobody else's hero changes.
+    assert.ok(after.includes("classList.add('invited')"), f + ': the reveal must mark the hero copy as invited');
+    assert.match(html, /\.invited \.badges ?\{[^}]*order: ?-1/, f + ': invited hero must lift the badges under the card');
+    assert.match(html, /\.invited \.refcode ?\{[^}]*order: ?-2/, f + ': invited hero must keep the card first');
+  }
   assert.equal(re.exec('?s=ref-dxwwgvkk')[1], 'dxwwgvkk');
   assert.equal(re.exec('?s=REF-AbC123&x=1')[1], 'AbC123');
   for (const bad of ['', '?s=ref-abc', '?s=ref-abcdefghijklm', '?s=ref-ab_cd', '?s=share', '?s=xref-abcd']) assert.equal(re.exec(bad), null, bad);

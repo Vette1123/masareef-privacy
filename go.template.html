@@ -44,17 +44,23 @@
       html[lang="ar"] .big { font-family: var(--arabic); line-height: 1.22; letter-spacing: 0; font-weight: 800; font-size: clamp(38px, 5.6vw, 76px); }
       .hero .lede { max-width: 44ch; margin-top: 22px; }
       .hero .badges { margin-top: 28px; }
-      /* A friend's invite code, shown only when ?s=ref-<code> arrives (hidden by default: no shift for anyone else). */
-      .refcode { margin-top: 22px; max-width: 420px; padding: 16px 18px; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); }
+      /* A friend's invite code, shown only when ?s=ref-<code> arrives (hidden by default: no shift for anyone else).
+         It leads the hero: the invited visitor came for the code, so it sits above the headline. */
+      .refcode { margin-bottom: 22px; max-width: 420px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); }
       .refcode[hidden] { display: none; }
-      .refcode h2 { font: 700 14px/1.4 var(--ui); color: var(--teal); letter-spacing: 0.01em; margin: 0 0 8px; }
+      .refcode h2 { font: 700 14px/1.4 var(--ui); color: var(--teal); letter-spacing: 0.01em; margin: 0 0 6px; }
       html[lang="ar"] .refcode h2 { font-family: var(--arabic); }
       .refcode .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-      .refcode code { font: 800 28px/1.2 ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: 0.14em; color: var(--ink); user-select: all; direction: ltr; unicode-bidi: isolate; overflow-wrap: anywhere; }
+      /* 12 characters (the longest code) stay on one line beside the button down to a 320px phone. */
+      .refcode code { min-width: 0; font: 800 clamp(18px, 5.6vw, 26px)/1.2 ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: 0.08em; color: var(--ink); user-select: all; direction: ltr; unicode-bidi: isolate; white-space: nowrap; font-variant-numeric: tabular-nums; }
       .refcode button { flex: none; font: 700 14px/1 var(--ui); color: var(--teal); background: transparent; border: 1px solid var(--teal); border-radius: 999px; padding: 10px 16px; cursor: pointer; transition: transform 160ms var(--ease); -webkit-tap-highlight-color: transparent; }
       html[lang="ar"] .refcode button { font-family: var(--arabic); }
       .refcode button:active { transform: scale(0.97); }
-      .refcode p { margin: 10px 0 0; font-size: 14px; line-height: 1.5; color: var(--soft); }
+      /* Invited: the code and the install buttons are the whole job, so the badges follow the card and the pitch comes after. */
+      .invited { display: flex; flex-direction: column; }
+      .invited .refcode { order: -2; margin-bottom: 16px; }
+      .hero .invited .badges { order: -1; margin: 0 0 28px; }
+      .refcode p { margin: 8px 0 0; font-size: 13px; line-height: 1.5; color: var(--soft); }
 
       /* ---- facts ---- */
       .facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-block: 1px solid var(--line); }
@@ -181,14 +187,34 @@
       <main>
       <section class="hero">
         <div>
-          <h1 class="rise"><span class="kicker">{{KICKER}}</span><span class="big">{{H1A}} <span>{{H1B}}</span></span></h1>
-          <p class="lede rise d1">{{LEDE}}</p>
-          <nav data-place="hero" class="badges rise d1" aria-label="{{NAV_LABEL}}">{{BADGES}}</nav>
           <div class="refcode" id="refcode" hidden>
             <h2>{{REF_H}}</h2>
             <div class="row"><code id="refcode-v"></code><button type="button" id="refcode-copy" data-done="{{REF_DONE}}">{{REF_COPY}}</button></div>
             <p>{{REF_P}}</p>
           </div>
+          <script>
+            // A friend's invite code (`?s=ref-<code>`), shown for the visitor to type into the app:
+            // iPhone has no install referrer, and Android's can be lost. It runs here, before the
+            // headline is parsed, so the card is there at first paint instead of pushing the page down.
+            (function () {
+              var r = /[?&]s=ref-([a-z0-9]{4,12})(?:&|#|$)/i.exec(location.search);
+              if (!r) return;
+              var box = document.getElementById('refcode'), val = document.getElementById('refcode-v'), btn = document.getElementById('refcode-copy');
+              var code = r[1].toUpperCase(), label = btn.textContent;
+              val.textContent = code;
+              box.hidden = false;
+              box.parentNode.classList.add('invited');
+              btn.addEventListener('click', function () {
+                var done = function () { btn.textContent = btn.dataset.done; setTimeout(function () { btn.textContent = label; }, 2000); };
+                var pick = function () { var g = getSelection(), rg = document.createRange(); rg.selectNodeContents(val); g.removeAllRanges(); g.addRange(rg); };
+                if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(code).then(done, pick);
+                else pick();
+              });
+            })();
+          </script>
+          <h1 class="rise"><span class="kicker">{{KICKER}}</span><span class="big">{{H1A}} <span>{{H1B}}</span></span></h1>
+          <p class="lede rise d1">{{LEDE}}</p>
+          <nav data-place="hero" class="badges rise d1" aria-label="{{NAV_LABEL}}">{{BADGES}}</nav>
         </div>
         <div class="demo">{{DEMO}}</div>
         <a class="cue" href="#how">{{CUE}}<span class="line" aria-hidden="true"></span></a>
@@ -254,22 +280,6 @@
           });
           document.querySelectorAll('.badges .apple').forEach(function (a) {
             a.href = a.href.replace(/([?&])ct=[^&]*/, '$1ct=' + encodeURIComponent(tag + '-share'));
-          });
-        }
-
-        // A friend's invite code (`?s=ref-<code>`) is shown for the visitor to type into the app:
-        // iPhone has no install referrer, and Android's can be lost. Attribution above is untouched.
-        var r = /[?&]s=ref-([a-z0-9]{4,12})(?:&|#|$)/i.exec(location.search);
-        if (r) {
-          var box = document.getElementById('refcode'), val = document.getElementById('refcode-v'), btn = document.getElementById('refcode-copy');
-          var code = r[1].toUpperCase(), label = btn.textContent;
-          val.textContent = code;
-          box.hidden = false;
-          btn.addEventListener('click', function () {
-            var done = function () { btn.textContent = btn.dataset.done; setTimeout(function () { btn.textContent = label; }, 2000); };
-            var pick = function () { var g = getSelection(), rg = document.createRange(); rg.selectNodeContents(val); g.removeAllRanges(); g.addRange(rg); };
-            if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(code).then(done, pick);
-            else pick();
           });
         }
 
