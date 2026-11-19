@@ -77,7 +77,7 @@
         "alternateName": "سياسة الخصوصية لتطبيق مصاريف",
         "url": "https://www.mohamedgado.com/projects/masareef/privacy",
         "inLanguage": ["en", "ar"],
-        "dateModified": "2026-11-01",
+        "dateModified": "2026-11-19",
         "isPartOf": { "@id": "https://www.mohamedgado.com/#website" },
         "about": {
           "@type": "MobileApplication",
@@ -191,7 +191,7 @@
           page explains exactly what it stores, what it sends, and to whom.
         </p>
         <p class="meta">
-          Last updated: <b><time datetime="2026-11-06">6 November 2026</time></b> · Covers app version
+          Last updated: <b><time datetime="2026-11-19">19 November 2026</time></b> · Covers app version
           <b>1.145.0</b> and later · Package <code>com.mohamedgado.masareef</code>
         </p>
         </div>
@@ -910,6 +910,14 @@
           device. An export is deliberately unencrypted so you can read and restore it, which also
           means it contains your financial detail in plain form. Keep it somewhere you trust.
         </p>
+        <h3>Daily copy in your own Google Drive (Pro)</h3>
+        <p>
+          If you turn on daily backup to Google Drive in Settings, once a day the app puts the same
+          backup file in your own Drive and keeps the last 10 copies. We never receive them.
+          <strong>Starting with the next app release</strong>, each new copy is encrypted
+          (AES-256-GCM) with a key tied to your Masareef account, so it opens only in Masareef, signed
+          in as you. Copies made before that release stay as they are until newer ones replace them.
+        </p>
         <h3>Receipt backup to your own Google Drive</h3>
         <p>
           Receipt photos stay on your phone unless you turn on <b>Back up receipts</b> in Settings.
@@ -1128,12 +1136,27 @@
             token sits in the OS keystore.
           </li>
           <li>
+            <strong>Starting with the next app release</strong>, the database on your phone and the
+            store that holds auto-track captures are also <strong>encrypted</strong> (SQLCipher and
+            AES-256). The key is random, made on your phone and kept in the OS keystore. A copy of it,
+            locked with a key tied to your account, sits beside the data, so a new phone or a reset
+            keystore needs only your sign-in. The first launch after the update encrypts what is
+            already there and checks every record before it removes the unencrypted file.
+          </li>
+          <li>
+            On our server, your synced records are <strong>encrypted at rest</strong> with AES-256-GCM.
+            The key is a server secret kept apart from the database, so a copy of the database on its
+            own does not reveal your records. One exception: an older table holding records that some
+            accounts synced before September 2026 is not encrypted yet.
+          </li>
+          <li>
             On the server, passwords are stored only as salted one-way hashes (section 2), every sync
             query is scoped to your own user id, and the API keys for the map and place services stay
             server side, never inside the app.
           </li>
           <li>
-            Synced records are <strong>not end-to-end encrypted</strong>. The operator has a
+            Synced records are <strong>not end-to-end encrypted</strong>: our server holds the keys,
+            which is how a new phone restores with only a sign-in. The operator has a
             token-protected admin tool that can export one account's synced records. Each export is
             logged.
           </li>
@@ -1466,7 +1489,7 @@
           التطبيق، وما يرسله، وإلى مَن.
         </p>
         <p class="meta">
-          آخر تحديث: <b><time datetime="2026-11-06">٦ نوفمبر ٢٠٢٦</time></b> · تغطي الإصدار
+          آخر تحديث: <b><time datetime="2026-11-19">١٩ نوفمبر ٢٠٢٦</time></b> · تغطي الإصدار
           <b>1.145.0</b> وما بعده · معرّف الحزمة <code>com.mohamedgado.masareef</code>
         </p>
         </div>
@@ -2113,6 +2136,14 @@
           مقصود لتبقى قراءته واستعادته ممكنة، وهذا يعني أنه يحتوي تفاصيلك المالية بشكل صريح. احفظه في
           مكان تثق به.
         </p>
+        <h3>نسخة يومية في Google Drive الخاص بك (Pro)</h3>
+        <p>
+          إذا فعّلت النسخ الاحتياطي اليومي إلى Google Drive من الإعدادات، يضع التطبيق مرة كل يوم ملف
+          النسخة الاحتياطية نفسه في Drive الخاص بك ويحتفظ بآخر ١٠ نسخ، ولا تصلنا أبدًا.
+          <strong>بدءًا من الإصدار القادم من التطبيق</strong>، تُشفَّر كل نسخة جديدة (AES-256-GCM) بمفتاح
+          مرتبط بحسابك في مصاريف، فلا تُفتح إلا داخل مصاريف وأنت مسجّل الدخول بحسابك. والنسخ التي
+          صُنعت قبل ذلك الإصدار تبقى كما هي حتى تحلّ محلها نسخ أحدث.
+        </p>
         <h3>نسخ الإيصالات إلى Google Drive الخاص بك</h3>
         <p>
           تبقى صور الإيصالات على هاتفك ما لم تفعّل <b>نسخ الإيصالات احتياطيًا</b> من الإعدادات. وإذا
@@ -2318,12 +2349,27 @@
             النظام عن بقية التطبيقات، ورمز جلستك في مخزن مفاتيح النظام.
           </li>
           <li>
+            <strong>بدءًا من الإصدار القادم من التطبيق</strong>، تصبح قاعدة البيانات على هاتفك والمخزن
+            الذي يحفظ مسوّدات التتبّع التلقائي <strong>مشفّرة</strong> أيضًا (SQLCipher وAES-256).
+            المفتاح عشوائي، يُنشأ على هاتفك ويُحفظ في مخزن مفاتيح النظام، ونسخة منه مقفلة بمفتاح مرتبط
+            بحسابك محفوظة بجوار البيانات، فلا يحتاج هاتف جديد أو مخزن مفاتيح أُعيد ضبطه إلا إلى تسجيل
+            دخولك. وأول تشغيل بعد التحديث يشفّر ما هو موجود بالفعل ويتحقق من كل سجل قبل أن يحذف الملف
+            غير المشفّر.
+          </li>
+          <li>
+            على خادمنا، سجلاتك المزامَنة <strong>مشفّرة أثناء التخزين</strong> بـ AES-256-GCM. المفتاح
+            سرّ على الخادم محفوظ بعيدًا عن قاعدة البيانات، فنسخة من قاعدة البيانات وحدها لا تكشف
+            سجلاتك. استثناء واحد: جدول أقدم يضم سجلات زامنتها بعض الحسابات قبل سبتمبر ٢٠٢٦ لم يُشفَّر
+            بعد.
+          </li>
+          <li>
             على الخادم، تُحفظ كلمات المرور كبصمات مملّحة أحادية الاتجاه فقط (القسم ٢)، وكل استعلام
             مزامنة محصور بمعرّف المستخدم الخاص بك، ومفاتيح خدمات الخرائط والأماكن تبقى على الخادم ولا
             توجد داخل التطبيق أبدًا.
           </li>
           <li>
-            السجلات المزامَنة <strong>غير مشفّرة من طرف إلى طرف</strong>. ولدى المشغّل أداة إدارة محمية برمز
+            السجلات المزامَنة <strong>غير مشفّرة من طرف إلى طرف</strong>: خادمنا يحتفظ بالمفاتيح، وبهذا
+            يستعيد الهاتف الجديد بياناتك بتسجيل الدخول فقط. ولدى المشغّل أداة إدارة محمية برمز
             تستطيع تصدير السجلات المزامَنة لحساب واحد، ويُسجَّل كل تصدير.
           </li>
           <li>
