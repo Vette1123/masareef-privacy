@@ -41,62 +41,16 @@
           document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) { m.content = t === 'dark' ? '#07121c' : '#f3f8f6'; });
         }
       } catch (e) {}
-      // Visits on mohamedgado.com, which proxies every page here, count in its own cookieless
-      // analytics: one pageview beacon to www.mohamedgado.com/ingest/e, which forwards it to
-      // PostHog EU (the path the portfolio's own pages use). The github.io copies send nothing.
-      // Absolute www URL: on the app subdomain /ingest/e answers 301 and a beacon never follows it.
-      // A link's ?s=<source> (masareef.mohamedgado.com/?s=ig) arrives as utm_source. The owner's
-      // opt-out (?va-ignore=1, same key as the portfolio) and lab/headless agents send nothing.
+      // PostHog: on mohamedgado.com (www and the app subdomains) every page loads www's /t.js,
+      // the same tracker the portfolio runs (lib/tracker-entry.ts there): pageviews, time on page
+      // and scroll depth, link and button clicks, store and download clicks, errors. Cookieless,
+      // EU servers, through www's own ingest path. ?s=<source> on a link arrives as
+      // utm_source. The github.io copies load nothing.
       if (/(^|\.)mohamedgado\.com$/.test(location.hostname)) {
-        try {
-          var optOut = false;
-          try {
-            var flag = new URLSearchParams(location.search).get('va-ignore');
-            if (flag === '1') localStorage.setItem('va-ignore', '1');
-            if (flag === '0') localStorage.removeItem('va-ignore');
-            optOut = localStorage.getItem('va-ignore') === '1';
-          } catch (e) {}
-          var lab = navigator.webdriver || /Chrome-Lighthouse|HeadlessChrome|PTST|GTmetrix/i.test(navigator.userAgent);
-          if (!optOut && !lab) {
-            // The subdomain install page serves in place; it counts under its canonical www URL.
-            var c = location.hostname !== 'www.mohamedgado.com' && document.querySelector('link[rel="canonical"]');
-            var url = c ? c.href + location.search : location.href.replace(/#.*$/, '');
-            var u = new URL(url);
-            var props = {
-              $current_url: url,
-              $host: u.host,
-              $pathname: u.pathname,
-              $referrer: document.referrer || '$direct',
-              $raw_user_agent: navigator.userAgent,
-              $browser_language: navigator.language,
-              $timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-              $screen_width: screen.width,
-              $screen_height: screen.height,
-              $viewport_width: innerWidth,
-              $viewport_height: innerHeight,
-              $lib: 'web-beacon',
-              area: 'traffic',
-              app: 'masareef',
-              $cookieless_mode: true,
-              $process_person_profile: false
-            };
-            ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (k) {
-              var v = u.searchParams.get(k);
-              if (v) props[k] = v;
-            });
-            var s = /^[a-z0-9_-]{1,40}$/i.exec(u.searchParams.get('s') || '');
-            if (s && !props.utm_source) props.utm_source = s[0].toLowerCase();
-            var body = JSON.stringify({
-              api_key: 'phc_mTuqCSZxECXYHxrPbEK5bXkxKUpEG32frvfZNsaMS6U7',
-              event: '$pageview',
-              distinct_id: '$posthog_cookieless',
-              timestamp: new Date().toISOString(),
-              properties: props
-            });
-            var sent = navigator.sendBeacon && navigator.sendBeacon('https://www.mohamedgado.com/ingest/e', body);
-            if (!sent) fetch('https://www.mohamedgado.com/ingest/e', { method: 'POST', body: body, keepalive: true, mode: 'no-cors' }).catch(function () {});
-          }
-        } catch (e) {}
+        var t = document.createElement('script');
+        t.src = 'https://www.mohamedgado.com/t.js';
+        t.async = true;
+        document.head.appendChild(t);
       }
     </script><!--/partial:head.html-->
     <!--partial:lang-pick.js--><script>
@@ -163,7 +117,7 @@
     <style>.hero{position: relative;isolation: isolate;padding-block: 32px 56px;display: grid;grid-template-columns: minmax(0,1.08fr) minmax(0,0.92fr);gap: 48px;align-items: center}.hero::before,.hero::after{content: "";position: absolute;z-index: -1;pointer-events: none;inset-inline: calc(50% - 50vw)}.hero::before{top: -120px;bottom: -200px;background: radial-gradient(min(900px,80vw) 460px at 22% 26%,var(--glow-a),transparent 70%),radial-gradient(min(800px,70vw) 420px at 80% 12%,var(--glow-b),transparent 70%),radial-gradient(ellipse 60% 13% at 50% 79%,var(--fog),transparent);-webkit-mask-image: var(--rise);mask-image: var(--rise)}.kicker{display: block;font: 700 15px/1.4 var(--ui);color: var(--teal);letter-spacing: 0.01em;margin-bottom: 14px}html[lang="ar"] .kicker{font-family: var(--arabic)}.big{display: block;font-family: var(--display);font-size: clamp(40px,6.2vw,86px);line-height: 0.99;letter-spacing: -0.045em;font-weight: 850}.big span{color: var(--faint)}html[lang="ar"] .big{font-family: var(--arabic);line-height: 1.22;letter-spacing: 0;font-weight: 800;font-size: clamp(38px,5.6vw,76px)}.hero .lede{max-width: 44ch;margin-top: 22px}.hero .badges{margin-top: 28px}.refcode{margin-top: 22px;max-width: 420px;padding: 16px 18px;border: 1px solid var(--line);border-radius: 16px;background: var(--panel)}.refcode[hidden]{display: none}.refcode h2{font: 700 14px/1.4 var(--ui);color: var(--teal);letter-spacing: 0.01em;margin: 0 0 8px}html[lang="ar"] .refcode h2{font-family: var(--arabic)}.refcode .row{display: flex;align-items: center;justify-content: space-between;gap: 12px}.refcode code{font: 800 28px/1.2 ui-monospace,"SF Mono",Menlo,Consolas,monospace;letter-spacing: 0.14em;color: var(--ink);user-select: all;direction: ltr;unicode-bidi: isolate;overflow-wrap: anywhere}.refcode button{flex: none;font: 700 14px/1 var(--ui);color: var(--teal);background: transparent;border: 1px solid var(--teal);border-radius: 999px;padding: 10px 16px;cursor: pointer;transition: transform 160ms var(--ease);-webkit-tap-highlight-color: transparent}html[lang="ar"] .refcode button{font-family: var(--arabic)}.refcode button:active{transform: scale(0.97)}.refcode p{margin: 10px 0 0;font-size: 14px;line-height: 1.5;color: var(--soft)}.facts{display: grid;grid-template-columns: repeat(4,minmax(0,1fr));border-block: 1px solid var(--line)}.facts div{padding: 22px 18px;border-inline-start: 1px solid var(--line);min-width: 0}.facts div:first-child{border-inline-start: 0;padding-inline-start: 0}.facts b{display: block;font-size: 22px;letter-spacing: -0.01em;font-variant-numeric: tabular-nums}.facts span{font-size: 14px;color: var(--soft)}.demo{position: relative;justify-self: center;width: min(100%,400px);isolation: isolate}.demo picture{position: relative;display: flex;justify-content: center}.demo picture::after,.feat picture::after{content: "";position: absolute;z-index: -1;left: 50%;bottom: -18px;translate: -50% 0;width: 70%;height: 64px;border-radius: 50%;background: radial-gradient(closest-side,rgba(4,14,22,0.38),transparent);pointer-events: none}.demo img{width: min(76%,300px);height: auto;margin-top: 40px}.card{position: absolute;z-index: 3;inset-inline: 0;display: grid;grid-template-columns: 40px minmax(0,1fr) auto;gap: 12px;align-items: center;padding: 14px 16px;border-radius: 22px;border: 1px solid var(--line);box-shadow: 0 24px 48px -22px rgba(15,29,39,0.45)}.card .ic{width: 40px;height: 40px;border-radius: 11px;display: grid;place-items: center;font: 800 12px var(--ui);color: #fff;background: #0b4a8b}.card b{display: block;font-size: 14px;line-height: 1.3}.card small{display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;color: var(--soft);font-size: 13px;line-height: 1.4}.alert{top: 0;background: var(--panel)}.alert time{align-self: start;color: var(--faint);font-size: 12px}.txn{top: 54%;inset-inline: 18px;background: var(--panel);border-color: color-mix(in srgb,var(--teal) 45%,var(--line))}.txn .ic{background: var(--teal);color: var(--bg);font-size: 18px}.txn small{-webkit-line-clamp: 1}.txn .tag{display: block;margin-top: 2px;font: 700 11px var(--ui);color: var(--teal);letter-spacing: 0.04em;text-transform: uppercase}html[lang="ar"] .txn .tag{font-family: var(--arabic);letter-spacing: 0}.txn .amt{font: 800 17px var(--display);color: var(--red);white-space: nowrap;font-variant-numeric: tabular-nums;direction: ltr;unicode-bidi: isolate}.txn .amt span{font-size: 11px;font-weight: 600;color: var(--faint);margin-inline-end: 4px}.cue{display: none}@media (min-width: 861px){.cue{position: absolute;bottom: 10px;left: 50%;translate: -50% 0;display: grid;justify-items: center;gap: 12px;padding: 8px 18px;font: 600 11px/1 var(--ui);letter-spacing: 0.18em;text-transform: uppercase;color: var(--faint);text-decoration: none;white-space: nowrap;transition: opacity 400ms var(--ease),color 200ms var(--ease);-webkit-tap-highlight-color: transparent}html[lang="ar"] .cue{font: 600 13px/1 var(--arabic);letter-spacing: 0;text-transform: none}.cue:hover{color: var(--ink)}.cue .line{position: relative;width: 1px;height: 48px;overflow: hidden;background: linear-gradient(var(--line),color-mix(in srgb,var(--teal) 30%,transparent))}.cue .line::after{content: "";position: absolute;left: 0;top: 0;width: 1px;height: 18px;background: linear-gradient(transparent,var(--teal));transform: translateY(-18px)}.scrolled .cue{opacity: 0;pointer-events: none}}@media (min-width: 861px) and (max-height: 559px){.cue{display: none}}@media (prefers-reduced-motion: no-preference){.cue .line::after{animation: run 2.4s var(--ease) infinite}@keyframes run{0%{transform: translateY(-18px);opacity: 0}15%{opacity: 1}75%{transform: translateY(48px);opacity: 1}100%{transform: translateY(48px);opacity: 0}}}.how{padding-block: 72px 24px}.how>h2,.feat h2,.banks h2{font-family: var(--display);font-size: clamp(30px,4vw,48px);line-height: 1.06;letter-spacing: -0.03em}html[lang="ar"] .how>h2,html[lang="ar"] .feat h2,html[lang="ar"] .banks h2{font-family: var(--arabic);line-height: 1.35;letter-spacing: 0}.how>p{margin-top: 14px;font-size: 18px;color: var(--soft);max-width: 60ch}.how ol{list-style: none;margin: 36px 0 0;padding: 0;display: grid;grid-template-columns: repeat(3,minmax(0,1fr));counter-reset: s;border-block: 1px solid var(--line)}.how li{counter-increment: s;padding: 28px 24px;border-inline-start: 1px solid var(--line);min-width: 0}.how li:first-child{border-inline-start: 0;padding-inline-start: 0}.how li::before{content: "0" counter(s);display: block;margin-bottom: 10px;font: 800 13px var(--ui);color: var(--teal);letter-spacing: 0.08em}.how h3{font-size: 19px;line-height: 1.3}.how li p{margin-top: 6px;font-size: 15px;color: var(--soft)}.feat{display: grid;grid-template-columns: minmax(0,1fr) minmax(0,1fr);gap: 56px;align-items: center;padding-block: 48px;border-bottom: 1px solid var(--line)}.feat:nth-child(even) picture{order: -1}.feat .k{font: 700 14px var(--ui);color: var(--teal)}html[lang="ar"] .feat .k{font-family: var(--arabic);font-size: 15px}.feat h2{margin-top: 10px}.feat p{margin-top: 14px;font-size: 18px;color: var(--soft);max-width: 44ch}.feat picture{position: relative;isolation: isolate;justify-self: center;width: min(100%,270px)}.banks{padding-block: 64px 16px}.banks p{margin-top: 12px;color: var(--soft);max-width: 60ch}.feat,.banks{content-visibility: auto;contain-intrinsic-size: auto 640px}@media (prefers-reduced-motion: no-preference){.alert{animation: drop 6.5s var(--ease) infinite}.txn{animation: land 6.5s var(--ease) infinite}@keyframes drop{0%{opacity: 0;transform: translateY(-22px) scale(0.96)}7%,40%{opacity: 1;transform: none}52%,100%{opacity: 0;transform: translateY(90px) scale(0.9)}}@keyframes land{0%,44%{opacity: 0;transform: translateY(-46px) scale(0.94)}56%,93%{opacity: 1;transform: none}100%{opacity: 0;transform: none}}}@media (min-width: 861px){.hero{--ph: min(300px,calc((100svh - 150px) * 480 / 981));min-height: calc(100svh - 80px);padding-block: 8px 24px}.big{font-size: clamp(34px,min(6.2vw,10svh),86px)}html[lang="ar"] .big{font-size: clamp(32px,min(5.6vw,9svh),76px)}.kicker{margin-bottom: min(14px,1.6svh)}.hero .lede{margin-top: min(22px,2.6svh);font-size: clamp(15px,min(1.6vw,2.6svh),19px)}.hero .badges{margin-top: min(28px,3.2svh)}.demo{width: min(100%,400px,max(340px,calc(var(--ph) + 120px)))}.demo img{width: var(--ph);margin-top: min(40px,5svh)}}@media (max-width: 860px){.hero,.feat{grid-template-columns: minmax(0,1fr)}.hero{gap: 36px;padding-block: 20px 40px}.feat{gap: 32px;padding-block: 48px}.feat:nth-child(even) picture{order: 0}.feat picture{width: min(72%,280px)}.how{padding-block: 48px 8px}.how ol{grid-template-columns: minmax(0,1fr)}.how li,.how li:first-child{padding: 22px 0;border-inline-start: 0}.how li + li{border-top: 1px solid var(--line)}.facts{grid-template-columns: repeat(2,minmax(0,1fr))}.facts div:nth-child(3){border-inline-start: 0;padding-inline-start: 0}.facts div:nth-child(n + 3){border-top: 1px solid var(--line)}.hero .badges{width: 100%}}@media (max-width: 380px){.card{padding: 12px;gap: 10px;grid-template-columns: 36px minmax(0,1fr) auto}.card .ic{width: 36px;height: 36px}.txn{inset-inline: 8px}.facts div{padding: 18px 12px}.facts div:first-child,.facts div:nth-child(3){padding-inline-start: 0}}</style>
   </head>
   <body>
-    <!--partial:header.html--><header class="top">
+    <!--partial:header.html--><header class="top" data-place="header">
   <div class="wrap top-in">
   <a class="brand" lang="en" href="https://www.mohamedgado.com/projects/masareef/go"><img src="https://www.mohamedgado.com/projects/masareef/go-img/icon-96.webp" width="40" height="40" alt="" />Masareef <small lang="ar">مصاريف</small></a>
   <a class="brand" lang="ar" href="https://www.mohamedgado.com/projects/masareef/go-ar"><img src="https://www.mohamedgado.com/projects/masareef/go-img/icon-96.webp" width="40" height="40" alt="" />مصاريف <small lang="en">Masareef</small></a>
@@ -188,7 +142,7 @@
         <div>
           <h1 class="rise"><span class="kicker">Masareef: Automatic Expense Tracker</span><span class="big">Your bank sends an alert. <span>Masareef writes it down.</span></span></h1>
           <p class="lede rise d1">Masareef turns your bank's payment alerts into transactions on your phone, so there is no daily typing. 1,200+ banks and wallets, any currency.</p>
-          <nav class="badges rise d1" aria-label="Download Masareef"><a class="apple" href="https://apps.apple.com/app/id6806735875?ct=card-qr"><img src="https://www.mohamedgado.com/projects/masareef/go-img/app-store-en.svg" width="156" height="52" alt="Download on the App Store" /></a><a class="play" href="https://play.google.com/store/apps/details?id=com.mohamedgado.masareef&amp;referrer=utm_source%3Dcard%26utm_medium%3Dqr"><img src="https://www.mohamedgado.com/projects/masareef/go-img/google-play-en.png" width="197" height="76" alt="Get it on Google Play" /></a></nav>
+          <nav data-place="hero" class="badges rise d1" aria-label="Download Masareef"><a class="apple" href="https://apps.apple.com/app/id6806735875?ct=card-qr"><img src="https://www.mohamedgado.com/projects/masareef/go-img/app-store-en.svg" width="156" height="52" alt="Download on the App Store" /></a><a class="play" href="https://play.google.com/store/apps/details?id=com.mohamedgado.masareef&amp;referrer=utm_source%3Dcard%26utm_medium%3Dqr"><img src="https://www.mohamedgado.com/projects/masareef/go-img/google-play-en.png" width="197" height="76" alt="Get it on Google Play" /></a></nav>
           <div class="refcode" id="refcode" hidden>
             <h2>Your friend's code</h2>
             <div class="row"><code id="refcode-v"></code><button type="button" id="refcode-copy" data-done="Copied">Copy</button></div>
@@ -236,7 +190,7 @@
       <nav class="badges" aria-label="Download Masareef"><a class="apple" href="https://apps.apple.com/app/id6806735875?ct=card-qr"><img src="https://www.mohamedgado.com/projects/masareef/go-img/app-store-en.svg" width="156" height="52" alt="Download on the App Store" /></a><a class="play" href="https://play.google.com/store/apps/details?id=com.mohamedgado.masareef&amp;referrer=utm_source%3Dcard%26utm_medium%3Dqr"><img src="https://www.mohamedgado.com/projects/masareef/go-img/google-play-en.png" width="197" height="76" alt="Get it on Google Play" /></a></nav>
     </section>
 
-    <!--partial:footer.en.html--><footer class="sitefoot wrap" lang="en" dir="ltr">
+    <!--partial:footer.en.html--><footer data-place="footer" class="sitefoot wrap" lang="en" dir="ltr">
       <div class="sf-brand">
         <div>
           <a class="brand" href="https://www.mohamedgado.com/projects/masareef/go"><img src="https://www.mohamedgado.com/projects/masareef/go-img/icon-96.webp" width="40" height="40" alt="" loading="lazy" decoding="async" />Masareef <small lang="ar">مصاريف</small></a>
@@ -261,7 +215,7 @@
       <nav aria-label="Masareef">
         <p class="sf-h">Masareef</p>
         <ul>
-          <li><a href="https://www.mohamedgado.com/projects/masareef/go" aria-current="page">Download Masareef</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/go">Download Masareef</a></li>
           <li><a href="https://www.mohamedgado.com/projects/masareef/go-ar" lang="ar" hreflang="ar">تحميل مصاريف</a></li>
           <li><a href="https://www.mohamedgado.com/projects/masareef/banks/en">All supported banks</a></li>
           <li><a href="https://www.mohamedgado.com/projects/masareef">How it is built</a></li>

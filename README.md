@@ -67,7 +67,7 @@ independently of app releases. Keeping it here means:
 
 - **Self-contained.** No web fonts, no CDN, no scripts from other hosts, no cookies.
 - **Counted, not tracked.** On mohamedgado.com (which proxies these pages) `partials/head.html`
-  sends one cookieless pageview beacon to www.mohamedgado.com/ingest/e (PostHog EU; Vercel Analytics 404s since the Cloudflare move), so visits show in its
+  loads www's shared tracker (https://www.mohamedgado.com/t.js: pageviews, time on page, clicks; PostHog EU, cookieless), so visits show in its
   PostHog; a link's `?s=` arrives as `utm_source`. The github.io copies load nothing. The policy
   says so in section 12 and every page's footer; keep them in step if this ever changes.
 - **Header:** one partial (`partials/header.html` + `header.js`), sticky, hides going down and

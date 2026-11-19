@@ -24,62 +24,16 @@
           document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) { m.content = t === 'dark' ? '#07121c' : '#f3f8f6'; });
         }
       } catch (e) {}
-      // Visits on mohamedgado.com, which proxies every page here, count in its own cookieless
-      // analytics: one pageview beacon to www.mohamedgado.com/ingest/e, which forwards it to
-      // PostHog EU (the path the portfolio's own pages use). The github.io copies send nothing.
-      // Absolute www URL: on the app subdomain /ingest/e answers 301 and a beacon never follows it.
-      // A link's ?s=<source> (masareef.mohamedgado.com/?s=ig) arrives as utm_source. The owner's
-      // opt-out (?va-ignore=1, same key as the portfolio) and lab/headless agents send nothing.
+      // PostHog: on mohamedgado.com (www and the app subdomains) every page loads www's /t.js,
+      // the same tracker the portfolio runs (lib/tracker-entry.ts there): pageviews, time on page
+      // and scroll depth, link and button clicks, store and download clicks, errors. Cookieless,
+      // EU servers, through www's own ingest path. ?s=<source> on a link arrives as
+      // utm_source. The github.io copies load nothing.
       if (/(^|\.)mohamedgado\.com$/.test(location.hostname)) {
-        try {
-          var optOut = false;
-          try {
-            var flag = new URLSearchParams(location.search).get('va-ignore');
-            if (flag === '1') localStorage.setItem('va-ignore', '1');
-            if (flag === '0') localStorage.removeItem('va-ignore');
-            optOut = localStorage.getItem('va-ignore') === '1';
-          } catch (e) {}
-          var lab = navigator.webdriver || /Chrome-Lighthouse|HeadlessChrome|PTST|GTmetrix/i.test(navigator.userAgent);
-          if (!optOut && !lab) {
-            // The subdomain install page serves in place; it counts under its canonical www URL.
-            var c = location.hostname !== 'www.mohamedgado.com' && document.querySelector('link[rel="canonical"]');
-            var url = c ? c.href + location.search : location.href.replace(/#.*$/, '');
-            var u = new URL(url);
-            var props = {
-              $current_url: url,
-              $host: u.host,
-              $pathname: u.pathname,
-              $referrer: document.referrer || '$direct',
-              $raw_user_agent: navigator.userAgent,
-              $browser_language: navigator.language,
-              $timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-              $screen_width: screen.width,
-              $screen_height: screen.height,
-              $viewport_width: innerWidth,
-              $viewport_height: innerHeight,
-              $lib: 'web-beacon',
-              area: 'traffic',
-              app: 'masareef',
-              $cookieless_mode: true,
-              $process_person_profile: false
-            };
-            ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (k) {
-              var v = u.searchParams.get(k);
-              if (v) props[k] = v;
-            });
-            var s = /^[a-z0-9_-]{1,40}$/i.exec(u.searchParams.get('s') || '');
-            if (s && !props.utm_source) props.utm_source = s[0].toLowerCase();
-            var body = JSON.stringify({
-              api_key: 'phc_mTuqCSZxECXYHxrPbEK5bXkxKUpEG32frvfZNsaMS6U7',
-              event: '$pageview',
-              distinct_id: '$posthog_cookieless',
-              timestamp: new Date().toISOString(),
-              properties: props
-            });
-            var sent = navigator.sendBeacon && navigator.sendBeacon('https://www.mohamedgado.com/ingest/e', body);
-            if (!sent) fetch('https://www.mohamedgado.com/ingest/e', { method: 'POST', body: body, keepalive: true, mode: 'no-cors' }).catch(function () {});
-          }
-        } catch (e) {}
+        var t = document.createElement('script');
+        t.src = 'https://www.mohamedgado.com/t.js';
+        t.async = true;
+        document.head.appendChild(t);
       }
     </script><!--/partial:head.html-->
     <!--partial:lang-pick.js--><script>
@@ -153,7 +107,7 @@
     <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"MobileApplication","@id":"https://www.mohamedgado.com/projects/masareef/go#app","name":"مصاريف — Masareef","operatingSystem":"Android, iOS","applicationCategory":"FinanceApplication","url":"https://www.mohamedgado.com/projects/masareef/go","publisher":{"@id":"https://www.mohamedgado.com/#person"},"image":"https://vette1123.github.io/masareef-privacy/icon.png","downloadUrl":"https://play.google.com/store/apps/details?id=com.mohamedgado.masareef","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"متتبّع مصروفات يقرأ إشعارات الدفع من أكثر من ١٢٠٠ بنك ومحفظة ويسجّل كل عملية تلقائيًا."},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"مصاريف","item":"https://www.mohamedgado.com/projects/masareef"},{"@type":"ListItem","position":2,"name":"البنوك والمحافظ","item":"https://www.mohamedgado.com/projects/masareef/banks"},{"@type":"ListItem","position":3,"name":"سنغافورة","item":"https://www.mohamedgado.com/projects/masareef/banks/singapore"},{"@type":"ListItem","position":4,"name":"CIMB Singapore","item":"https://www.mohamedgado.com/projects/masareef/banks/cimb-sg"}]}]}</script>
   </head>
   <body>
-    <!--partial:header.html--><header class="top">
+    <!--partial:header.html--><header class="top" data-place="header">
   <div class="wrap top-in">
   <a class="brand" lang="en" href="https://www.mohamedgado.com/projects/masareef/go"><img src="../go-img/icon-96.webp" width="40" height="40" alt="" />Masareef <small lang="ar">مصاريف</small></a>
   <a class="brand" lang="ar" href="https://www.mohamedgado.com/projects/masareef/go-ar"><img src="../go-img/icon-96.webp" width="40" height="40" alt="" />مصاريف <small lang="en">Masareef</small></a>
@@ -319,7 +273,7 @@
         </section>
       </div>
     </main>
-    <div id="foot-ar"><!--partial:footer.ar.html--><footer class="sitefoot wrap" lang="ar" dir="rtl">
+    <div id="foot-ar"><!--partial:footer.ar.html--><footer data-place="footer" class="sitefoot wrap" lang="ar" dir="rtl">
       <div class="sf-brand">
         <div>
           <a class="brand" href="https://www.mohamedgado.com/projects/masareef/go-ar"><img src="../go-img/icon-96.webp" width="40" height="40" alt="" loading="lazy" decoding="async" />مصاريف <small lang="en">Masareef</small></a>

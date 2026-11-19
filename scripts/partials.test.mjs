@@ -319,58 +319,35 @@ test('header.js: reads no layout while it loads, only on the first frame', async
 });
 
 // 6 Nov: visits to these pages were invisible: mohamedgado.com proxies them from github.io, so they
-// never got the portfolio's own analytics. 19 Nov: Vercel's script 404s since the move to Cloudflare, so
-// the head sends one cookieless pageview beacon to www.mohamedgado.com/ingest/e (PostHog EU) instead.
-function runHead(hostname, { canonical, search = '', href, optOut, webdriver } = {}) {
+// never got the portfolio's own analytics. 19 Nov: Vercel's script 404s since the move to Cloudflare, and
+// every page now loads www's shared tracker (/t.js, the one the portfolio runs) on mohamedgado.com only.
+function runHead(hostname) {
   return import('node:fs').then(async ({ readFileSync }) => {
     const vm = await import('node:vm');
     const head = readFileSync(new URL('../partials/head.html', import.meta.url), 'utf8');
     const js = head.match(/<script>([\s\S]*?)<\/script>/)[1];
     const added = [];
-    const beacons = [];
-    const store = optOut ? { 'va-ignore': '1' } : {};
     const ctx = {
-      location: { hostname, search, href: href || `https://${hostname}/${search}` },
-      localStorage: { getItem: (k) => store[k] ?? null, setItem: (k, v) => { store[k] = v; }, removeItem: (k) => { delete store[k]; } },
-      navigator: { webdriver, userAgent: 'Mozilla/5.0', language: 'en', sendBeacon: (u, b) => { beacons.push({ url: u, body: JSON.parse(b) }); return true; } },
-      document: { referrer: '', documentElement: { setAttribute() {} }, querySelectorAll: () => [], querySelector: (q) => (canonical && q === 'link[rel="canonical"]' ? { href: canonical } : null), createElement: () => ({}), head: { appendChild: (n) => added.push(n) } },
-      screen: { width: 1, height: 2 }, innerWidth: 3, innerHeight: 4,
-      Intl, URL, URLSearchParams, Date, JSON, Object, fetch: () => Promise.resolve(),
+      location: { hostname },
+      localStorage: { getItem: () => null },
+      document: { documentElement: { setAttribute() {} }, querySelectorAll: () => [], createElement: () => ({}), head: { appendChild: (n) => added.push(n) } },
     };
     vm.runInNewContext(js, ctx);
-    return { added, beacons };
+    return { added, head };
   });
 }
 
-test('head: one PostHog beacon on mohamedgado.com only, and ?s= becomes utm_source', async () => {
+test('head: the shared tracker loads async on mohamedgado.com only', async () => {
   for (const host of ['vette1123.github.io', 'localhost', 'mohamedgado.com.evil.example']) {
-    const { added, beacons } = await runHead(host);
-    assert.equal(added.length, 0, `${host} loads nothing`);
-    assert.equal(beacons.length, 0, `${host} sends nothing`);
+    const { added } = await runHead(host);
+    assert.equal(added.length, 0, `${host} appends nothing`);
   }
-  for (const host of ['www.mohamedgado.com', 'mohamedgado.com']) {
-    const { added, beacons } = await runHead(host);
-    assert.equal(added.length, 0, `${host}: no script is loaded`);
-    assert.equal(beacons.length, 1);
-    assert.equal(beacons[0].url, 'https://www.mohamedgado.com/ingest/e', 'absolute www URL: the subdomain answers 301');
-    assert.equal(beacons[0].body.event, '$pageview');
-    assert.equal(beacons[0].body.properties.app, 'masareef');
-    assert.equal(beacons[0].body.properties.$cookieless_mode, true);
+  for (const host of ['www.mohamedgado.com', 'mohamedgado.com', 'masareef.mohamedgado.com']) {
+    const { added } = await runHead(host);
+    assert.deepEqual(added.map((n) => [n.src, n.async]), [['https://www.mohamedgado.com/t.js', true]], `${host}: one async tracker script`);
   }
-  const page = 'https://www.mohamedgado.com/projects/masareef/go';
-  const tagged = await runHead('www.mohamedgado.com', { search: '?s=IG', href: page + '?s=IG#x' });
-  assert.equal(tagged.beacons[0].body.properties.utm_source, 'ig');
-  assert.equal(tagged.beacons[0].body.properties.$current_url, page + '?s=IG', 'fragment dropped');
-  const explicit = await runHead('www.mohamedgado.com', { search: '?s=x&utm_source=y', href: page + '?s=x&utm_source=y' });
-  assert.equal(explicit.beacons[0].body.properties.utm_source, 'y', 'an explicit utm wins');
-  // masareef.mohamedgado.com serves its install page in place: it counts under the canonical www page.
-  const sub = await runHead('masareef.mohamedgado.com', { canonical: page, search: '?s=IG' });
-  assert.equal(sub.beacons[0].body.properties.$current_url, page + '?s=IG');
-  assert.equal(sub.beacons[0].body.properties.$pathname, '/projects/masareef/go');
-  assert.equal(sub.beacons[0].body.properties.utm_source, 'ig');
-  // The owner's opt-out and lab agents send nothing.
-  assert.equal((await runHead('www.mohamedgado.com', { optOut: true })).beacons.length, 0);
-  assert.equal((await runHead('www.mohamedgado.com', { webdriver: true })).beacons.length, 0);
+  const { head } = await runHead('localhost');
+  assert.doesNotMatch(head, /ingest\/e|_vercel/, 'no inline beacon, no Vercel');
   // The policy says so, in both languages, and names no other analytics host.
   const { readFileSync } = await import('node:fs');
   for (const f of ['index.html', 'terms.html', 'delete-account.html']) {
@@ -380,6 +357,9 @@ test('head: one PostHog beacon on mohamedgado.com only, and ?s= becomes utm_sour
     assert.match(html, /counted, without cookies, by PostHog analytics on EU servers/);
     assert.match(html, /تُعدّ الزيارة بلا كوكيز عبر تحليلات PostHog على خوادم في الاتحاد الأوروبي/);
   }
+  const policy = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  assert.match(policy, /which links and buttons were clicked/);
+  assert.match(policy, /والروابط والأزرار التي نُقر عليها/);
 });
 
 // 7 Nov: the site linked the stores and nothing else, while the app's Settings offered seven ways

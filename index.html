@@ -21,62 +21,16 @@
           document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) { m.content = t === 'dark' ? '#07121c' : '#f3f8f6'; });
         }
       } catch (e) {}
-      // Visits on mohamedgado.com, which proxies every page here, count in its own cookieless
-      // analytics: one pageview beacon to www.mohamedgado.com/ingest/e, which forwards it to
-      // PostHog EU (the path the portfolio's own pages use). The github.io copies send nothing.
-      // Absolute www URL: on the app subdomain /ingest/e answers 301 and a beacon never follows it.
-      // A link's ?s=<source> (masareef.mohamedgado.com/?s=ig) arrives as utm_source. The owner's
-      // opt-out (?va-ignore=1, same key as the portfolio) and lab/headless agents send nothing.
+      // PostHog: on mohamedgado.com (www and the app subdomains) every page loads www's /t.js,
+      // the same tracker the portfolio runs (lib/tracker-entry.ts there): pageviews, time on page
+      // and scroll depth, link and button clicks, store and download clicks, errors. Cookieless,
+      // EU servers, through www's own ingest path. ?s=<source> on a link arrives as
+      // utm_source. The github.io copies load nothing.
       if (/(^|\.)mohamedgado\.com$/.test(location.hostname)) {
-        try {
-          var optOut = false;
-          try {
-            var flag = new URLSearchParams(location.search).get('va-ignore');
-            if (flag === '1') localStorage.setItem('va-ignore', '1');
-            if (flag === '0') localStorage.removeItem('va-ignore');
-            optOut = localStorage.getItem('va-ignore') === '1';
-          } catch (e) {}
-          var lab = navigator.webdriver || /Chrome-Lighthouse|HeadlessChrome|PTST|GTmetrix/i.test(navigator.userAgent);
-          if (!optOut && !lab) {
-            // The subdomain install page serves in place; it counts under its canonical www URL.
-            var c = location.hostname !== 'www.mohamedgado.com' && document.querySelector('link[rel="canonical"]');
-            var url = c ? c.href + location.search : location.href.replace(/#.*$/, '');
-            var u = new URL(url);
-            var props = {
-              $current_url: url,
-              $host: u.host,
-              $pathname: u.pathname,
-              $referrer: document.referrer || '$direct',
-              $raw_user_agent: navigator.userAgent,
-              $browser_language: navigator.language,
-              $timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-              $screen_width: screen.width,
-              $screen_height: screen.height,
-              $viewport_width: innerWidth,
-              $viewport_height: innerHeight,
-              $lib: 'web-beacon',
-              area: 'traffic',
-              app: 'masareef',
-              $cookieless_mode: true,
-              $process_person_profile: false
-            };
-            ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (k) {
-              var v = u.searchParams.get(k);
-              if (v) props[k] = v;
-            });
-            var s = /^[a-z0-9_-]{1,40}$/i.exec(u.searchParams.get('s') || '');
-            if (s && !props.utm_source) props.utm_source = s[0].toLowerCase();
-            var body = JSON.stringify({
-              api_key: 'phc_mTuqCSZxECXYHxrPbEK5bXkxKUpEG32frvfZNsaMS6U7',
-              event: '$pageview',
-              distinct_id: '$posthog_cookieless',
-              timestamp: new Date().toISOString(),
-              properties: props
-            });
-            var sent = navigator.sendBeacon && navigator.sendBeacon('https://www.mohamedgado.com/ingest/e', body);
-            if (!sent) fetch('https://www.mohamedgado.com/ingest/e', { method: 'POST', body: body, keepalive: true, mode: 'no-cors' }).catch(function () {});
-          }
-        } catch (e) {}
+        var t = document.createElement('script');
+        t.src = 'https://www.mohamedgado.com/t.js';
+        t.async = true;
+        document.head.appendChild(t);
       }
     </script><!--/partial:head.html-->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -196,7 +150,7 @@
   </head>
   <body>
     <a class="skip" href="#main">Skip to content / تخطي إلى المحتوى</a>
-    <!--partial:header.html--><header class="top">
+    <!--partial:header.html--><header class="top" data-place="header">
   <div class="wrap top-in">
   <a class="brand" lang="en" href="https://www.mohamedgado.com/projects/masareef/go"><img src="https://www.mohamedgado.com/projects/masareef/go-img/icon-96.webp" width="40" height="40" alt="" />Masareef <small lang="ar">مصاريف</small></a>
   <a class="brand" lang="ar" href="https://www.mohamedgado.com/projects/masareef/go-ar"><img src="https://www.mohamedgado.com/projects/masareef/go-img/icon-96.webp" width="40" height="40" alt="" />مصاريف <small lang="en">Masareef</small></a>
@@ -924,13 +878,8 @@
         </div>
         <h3>This website</h3>
         <p>
-          When you read these pages on <code>mohamedgado.com</code> (this policy, the terms, the
-          install page and the bank pages), the site counts the visit with
-          <strong>PostHog analytics</strong> on EU servers: the page address and the source tag in the link you
-          followed, the referring site, your country, and your browser, operating system and device
-          type. It sets no cookies and stores no identifier: a visitor is told apart only by a hash of
-          the request that is discarded within a day, and the counts are never joined to your Masareef
-          account or to the app's analytics above. The copies on <code>vette1123.github.io</code> run
+          This applies to these pages on <code>mohamedgado.com</code> (this policy, the terms, the
+          install page and the bank pages). Read on mohamedgado.com, the visit is counted, without cookies, by PostHog analytics on EU servers: the page, how long it stayed open and how far it was scrolled, which links and buttons were clicked, and any error the page hit. A random ID kept in this browser's storage (never in EU or UK time zones) lets a return visit count as one; it is not linked to the app or to you. The copies on <code>vette1123.github.io</code> run
           nothing.
         </p>
 
@@ -2152,11 +2101,8 @@
         </div>
         <h3>هذا الموقع</h3>
         <p>
-          حين تقرأ هذه الصفحات على <code>mohamedgado.com</code> (هذه السياسة والشروط وصفحة التحميل
-          وصفحات البنوك)، يعدّ الموقع الزيارة بلا كوكيز عبر <strong>تحليلات PostHog</strong> على خوادم في الاتحاد الأوروبي: عنوان الصفحة
-          ووسم المصدر في الرابط الذي فتحته، والموقع الذي أحالك، وبلدك، ونوع متصفحك ونظام تشغيلك وجهازك.
-          لا يضع كوكيز ولا يحفظ أي معرّف: يُميَّز الزائر فقط ببصمة من الطلب تُحذف خلال يوم، ولا تُربط
-          الأعداد بحسابك في مصاريف ولا بقياسات التطبيق أعلاه. أما النسخ على
+          هذا يسري على هذه الصفحات على <code>mohamedgado.com</code> (هذه السياسة والشروط وصفحة التحميل
+          وصفحات البنوك). عند القراءة على mohamedgado.com تُعدّ الزيارة بلا كوكيز عبر تحليلات PostHog على خوادم في الاتحاد الأوروبي: الصفحة، ومدة بقائها مفتوحة ومدى التمرير فيها، والروابط والأزرار التي نُقر عليها، وأي خطأ واجهته الصفحة. ويُحفظ معرّف عشوائي في متصفحك (لا يُحفظ أبدًا في المناطق الزمنية للاتحاد الأوروبي والمملكة المتحدة) لتُعدّ الزيارة المتكررة زيارةً واحدة، ولا يرتبط بالتطبيق ولا بهويتك. أما النسخ على
           <code>vette1123.github.io</code> فلا تشغّل شيئًا.
         </p>
 
@@ -2695,7 +2641,7 @@
         </footer>
       </section>
     </main>
-    <div id="foot-en"><!--partial:footer.en.html--><footer class="sitefoot wrap" lang="en" dir="ltr">
+    <div id="foot-en"><!--partial:footer.en.html--><footer data-place="footer" class="sitefoot wrap" lang="en" dir="ltr">
       <div class="sf-brand">
         <div>
           <a class="brand" href="https://www.mohamedgado.com/projects/masareef/go"><img src="https://www.mohamedgado.com/projects/masareef/go-img/icon-96.webp" width="40" height="40" alt="" loading="lazy" decoding="async" />Masareef <small lang="ar">مصاريف</small></a>
@@ -2762,7 +2708,7 @@
       <nav aria-label="Legal">
         <p class="sf-h">Legal</p>
         <ul>
-          <li><a href="https://www.mohamedgado.com/projects/masareef/privacy" aria-current="page">Privacy policy</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/privacy">Privacy policy</a></li>
           <li><a href="https://www.mohamedgado.com/projects/masareef/terms">Terms of service</a></li>
           <li><a href="https://www.mohamedgado.com/projects/masareef/delete-account.html">Delete your account</a></li>
         </ul>
@@ -2777,7 +2723,7 @@
       </nav>
       <p class="sf-base">© 2026 <a href="https://www.mohamedgado.com/">Mohamed Gado</a> · Free to start · No ads · Works offline once you sign in</p>
     </footer><!--/partial:footer.en.html--></div>
-    <div id="foot-ar"><!--partial:footer.ar.html--><footer class="sitefoot wrap" lang="ar" dir="rtl">
+    <div id="foot-ar"><!--partial:footer.ar.html--><footer data-place="footer" class="sitefoot wrap" lang="ar" dir="rtl">
       <div class="sf-brand">
         <div>
           <a class="brand" href="https://www.mohamedgado.com/projects/masareef/go-ar"><img src="https://www.mohamedgado.com/projects/masareef/go-img/icon-96.webp" width="40" height="40" alt="" loading="lazy" decoding="async" />مصاريف <small lang="en">Masareef</small></a>
@@ -2844,7 +2790,7 @@
       <nav aria-label="قانوني">
         <p class="sf-h">قانوني</p>
         <ul>
-          <li><a href="https://www.mohamedgado.com/projects/masareef/privacy" aria-current="page">سياسة الخصوصية</a></li>
+          <li><a href="https://www.mohamedgado.com/projects/masareef/privacy">سياسة الخصوصية</a></li>
           <li><a href="https://www.mohamedgado.com/projects/masareef/terms">شروط الخدمة</a></li>
           <li><a href="https://www.mohamedgado.com/projects/masareef/delete-account.html">حذف حسابك</a></li>
         </ul>
