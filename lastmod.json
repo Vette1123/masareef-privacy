@@ -2655,13 +2655,13 @@
  "features/travel-expense-tracker.html": "2026-11-19",
  "go-ar.html": "2026-11-19",
  "go.html": "2026-11-19",
+ "go.template.html": "2026-11-19",
  "index.html": "2026-11-19",
+ "partials/footer.ar.html": "2026-11-19",
+ "partials/footer.en.html": "2026-11-19",
  "partials/head.html": "2026-11-19",
+ "partials/header.html": "2026-11-19",
  "terms.html": "2026-11-19",
- "go.template.html": "2026-11-14",
- "partials/footer.ar.html": "2026-11-14",
- "partials/footer.en.html": "2026-11-14",
- "partials/header.html": "2026-11-07",
  "google7349409b25f0c975.html": "2026-10-17",
  "threads-callback/index.html": "2026-09-18"
 }
