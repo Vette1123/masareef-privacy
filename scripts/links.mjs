@@ -32,6 +32,10 @@ export function auditLinks() {
     const dir = path.posix.dirname(f);
     for (const m of html.matchAll(/<(a|img|source|link)\b[^>]*?\s(href|src|srcset)="([^"]+)"/g)) {
       const [, tag, , raw] = m;
+      // A store link with no source is an install nobody can credit: Play reports it as
+      // "(not set)" (54 Android installs in 30 days, Nov 2026) and the App Store as no campaign.
+      if (tag === 'a' && /play\.google\.com\/store\/apps\/details\?id=com\.mohamedgado\.masareef\b/.test(raw) && !/[?&](amp;)?referrer=/.test(raw)) bad('untagged store link', f, raw);
+      if (tag === 'a' && /apps\.apple\.com\/app\/(\w+\/)?id6806735875/.test(raw) && !/[?&](amp;)?ct=/.test(raw)) bad('untagged store link', f, raw);
       if (tag === 'link' && !/\.(png|webp|avif|jpg|svg|ico|css)$/.test(raw.split('#')[0])) continue;
       for (const url of m[2] === 'srcset' ? raw.split(',').map((s) => s.trim().split(/\s+/)[0]) : [raw]) {
         let target;
