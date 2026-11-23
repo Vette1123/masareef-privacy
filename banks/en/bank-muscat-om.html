@@ -140,7 +140,22 @@
         </nav>
           <p class="meta">Free · 25 automatic captures a month · No ads · Arabic and English</p>
         </div>
-        <figure class="demo"><picture><source type="image/avif" srcset="../../go-img/2f-en-480.avif 480w, ../../go-img/2f-en-720.avif 720w" sizes="300px" /><img src="../../go-img/2f-en-480.webp" srcset="../../go-img/2f-en-480.webp 480w, ../../go-img/2f-en-720.webp 720w" sizes="300px" width="480" height="981" alt="Masareef: your spending, logged on its own" loading="lazy" decoding="async" /></picture></figure>
+        <figure class="demo">
+          <picture><source type="image/avif" srcset="../../go-img/2f-en-480.avif 480w, ../../go-img/2f-en-720.avif 720w" sizes="300px" /><img src="../../go-img/2f-en-480.webp" srcset="../../go-img/2f-en-480.webp 480w, ../../go-img/2f-en-720.webp 720w" sizes="300px" width="480" height="981" alt="Masareef: your spending, logged on its own" loading="lazy" decoding="async" /></picture>
+          <div class="note">
+            <span class="tile" style="--h:175" aria-hidden="true">BM</span>
+            <div>
+              <div class="row"><b><bdi dir="ltr">BANKMUSCAT</bdi></b><time>now</time></div>
+              <p dir="auto">تم خصم OMR 4.500 من حسابك رقم XXXXXXX1234 بإستخدام بطاقة الخصم المباشر في Lulu Hypermarket بتاريخ 2026/10/12 18:30:00. رصيدك الحالي هو 250.000 OMR.</p>
+            </div>
+          </div>
+          <div class="logged">
+            <span class="tile ok" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg></span>
+            <div><b><bdi dir="ltr">Lulu Hypermarket</bdi></b><span class="tag">Expense</span></div>
+            <p class="amt"><span class="cur">OMR</span>-45.00</p>
+          </div>
+          <figcaption>An example alert from Bank Muscat: Masareef logs it as an expense, with its amount and payee. An illustration in the bank's own wording; the numbers and names in it are not real.</figcaption>
+        </figure>
       </div>
 
       <section class="sec">
@@ -161,7 +176,7 @@
           <li>On Android: open Masareef and allow "Notification access" once. After that it captures alerts even with the app closed.</li>
           <li>On iPhone: from iOS 27 add the ready-made automation in Shortcuts; from iOS 16.4 to 26 set up one automation for Bank Muscat texts (sender <bdi dir="ltr">BANKMUSCAT</bdi>) once.</li>
           <li>Make sure alerts from the Bank Muscat app are switched on on your phone: Masareef reads the alert you already receive and never contacts the bank.</li>
-          <li>On the first transaction Bank Muscat sends an alert, and Masareef logs it with its amount, merchant and time.</li>
+          <li>On the first transaction Bank Muscat sends an alert like: <span class="sample" dir="auto">تم خصم OMR 4.500 من حسابك رقم XXXXXXX1234 بإستخدام بطاقة الخصم المباشر في Lulu Hypermarket بتاريخ 2026/10/12 18:30:00. رصيدك الحالي هو 250.000 OMR.</span> and Masareef logs it as an expense of <bdi dir="ltr">45.00 OMR</bdi> at <bdi dir="ltr">Lulu Hypermarket</bdi>. An illustration in the bank's wording; the numbers and names are not real.</li>
           <li>Wrong category? Open the transaction and change it, and turn on "Remember this merchant" so this merchant goes there from now on. An unclear alert waits in "To review" for one tap to confirm.</li>
         </ol>
       </section>
