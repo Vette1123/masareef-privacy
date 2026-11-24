@@ -27,9 +27,10 @@ const tpl = fs.readFileSync(path.join(repo, 'go.template.html'), 'utf8')
 
 function ld(l) {
   const t = c[l]
-  // App only. Google stopped showing FAQ rich results on 7 May 2026, so the FAQ stays
-  // visible HTML and no longer ships as FAQPage markup. No aggregateRating: Google only
-  // accepts ratings collected and shown on this page, and store ratings are neither.
+  // FAQPage is the visible FAQ, question for question (go.copy.json faq). Google stopped showing
+  // FAQ rich results on 7 May 2026; the markup stays for other engines and answer tools, which read
+  // it. No aggregateRating: Google only accepts ratings collected and shown on this page, and
+  // store ratings are neither.
   const self = base + (l === 'ar' ? 'go-ar' : 'go')
   const app = {
     '@type': 'MobileApplication',
@@ -61,6 +62,10 @@ function ld(l) {
     ].map(([name, item], i) => ({ '@type': 'ListItem', position: i + 1, name, item })),
   }
   crumbs['@id'] = self + '#breadcrumb'
+  const faq = {
+    '@type': 'FAQPage', '@id': self + '#faq', inLanguage: l, isPartOf: { '@id': self + '#webpage' },
+    mainEntity: t.faq.map(([name, text]) => ({ '@type': 'Question', name, acceptedAnswer: { '@type': 'Answer', text } })),
+  }
   const person = { '@type': 'Person', '@id': 'https://www.mohamedgado.com/#person', name: 'Mohamed Gado', url: 'https://www.mohamedgado.com/', sameAs: PERSON_SAME_AS }
   const website = { '@type': 'WebSite', '@id': 'https://www.mohamedgado.com/#website', name: 'Mohamed Gado', url: 'https://www.mohamedgado.com/', publisher: { '@id': person['@id'] } }
   // The page itself: what it is about (the app), where it sits (breadcrumb, site) and its language.
@@ -69,7 +74,7 @@ function ld(l) {
     isPartOf: { '@id': website['@id'] }, breadcrumb: { '@id': crumbs['@id'] }, mainEntity: { '@id': app['@id'] },
     primaryImageOfPage: { '@type': 'ImageObject', url: `${img}${t.features[0][0]}-${l}-720.webp`, width: 720, height: 1471 },
   }
-  return JSON.stringify({ '@context': 'https://schema.org', '@graph': [webpage, app, crumbs, website, person] }).replaceAll('<', '\\u003c')
+  return JSON.stringify({ '@context': 'https://schema.org', '@graph': [webpage, app, faq, crumbs, website, person] }).replaceAll('<', '\\u003c')
 }
 
 function page(l) {

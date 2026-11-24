@@ -83,24 +83,28 @@
     "faqH": "Questions",
     "faq": [
       [
-        "Is Masareef free?",
-        "Masareef is free to start, with 25 automatic captures a month. Masareef Pro lifts the cap."
-      ],
-      [
         "How do I track expenses from bank alerts?",
         "Turn on auto-track and allow notification access once. Each payment alert from your bank then becomes a transaction with the amount, place and wallet filled in, and you confirm it with one tap."
       ],
       [
-        "Does Masareef need my banking password?",
-        "No. It never asks for your banking password, and it is not affiliated with any bank or wallet."
+        "Does it work with my bank, and in which countries?",
+        "It reads alerts from 1,200+ banks, wallets and payment apps. Masareef is global: you pick your country and currency, and the supported banks page lists every bank by country."
       ],
       [
-        "Does it work with my bank?",
-        "It reads alerts from 1,200+ banks, wallets and payment apps. The supported banks page lists every one."
+        "Is Masareef free, or do I need Pro?",
+        "Masareef is free to start. On the free plan, auto-track posts 25 captures a month; Masareef Pro lifts that limit. Alerts over the limit are held, not dropped, and appear as review cards when you go Pro. Confirming a review card by hand is always free."
       ],
       [
-        "Which phones can run Masareef?",
-        "Masareef is on Google Play for Android and on the App Store for iPhone."
+        "Is my data private, and where does it live?",
+        "Your records live on your phone first, in an encrypted local database. When you are signed in they sync to Masareef's own backend on Cloudflare. The alert text auto-track reads, and everything worked out from it before you confirm, stays on the phone. Masareef never asks for your banking password and is not affiliated with any bank or wallet."
+      ],
+      [
+        "Does it read my SMS on iPhone and on Android?",
+        "On Android, auto-track reads your bank's payment notifications on the device after you allow notification access. iPhone does not let apps read your messages, so on iPhone you set up an iOS Shortcuts automation that hands the bank's text to Masareef; bank-app alerts need iOS 27 or later."
+      ],
+      [
+        "Does Masareef handle more than one currency?",
+        "Yes. You choose your home currency, and a wallet can have another currency. An expense in a foreign currency can start a trip in that currency, and travel mode uses today's exchange rates."
       ]
     ],
     "ctaH": "Know where your money went.",
@@ -211,24 +215,28 @@
     "faqH": "أسئلة شائعة",
     "faq": [
       [
-        "هل مصاريف مجاني؟",
-        "يمكنك البدء مجانًا مع ٢٥ عملية التقاط تلقائي شهريًا، و«مصاريف برو» يرفع هذا الحد."
-      ],
-      [
         "كيف أتتبع مصاريفي من إشعارات البنك؟",
         "فعّل التتبع التلقائي واسمح بالوصول إلى الإشعارات مرة واحدة. بعدها يصبح كل إشعار دفع من بنكك معاملة فيها المبلغ والمكان والمحفظة، وتؤكدها بلمسة واحدة."
       ],
       [
-        "هل يحتاج مصاريف إلى كلمة مرور بنكي؟",
-        "لا، لا يطلب مصاريف كلمة مرور بنكك أبدًا، وهو غير تابع لأي بنك أو محفظة."
+        "هل يعمل مع بنكي، وفي أي الدول؟",
+        "يقرأ إشعارات أكثر من ١٢٠٠ بنك ومحفظة وتطبيق دفع. مصاريف عالمي: تختار دولتك وعملتك، وصفحة البنوك المدعومة تذكر كل بنك حسب الدولة."
       ],
       [
-        "هل يعمل مع بنكي؟",
-        "يقرأ إشعارات أكثر من ١٢٠٠ بنك ومحفظة وتطبيق دفع، وصفحة البنوك المدعومة تذكرها كلها."
+        "هل مصاريف مجاني أم أحتاج برو؟",
+        "يمكنك البدء مجانًا. في الخطة المجانية يسجّل التتبع التلقائي ٢٥ عملية التقاط شهريًا، و«مصاريف برو» يرفع هذا الحد. الإشعارات التي تتجاوز الحد تُحفظ ولا تضيع، وتظهر كبطاقات مراجعة عند الاشتراك في برو. تأكيد بطاقة المراجعة يدويًا مجاني دائمًا."
       ],
       [
-        "ما الأجهزة التي يعمل عليها مصاريف؟",
-        "مصاريف متوفر على Google Play لأجهزة Android وعلى App Store لأجهزة iPhone."
+        "هل بياناتي خاصة، وأين تُحفظ؟",
+        "تُحفظ سجلاتك على هاتفك أولًا في قاعدة بيانات محلية مشفرة. وعند تسجيل الدخول تُزامَن مع خادم مصاريف الخاص على Cloudflare. أما نص الإشعار الذي يقرؤه التتبع التلقائي وكل ما يُستخرج منه قبل تأكيدك فيبقى على الهاتف. لا يطلب مصاريف كلمة مرور بنكك أبدًا، وهو غير تابع لأي بنك أو محفظة."
+      ],
+      [
+        "هل يقرأ رسائلي النصية على iPhone وعلى Android؟",
+        "على Android يقرأ التتبع التلقائي إشعارات الدفع من بنكك على الجهاز بعد أن تسمح بالوصول إلى الإشعارات. أما iPhone فلا يسمح للتطبيقات بقراءة رسائلك، لذلك تُعدّ على iPhone أتمتة في تطبيق الاختصارات تمرّر نص رسالة البنك إلى مصاريف، وإشعارات تطبيق البنك تحتاج iOS 27 أو أحدث."
+      ],
+      [
+        "هل يدعم مصاريف أكثر من عملة؟",
+        "نعم. تختار عملتك الأساسية، ويمكن أن تكون لمحفظة ما عملة أخرى. ويمكن لمصروف بعملة أجنبية أن يبدأ رحلة بتلك العملة، ويستخدم وضع السفر أسعار الصرف الحالية."
       ]
     ],
     "ctaH": "اعرف أين ذهبت أموالك.",
